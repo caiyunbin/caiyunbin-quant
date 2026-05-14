@@ -201,8 +201,8 @@ async function loadJSON(path) {
         }
         chart.setOption({
             tooltip: { trigger: 'axis' },
-            legend: { bottom: 0, type: 'scroll' },
-            grid: { left: 50, right: 20, top: 30, bottom: 50 },
+            legend: { bottom: 10, type: 'scroll' },
+            grid: { left: 50, right: 20, top: 30, bottom: 80 },
             xAxis: { type: 'category', data: eq_curves.dates, axisLabel: { rotate: 30 } },
             yAxis: { type: 'value', name: '净值 (起点=1.0)' },
             series: series,

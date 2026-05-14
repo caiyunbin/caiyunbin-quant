@@ -1,23 +1,13 @@
 // ============================================================
-// 多子策略决策引擎 — 手机号 + 验证码 登录 (前端 sha256 校验)
+// 多子策略决策引擎 — 账号池登录 (前端 sha256 校验)
 // ============================================================
-// 安全说明:
-//   - 前端校验, 仅挡爬虫和无关访客, 不是高强度安全
-//   - 验证码统一是 "caiman" (固定密码, 静态站无后端发短信)
-//   - 手机号: 默认任意 11 位手机号都通过; 若 PHONE_WHITELIST 非空, 则只允许白名单
-//   - 凭证 LocalStorage 保存 7 天
-
-// caiman 的 sha256
-const __CODE_HASH = "04c092601015157c6b24f7f458ad3bbee478d4b25930ab6ef305e9d79727b7eb";
-
-// 手机号白名单 (sha256 hash). 留空数组 = 任意 11 位手机号都通过.
-// 想限制, 把允许的手机号 hash 加进来 (python: hashlib.sha256(b'13800138000').hexdigest())
-const __PHONE_WHITELIST = [
-    // "abcdef..."   // 示例: 张三 138xxxx
-];
+// 设计:
+//   - 由本地 manage_accounts.py CLI 生成/撤销账号
+//   - 账号池 = data/auth_pool.json (仅 sha256 hash 公开)
+//   - 登录: sha256(user + ":" + password) 在池子里 且 expire > today → ok
+//   - 凭证 LocalStorage 保存, 但每次跳转都重新校验 auth_pool (即可远程撤销)
 
 const __AUTH_KEY = "caiman_auth_2026";
-const __AUTH_TTL_MS = 7 * 24 * 60 * 60 * 1000;   // 7 天
 
 async function _sha256(text) {
     const enc = new TextEncoder();
@@ -27,39 +17,48 @@ async function _sha256(text) {
         .join('');
 }
 
-function _isPhoneValid(phone) {
-    return /^1[3-9]\d{9}$/.test(phone);
+async function _loadAuthPool() {
+    // 子目录 vs 根目录
+    const isSub = window.location.pathname.includes('/strategies/');
+    const path = (isSub ? "../" : "") + "data/auth_pool.json";
+    try {
+        const r = await fetch(path + "?t=" + Date.now(), {cache: "no-store"});
+        if (!r.ok) return null;
+        return await r.json();
+    } catch (e) {
+        console.error("auth_pool load fail:", e);
+        return null;
+    }
 }
 
-async function _phoneAllowed(phone) {
-    if (__PHONE_WHITELIST.length === 0) return true;   // 默认放行
-    const h = await _sha256(phone);
-    return __PHONE_WHITELIST.includes(h);
-}
-
-async function tryLogin(phone, code) {
-    if (!_isPhoneValid(phone)) {
-        return { ok: false, msg: "手机号格式不正确, 请输入 11 位有效手机号" };
+async function tryLogin(user, password) {
+    if (!user || !password) {
+        return { ok: false, msg: "请输入账号和密码" };
     }
-    if (!(await _phoneAllowed(phone))) {
-        return { ok: false, msg: "该手机号未授权访问, 请联系管理员" };
+    const pool = await _loadAuthPool();
+    if (!pool || !pool.tokens) {
+        return { ok: false, msg: "账号池未加载, 请稍后重试或联系管理员" };
     }
-    const codeHash = await _sha256(code || "");
-    if (codeHash !== __CODE_HASH) {
-        return { ok: false, msg: "验证码错误, 请重新输入" };
+    const token = await _sha256(user + ":" + password);
+    const expire = pool.tokens[token];
+    if (!expire) {
+        return { ok: false, msg: "账号或密码错误" };
     }
-    const token = {
+    const today = new Date().toISOString().slice(0, 10);
+    if (expire < today) {
+        return { ok: false, msg: "该账号已过期 (到期 " + expire + "), 请联系管理员续期" };
+    }
+    localStorage.setItem(__AUTH_KEY, JSON.stringify({
         ts: Date.now(),
-        h: __CODE_HASH.slice(0, 8),
-        phone: phone.slice(0, 3) + "****" + phone.slice(-4),   // 仅保存脱敏号
-    };
-    localStorage.setItem(__AUTH_KEY, JSON.stringify(token));
-    return { ok: true, token };
+        token: token.slice(0, 12),
+        user: user,
+        expire: expire,
+    }));
+    return { ok: true, expire: expire };
 }
 
 function logout() {
     localStorage.removeItem(__AUTH_KEY);
-    // 跳回 login (根 / 还是子目录都能正确处理)
     const isSub = window.location.pathname.includes('/strategies/');
     window.location.href = isSub ? "../login.html" : "login.html";
 }
@@ -69,17 +68,53 @@ function getAuthInfo() {
         const raw = localStorage.getItem(__AUTH_KEY);
         if (!raw) return null;
         const t = JSON.parse(raw);
-        if (!t.ts || !t.h) return null;
-        if (Date.now() - t.ts > __AUTH_TTL_MS) return null;
-        if (t.h !== __CODE_HASH.slice(0, 8)) return null;
+        if (!t.ts || !t.token || !t.user) return null;
+        // 检查过期日 (相对本地时间)
+        const today = new Date().toISOString().slice(0, 10);
+        if (t.expire && t.expire < today) return null;
         return t;
     } catch (e) { return null; }
 }
 
-function requireAuth() {
-    if (!getAuthInfo()) {
-        const back = encodeURIComponent(window.location.pathname + window.location.search);
-        const isSub = window.location.pathname.includes('/strategies/');
-        window.location.href = (isSub ? "../login.html" : "login.html") + "?back=" + back;
+// 受保护页面调用: 校验本地凭证 + 远程 auth_pool (账号被撤销时也能即时拒绝)
+async function requireAuthAsync() {
+    const local = getAuthInfo();
+    if (!local) {
+        _gotoLogin();
+        return;
     }
+    // 远程校验: 看 token 还在 auth_pool 中且未过期
+    const pool = await _loadAuthPool();
+    if (!pool || !pool.tokens) {
+        // 加载失败暂时放行 (避免网络抖动让用户登出)
+        return;
+    }
+    // local.token 只是前 12 位; 完整 token 我们没存. 我们用 prefix 匹配
+    const matched = Object.keys(pool.tokens).find(k => k.startsWith(local.token));
+    if (!matched) {
+        // 账号已撤销
+        localStorage.removeItem(__AUTH_KEY);
+        _gotoLogin("您的账号已被管理员撤销, 请重新登录");
+        return;
+    }
+    const today = new Date().toISOString().slice(0, 10);
+    if (pool.tokens[matched] < today) {
+        localStorage.removeItem(__AUTH_KEY);
+        _gotoLogin("您的账号已过期, 请联系管理员续期");
+        return;
+    }
+}
+function _gotoLogin(reason) {
+    const back = encodeURIComponent(window.location.pathname + window.location.search);
+    const isSub = window.location.pathname.includes('/strategies/');
+    let url = (isSub ? "../login.html" : "login.html") + "?back=" + back;
+    if (reason) url += "&reason=" + encodeURIComponent(reason);
+    window.location.href = url;
+}
+
+// 同步版本 (兼容旧调用): 只查本地, 不查远程
+function requireAuth() {
+    if (!getAuthInfo()) _gotoLogin();
+    // 后台异步再做远程校验 (避免 race)
+    setTimeout(requireAuthAsync, 100);
 }

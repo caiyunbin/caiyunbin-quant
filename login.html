@@ -9,134 +9,120 @@
     <script src="assets/auth.js"></script>
 </head>
 <body class="bg-gradient-to-br from-indigo-50 via-white to-blue-50 min-h-screen flex items-center justify-center p-4">
-    <div class="bg-white shadow-xl rounded-lg p-8 sm:p-10 max-w-md w-full">
-        <div class="text-center mb-8">
+<div class="max-w-lg w-full space-y-4">
+
+    <!-- 登录卡片 -->
+    <div class="bg-white shadow-xl rounded-lg p-6 sm:p-10">
+        <div class="text-center mb-6">
             <div class="text-4xl mb-3">🚀</div>
             <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700">多子策略决策引擎</h1>
-            <p class="text-sm text-gray-500 mt-2">A 股每日量化信号 · 仅限授权访问</p>
+            <p class="text-sm text-gray-500 mt-2">A 股每日量化信号 · 仅限授权账号访问</p>
         </div>
 
         <form id="login-form" class="space-y-4">
-            <!-- 手机号 -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">手机号</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">账号</label>
                 <input
-                    type="tel"
-                    id="phone"
-                    inputmode="numeric"
-                    pattern="1[3-9][0-9]{9}"
-                    maxlength="11"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-base"
-                    placeholder="请输入 11 位手机号"
-                    autocomplete="tel-national"
+                    type="text"
+                    id="user"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-base font-mono"
+                    placeholder="请输入管理员分配的账号 (u 开头 8 位)"
+                    autocomplete="username"
+                    spellcheck="false"
                     required
                 >
             </div>
-
-            <!-- 验证码 + 获取按钮 -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">验证码</label>
-                <div class="flex gap-2">
-                    <input
-                        type="text"
-                        id="code"
-                        inputmode="text"
-                        class="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-base"
-                        placeholder="请输入验证码"
-                        autocomplete="one-time-code"
-                        required
-                    >
-                    <button
-                        type="button"
-                        id="send-code-btn"
-                        class="px-4 py-3 bg-indigo-50 text-indigo-600 rounded-md text-sm font-medium hover:bg-indigo-100 whitespace-nowrap min-w-[110px]"
-                    >
-                        获取验证码
-                    </button>
-                </div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+                <input
+                    type="password"
+                    id="password"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-base font-mono"
+                    placeholder="请输入管理员分配的密码 (8 位字母数字)"
+                    autocomplete="current-password"
+                    required
+                >
             </div>
-
             <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-md font-medium hover:bg-indigo-700 active:bg-indigo-800 text-base">
                 登录
             </button>
-
             <div id="msg-box" class="hidden rounded-md p-3 text-sm"></div>
         </form>
 
-        <div class="mt-8 text-xs text-gray-400 border-t pt-4 space-y-1">
-            <p>⚠ 本站内容仅供本人量化研究参考, 不构成投资建议.</p>
-            <p>登录凭证 7 天有效, 过期需重新登录.</p>
-            <p>遇到登录问题请联系管理员.</p>
+        <div class="mt-6 text-xs text-gray-500 border-t pt-4 space-y-1">
+            <p>📌 账号由管理员统一生成, 默认 <strong>7 天有效</strong></p>
+            <p>📌 账号过期后请联系管理员续期, 否则无法登录</p>
+            <p>📌 登录凭证保存于浏览器, 关闭后仍有效 (至账号到期)</p>
+            <p>📌 管理员可随时撤销账号, 撤销后立即生效</p>
         </div>
     </div>
 
-    <script>
-        const $phone = document.getElementById('phone');
-        const $code  = document.getElementById('code');
-        const $msg   = document.getElementById('msg-box');
-        const $btn   = document.getElementById('send-code-btn');
+    <!-- 金融风险提示 (重要, 大字号显眼) -->
+    <div class="bg-red-50 border-l-4 border-red-500 rounded-lg p-5 shadow">
+        <h3 class="font-bold text-red-800 mb-2 text-base">⚠️ 重要风险提示</h3>
+        <div class="text-xs text-red-900 space-y-2 leading-relaxed">
+            <p><strong>1. 仅供研究参考</strong>: 本网站所展示的策略数据、信号、净值曲线、推荐买卖股票等内容,
+                <strong>均为本人量化研究的统计结果</strong>, 仅供研究参考与个人学习交流使用,
+                <strong>不构成任何形式的投资建议、保荐意见或收益承诺</strong>.</p>
+            <p><strong>2. 不构成委托关系</strong>: 本网站不向任何用户提供投资咨询、资产管理、代客理财服务,
+                不接受任何形式的投资委托. 用户与本网站之间<strong>不存在投资顾问关系</strong>.</p>
+            <p><strong>3. 历史业绩不代表未来</strong>: 网站展示的回测净值与年化收益均为
+                <strong>历史模拟数据</strong>, 受幸存者偏差、滑点假设、容量约束等因素影响,
+                实盘表现可能<strong>显著低于</strong>历史回测.</p>
+            <p><strong>4. 投资风险自负</strong>: 用户基于本网站任何内容做出的投资决策,
+                由用户<strong>独立判断并自行承担风险</strong>, 包括但不限于本金亏损、流动性风险、市场风险、政策风险.
+                本网站<strong>不对任何投资亏损负责</strong>.</p>
+            <p><strong>5. 适当性原则</strong>: 证券投资有风险, 用户应根据自身的财务状况、投资经验、风险承受能力,
+                结合专业顾问意见独立做出投资决策. <strong>不具备风险承受能力的用户,
+                请勿基于本网站内容进行任何投资操作</strong>.</p>
+            <p><strong>6. 数据准确性</strong>: 本网站数据来源于第三方接口, 不保证数据的实时性、准确性、完整性.
+                因数据错误或延迟导致的任何损失, 本网站<strong>不承担任何责任</strong>.</p>
+            <p class="text-red-700 font-bold mt-3 text-center">
+                登录即视为您已完整阅读、充分理解并同意上述风险提示.
+            </p>
+        </div>
+    </div>
 
-        function showMsg(text, type) {
-            $msg.className = 'rounded-md p-3 text-sm ' +
-                (type === 'err' ? 'bg-red-50 text-red-700' :
-                 type === 'ok'  ? 'bg-green-50 text-green-700' :
-                                   'bg-blue-50 text-blue-700');
-            $msg.textContent = text;
-            $msg.classList.remove('hidden');
+    <div class="text-center text-xs text-gray-400 pt-2">
+        &copy; 2026 多子策略决策引擎 · 仅限本人量化研究用
+    </div>
+</div>
+
+<script>
+    const $u = document.getElementById('user');
+    const $p = document.getElementById('password');
+    const $msg = document.getElementById('msg-box');
+
+    function showMsg(text, type) {
+        $msg.className = 'rounded-md p-3 text-sm ' +
+            (type === 'err' ? 'bg-red-50 text-red-700' :
+             type === 'ok'  ? 'bg-green-50 text-green-700' :
+                               'bg-blue-50 text-blue-700');
+        $msg.textContent = text;
+        $msg.classList.remove('hidden');
+    }
+
+    // URL 带 ?reason=xxx 时显示原因 (撤销/过期)
+    const reason = new URLSearchParams(window.location.search).get('reason');
+    if (reason) showMsg(decodeURIComponent(reason), 'err');
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const user = $u.value.trim();
+        const password = $p.value;
+        showMsg('校验中...', 'info');
+        const res = await tryLogin(user, password);
+        if (res.ok) {
+            showMsg(`登录成功, 跳转中... (账号有效期至 ${res.expire})`, 'ok');
+            const back = new URLSearchParams(window.location.search).get('back');
+            setTimeout(() => {
+                window.location.href = back ? decodeURIComponent(back) : 'index.html';
+            }, 600);
+        } else {
+            showMsg(res.msg, 'err');
+            $p.value = '';
         }
-        function hideMsg() { $msg.classList.add('hidden'); }
-
-        // 限制手机号只能输数字
-        $phone.addEventListener('input', () => {
-            $phone.value = $phone.value.replace(/\D/g, '').slice(0, 11);
-            hideMsg();
-        });
-
-        // 获取验证码 (UX 友好的假倒计时)
-        let timer = null;
-        $btn.addEventListener('click', () => {
-            const phone = $phone.value;
-            if (!/^1[3-9]\d{9}$/.test(phone)) {
-                showMsg('请先输入正确的 11 位手机号', 'err');
-                return;
-            }
-            // 静态站不真发短信, 提示用户输入约定的验证码
-            showMsg('验证码已发送, 请输入授权口令 (向管理员索取)', 'ok');
-            // 60s 倒计时
-            let left = 60;
-            $btn.disabled = true;
-            $btn.className = 'px-4 py-3 bg-gray-200 text-gray-500 rounded-md text-sm font-medium whitespace-nowrap min-w-[110px] cursor-not-allowed';
-            $btn.textContent = left + 's 后重发';
-            timer = setInterval(() => {
-                left--;
-                if (left <= 0) {
-                    clearInterval(timer);
-                    $btn.disabled = false;
-                    $btn.className = 'px-4 py-3 bg-indigo-50 text-indigo-600 rounded-md text-sm font-medium hover:bg-indigo-100 whitespace-nowrap min-w-[110px]';
-                    $btn.textContent = '获取验证码';
-                } else {
-                    $btn.textContent = left + 's 后重发';
-                }
-            }, 1000);
-        });
-
-        // 登录
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const phone = $phone.value.trim();
-            const code  = $code.value.trim();
-            const res = await tryLogin(phone, code);
-            if (res.ok) {
-                showMsg('登录成功, 跳转中...', 'ok');
-                const back = new URLSearchParams(window.location.search).get('back');
-                setTimeout(() => {
-                    window.location.href = back ? decodeURIComponent(back) : 'index.html';
-                }, 500);
-            } else {
-                showMsg(res.msg, 'err');
-                $code.value = '';
-            }
-        });
-    </script>
+    });
+</script>
 </body>
 </html>

@@ -159,7 +159,7 @@ async function loadJSON(p) {
         const chart = echarts.init(document.getElementById('sub_chart'));
         chart.setOption({
             tooltip: { trigger: 'axis' },
-            grid: { left: 50, right: 30, top: 30, bottom: 50 },
+            grid: { left: 50, right: 30, top: 30, bottom: 60 },
             xAxis: { type: 'category', data: eq.dates, axisLabel: { rotate: 30 } },
             yAxis: { type: 'value', name: '净值' },
             series: [{
