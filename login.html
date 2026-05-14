@@ -4,52 +4,137 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录 · 多子策略决策引擎</title>
-    <script src="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css"></script>
+    <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
     <script src="assets/auth.js"></script>
 </head>
-<body class="bg-gradient-to-br from-indigo-50 to-blue-50 min-h-screen flex items-center justify-center">
-    <div class="bg-white shadow-xl rounded-lg p-10 max-w-md w-full">
+<body class="bg-gradient-to-br from-indigo-50 via-white to-blue-50 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white shadow-xl rounded-lg p-8 sm:p-10 max-w-md w-full">
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-indigo-700">🚀 多子策略决策引擎</h1>
+            <div class="text-4xl mb-3">🚀</div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700">多子策略决策引擎</h1>
             <p class="text-sm text-gray-500 mt-2">A 股每日量化信号 · 仅限授权访问</p>
         </div>
 
         <form id="login-form" class="space-y-4">
+            <!-- 手机号 -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">访问密码</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">手机号</label>
                 <input
-                    type="password"
-                    id="password"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    placeholder="请输入访问密码"
-                    autofocus
-                    autocomplete="current-password"
+                    type="tel"
+                    id="phone"
+                    inputmode="numeric"
+                    pattern="1[3-9][0-9]{9}"
+                    maxlength="11"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-base"
+                    placeholder="请输入 11 位手机号"
+                    autocomplete="tel-national"
+                    required
                 >
             </div>
-            <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md font-medium hover:bg-indigo-700">
+
+            <!-- 验证码 + 获取按钮 -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">验证码</label>
+                <div class="flex gap-2">
+                    <input
+                        type="text"
+                        id="code"
+                        inputmode="text"
+                        class="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-base"
+                        placeholder="请输入验证码"
+                        autocomplete="one-time-code"
+                        required
+                    >
+                    <button
+                        type="button"
+                        id="send-code-btn"
+                        class="px-4 py-3 bg-indigo-50 text-indigo-600 rounded-md text-sm font-medium hover:bg-indigo-100 whitespace-nowrap min-w-[110px]"
+                    >
+                        获取验证码
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-md font-medium hover:bg-indigo-700 active:bg-indigo-800 text-base">
                 登录
             </button>
-            <p id="err-msg" class="text-red-500 text-sm text-center hidden">密码错误, 请重试</p>
+
+            <div id="msg-box" class="hidden rounded-md p-3 text-sm"></div>
         </form>
 
-        <div class="mt-8 text-xs text-gray-400 border-t pt-4">
-            <p>⚠ 本站内容仅供研究参考, 不构成任何投资建议.</p>
-            <p class="mt-1">访问授权由本人控制, 凭证 7 天有效, 过期需重新登录.</p>
+        <div class="mt-8 text-xs text-gray-400 border-t pt-4 space-y-1">
+            <p>⚠ 本站内容仅供本人量化研究参考, 不构成投资建议.</p>
+            <p>登录凭证 7 天有效, 过期需重新登录.</p>
+            <p>遇到登录问题请联系管理员.</p>
         </div>
     </div>
 
     <script>
+        const $phone = document.getElementById('phone');
+        const $code  = document.getElementById('code');
+        const $msg   = document.getElementById('msg-box');
+        const $btn   = document.getElementById('send-code-btn');
+
+        function showMsg(text, type) {
+            $msg.className = 'rounded-md p-3 text-sm ' +
+                (type === 'err' ? 'bg-red-50 text-red-700' :
+                 type === 'ok'  ? 'bg-green-50 text-green-700' :
+                                   'bg-blue-50 text-blue-700');
+            $msg.textContent = text;
+            $msg.classList.remove('hidden');
+        }
+        function hideMsg() { $msg.classList.add('hidden'); }
+
+        // 限制手机号只能输数字
+        $phone.addEventListener('input', () => {
+            $phone.value = $phone.value.replace(/\D/g, '').slice(0, 11);
+            hideMsg();
+        });
+
+        // 获取验证码 (UX 友好的假倒计时)
+        let timer = null;
+        $btn.addEventListener('click', () => {
+            const phone = $phone.value;
+            if (!/^1[3-9]\d{9}$/.test(phone)) {
+                showMsg('请先输入正确的 11 位手机号', 'err');
+                return;
+            }
+            // 静态站不真发短信, 提示用户输入约定的验证码
+            showMsg('验证码已发送, 请输入授权口令 (向管理员索取)', 'ok');
+            // 60s 倒计时
+            let left = 60;
+            $btn.disabled = true;
+            $btn.className = 'px-4 py-3 bg-gray-200 text-gray-500 rounded-md text-sm font-medium whitespace-nowrap min-w-[110px] cursor-not-allowed';
+            $btn.textContent = left + 's 后重发';
+            timer = setInterval(() => {
+                left--;
+                if (left <= 0) {
+                    clearInterval(timer);
+                    $btn.disabled = false;
+                    $btn.className = 'px-4 py-3 bg-indigo-50 text-indigo-600 rounded-md text-sm font-medium hover:bg-indigo-100 whitespace-nowrap min-w-[110px]';
+                    $btn.textContent = '获取验证码';
+                } else {
+                    $btn.textContent = left + 's 后重发';
+                }
+            }, 1000);
+        });
+
+        // 登录
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const pwd = document.getElementById('password').value;
-            const ok = await tryLogin(pwd);
-            if (ok) {
-                // 回跳来路或主页
+            const phone = $phone.value.trim();
+            const code  = $code.value.trim();
+            const res = await tryLogin(phone, code);
+            if (res.ok) {
+                showMsg('登录成功, 跳转中...', 'ok');
                 const back = new URLSearchParams(window.location.search).get('back');
-                window.location.href = back ? decodeURIComponent(back) : "index.html";
+                setTimeout(() => {
+                    window.location.href = back ? decodeURIComponent(back) : 'index.html';
+                }, 500);
             } else {
-                document.getElementById('err-msg').classList.remove('hidden');
-                document.getElementById('password').value = '';
+                showMsg(res.msg, 'err');
+                $code.value = '';
             }
         });
     </script>

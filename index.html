@@ -4,88 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>多子策略决策引擎</title>
-    <script src="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css"></script>
+    <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
     <script src="https://cdn.staticfile.net/echarts/5.4.3/echarts.min.js"></script>
     <script src="assets/auth.js"></script>
+    <script src="assets/nav.js"></script>
     <script>requireAuth();</script>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
-    <nav class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <span class="text-xl font-bold text-indigo-600">🚀 多子策略决策引擎</span>
-            <div class="space-x-4 text-sm">
-                <a href="index.html" class="text-indigo-600 font-medium">总览</a>
-                <a href="strategies/small_cap.html" class="text-gray-600 hover:text-indigo-600">小盘动量</a>
-                <a href="strategies/large_cap.html" class="text-gray-600 hover:text-indigo-600">大盘突破</a>
-                <a href="strategies/consolidation.html" class="text-gray-600 hover:text-indigo-600">上涨横盘</a>
-                <a href="strategies/etf.html" class="text-gray-600 hover:text-indigo-600">板块轮动</a>
-                <a href="javascript:logout()" class="text-red-500 hover:text-red-700">退出</a>
-            </div>
-        </div>
-    </nav>
+<script>renderNav(false);</script>
 
-    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full space-y-6">
-        <!-- 头部 -->
-        <div class="bg-white shadow rounded-lg p-6">
-            <h1 class="text-3xl font-bold text-indigo-700 mb-1">📊 总览</h1>
-            <p class="text-sm text-gray-500" id="header-info">加载中…</p>
-            <p class="text-xs text-gray-400 mt-1" id="generated-at"></p>
-        </div>
+<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 w-full">
+<div class="space-y-6">
 
-        <!-- 关键指标 -->
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="combo-metrics">
-            <!-- by JS -->
+    <!-- 顶部说明 -->
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+        <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-2">🚀 多子策略决策引擎 · 总览</h1>
+        <p class="text-gray-500 text-sm mb-1" id="meta-version"></p>
+        <p class="text-xs text-gray-400" id="meta-weights"></p>
+        <p class="text-xs text-gray-400 mt-1" id="meta-generated"></p>
+        <div class="mt-3">
+            <a href="signals.html" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">⭐ 查看今日推荐信号 →</a>
         </div>
+    </div>
 
-        <!-- 净值曲线 -->
-        <div class="bg-white shadow rounded-lg p-6">
-            <h2 class="text-xl font-bold mb-3">📈 净值曲线 (历史回测, 归一化)</h2>
-            <div id="equity-chart" style="width:100%;height:420px"></div>
-        </div>
+    <!-- 组合关键指标 -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4" id="combo-metrics"></div>
 
-        <!-- 子策略表 -->
-        <div class="bg-white shadow rounded-lg p-6">
-            <h2 class="text-xl font-bold mb-3">🧱 子决策树独立表现</h2>
-            <table class="min-w-full text-sm">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-4 py-2 text-left">子决策树</th>
-                        <th class="px-4 py-2 text-right">权重</th>
-                        <th class="px-4 py-2 text-right">Ret 全期</th>
-                        <th class="px-4 py-2 text-right">年化</th>
-                        <th class="px-4 py-2 text-right">MDD</th>
-                        <th class="px-4 py-2 text-right">Sharpe</th>
-                        <th class="px-4 py-2 text-right">Calmar</th>
-                    </tr>
-                </thead>
-                <tbody id="single-strategies-tbody" class="divide-y divide-gray-200"></tbody>
-            </table>
-            <p class="text-xs text-gray-500 mt-3" id="etf-note"></p>
-        </div>
+    <!-- 净值曲线 -->
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">📈 净值曲线 (归一化为 1.0)</h2>
+        <div id="equity_chart" style="width: 100%; height: 360px;"></div>
+    </div>
 
-        <!-- 今日推荐 -->
-        <div class="bg-white shadow rounded-lg p-6">
-            <h2 class="text-xl font-bold mb-3">⭐ 今日操作建议 (T+1 撮合)</h2>
-            <div id="today-signals" class="space-y-4">
-                <!-- by JS -->
-            </div>
+    <!-- 单策略对比 -->
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">🧱 子决策树独立表现</h2>
+        <div class="scroll-x">
+        <table class="min-w-full divide-y divide-gray-200 text-xs sm:text-sm">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-3 sm:px-4 py-2 text-left">子决策树</th>
+                    <th class="px-3 sm:px-4 py-2 text-right">权重</th>
+                    <th class="px-3 sm:px-4 py-2 text-right">Ret</th>
+                    <th class="px-3 sm:px-4 py-2 text-right">年化</th>
+                    <th class="px-3 sm:px-4 py-2 text-right">MDD</th>
+                    <th class="px-3 sm:px-4 py-2 text-right">Sharpe</th>
+                    <th class="px-3 sm:px-4 py-2 text-right">Calmar</th>
+                </tr>
+            </thead>
+            <tbody id="singles-tbody" class="bg-white divide-y divide-gray-200"></tbody>
+        </table>
         </div>
+        <p class="text-xs text-gray-500 mt-3">⚠ 板块轮动 (ETF) 为独立策略，每日单独更新数据与信号，<strong>不并入总组合</strong>。</p>
+    </div>
 
-        <!-- ETF 独立 -->
-        <div class="bg-yellow-50 border border-yellow-200 shadow rounded-lg p-6" id="etf-card" style="display:none">
-            <h2 class="text-xl font-bold text-yellow-800 mb-2">🏦 板块轮动 (ETF) · 独立运行</h2>
-            <p class="text-xs text-yellow-700 mb-3">独立策略, 每日单独更新 — 不并入主组合, 不推送微信. 仅在本面板展示.</p>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm" id="etf-grid"></div>
-            <p class="text-xs text-gray-500 mt-2">详细信号 → <a href="strategies/etf.html" class="text-yellow-700 underline">板块轮动详情</a></p>
+    <!-- 年度收益 -->
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">📊 年度表现 (三策略组合)</h2>
+        <div class="scroll-x">
+        <table class="min-w-full divide-y divide-gray-200 text-xs sm:text-sm">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-2 text-left">年份</th>
+                    <th class="px-4 py-2 text-right">收益</th>
+                </tr>
+            </thead>
+            <tbody id="yearly-tbody" class="bg-white divide-y divide-gray-200"></tbody>
+        </table>
         </div>
-    </main>
+    </div>
 
-    <footer class="bg-white border-t border-gray-200 mt-auto">
-        <div class="max-w-7xl mx-auto py-4 px-4 text-center">
-            <p class="text-xs text-gray-400">⚠ 风险提示: 本网站展示内容仅供研究参考, 不构成任何投资建议或收益承诺. 投资有风险, 决策需谨慎.</p>
-            <p class="text-xs text-gray-300 mt-1">&copy; 2026 多子策略决策引擎</p>
-        </div>
-    </footer>
+    <!-- ETF 独立 -->
+    <div class="bg-yellow-50 border border-yellow-200 shadow rounded-lg p-4 sm:p-6" id="etf-card" style="display:none">
+        <h2 class="text-xl font-bold text-yellow-800 mb-2">🏦 板块轮动 (ETF) · 独立运行</h2>
+        <p class="text-xs text-yellow-700 mb-3">独立策略, 每日单独更新 — 不并入主组合, 不推送微信. 仅在本面板展示.</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm" id="etf-grid"></div>
+        <p class="text-xs text-gray-500 mt-2">详细信号 → <a href="strategies/etf.html" class="text-yellow-700 underline">板块轮动详情</a></p>
+    </div>
+
+</div>
+</main>
+
+<script>renderFooter();</script>
 
 <script>
 const NAME_CN = {
@@ -103,135 +104,107 @@ async function loadJSON(path) {
 
 (async function main() {
     let latest = null, eq_curves = null;
-    try {
-        latest = await loadJSON("data/latest.json");
-    } catch (e) {
-        document.getElementById('header-info').innerHTML = '⚠ 数据尚未生成. 请等待本地 export 脚本首次运行.';
-        return;
-    }
-    try {
-        eq_curves = await loadJSON("data/equity_curves.json");
-    } catch (e) {
-        console.warn("equity_curves 未生成", e);
-    }
+    try { latest = await loadJSON("data/latest.json"); }
+    catch (e) { document.getElementById('meta-version').innerHTML = '⚠ 数据尚未生成. 等待本地 export 脚本首次运行.'; return; }
+    try { eq_curves = await loadJSON("data/equity_curves.json"); } catch (e) {}
 
     // Header
-    document.getElementById('header-info').textContent =
-        `${latest.meta.version} · 数据更新至 ${latest.meta.data_date} · 共 ${latest.meta.n_strategies} 个子决策树`;
-    document.getElementById('generated-at').textContent =
-        `网站生成时间: ${latest.meta.generated_at}`;
+    document.getElementById('meta-version').textContent = latest.meta.version + ' · 每日 19:00 自动更新';
+    document.getElementById('meta-weights').textContent =
+        `总组合配比: 小盘动量 ${(latest.weights['V16.F']*100).toFixed(0)}% · 大盘突破 ${(latest.weights['S2.G13']*100).toFixed(0)}% · 上涨横盘 ${(latest.weights['S4.V4']*100).toFixed(0)}% (板块轮动独立运行不并入)`;
+    document.getElementById('meta-generated').textContent =
+        `数据日期 ${latest.meta.data_date} · 站点生成 ${latest.meta.generated_at}`;
 
-    // 组合指标卡片
+    // 关键指标
     const combo = latest.combo;
-    const metricCards = [
+    const cards = [
         ['累计收益', FMT_PCT(combo.ret), 'text-green-600'],
         ['年化收益', FMT_PCT(combo.ann_ret), 'text-green-600'],
-        ['Sharpe',   FMT_DEC(combo.sharpe), 'text-indigo-600'],
-        ['Calmar',   FMT_DEC(combo.calmar), 'text-indigo-600'],
-        ['最大回撤', FMT_PCT(combo.mdd),    'text-red-500'],
+        ['Sharpe',  FMT_DEC(combo.sharpe), 'text-indigo-600'],
+        ['Calmar',  FMT_DEC(combo.calmar), 'text-indigo-600'],
+        ['最大回撤', FMT_PCT(combo.mdd),   'text-red-500'],
     ];
-    document.getElementById('combo-metrics').innerHTML = metricCards.map(([k,v,c]) =>
-        `<div class="bg-white shadow rounded p-3">
+    document.getElementById('combo-metrics').innerHTML = cards.map(([k,v,c]) =>
+        `<div class="bg-white shadow rounded-lg p-3 sm:p-4">
             <div class="text-xs text-gray-500">${k}</div>
-            <div class="text-xl font-bold ${c}">${v}</div>
+            <div class="metric-num text-2xl font-bold ${c}">${v}</div>
         </div>`
     ).join('');
 
     // 单策略表
-    const tbody = document.getElementById('single-strategies-tbody');
+    const tbody = document.getElementById('singles-tbody');
     let html = '';
     for (const s of latest.singles) {
         const cn = NAME_CN[s.name] || s.name;
-        const w = s.weight === null ? '<span class="text-gray-400">独立</span>' : ((s.weight*100).toFixed(0)+'%');
+        const w  = s.weight === null ? '<span class="text-gray-400">独立</span>' : ((s.weight*100).toFixed(0)+'%');
         const tone = s.independent ? 'bg-yellow-50 italic' : '';
         html += `<tr class="${tone}">
-            <td class="px-4 py-2 font-medium">${cn}${s.independent ? '<span class="text-xs text-yellow-700 ml-1">(独立, 不参与组合)</span>' : ''}</td>
-            <td class="px-4 py-2 text-right">${w}</td>
-            <td class="px-4 py-2 text-right ${s.ret>=0?'text-green-600':'text-red-500'}">${FMT_PCT(s.ret)}</td>
-            <td class="px-4 py-2 text-right">${FMT_PCT(s.ann_ret)}</td>
-            <td class="px-4 py-2 text-right text-red-500">${FMT_PCT(s.mdd)}</td>
-            <td class="px-4 py-2 text-right font-bold">${FMT_DEC(s.sharpe)}</td>
-            <td class="px-4 py-2 text-right">${FMT_DEC(s.calmar)}</td>
+            <td class="px-3 sm:px-4 py-2 font-medium whitespace-nowrap">${cn}${s.independent ? '<span class="text-xs text-yellow-700 ml-1">(独立)</span>' : ''}</td>
+            <td class="px-3 sm:px-4 py-2 text-right">${w}</td>
+            <td class="px-3 sm:px-4 py-2 text-right ${s.ret>=0?'text-green-600':'text-red-500'}">${FMT_PCT(s.ret)}</td>
+            <td class="px-3 sm:px-4 py-2 text-right">${FMT_PCT(s.ann_ret)}</td>
+            <td class="px-3 sm:px-4 py-2 text-right text-red-500">${FMT_PCT(s.mdd)}</td>
+            <td class="px-3 sm:px-4 py-2 text-right font-bold">${FMT_DEC(s.sharpe)}</td>
+            <td class="px-3 sm:px-4 py-2 text-right">${FMT_DEC(s.calmar)}</td>
         </tr>`;
     }
     html += `<tr class="bg-indigo-50 font-bold">
-        <td class="px-4 py-2">三策略组合 (${(latest.weights['V16.F']*100).toFixed(0)}/${(latest.weights['S2.G13']*100).toFixed(0)}/${(latest.weights['S4.V4']*100).toFixed(0)})</td>
-        <td class="px-4 py-2 text-right">100%</td>
-        <td class="px-4 py-2 text-right text-green-700">${FMT_PCT(combo.ret)}</td>
-        <td class="px-4 py-2 text-right">${FMT_PCT(combo.ann_ret)}</td>
-        <td class="px-4 py-2 text-right text-red-600">${FMT_PCT(combo.mdd)}</td>
-        <td class="px-4 py-2 text-right text-indigo-700">${FMT_DEC(combo.sharpe)}</td>
-        <td class="px-4 py-2 text-right text-indigo-700">${FMT_DEC(combo.calmar)}</td>
+        <td class="px-3 sm:px-4 py-2 whitespace-nowrap">三策略组合 (${(latest.weights['V16.F']*100).toFixed(0)}/${(latest.weights['S2.G13']*100).toFixed(0)}/${(latest.weights['S4.V4']*100).toFixed(0)})</td>
+        <td class="px-3 sm:px-4 py-2 text-right">100%</td>
+        <td class="px-3 sm:px-4 py-2 text-right text-green-700">${FMT_PCT(combo.ret)}</td>
+        <td class="px-3 sm:px-4 py-2 text-right">${FMT_PCT(combo.ann_ret)}</td>
+        <td class="px-3 sm:px-4 py-2 text-right text-red-600">${FMT_PCT(combo.mdd)}</td>
+        <td class="px-3 sm:px-4 py-2 text-right text-indigo-700">${FMT_DEC(combo.sharpe)}</td>
+        <td class="px-3 sm:px-4 py-2 text-right text-indigo-700">${FMT_DEC(combo.calmar)}</td>
     </tr>`;
     tbody.innerHTML = html;
-    document.getElementById('etf-note').textContent =
-        "⚠ 板块轮动 (ETF) 独立运行, 不并入总组合.";
 
-    // 今日推荐
-    const sig = latest.daily_signals;
-    let sigHtml = '';
-    for (const strat of ["小盘动量","大盘突破","上涨横盘"]) {
-        const s = sig[strat];
-        if (!s) continue;
-        sigHtml += `<div class="border-l-4 border-indigo-400 pl-3"><h3 class="font-bold">${strat}</h3>`;
-        if (s.holding && s.holding.length > 0) {
-            sigHtml += `<div class="text-xs text-gray-600">当前持仓 (${s.holding.length}):</div><ul class="text-sm ml-4 list-disc">`;
-            for (const h of s.holding) {
-                sigHtml += `<li>${h.ts_code} · 入场 ${h.entry_date}</li>`;
-            }
-            sigHtml += `</ul>`;
-        }
-        if (s.sell_today && s.sell_today.length > 0) {
-            sigHtml += `<div class="text-xs text-red-600 mt-1">明日 T+1 卖出:</div><ul class="text-sm ml-4 list-disc">`;
-            for (const x of s.sell_today) {
-                sigHtml += `<li>${x.ts_code} · 收益 ${FMT_PCT(x.ret)} · ${x.reason}</li>`;
-            }
-            sigHtml += `</ul>`;
-        }
-        if (s.buy_today && s.buy_today.length > 0) {
-            sigHtml += `<div class="text-xs text-green-600 mt-1">明日 T+1 推荐买入 (★ 标 Top 3):</div><ul class="text-sm ml-4 list-disc">`;
-            for (let i = 0; i < Math.min(s.buy_today.length, 8); i++) {
-                const star = i===0?"★★★ ":i===1?"★★ ":i===2?"★ ":"";
-                sigHtml += `<li>${star}${s.buy_today[i]}</li>`;
-            }
-            sigHtml += `</ul>`;
-        }
-        sigHtml += `</div>`;
-    }
-    document.getElementById('today-signals').innerHTML = sigHtml || '<p class="text-gray-500">今日无推荐操作</p>';
+    // 年度表 (从组合的年度推断 — 我们后端没存组合年度, 借用 V16.F 的 yearly 作为占位)
+    // 实际上 latest.combo 没有 yearly, 暂用第一个 single 的 yearly 作示意
+    const yearlyData = latest.combo.yearly || (latest.singles[0] && latest.singles[0].yearly) || {};
+    const yrTbody = document.getElementById('yearly-tbody');
+    yrTbody.innerHTML = Object.keys(yearlyData).sort().map(y => {
+        const v = yearlyData[y];
+        return `<tr class="${v<0?'bg-red-50':''}">
+            <td class="px-4 py-2 font-medium">${y}</td>
+            <td class="px-4 py-2 text-right ${v>=0?'text-green-600':'text-red-500'}">${FMT_PCT(v)}</td>
+        </tr>`;
+    }).join('');
 
     // ETF 独立卡片
     if (latest.etf_state) {
         const e = latest.etf_state;
-        document.getElementById('etf-card').style.display = 'block';
+        document.getElementById('etf-card').style.display = '';
         document.getElementById('etf-grid').innerHTML = `
-            <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">最近运行</div><div class="font-mono">${e.last_run_date || '-'}</div></div>
-            <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">累计净值</div><div class="font-mono text-green-600">${(e.last_equity || 1.0).toFixed(3)}</div></div>
-            <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">当前持仓</div><div class="font-mono">${(e.holdings || []).length}</div></div>
-            <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">历史交易</div><div class="font-mono">${(e.trade_history || []).length}</div></div>
+            <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">最近运行</div><div class="font-mono text-base">${e.last_run_date || '-'}</div></div>
+            <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">累计净值</div><div class="font-mono text-base text-green-600">${(e.last_equity || 1.0).toFixed(3)}</div></div>
+            <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">当前持仓</div><div class="font-mono text-base">${(e.holdings || []).length}</div></div>
+            <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">历史交易</div><div class="font-mono text-base">${(e.trade_history || []).length}</div></div>
         `;
     }
 
     // 净值曲线
-    if (eq_curves) {
-        const chart = echarts.init(document.getElementById('equity-chart'));
-        const colors = {V16F:"#10b981", S2G13:"#f59e0b", S4V4:"#ef4444", ETF:"#a855f7", COMBO:"#3b82f6"};
+    if (eq_curves && eq_curves.dates && eq_curves.dates.length > 0) {
+        const chart = echarts.init(document.getElementById('equity_chart'));
+        const colors = ['#10b981', '#f59e0b', '#ef4444', '#a855f7', '#3b82f6'];
         const series = [];
+        let i = 0;
         for (const k of ["V16.F","S2.G13","S4.V4","ETF.honest","三策略组合"]) {
             if (!eq_curves[k]) continue;
             series.push({
                 name: NAME_CN[k] || k,
                 type: 'line', smooth: true, showSymbol: false,
                 data: eq_curves[k],
-                lineStyle: { width: k==="三策略组合"?3:1.5 },
+                lineStyle: { width: k==="三策略组合"?3:1.5, color: colors[i] },
             });
+            i++;
         }
         chart.setOption({
-            tooltip: {trigger:'axis'},
-            legend: {bottom: 0},
-            grid: {left: 50, right: 30, top: 30, bottom: 50},
-            xAxis: {type: 'category', data: eq_curves.dates, axisLabel:{rotate:30}},
-            yAxis: {type: 'value', name: '净值 (起点=1.0)'},
+            tooltip: { trigger: 'axis' },
+            legend: { bottom: 0, type: 'scroll' },
+            grid: { left: 50, right: 20, top: 30, bottom: 50 },
+            xAxis: { type: 'category', data: eq_curves.dates, axisLabel: { rotate: 30 } },
+            yAxis: { type: 'value', name: '净值 (起点=1.0)' },
             series: series,
         });
         window.addEventListener('resize', () => chart.resize());

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今日信号 · 多子策略决策引擎</title>
+    <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/auth.js"></script>
+    <script src="assets/nav.js"></script>
+    <script>requireAuth();</script>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+<script>renderNav(false);</script>
+
+<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 w-full">
+<div class="space-y-6">
+
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+        <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-1">🎯 今日推荐信号</h1>
+        <p class="text-gray-500 text-sm">三个子决策树当日候选股票 + 持仓状态 + 卖出建议 (T+1 开盘价撮合)</p>
+        <p class="text-xs text-gray-400 mt-2" id="meta-info"></p>
+    </div>
+
+    <div id="strategy-cards" class="space-y-6">
+        <!-- by JS: 每个策略 1 张大卡片 + 4 个状态分块 -->
+    </div>
+
+    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
+        <h3 class="font-bold text-sm text-blue-900 mb-2">📖 状态说明</h3>
+        <ul class="text-xs text-blue-900 list-disc list-inside space-y-1">
+            <li><b>持仓中</b>: 当前已买入未卖出, 继续持有</li>
+            <li><b>明日开盘卖出</b>: 系统决定明日 T+1 开盘卖出, 用户应在开盘时挂卖单</li>
+            <li><b>明日开盘推荐买入</b>: 候选股票池, ★★★ 最优, 用户应根据资金量在明日 T+1 开盘按比例买入</li>
+            <li><b>已卖出</b>: 最近 30 天平仓记录, 仅作历史参考</li>
+        </ul>
+        <p class="text-xs text-blue-700 mt-2">⚠️ 本系统输出"应持仓建议", 不真实下单. 请根据微信推送或本页内容手动操作.</p>
+    </div>
+
+</div>
+</main>
+
+<script>renderFooter();</script>
+
+<script>
+const STRATEGY_INFO = {
+    "小盘动量":   {icon: "🎯", weight: 0.05, pool: "A 股小盘股 — 涨幅+主力+量比 三维 rank-delta 跃升"},
+    "大盘突破":   {icon: "🏛️", weight: 0.45, pool: "A 股大盘股 (流通市值 ≥ 200 亿) — 连 3 日主力净流入 + 突破 20 日新高"},
+    "上涨横盘":   {icon: "📈", weight: 0.50, pool: "A 股 amount_20d ≥ 5000万 — MA5>MA20>MA60 多头 5-29 天 + 横盘紧贴 MA5"},
+};
+const FMT_PCT = (x) => (x>=0?"+":"") + (x*100).toFixed(1) + "%";
+
+async function loadJSON(p) {
+    const r = await fetch(p + "?t=" + Date.now());
+    if (!r.ok) throw new Error(p);
+    return r.json();
+}
+
+(async function () {
+    let latest = null;
+    try { latest = await loadJSON("data/latest.json"); }
+    catch (e) {
+        document.getElementById('strategy-cards').innerHTML =
+            '<div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded"><h3 class="font-bold text-yellow-900">⚠ 数据尚未生成</h3></div>';
+        return;
+    }
+    document.getElementById('meta-info').textContent =
+        `信号日期 ${latest.meta.data_date} · 站点生成 ${latest.meta.generated_at}`;
+
+    const signals = latest.daily_signals || {};
+    const container = document.getElementById('strategy-cards');
+    let outerHtml = '';
+
+    for (const strat of Object.keys(STRATEGY_INFO)) {
+        const info = STRATEGY_INFO[strat];
+        const s = signals[strat] || {};
+        const isEmpty = (!s.holding || s.holding.length===0) && (!s.buy_today || s.buy_today.length===0) && (!s.sell_today || s.sell_today.length===0);
+
+        let buyHtml = '';
+        if (s.buy_today && s.buy_today.length > 0) {
+            buyHtml = s.buy_today.slice(0, 8).map((ts, i) => {
+                let star = '';
+                if (i === 0) star = '<span class="text-yellow-500 text-lg">★★★</span><span class="text-xs text-gray-400 ml-1">最优</span>';
+                else if (i === 1) star = '<span class="text-yellow-500">★★</span>';
+                else if (i === 2) star = '<span class="text-yellow-500">★</span>';
+                else star = '<span class="text-xs text-gray-400">候选</span>';
+                return `<li class="bg-white px-3 py-2 rounded text-xs flex justify-between items-center">
+                    <span class="font-mono font-bold text-green-700">${ts}</span>
+                    <span>${star}</span>
+                </li>`;
+            }).join('');
+        } else {
+            buyHtml = '<p class="text-xs text-gray-500">今日无信号 (可能 macro 触发空仓)</p>';
+        }
+
+        let holdHtml = '';
+        if (s.holding && s.holding.length > 0) {
+            holdHtml = s.holding.map(h =>
+                `<li class="bg-white px-3 py-2 rounded text-xs flex justify-between flex-wrap gap-1">
+                    <span class="font-mono font-bold text-blue-700">${h.ts_code}</span>
+                    <span class="text-gray-500">入场 ${h.entry_date}</span>
+                </li>`
+            ).join('');
+        } else holdHtml = '<p class="text-xs text-gray-500">无持仓</p>';
+
+        let sellHtml = '';
+        if (s.sell_today && s.sell_today.length > 0) {
+            sellHtml = s.sell_today.map(x =>
+                `<li class="bg-white px-3 py-2 rounded text-xs">
+                    <div class="flex justify-between flex-wrap gap-1">
+                        <span class="font-mono font-bold text-red-700">${x.ts_code}</span>
+                        <span class="${x.ret >= 0 ? 'text-green-600' : 'text-red-500'} font-bold">${FMT_PCT(x.ret)}</span>
+                    </div>
+                    <div class="text-gray-500 mt-1">入 ${x.entry_date} · ${x.reason}</div>
+                </li>`
+            ).join('');
+        } else sellHtml = '<p class="text-xs text-gray-500">今日无卖出</p>';
+
+        let exitedHtml = '';
+        if (s.exited_recent && s.exited_recent.length > 0) {
+            exitedHtml = s.exited_recent.slice(-5).reverse().map(x =>
+                `<li class="bg-white px-3 py-2 rounded text-xs">
+                    <div class="flex justify-between flex-wrap gap-1">
+                        <span class="font-mono text-gray-700">${x.ts_code}</span>
+                        <span class="${x.ret >= 0 ? 'text-green-600' : 'text-red-500'} font-bold">${FMT_PCT(x.ret)}</span>
+                    </div>
+                    <div class="text-gray-500 mt-1">入 ${x.entry_date} → 退 ${x.exit_date} · ${x.reason}</div>
+                </li>`
+            ).join('');
+        } else exitedHtml = '<p class="text-xs text-gray-500">无已卖出</p>';
+
+        outerHtml += `<div class="bg-white shadow rounded-lg p-4 sm:p-6 ${isEmpty?'border-l-4 border-gray-300':''}">
+            <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-800">${info.icon} ${strat}${isEmpty?' <span class="text-sm text-gray-400 font-normal">(空仓)</span>':''}</h2>
+                <span class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-medium">权重 ${(info.weight*100).toFixed(0)}%</span>
+            </div>
+            <p class="text-xs text-gray-500 mb-4">${info.pool}</p>
+
+            ${isEmpty ? `<div class="bg-gray-50 rounded-lg p-4 sm:p-6 text-center mb-4">
+                <p class="text-base text-gray-600">💤 当前空仓</p>
+                <p class="text-xs text-gray-500 mt-2">无持仓、无新信号 — 可能 macro 触发空仓, 等待行情转好</p>
+            </div>` : ''}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                <div class="bg-blue-50 rounded-lg p-4">
+                    <h3 class="text-sm font-bold text-blue-900 mb-3">📦 持仓中 (${(s.holding||[]).length})</h3>
+                    <ul class="space-y-2">${holdHtml}</ul>
+                </div>
+                <div class="bg-red-50 rounded-lg p-4">
+                    <h3 class="text-sm font-bold text-red-900 mb-3">📤 明日开盘卖出 (${(s.sell_today||[]).length})</h3>
+                    <ul class="space-y-2">${sellHtml}</ul>
+                </div>
+                <div class="bg-green-50 rounded-lg p-4">
+                    <h3 class="text-sm font-bold text-green-900 mb-3">⭐ 明日开盘推荐买入 (${(s.buy_today||[]).length})</h3>
+                    <ul class="space-y-2">${buyHtml}</ul>
+                </div>
+                <div class="bg-gray-100 rounded-lg p-4">
+                    <h3 class="text-sm font-bold text-gray-700 mb-3">✓ 最近已卖出 (${(s.exited_recent||[]).length})</h3>
+                    <ul class="space-y-2">${exitedHtml}</ul>
+                </div>
+            </div>
+        </div>`;
+    }
+
+    container.innerHTML = outerHtml;
+})();
+</script>
+</body>
+</html>
