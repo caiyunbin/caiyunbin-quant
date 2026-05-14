@@ -1,0 +1,184 @@
+<!--
+通用子策略详情页 — 每个具体策略页只改 data-strategy 属性即可.
+本身不会被直接访问 (无路由); export 脚本会复制 4 份: small_cap.html, large_cap.html, consolidation.html, etf.html
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏦板块轮动 · 多子策略决策引擎</title>
+    <script src="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css"></script>
+    <script src="https://cdn.staticfile.net/echarts/5.4.3/echarts.min.js"></script>
+    <script src="../assets/auth.js"></script>
+    <script>requireAuth();</script>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="../index.html" class="text-xl font-bold text-indigo-600">🚀 多子策略决策引擎</a>
+            <div class="space-x-4 text-sm">
+                <a href="../index.html" class="text-gray-600 hover:text-indigo-600">← 返回总览</a>
+                <a href="javascript:logout()" class="text-red-500">退出</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-5xl mx-auto px-4 py-8 w-full space-y-6">
+        <div class="bg-white shadow rounded-lg p-6" data-strategy="ETF.honest">
+            <h1 class="text-3xl font-bold text-indigo-700 mb-2" id="strat-title">🏦板块轮动</h1>
+            <p class="text-sm text-gray-500" id="strat-subtitle">加载中…</p>
+            <p class="text-xs text-gray-400 mt-1" id="strat-alpha"></p>
+            <p class="text-xs text-gray-400 mt-1" id="strat-pool"></p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="metric-cards"></div>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-bold mb-3">📈 净值曲线</h2>
+            <div id="strat-chart" style="width:100%;height:380px"></div>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-bold mb-3">📊 年度表现</h2>
+            <table class="min-w-full text-sm">
+                <thead class="bg-gray-50"><tr>
+                    <th class="px-4 py-2 text-left">年份</th>
+                    <th class="px-4 py-2 text-right">Ret</th>
+                </tr></thead>
+                <tbody id="yearly-tbody" class="divide-y"></tbody>
+            </table>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-bold mb-3">⭐ 今日操作建议</h2>
+            <div id="strat-signals"></div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl mx-auto py-4 px-4 text-center">
+            <p class="text-xs text-gray-400">⚠ 风险提示: 本网站展示内容仅供研究参考, 不构成任何投资建议. 投资有风险, 决策需谨慎.</p>
+        </div>
+    </footer>
+
+<script>
+const STRAT_KEY = document.querySelector('[data-strategy]').dataset.strategy;
+const FMT_PCT = (x) => (x>=0?"+":"") + (x*100).toFixed(1) + "%";
+const FMT_DEC = (x,n=3) => (x>=0?"+":"") + (x).toFixed(n);
+
+async function loadJSON(p) {
+    const r = await fetch(p + "?t=" + Date.now());
+    return r.json();
+}
+
+(async function () {
+    const data = await loadJSON("../data/latest.json").catch(_=>null);
+    const eq = await loadJSON("../data/equity_curves.json").catch(_=>null);
+    if (!data) { document.getElementById('strat-subtitle').textContent = "⚠ 数据尚未生成"; return; }
+
+    const META = {
+        "V16.F":      {cn: "🎯 小盘动量", sub: "涨幅+主力+量比 三维 rank-delta 跃升 + 低位过滤 + 7 因子综合加权",
+                       alpha: "捕捉小盘股的「今天突然冒头」 — 主力资金排名跃升 ≥ 21.5% + 涨幅排名跃升 ∈ [7.5, 24]",
+                       pool:  "A 股小盘股池 (无市值上限, 持仓中位流通市值 30-80 亿)",
+                       sigKey: "小盘动量"},
+        "S2.G13":     {cn: "🏛️ 大盘突破", sub: "流通市值 ≥ 200 亿 + 连续 3 日主力净流入 + 突破 20 日新高",
+                       alpha: "捕捉大盘股的趋势性建仓 — 主力建仓 + 突破 + 加固风控 (止损 -3% / MA40 macro)",
+                       pool:  "A 股大盘股 (流通市值 ≥ 200 亿元)",
+                       sigKey: "大盘突破"},
+        "S4.V4":      {cn: "📈 上涨横盘", sub: "MA5>MA20>MA60 多头 5-29 天 + 横盘 (MA5 斜率<0.5%) + 紧贴 MA5 (偏离度<2.5%)",
+                       alpha: "捕捉趋势中段的低波动洗盘窗口, EarlyStop 锁利 +8.4% (rqalpha-grade 17 项坑全修)",
+                       pool:  "A 股 amount_20d ≥ 5000万, IPO 后 ≥ 90 天, close ≥ 5",
+                       sigKey: "上涨横盘"},
+        "ETF.honest": {cn: "🏦 板块轮动 (独立)", sub: "首买 z 得分 > 0.60 + 板块排名反转 < -0.30 + 拥挤度 < 0.50 + 周线确认 + 60 日强平",
+                       alpha: "捕捉板块的机构首买信号 (独立策略, 不并入主组合)",
+                       pool:  "45 板块 + 沪深 300 子指数 ETF 池",
+                       sigKey: null},
+    };
+    const m = META[STRAT_KEY];
+    document.getElementById('strat-title').textContent = m.cn;
+    document.getElementById('strat-subtitle').textContent = m.sub;
+    document.getElementById('strat-alpha').textContent = "🎯 Alpha: " + m.alpha;
+    document.getElementById('strat-pool').textContent = "🪣 股票池: " + m.pool;
+
+    const single = data.singles.find(s => s.name === STRAT_KEY);
+    if (single) {
+        document.getElementById('metric-cards').innerHTML = [
+            ['累计收益', FMT_PCT(single.ret), 'text-green-600'],
+            ['年化收益', FMT_PCT(single.ann_ret), 'text-green-600'],
+            ['Sharpe',  FMT_DEC(single.sharpe), 'text-indigo-600'],
+            ['Calmar',  FMT_DEC(single.calmar), 'text-indigo-600'],
+            ['最大回撤', FMT_PCT(single.mdd),    'text-red-500'],
+        ].map(([k,v,c]) => `<div class="bg-white shadow rounded p-3"><div class="text-xs text-gray-500">${k}</div><div class="text-xl font-bold ${c}">${v}</div></div>`).join('');
+    }
+
+    // 年度
+    if (single && single.yearly) {
+        const yrs = Object.keys(single.yearly).sort();
+        document.getElementById('yearly-tbody').innerHTML = yrs.map(y =>
+            `<tr><td class="px-4 py-2">${y}</td><td class="px-4 py-2 text-right ${single.yearly[y]>=0?'text-green-600':'text-red-500'}">${FMT_PCT(single.yearly[y])}</td></tr>`
+        ).join('');
+    }
+
+    // 净值曲线
+    if (eq && eq[STRAT_KEY]) {
+        const chart = echarts.init(document.getElementById('strat-chart'));
+        chart.setOption({
+            tooltip: {trigger: 'axis'},
+            grid: {left:50, right:30, top:30, bottom:50},
+            xAxis: {type:'category', data: eq.dates, axisLabel: {rotate:30}},
+            yAxis: {type:'value', name:'净值'},
+            series: [{name: m.cn, type:'line', smooth:true, showSymbol:false, data: eq[STRAT_KEY], lineStyle:{width:2, color:'#3b82f6'}}],
+        });
+        window.addEventListener('resize', () => chart.resize());
+    }
+
+    // 今日信号
+    if (m.sigKey && data.daily_signals && data.daily_signals[m.sigKey]) {
+        const s = data.daily_signals[m.sigKey];
+        let html = '';
+        if (s.holding && s.holding.length > 0) {
+            html += `<div class="mb-3"><h3 class="font-bold text-gray-700 mb-1">当前持仓 (${s.holding.length})</h3><ul class="text-sm ml-4 list-disc">`;
+            for (const h of s.holding) html += `<li>${h.ts_code} · 入场 ${h.entry_date}</li>`;
+            html += `</ul></div>`;
+        }
+        if (s.sell_today && s.sell_today.length > 0) {
+            html += `<div class="mb-3 text-red-700"><h3 class="font-bold mb-1">明日 T+1 卖出</h3><ul class="text-sm ml-4 list-disc">`;
+            for (const x of s.sell_today) html += `<li>${x.ts_code} · 收益 ${FMT_PCT(x.ret)} · ${x.reason}</li>`;
+            html += `</ul></div>`;
+        }
+        if (s.buy_today && s.buy_today.length > 0) {
+            html += `<div class="mb-3 text-green-700"><h3 class="font-bold mb-1">明日 T+1 推荐买入 (★ Top 3)</h3><ul class="text-sm ml-4 list-disc">`;
+            for (let i = 0; i < Math.min(s.buy_today.length, 8); i++) {
+                const star = i===0?"★★★ ":i===1?"★★ ":i===2?"★ ":"";
+                html += `<li>${star}${s.buy_today[i]}</li>`;
+            }
+            html += `</ul></div>`;
+        }
+        if (s.exited_recent && s.exited_recent.length > 0) {
+            html += `<div class="mb-3 text-gray-600"><h3 class="font-bold mb-1">最近已卖出 (近 ${s.exited_recent.length} 笔)</h3><ul class="text-sm ml-4 list-disc">`;
+            for (const x of s.exited_recent.slice(-5)) html += `<li>${x.ts_code} · 入 ${x.entry_date} → 退 ${x.exit_date} · ${FMT_PCT(x.ret)} (${x.reason})</li>`;
+            html += `</ul></div>`;
+        }
+        if (!html) html = '<p class="text-gray-500">今日空仓, 无操作</p>';
+        document.getElementById('strat-signals').innerHTML = html;
+    } else if (STRAT_KEY === 'ETF.honest' && data.etf_state) {
+        // ETF 独立: 显示 etf_state
+        const e = data.etf_state;
+        let html = `<p class="text-sm text-gray-600 mb-2">最近运行: <span class="font-mono">${e.last_run_date}</span></p>`;
+        html += `<p class="text-sm">当前持仓: ${(e.holdings || []).length} 个</p>`;
+        if (e.holdings && e.holdings.length > 0) {
+            html += `<ul class="text-sm ml-4 list-disc">`;
+            for (const h of e.holdings) html += `<li>${h.ts_code || h}</li>`;
+            html += `</ul>`;
+        } else {
+            html += '<p class="text-gray-500 text-sm mt-1">空仓 (macro 信号为熊市或无合格板块)</p>';
+        }
+        document.getElementById('strat-signals').innerHTML = html;
+    } else {
+        document.getElementById('strat-signals').innerHTML = '<p class="text-gray-500">无今日信号数据</p>';
+    }
+})();
+</script>
+</body>
+</html>

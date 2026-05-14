@@ -1,0 +1,69 @@
+# ============================================================
+# 双保险: 任何含敏感信息的文件类型都 ban 掉
+# ============================================================
+# Python 引擎源代码 — 绝对不能上 GitHub
+*.py
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# 数据 — 绝对不能上 GitHub
+*.parquet
+*.db
+*.sqlite
+*.sqlite3
+*.h5
+*.feather
+*.csv  # 除非显式 force-add 必要的小 csv
+*.tsv
+*.xlsx
+*.xls
+
+# 密钥 / 环境变量 — 绝对不能上 GitHub
+.env
+.env.*
+secrets/
+*.key
+*.pem
+*.cer
+*.p12
+*token*
+*secret*
+*password*
+*.cred
+
+# 项目特定 — 双重防御
+params*.py
+v26_production/
+ETF策略V1/
+S4_*/
+v20_3d_zscore_regime/
+v14_*.py
+v15_*.py
+v16_*.py
+v27_*.py
+data/processed_features*.parquet
+data/raw*.parquet
+
+# 日志 / 临时
+*.log
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+node_modules/
+.cache/
+
+# 上面的所有都 ban 了, 仅允许以下白名单内容
+!index.html
+!login.html
+!strategies/*.html
+!data/*.json
+!data/history/*.json
+!assets/*.js
+!assets/*.css
+!.gitignore
+!.nojekyll
+!README.md
