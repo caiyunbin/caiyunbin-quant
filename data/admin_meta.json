@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15 03:15:48",
+  "generated_at": "2026-05-15 03:15:53",
   "n_total": 51,
   "n_active": 51,
   "n_admin": 1,
@@ -25,7 +25,7 @@
       "note": "批量 7d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "5522e1435d21",
