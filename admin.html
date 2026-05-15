@@ -452,34 +452,23 @@ function renderAccGroups(accounts) {
         }).join('');
     }
 
-    // 绑定复制按钮: 复制完整文案 (账号 + 密码 + 网址 + 有效期 + 引导)
+    // 绑定复制按钮: 仅复制 账号 + 密码, 两行
     document.querySelectorAll('.copy-cred').forEach(btn => {
         btn.addEventListener('click', () => {
-            const user   = btn.dataset.user;
-            const pwd    = btn.dataset.pwd;
-            const expire = btn.dataset.expire;
-            // ⭐ 给用户的完整登录信息, 账号密码各占一行
-            const text =
-`【多子策略决策引擎 · 登录信息】
-
-账号:${user}
-密码:${pwd}
-
-网址:https://caiyunbin.github.io/caiyunbin-quant/
-有效期至:${expire}
-
-⚠ 仅限本人使用, 请勿转发. 一个账号最多 2 个设备登录.
-⚠ 网站内容仅供研究参考, 不构成投资建议.`;
+            const user = btn.dataset.user;
+            const pwd  = btn.dataset.pwd;
+            // 仅两行: 账号 + 密码
+            const text = `账号:${user}\n密码:${pwd}`;
             navigator.clipboard.writeText(text).then(() => {
                 const orig = btn.textContent;
-                btn.textContent = '✅ 已复制 (粘给用户)';
+                btn.textContent = '✅ 已复制';
                 btn.classList.remove('bg-indigo-600');
                 btn.classList.add('bg-green-600');
                 setTimeout(() => {
                     btn.textContent = orig;
                     btn.classList.add('bg-indigo-600');
                     btn.classList.remove('bg-green-600');
-                }, 2000);
+                }, 1500);
             }).catch(e => alert('复制失败: ' + e.message));
         });
     });
