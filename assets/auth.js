@@ -84,7 +84,7 @@ async function tryLogin(user, password) {
     const tokenPrefix = token.slice(0, 12);
     const did = _getOrCreateDeviceId();
 
-    // 2 设备限制 (仅 user, admin 不限)
+    // ⭐ 2 设备限制: 仅 user 受限, admin 完全不限 (任意多设备, 不记账号设备 registry)
     if (role === "user") {
         const devices = _getAccountDevices(tokenPrefix);
         // 清掉超过 30 天未活跃的设备
@@ -97,9 +97,9 @@ async function tryLogin(user, password) {
                 msg: `该账号已绑定 ${MAX_DEVICES_PER_ACCOUNT} 个设备, 请先在其他设备退出后重试 (或联系管理员重置)`
             };
         }
+        _addAccountDevice(tokenPrefix, did);   // 仅 user 记录设备
     }
-
-    _addAccountDevice(tokenPrefix, did);
+    // admin 完全不进 device registry, 即使在 5 个设备登录也不会被算
 
     localStorage.setItem(__AUTH_KEY, JSON.stringify({
         ts: Date.now(),
@@ -259,8 +259,10 @@ async function requireAuthAsync() {
         _gotoLogin("您的账号已过期");
         return;
     }
-    // 更新 device 心跳
-    _addAccountDevice(local.token, local.device || _getOrCreateDeviceId());
+    // 更新 device 心跳 (仅 user 角色, admin 不进 device registry)
+    if (local.role === "user") {
+        _addAccountDevice(local.token, local.device || _getOrCreateDeviceId());
+    }
 }
 
 function requireAuth() {
