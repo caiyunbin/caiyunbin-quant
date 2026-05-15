@@ -2,7 +2,7 @@
   "meta": {
     "version": "V27-5/45/50 (V16.F + S2.G13 + S4.V4, 去 ETF)",
     "data_date": "2026-05-14",
-    "generated_at": "2026-05-15 11:13:31",
+    "generated_at": "2026-05-15 15:13:47",
     "n_strategies": 3
   },
   "weights": {
@@ -366,7 +366,6 @@
     },
     "上涨横盘": {
       "buy_today": [
-        "601997.SH",
         "603390.SH"
       ],
       "holding": [
@@ -496,7 +495,7 @@
     }
   },
   "etf_state": {
-    "last_run_date": "2026-05-14",
+    "last_run_date": "2026-05-15",
     "last_equity": 2.8629320837507786,
     "holdings": [],
     "trade_history": []
