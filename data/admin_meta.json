@@ -8,7 +8,7 @@
   "n_revoked": 0,
   "accounts": [
     {
-      "hash_prefix": "dd7d298e8dcb",
+      "hash_prefix": "305f2698e464",
       "role": "admin",
       "expire": "2036-05-12",
       "created": "2026-05-15",
