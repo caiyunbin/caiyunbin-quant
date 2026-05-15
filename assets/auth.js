@@ -109,12 +109,20 @@ async function tryLogin(user, password) {
         expire: expire,
         device: did,
     }));
+
+    // ⭐ admin 角色: 立即用密码解密 admin_creds.enc.json → sessionStorage
+    if (role === "admin") {
+        try { await _maybeDecryptAdminCreds(password); } catch (e) {}
+    }
+
     return { ok: true, expire: expire, role: role };
 }
 
 function logout() {
     // 仅清登录态, 保留 device_id 和 compliance (用户身份保留)
     localStorage.removeItem(__AUTH_KEY);
+    // admin 的解密明文清单一并清除
+    sessionStorage.removeItem(__CREDS_SESSION_KEY);
     const isSub = window.location.pathname.includes('/strategies/');
     window.location.href = isSub ? "../login.html" : "login.html";
 }
@@ -134,6 +142,66 @@ function getAuthInfo() {
 function isAdmin() {
     const info = getAuthInfo();
     return info && info.role === "admin";
+}
+
+// ============================================================
+// admin 专属: 用密码解密 admin_creds.enc.json → sessionStorage
+// ============================================================
+const __CREDS_SESSION_KEY = "caiman_creds_session";
+
+async function _decryptAesGcm(blob, password) {
+    const dec = new TextDecoder();
+    const enc = new TextEncoder();
+    const salt = Uint8Array.from(atob(blob.salt), c => c.charCodeAt(0));
+    const iv = Uint8Array.from(atob(blob.iv), c => c.charCodeAt(0));
+    const cipher = Uint8Array.from(atob(blob.cipher), c => c.charCodeAt(0));
+    const keyMaterial = await crypto.subtle.importKey(
+        "raw", enc.encode(password), {name: "PBKDF2"}, false, ["deriveKey"]
+    );
+    const key = await crypto.subtle.deriveKey(
+        {name: "PBKDF2", salt, iterations: blob.iterations || 100000, hash: "SHA-256"},
+        keyMaterial, {name: "AES-GCM", length: 256}, false, ["decrypt"]
+    );
+    const plain = await crypto.subtle.decrypt(
+        {name: "AES-GCM", iv}, key, cipher
+    );
+    return dec.decode(plain);
+}
+
+async function _loadCredsEnc() {
+    const isSub = window.location.pathname.includes('/strategies/');
+    const path = (isSub ? "../" : "") + "data/admin_creds.enc.json";
+    try {
+        const r = await fetch(path + "?t=" + Date.now(), {cache: "no-store"});
+        if (!r.ok) return null;
+        return await r.json();
+    } catch (e) { return null; }
+}
+
+// 登录成功后调用: admin 角色才尝试解密
+async function _maybeDecryptAdminCreds(password) {
+    try {
+        const blob = await _loadCredsEnc();
+        if (!blob) return;
+        const plain = await _decryptAesGcm(blob, password);
+        sessionStorage.setItem(__CREDS_SESSION_KEY, plain);
+    } catch (e) {
+        console.warn("admin creds 解密失败:", e.message);
+        sessionStorage.removeItem(__CREDS_SESSION_KEY);
+    }
+}
+
+function getDecryptedAccounts() {
+    const raw = sessionStorage.getItem(__CREDS_SESSION_KEY);
+    if (!raw) return null;
+    try {
+        const obj = JSON.parse(raw);
+        return obj.accounts || null;
+    } catch (e) { return null; }
+}
+
+function clearDecryptedCreds() {
+    sessionStorage.removeItem(__CREDS_SESSION_KEY);
 }
 
 // 查当前登录用户的 ETF 可见性 (从 auth_pool.etf_prefs[token] 读)
