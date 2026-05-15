@@ -4,7 +4,10 @@
 // 组级复制 / CSV 导出
 // ============================================================
 const NOTES_KEY = "caiman_acc_notes_2026";
-const SITE_URL = "https://caiyunbin.github.io/caiyunbin-quant/";
+// ⭐ 国内可访问的 Cloudflare 镜像 (主用)
+const SITE_URL = "https://caiyunbin-quant.caiyunbinlihai.workers.dev/";
+// GitHub Pages 原站 (海外备用)
+const SITE_URL_GITHUB = "https://caiyunbin.github.io/caiyunbin-quant/";
 
 function loadAccNotes() {
     try { return JSON.parse(localStorage.getItem(NOTES_KEY) || "{}"); }
