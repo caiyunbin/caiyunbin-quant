@@ -9,6 +9,7 @@
     <script src="assets/auth.js"></script>
     <script src="assets/compliance.js"></script>
     <script src="assets/admin_api.js"></script>
+    <script src="assets/distribution.js"></script>
     <script src="assets/pat_wizard.js"></script>
     <script src="assets/nav.js"></script>
     <script>requireAdmin();</script>
@@ -86,10 +87,20 @@
     </div>
 
 
-    <!-- ⑥ 账号列表 (分时长模块) -->
+    <!-- ⑥ 分发统计 -->
+    <div class="bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-purple-800 mb-3">📊 账号分发情况</h2>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="dist-stats"></div>
+        <div class="mt-4 flex gap-2 flex-wrap">
+            <button id="export-all-csv" class="bg-purple-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-purple-700">📥 全部账号导出 CSV</button>
+            <button id="clear-all-notes" class="bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm">🗑️ 清空分发备注</button>
+        </div>
+    </div>
+
+    <!-- ⑦ 账号列表 (分时长模块 + 分发工具) -->
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
         <h2 class="text-xl font-bold text-gray-800 mb-4">📜 账号列表 (按有效期分组)</h2>
-        <p class="text-xs text-gray-500 mb-3">每组用不同颜色边框区分. 导入明文后, 每行右侧会显示 📋 复制按钮.</p>
+        <p class="text-xs text-gray-500 mb-3">每组用不同颜色边框区分. 每行右侧 <strong>📋 复制</strong> · <strong>🏷️ 标记</strong> · <strong>🖼️ 卡片</strong> 三个按钮.</p>
 
         <div class="mb-3 flex gap-2 flex-wrap">
             <button id="batch-etf-on" class="bg-green-600 text-white px-3 py-1.5 rounded text-xs">批量: 所有用户 ETF 开启</button>
@@ -328,25 +339,42 @@ function renderAccGroups(accounts) {
     $c.innerHTML = '';
     const hasCreds = !!getDecryptedAccounts();
 
+    // 分发统计
+    refreshDistStats(accounts);
+
     for (const gKey of GROUP_ORDER) {
         const list = groups[gKey];
         if (!list || list.length === 0) continue;
         const meta = GROUP_META[gKey];
+
+        // 计算该组已分发率
+        let groupDist = 0;
+        list.forEach(a => { if (a.role !== 'admin' && getNote(a.hash_prefix)?.distributed) groupDist++; });
+
         const section = document.createElement('div');
         section.className = `border-l-4 ${meta.color} rounded p-3 sm:p-4`;
         section.innerHTML = `
-            <h3 class="font-bold mb-3 flex items-center justify-between">
-                <span>${meta.label} <span class="ml-2 text-xs ${meta.tag} px-2 py-0.5 rounded">${list.length} 个</span></span>
-            </h3>
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="font-bold">
+                    <span>${meta.label} <span class="ml-2 text-xs ${meta.tag} px-2 py-0.5 rounded">${list.length} 个</span>
+                    ${gKey !== 'admin' && gKey !== 'revoked' && gKey !== 'expired'
+                      ? `<span class="ml-2 text-xs text-gray-500">已分发 ${groupDist}/${list.length}</span>` : ''}</span>
+                </h3>
+                <div class="flex gap-1">
+                    ${gKey !== 'admin' && hasCreds ? `
+                    <button class="group-copy bg-indigo-500 text-white px-3 py-1 rounded text-xs hover:bg-indigo-600" data-group="${gKey}">📋 复制本组</button>
+                    <button class="group-csv  bg-purple-500 text-white px-3 py-1 rounded text-xs hover:bg-purple-600" data-group="${gKey}">📥 CSV</button>
+                    ` : ''}
+                </div>
+            </div>
             <div class="scroll-x">
             <table class="min-w-full text-xs sm:text-sm">
                 <thead class="bg-white">
                     <tr class="border-b">
-                        <th class="px-2 py-2 text-left">Token (脱敏)</th>
                         <th class="px-2 py-2 text-left">账号 / 密码</th>
+                        <th class="px-2 py-2 text-left">备注 / 接收人</th>
                         <th class="px-2 py-2 text-left">到期</th>
-                        <th class="px-2 py-2 text-left">备注</th>
-                        <th class="px-2 py-2 text-center">ETF 可见</th>
+                        <th class="px-2 py-2 text-center">ETF</th>
                         <th class="px-2 py-2 text-center">操作</th>
                     </tr>
                 </thead>
@@ -359,61 +387,141 @@ function renderAccGroups(accounts) {
         const tbody = section.querySelector(`#tbody-${gKey}`);
         tbody.innerHTML = list.map(a => {
             const cred = hasCreds ? _findCredByHash(a.hash_prefix) : null;
+            const note = getNote(a.hash_prefix);
+            const isDist = note?.distributed;
+
             const credCell = cred
-                ? `<div class="font-mono text-xs">
+                ? `<div class="font-mono text-xs leading-tight">
                     <div>账号: <span class="text-indigo-700 font-bold">${cred.user}</span></div>
                     <div>密码: <span class="text-indigo-700 font-bold">${cred.password}</span></div>
                    </div>`
                 : (hasCreds ? '<span class="text-gray-400 text-xs">未找到</span>'
                             : '<span class="text-yellow-600 text-xs">解密失败, 请重新登录</span>');
-            const copyBtn = cred
-                ? `<button class="copy-cred bg-indigo-600 text-white px-3 py-1.5 rounded text-xs font-bold hover:bg-indigo-700 whitespace-nowrap"
-                          data-user="${cred.user}" data-pwd="${cred.password}" data-expire="${a.expire}">📋 复制账号密码</button>`
-                : '';
+
+            const noteCell = `
+                <div class="text-xs">
+                    ${note?.recipient ? `<div class="text-green-700">👤 <strong>${note.recipient}</strong></div>` : '<div class="text-gray-400">未分发</div>'}
+                    ${note?.note ? `<div class="text-gray-600">📝 ${note.note}</div>` : ''}
+                    ${note?.distributed_at ? `<div class="text-gray-400 text-[10px]">${note.distributed_at.slice(0, 10)}</div>` : ''}
+                </div>`;
 
             let etfCell;
             if (a.role === 'admin') {
-                etfCell = '<span class="text-xs text-gray-400">总是可见</span>';
+                etfCell = '<span class="text-xs text-gray-400">-</span>';
             } else {
                 const on = a.etf_visible !== false;
-                etfCell = `<button class="etf-toggle px-3 py-1 rounded text-xs ${on ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700'}"
+                etfCell = `<button class="etf-toggle px-2 py-1 rounded text-xs ${on ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700'}"
                                 data-hash="${a.hash_prefix}" data-next="${on ? '0' : '1'}">
-                    ${on ? '✅ 开' : '🚫 关'}
+                    ${on ? '✅' : '🚫'}
                 </button>`;
             }
-            return `<tr>
-                <td class="px-2 py-2 font-mono text-gray-500">${a.hash_prefix}…</td>
+
+            const opCell = cred ? `
+                <div class="flex gap-1 justify-center flex-wrap">
+                    <button class="op-copy bg-indigo-600 text-white px-2 py-1 rounded text-xs hover:bg-indigo-700"
+                            data-user="${cred.user}" data-pwd="${cred.password}" data-expire="${a.expire}"
+                            title="复制账号密码">📋</button>
+                    <button class="op-note bg-yellow-500 text-white px-2 py-1 rounded text-xs hover:bg-yellow-600"
+                            data-hash="${a.hash_prefix}"
+                            title="标记分发">🏷️</button>
+                    <button class="op-card bg-purple-500 text-white px-2 py-1 rounded text-xs hover:bg-purple-600"
+                            data-user="${cred.user}" data-pwd="${cred.password}" data-expire="${a.expire}"
+                            title="下载卡片">🖼️</button>
+                </div>` : '<span class="text-gray-300 text-xs">-</span>';
+
+            return `<tr class="${isDist ? 'bg-green-50' : ''}">
                 <td class="px-2 py-2">${credCell}</td>
-                <td class="px-2 py-2">${a.expire}</td>
-                <td class="px-2 py-2 text-xs text-gray-500">${a.note}</td>
+                <td class="px-2 py-2">${noteCell}</td>
+                <td class="px-2 py-2 text-xs">${a.expire}</td>
                 <td class="px-2 py-2 text-center">${etfCell}</td>
-                <td class="px-2 py-2 text-center">${copyBtn}</td>
+                <td class="px-2 py-2 text-center">${opCell}</td>
             </tr>`;
         }).join('');
     }
 
-    // 绑定复制按钮: 仅复制 账号 + 密码, 两行
-    document.querySelectorAll('.copy-cred').forEach(btn => {
+    bindOps();
+}
+
+function bindOps() {
+    // 单行复制
+    document.querySelectorAll('.op-copy').forEach(btn => {
         btn.addEventListener('click', () => {
-            const user = btn.dataset.user;
-            const pwd  = btn.dataset.pwd;
-            // 仅两行: 账号 + 密码
-            const text = `账号:${user}\n密码:${pwd}`;
-            navigator.clipboard.writeText(text).then(() => {
-                const orig = btn.textContent;
-                btn.textContent = '✅ 已复制';
-                btn.classList.remove('bg-indigo-600');
-                btn.classList.add('bg-green-600');
-                setTimeout(() => {
-                    btn.textContent = orig;
-                    btn.classList.add('bg-indigo-600');
-                    btn.classList.remove('bg-green-600');
-                }, 1500);
-            }).catch(e => alert('复制失败: ' + e.message));
+            const text = formatCredential(btn.dataset.user, btn.dataset.pwd, btn.dataset.expire);
+            navigator.clipboard.writeText(text).then(() => flashBtn(btn, '✅'));
         });
     });
 
-    // 绑定 ETF toggle
+    // 单行 标记分发 (prompt 输入接收人)
+    document.querySelectorAll('.op-note').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const hash = btn.dataset.hash;
+            const cur = getNote(hash) || {};
+            const recipient = prompt(
+                '👤 接收人姓名 (留空 = 取消已分发标记):',
+                cur.recipient || ''
+            );
+            if (recipient === null) return;
+            if (recipient.trim() === '') {
+                clearNote(hash);
+            } else {
+                const extra = prompt('📝 额外备注 (可选, 直接回车跳过):', cur.note || '') || '';
+                markDistributed(hash, recipient.trim());
+                if (extra.trim()) setNote(hash, {note: extra.trim()});
+            }
+            // 刷新列表
+            renderAccGroups(window.__cached_meta_accounts);
+        });
+    });
+
+    // 单行 卡片下载
+    document.querySelectorAll('.op-card').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const orig = btn.textContent;
+            btn.textContent = '⏳';
+            try {
+                await downloadCredCard(btn.dataset.user, btn.dataset.pwd, btn.dataset.expire);
+                btn.textContent = '✅';
+                setTimeout(() => btn.textContent = orig, 1200);
+            } catch (e) {
+                btn.textContent = orig;
+                alert('生成卡片失败: ' + e.message);
+            }
+        });
+    });
+
+    // 组级复制
+    document.querySelectorAll('.group-copy').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const gKey = btn.dataset.group;
+            const accs = (window.__cached_meta_accounts || []).filter(a => _classifyAccount(a) === gKey);
+            const rows = [];
+            for (const a of accs) {
+                const cred = _findCredByHash(a.hash_prefix);
+                if (cred) rows.push({user: cred.user, password: cred.password, expire: a.expire});
+            }
+            if (rows.length === 0) { alert('该组无可复制账号 (明文未解密?)'); return; }
+            navigator.clipboard.writeText(formatCredentialList(rows)).then(() => {
+                flashBtn(btn, `✅ 已复制 ${rows.length} 个`);
+            });
+        });
+    });
+
+    // 组级 CSV
+    document.querySelectorAll('.group-csv').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const gKey = btn.dataset.group;
+            const accs = (window.__cached_meta_accounts || []).filter(a => _classifyAccount(a) === gKey);
+            const rows = [];
+            for (const a of accs) {
+                const cred = _findCredByHash(a.hash_prefix);
+                if (cred) rows.push({...cred, hash_prefix: a.hash_prefix, expire: a.expire, created: a.created});
+            }
+            if (rows.length === 0) { alert('该组无可导出账号'); return; }
+            downloadCSV(`accounts_${gKey}_${new Date().toISOString().slice(0,10)}.csv`, generateCSV(rows));
+        });
+    });
+
+    // ETF toggle (原逻辑保留)
     document.querySelectorAll('.etf-toggle').forEach(btn => {
         btn.addEventListener('click', async () => {
             if (!adminHasPAT()) { alert("请先配置 PAT"); return; }
@@ -424,8 +532,8 @@ function renderAccGroups(accounts) {
             btn.textContent = '⏳';
             try {
                 await adminToggleEtf(hash, next);
-                btn.className = `etf-toggle px-3 py-1 rounded text-xs ${next ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700'}`;
-                btn.textContent = next ? '✅ 开' : '🚫 关';
+                btn.className = `etf-toggle px-2 py-1 rounded text-xs ${next ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700'}`;
+                btn.textContent = next ? '✅' : '🚫';
                 btn.dataset.next = next ? '0' : '1';
                 btn.disabled = false;
             } catch (e) {
@@ -436,6 +544,53 @@ function renderAccGroups(accounts) {
         });
     });
 }
+
+function flashBtn(btn, msg) {
+    const orig = btn.textContent;
+    btn.textContent = msg;
+    btn.classList.add('bg-green-600');
+    setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('bg-green-600');
+    }, 1500);
+}
+
+// 分发统计渲染
+function refreshDistStats(accounts) {
+    const s = getDistributionStats(accounts);
+    const cards = [
+        ['用户总数',     s.total,           'text-gray-700'],
+        ['✅ 已分发',     s.distributed,     'text-green-600'],
+        ['⏳ 未分发',     s.not_distributed, 'text-orange-600'],
+        ['⏰ 已过期',     s.expired,         'text-gray-400'],
+        ['🚫 已撤销',     s.revoked,         'text-red-500'],
+    ];
+    document.getElementById('dist-stats').innerHTML = cards.map(([k, v, c]) =>
+        `<div class="bg-white rounded p-3">
+            <div class="text-xs text-gray-500">${k}</div>
+            <div class="text-2xl font-bold ${c}">${v}</div>
+        </div>`
+    ).join('');
+}
+
+// 全部 CSV 导出
+document.getElementById('export-all-csv').addEventListener('click', () => {
+    const accs = window.__cached_meta_accounts || [];
+    const rows = [];
+    for (const a of accs) {
+        const cred = _findCredByHash(a.hash_prefix);
+        if (cred) rows.push({...cred, hash_prefix: a.hash_prefix, expire: a.expire, created: a.created});
+    }
+    if (rows.length === 0) { alert('无账号可导出, 请先用 admin 账号登录解密'); return; }
+    downloadCSV(`all_accounts_${new Date().toISOString().slice(0,10)}.csv`, generateCSV(rows));
+});
+
+// 清空所有备注
+document.getElementById('clear-all-notes').addEventListener('click', () => {
+    if (!confirm('确定清空所有分发备注 / 接收人 / 已发标记?')) return;
+    localStorage.removeItem(NOTES_KEY);
+    renderAccGroups(window.__cached_meta_accounts || []);
+});
 
 // 页面加载: 检查是否已解密
 if (getDecryptedAccounts()) {
