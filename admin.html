@@ -85,10 +85,30 @@
         </div>
     </div>
 
-    <!-- ⑤ 账号列表 + 即时 ETF 开关 -->
+    <!-- ⑤ 账号明文清单导入 (本浏览器 LocalStorage, 不进 GitHub) -->
+    <div class="bg-purple-50 border-l-4 border-purple-500 rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-purple-800 mb-2">📋 账号明文清单 (本浏览器)</h2>
+        <p class="text-xs text-purple-700 mb-3">
+            导入后, 下面账号列表会显示完整账号密码 + <strong>📋 一键复制</strong> 按钮.
+            明文仅存本浏览器 LocalStorage, <strong>永远不进 GitHub</strong>.
+        </p>
+        <div id="creds-status" class="text-sm mb-3"></div>
+        <div class="bg-white rounded p-3 mb-3">
+            <p class="text-xs text-gray-700 mb-2"><strong>步骤 1</strong>: 本机执行命令 (会自动复制到剪贴板):</p>
+            <code class="block bg-gray-900 text-green-300 font-mono text-xs p-2 rounded">python v26_production/manage_accounts.py export-clipboard</code>
+            <p class="text-xs text-gray-700 mt-3 mb-2"><strong>步骤 2</strong>: 粘贴到下面文本框 → 点 "导入":</p>
+            <textarea id="creds-paste" class="w-full px-3 py-2 border border-gray-300 rounded-md font-mono text-xs" rows="4" placeholder='粘贴 JSON 在此 (含 "accounts" 字段)'></textarea>
+            <div class="mt-2 flex gap-2 flex-wrap">
+                <button id="creds-import" class="bg-purple-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-purple-700">📥 导入</button>
+                <button id="creds-clear" class="bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm">🗑️ 清除明文 (退出/换浏览器前)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ⑥ 账号列表 (分时长模块) -->
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">📜 账号列表 (即时 ETF 开关)</h2>
-        <p class="text-xs text-gray-500 mb-3">⚠ 网站仅显示 sha256 hash 前缀. 完整账号密码在本机 <code class="bg-gray-100 px-1 rounded">~/.quant-site-accounts.json</code>. ETF 开关需 PAT 配置后才能直接 toggle.</p>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">📜 账号列表 (按有效期分组)</h2>
+        <p class="text-xs text-gray-500 mb-3">每组用不同颜色边框区分. 导入明文后, 每行右侧会显示 📋 复制按钮.</p>
 
         <div class="mb-3 flex gap-2 flex-wrap">
             <button id="batch-etf-on" class="bg-green-600 text-white px-3 py-1.5 rounded text-xs">批量: 所有用户 ETF 开启</button>
@@ -96,22 +116,8 @@
             <span id="batch-etf-status" class="text-sm self-center"></span>
         </div>
 
-        <div class="scroll-x">
-        <table class="min-w-full text-xs sm:text-sm divide-y">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-3 py-2 text-left">Token (脱敏)</th>
-                    <th class="px-3 py-2 text-left">角色</th>
-                    <th class="px-3 py-2 text-left">创建</th>
-                    <th class="px-3 py-2 text-left">到期</th>
-                    <th class="px-3 py-2 text-left">备注</th>
-                    <th class="px-3 py-2 text-left">状态</th>
-                    <th class="px-3 py-2 text-center">ETF 可见</th>
-                </tr>
-            </thead>
-            <tbody id="acc-table" class="divide-y"></tbody>
-        </table>
-        </div>
+        <div id="acc-groups-container" class="space-y-5"></div>
+
         <p class="text-xs text-orange-600 mt-3">⚠ admin 切换 ETF 通过 GitHub API 即时生效, 但 manage_accounts.py sync 会回滚. 切换后请同步本机:
             <code class="bg-gray-100 px-1">python v26_production/manage_accounts.py pull-remote-etf</code></p>
     </div>
@@ -255,7 +261,7 @@ updateChangeCredUI();
             `<div class="bg-blue-50 rounded p-2 text-center"><div class="text-gray-600">${k}</div><div class="text-base font-bold text-indigo-600">${v}</div></div>`
         ).join('');
 
-        renderAccTable(meta.accounts);
+        renderAccGroups(meta.accounts);
     }
 
     // 批量 ETF
@@ -292,37 +298,176 @@ updateChangeCredUI();
     }
 })();
 
-function renderAccTable(accounts) {
-    const tbody = document.getElementById('acc-table');
-    tbody.innerHTML = accounts.map(a => {
-        const status = a.revoked ? '<span class="text-red-500">🚫 撤销</span>'
-                     : !a.active ? '<span class="text-gray-400">⏰ 过期</span>'
-                     : '<span class="text-green-600">✅ 有效</span>';
-        const roleBadge = a.role === 'admin'
-            ? '<span class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded text-xs">👑 管理员</span>'
-            : '<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs">👤 用户</span>';
-        let etfCell;
-        if (a.role === 'admin') {
-            etfCell = '<span class="text-xs text-gray-400">总是可见</span>';
-        } else {
-            const on = a.etf_visible !== false;
-            etfCell = `<button class="etf-toggle px-3 py-1 rounded text-xs ${on ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700'}"
-                            data-hash="${a.hash_prefix}" data-next="${on ? '0' : '1'}">
-                ${on ? '✅ 开' : '🚫 关'}
-            </button>`;
-        }
-        return `<tr class="${a.role === 'admin' ? 'bg-orange-50' : ''}">
-            <td class="px-3 py-2 font-mono">${a.hash_prefix}…</td>
-            <td class="px-3 py-2">${roleBadge}</td>
-            <td class="px-3 py-2">${a.created}</td>
-            <td class="px-3 py-2">${a.expire}</td>
-            <td class="px-3 py-2">${a.note}</td>
-            <td class="px-3 py-2">${status}</td>
-            <td class="px-3 py-2 text-center">${etfCell}</td>
-        </tr>`;
-    }).join('');
+// ============================================================
+// 明文清单管理 (LocalStorage, 永不进 GitHub)
+// ============================================================
+const CREDS_KEY = "caiman_creds_plaintext";
+function getCreds() {
+    try { return JSON.parse(localStorage.getItem(CREDS_KEY) || "{}"); }
+    catch (e) { return {}; }
+}
+function setCreds(d) { localStorage.setItem(CREDS_KEY, JSON.stringify(d)); }
+function clearCreds() { localStorage.removeItem(CREDS_KEY); }
 
-    // 绑定即时 toggle (调 GitHub API)
+function refreshCredsStatus() {
+    const c = getCreds();
+    const $s = document.getElementById('creds-status');
+    if (c.accounts && c.accounts.length > 0) {
+        $s.innerHTML = `<span class="bg-green-100 text-green-800 px-2 py-1 rounded">✅ 已导入 ${c.accounts.length} 个明文账号 (导入时间: ${c.generated_at || '-'})</span>`;
+    } else {
+        $s.innerHTML = `<span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">⚠ 尚未导入明文清单, 复制按钮不可用</span>`;
+    }
+}
+
+document.getElementById('creds-import').addEventListener('click', () => {
+    const txt = document.getElementById('creds-paste').value.trim();
+    if (!txt) { alert('请先粘贴 JSON'); return; }
+    try {
+        const obj = JSON.parse(txt);
+        if (!obj.accounts || !Array.isArray(obj.accounts)) throw new Error('JSON 缺 accounts 数组');
+        setCreds(obj);
+        document.getElementById('creds-paste').value = '';
+        refreshCredsStatus();
+        // 重渲染列表
+        renderAccGroups(window.__cached_meta_accounts || []);
+        alert(`✅ 导入成功! 共 ${obj.accounts.length} 个账号. 列表已刷新.`);
+    } catch (e) {
+        alert('❌ 导入失败: ' + e.message);
+    }
+});
+document.getElementById('creds-clear').addEventListener('click', () => {
+    if (!confirm('清除明文? 复制按钮将失效, 需要重新导入.')) return;
+    clearCreds();
+    refreshCredsStatus();
+    renderAccGroups(window.__cached_meta_accounts || []);
+});
+
+function _findCredByHash(hashPrefix) {
+    const c = getCreds();
+    if (!c.accounts) return null;
+    return c.accounts.find(a => a.hash_prefix === hashPrefix);
+}
+
+// ============================================================
+// 账号列表分组渲染
+// ============================================================
+function _classifyAccount(a) {
+    if (a.role === 'admin') return 'admin';
+    if (a.revoked) return 'revoked';
+    if (!a.active) return 'expired';
+    const n = (a.note || '').toLowerCase();
+    if (n.includes('7d'))    return '7d';
+    if (n.includes('30d'))   return '30d';
+    if (n.includes('90d'))   return '90d';
+    if (n.includes('180d'))  return '180d';
+    if (n.includes('365d'))  return '365d';
+    return 'other';
+}
+
+const GROUP_META = {
+    admin:   { label: '👑 管理员', color: 'bg-orange-50 border-orange-300', tag: 'bg-orange-100 text-orange-700' },
+    '7d':    { label: '🔴 7 天用户',   color: 'bg-red-50 border-red-300',         tag: 'bg-red-100 text-red-700' },
+    '30d':   { label: '🟠 30 天用户',  color: 'bg-yellow-50 border-yellow-300',   tag: 'bg-yellow-100 text-yellow-700' },
+    '90d':   { label: '🟡 90 天用户',  color: 'bg-amber-50 border-amber-300',     tag: 'bg-amber-100 text-amber-700' },
+    '180d':  { label: '🔵 180 天用户', color: 'bg-sky-50 border-sky-300',         tag: 'bg-sky-100 text-sky-700' },
+    '365d':  { label: '🟢 365 天用户', color: 'bg-green-50 border-green-300',     tag: 'bg-green-100 text-green-700' },
+    other:   { label: '⚪ 其他用户',   color: 'bg-gray-50 border-gray-300',       tag: 'bg-gray-100 text-gray-700' },
+    expired: { label: '⏰ 已过期',     color: 'bg-gray-100 border-gray-400',      tag: 'bg-gray-200 text-gray-600' },
+    revoked: { label: '🚫 已撤销',     color: 'bg-gray-100 border-red-400',       tag: 'bg-red-100 text-red-700' },
+};
+const GROUP_ORDER = ['admin', '7d', '30d', '90d', '180d', '365d', 'other', 'expired', 'revoked'];
+
+function renderAccGroups(accounts) {
+    window.__cached_meta_accounts = accounts;
+    const groups = {};
+    for (const a of accounts) {
+        const g = _classifyAccount(a);
+        (groups[g] ??= []).push(a);
+    }
+    const $c = document.getElementById('acc-groups-container');
+    $c.innerHTML = '';
+    const hasCreds = !!getCreds().accounts;
+
+    for (const gKey of GROUP_ORDER) {
+        const list = groups[gKey];
+        if (!list || list.length === 0) continue;
+        const meta = GROUP_META[gKey];
+        const section = document.createElement('div');
+        section.className = `border-l-4 ${meta.color} rounded p-3 sm:p-4`;
+        section.innerHTML = `
+            <h3 class="font-bold mb-3 flex items-center justify-between">
+                <span>${meta.label} <span class="ml-2 text-xs ${meta.tag} px-2 py-0.5 rounded">${list.length} 个</span></span>
+            </h3>
+            <div class="scroll-x">
+            <table class="min-w-full text-xs sm:text-sm">
+                <thead class="bg-white">
+                    <tr class="border-b">
+                        <th class="px-2 py-2 text-left">Token (脱敏)</th>
+                        <th class="px-2 py-2 text-left">账号 / 密码</th>
+                        <th class="px-2 py-2 text-left">到期</th>
+                        <th class="px-2 py-2 text-left">备注</th>
+                        <th class="px-2 py-2 text-center">ETF 可见</th>
+                        <th class="px-2 py-2 text-center">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y" id="tbody-${gKey}"></tbody>
+            </table>
+            </div>
+        `;
+        $c.appendChild(section);
+
+        const tbody = section.querySelector(`#tbody-${gKey}`);
+        tbody.innerHTML = list.map(a => {
+            const cred = hasCreds ? _findCredByHash(a.hash_prefix) : null;
+            const credCell = cred
+                ? `<div class="font-mono text-xs">
+                    <div>账号: <span class="text-indigo-700 font-bold">${cred.user}</span></div>
+                    <div>密码: <span class="text-indigo-700 font-bold">${cred.password}</span></div>
+                   </div>`
+                : (hasCreds ? '<span class="text-gray-400 text-xs">未找到</span>'
+                            : '<span class="text-yellow-600 text-xs">请先导入明文</span>');
+            const copyBtn = cred
+                ? `<button class="copy-cred bg-indigo-600 text-white px-2 py-1 rounded text-xs hover:bg-indigo-700 mr-1"
+                          data-user="${cred.user}" data-pwd="${cred.password}">📋 复制</button>`
+                : '';
+
+            let etfCell;
+            if (a.role === 'admin') {
+                etfCell = '<span class="text-xs text-gray-400">总是可见</span>';
+            } else {
+                const on = a.etf_visible !== false;
+                etfCell = `<button class="etf-toggle px-3 py-1 rounded text-xs ${on ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700'}"
+                                data-hash="${a.hash_prefix}" data-next="${on ? '0' : '1'}">
+                    ${on ? '✅ 开' : '🚫 关'}
+                </button>`;
+            }
+            return `<tr>
+                <td class="px-2 py-2 font-mono text-gray-500">${a.hash_prefix}…</td>
+                <td class="px-2 py-2">${credCell}</td>
+                <td class="px-2 py-2">${a.expire}</td>
+                <td class="px-2 py-2 text-xs text-gray-500">${a.note}</td>
+                <td class="px-2 py-2 text-center">${etfCell}</td>
+                <td class="px-2 py-2 text-center">${copyBtn}</td>
+            </tr>`;
+        }).join('');
+    }
+
+    // 绑定复制按钮
+    document.querySelectorAll('.copy-cred').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const user = btn.dataset.user;
+            const pwd  = btn.dataset.pwd;
+            const text = `账号: ${user}\n密码: ${pwd}`;
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.textContent;
+                btn.textContent = '✅ 已复制';
+                btn.classList.add('bg-green-600');
+                setTimeout(() => { btn.textContent = orig; btn.classList.remove('bg-green-600'); }, 1500);
+            });
+        });
+    });
+
+    // 绑定 ETF toggle
     document.querySelectorAll('.etf-toggle').forEach(btn => {
         btn.addEventListener('click', async () => {
             if (!adminHasPAT()) { alert("请先配置 PAT"); return; }
@@ -345,6 +490,8 @@ function renderAccTable(accounts) {
         });
     });
 }
+
+refreshCredsStatus();
 </script>
 </body>
 </html>
