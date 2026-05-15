@@ -78,6 +78,10 @@ async function renderNav(isSubdir) {
             if (typeof showComplianceModalIfNeeded === 'function') showComplianceModalIfNeeded();
         }, 200);
     }
+    // 用户行为统计: 页面访问触发心跳
+    if (typeof trackPageView === "function") {
+        try { trackPageView(); } catch (e) {}
+    }
 }
 
 function renderFooter() {

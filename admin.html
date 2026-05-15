@@ -7,6 +7,7 @@
     <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
     <script src="assets/auth.js"></script>
+    <script src="assets/activity.js"></script>
     <script src="assets/compliance.js"></script>
     <script src="assets/admin_api.js"></script>
     <script src="assets/distribution.js"></script>
@@ -108,6 +109,21 @@
         <div class="mt-4 flex gap-2 flex-wrap">
             <button id="export-all-csv" class="bg-purple-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-purple-700">📥 全部账号导出 CSV</button>
             <button id="clear-all-notes" class="bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm">🗑️ 清空分发备注</button>
+        </div>
+    </div>
+
+    <!-- 用户行为统计 -->
+    <div class="bg-gradient-to-r from-cyan-50 to-blue-50 border border-cyan-200 rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-cyan-800 mb-2">📈 用户行为统计</h2>
+        <p class="text-xs text-cyan-700 mb-3">
+            <strong>本地模式</strong> (默认): 只能看到 <strong>当前浏览器</strong> 登录过的账号. 用户在自己浏览器记录, 你看不到他们的统计.<br>
+            <strong>全局模式</strong> (需配置 Cloudflare Worker): 所有用户上报到一个集中统计后端, admin 拉取全量. 部署指南见后文.
+        </p>
+        <div id="activity-stats-mode" class="mb-3"></div>
+        <div id="activity-table-wrap" class="scroll-x"></div>
+        <div class="mt-3 flex gap-2 flex-wrap">
+            <button id="act-refresh" class="bg-cyan-600 text-white px-4 py-2 rounded text-xs hover:bg-cyan-700">🔄 刷新</button>
+            <button id="act-clear" class="bg-gray-200 text-gray-700 px-4 py-2 rounded text-xs">🗑️ 清空本机记录</button>
         </div>
     </div>
 
@@ -605,6 +621,73 @@ document.getElementById('clear-all-notes').addEventListener('click', () => {
     localStorage.removeItem(NOTES_KEY);
     renderAccGroups(window.__cached_meta_accounts || []);
 });
+
+// === 用户行为统计 ===
+function renderActivityStats() {
+    const $mode = document.getElementById('activity-stats-mode');
+    const $wrap = document.getElementById('activity-table-wrap');
+
+    // 模式标识
+    const hasRemote = (typeof STATS_API_URL !== 'undefined' && STATS_API_URL);
+    $mode.innerHTML = hasRemote
+        ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">🌐 全局模式 (Cloudflare Worker 已配置)</span>'
+        : '<span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">📍 本地模式 (仅本浏览器)</span>';
+
+    const act = loadLocalActivity();
+    const users = act.users || {};
+    const keys = Object.keys(users);
+    if (keys.length === 0) {
+        $wrap.innerHTML = '<p class="text-sm text-gray-500 py-4">暂无活动记录. 用户登录后会自动生成统计.</p>';
+        return;
+    }
+
+    const decAccs = getDecryptedAccounts() || [];
+    const findUser = (token) => {
+        const a = decAccs.find(a => a.hash_prefix === token);
+        return a ? a.user : '-';
+    };
+
+    let html = `<table class="min-w-full text-xs">
+        <thead class="bg-white">
+            <tr class="border-b">
+                <th class="px-2 py-2 text-left">账号</th>
+                <th class="px-2 py-2 text-left">角色</th>
+                <th class="px-2 py-2 text-right">登录次数</th>
+                <th class="px-2 py-2 text-right">总停留</th>
+                <th class="px-2 py-2 text-right">设备数</th>
+                <th class="px-2 py-2 text-left">最近登录</th>
+                <th class="px-2 py-2 text-left">设备指纹</th>
+            </tr>
+        </thead><tbody class="divide-y">`;
+    // 按 最近登录 倒序
+    keys.sort((a, b) => (users[b].last_login || '').localeCompare(users[a].last_login || ''));
+    for (const token of keys) {
+        const u = users[token];
+        const totalMin = Math.round((u.total_seconds || 0) / 60);
+        const totalH = Math.floor(totalMin / 60), totalM = totalMin % 60;
+        const totalStr = totalH > 0 ? `${totalH}h ${totalM}m` : `${totalM} 分`;
+        const devShort = (u.devices || []).map(d => d.id.slice(0, 12)).join(' / ');
+        html += `<tr>
+            <td class="px-2 py-2 font-mono">${u.user || findUser(token) || token + '…'}</td>
+            <td class="px-2 py-2"><span class="${u.role === 'admin' ? 'bg-orange-100 text-orange-700' : 'bg-blue-100 text-blue-700'} px-2 py-0.5 rounded">${u.role === 'admin' ? '👑' : '👤'} ${u.role}</span></td>
+            <td class="px-2 py-2 text-right font-bold">${u.login_count || 0}</td>
+            <td class="px-2 py-2 text-right">${totalStr}</td>
+            <td class="px-2 py-2 text-right">${(u.devices || []).length}</td>
+            <td class="px-2 py-2">${(u.last_login || '').replace('T', ' ').slice(0, 16)}</td>
+            <td class="px-2 py-2 font-mono text-gray-500">${devShort || '-'}</td>
+        </tr>`;
+    }
+    html += `</tbody></table>`;
+    html += `<p class="text-xs text-gray-400 mt-3">⚠ 本地模式数据保存在你这个浏览器, 不同步给其他设备/其他 admin. 总停留时长每 60 秒心跳更新.</p>`;
+    $wrap.innerHTML = html;
+}
+document.getElementById('act-refresh').addEventListener('click', renderActivityStats);
+document.getElementById('act-clear').addEventListener('click', () => {
+    if (!confirm('清空本浏览器所有活动记录?')) return;
+    localStorage.removeItem(ACT_KEY);
+    renderActivityStats();
+});
+renderActivityStats();
 
 // 页面加载: 检测解密状态, 没解密则显示解锁卡片
 (function () {

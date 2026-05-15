@@ -115,10 +115,20 @@ async function tryLogin(user, password) {
         try { await _maybeDecryptAdminCreds(password); } catch (e) {}
     }
 
+    // 用户行为统计
+    if (typeof trackLogin === "function") {
+        try { trackLogin(user, role, tokenPrefix, did); } catch (e) {}
+    }
+
     return { ok: true, expire: expire, role: role };
 }
 
 function logout() {
+    // 上报 logout (优先, 在清 LocalStorage 之前)
+    const a = getAuthInfo();
+    if (a && typeof trackLogout === "function") {
+        try { trackLogout(a.token); } catch (e) {}
+    }
     // 仅清登录态, 保留 device_id 和 compliance (用户身份保留)
     localStorage.removeItem(__AUTH_KEY);
     // admin 的解密明文清单一并清除

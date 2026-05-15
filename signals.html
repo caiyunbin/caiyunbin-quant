@@ -7,6 +7,7 @@
     <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
     <script src="assets/auth.js"></script>
+    <script src="assets/activity.js"></script>
     <script src="assets/compliance.js"></script>
     <script src="assets/nav.js"></script>
     <script>requireAuth();</script>
@@ -19,7 +20,7 @@
 
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
         <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-1">🎯 今日信号</h1>
-        <p class="text-gray-500 text-sm">三个子决策树当日候选股票 + 持仓状态 + 卖出建议 (T+1 开盘价撮合)</p>
+        <p class="text-gray-500 text-sm">三个子决策树当日候选股票 + 信号持续状态 + 信号出清建议 (T+1 开盘价撮合)</p>
         <p class="text-xs text-gray-400 mt-2" id="meta-info"></p>
     </div>
 
@@ -30,12 +31,12 @@
     <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
         <h3 class="font-bold text-sm text-blue-900 mb-2">📖 状态说明</h3>
         <ul class="text-xs text-blue-900 list-disc list-inside space-y-1">
-            <li><b>信号持续</b>: 当前已买入未卖出, 继续持有</li>
-            <li><b>明日 T+1 信号出清</b>: 系统决定明日 T+1 开盘卖出, 用户可作为出清参考</li>
-            <li><b>明日开盘信号生成</b>: 候选股票池, ★★★ 最优, 用户应根据资金量在明日 T+1 开盘参考信号</li>
-            <li><b>历史出清</b>: 最近 30 天平仓记录, 仅作历史参考</li>
+            <li><b>信号持续</b>: 该标的目前处于信号持续期, 继续保留观察</li>
+            <li><b>明日 T+1 信号出清</b>: 系统判定明日 T+1 集合竞价出清, 可作为出清参考</li>
+            <li><b>明日开盘信号生成</b>: 候选标的池, ★★★ 最优, 用户应根据资金量在明日 T+1 开盘参考信号</li>
+            <li><b>历史出清</b>: 最近 30 天的历史出清记录, 仅作研究参考</li>
         </ul>
-        <p class="text-xs text-blue-700 mt-2">⚠️ 本系统输出"应持仓建议", 不真实下单. 请根据微信推送或本页内容手动操作.</p>
+        <p class="text-xs text-blue-700 mt-2">⚠️ 本系统输出"信号参考", 不真实下单, 不构成投资建议. 用户应自主判断、独立决策、风险自担.</p>
     </div>
 
 </div>
@@ -44,11 +45,19 @@
 <script>renderFooter();</script>
 
 <script>
-const STRATEGY_INFO = {
+// 详细参数 (admin 才能看) + 模糊行情描述 (user 看)
+const STRATEGY_INFO_ADMIN = {
     "小盘动量":   {icon: "🎯", weight: 0.05, pool: "A 股小盘股 — 涨幅+主力+量比 三维 rank-delta 跃升"},
     "大盘突破":   {icon: "🏛️", weight: 0.45, pool: "A 股大盘股 (流通市值 ≥ 200 亿) — 连 3 日主力净流入 + 突破 20 日新高"},
     "上涨横盘":   {icon: "📈", weight: 0.50, pool: "A 股 amount_20d ≥ 5000万 — MA5>MA20>MA60 多头 5-29 天 + 横盘紧贴 MA5"},
 };
+const STRATEGY_INFO_USER = {
+    "小盘动量":   {icon: "🎯", weight: 0.05, pool: "适配中小盘活跃 + 资金面宽松的市场环境. 在题材股启动、成长股放量、超跌反弹阶段的 Alpha 爆发最强."},
+    "大盘突破":   {icon: "🏛️", weight: 0.45, pool: "适配大盘股趋势行情. 在主力资金持续入场、市场风格切到价值蓝筹、指数突破前期高点时的 Alpha 爆发最强."},
+    "上涨横盘":   {icon: "📈", weight: 0.50, pool: "适配震荡上行行情中的低波动洗盘期. 在大盘已在上升通道, 个股进入紧贴均线的窄幅盘整时的 Alpha 爆发最强."},
+};
+const STRATEGY_INFO = (typeof isAdmin === 'function' && isAdmin())
+    ? STRATEGY_INFO_ADMIN : STRATEGY_INFO_USER;
 const FMT_PCT = (x) => (x>=0?"+":"") + (x*100).toFixed(1) + "%";
 
 async function loadJSON(p) {
@@ -115,7 +124,7 @@ async function loadJSON(p) {
                     <div class="text-gray-500 mt-1">入 ${x.entry_date} · ${x.reason}</div>
                 </li>`
             ).join('');
-        } else sellHtml = '<p class="text-xs text-gray-500">今日无卖出</p>';
+        } else sellHtml = '<p class="text-xs text-gray-500">今日无信号出清</p>';
 
         let exitedHtml = '';
         if (s.exited_recent && s.exited_recent.length > 0) {
