@@ -3,8 +3,8 @@ async function renderNav(isSubdir) {
     const prefix = isSubdir ? "../" : "";
     const auth = getAuthInfo();
     const showAdmin = auth && auth.role === "admin";
-    const cfg = await loadSiteConfig();
-    const showEtf = showAdmin || cfg.etf_visible_to_users !== false;
+    // per-user ETF 开关 (admin 总能看, user 看自己的 etf_visible)
+    const showEtf = await isEtfVisibleForCurrentUser();
 
     const etfLink = showEtf
         ? `<a href="${prefix}strategies/etf.html" class="nav-strat-btn"><span class="label-2x2">板块轮动</span></a>`

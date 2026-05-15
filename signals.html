@@ -30,7 +30,7 @@
     <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
         <h3 class="font-bold text-sm text-blue-900 mb-2">📖 状态说明</h3>
         <ul class="text-xs text-blue-900 list-disc list-inside space-y-1">
-            <li><b>持仓中</b>: 当前已买入未卖出, 继续持有</li>
+            <li><b>信号持续</b>: 当前已买入未卖出, 继续持有</li>
             <li><b>明日 T+1 信号出清</b>: 系统决定明日 T+1 开盘卖出, 用户可作为出清参考</li>
             <li><b>明日开盘信号生成</b>: 候选股票池, ★★★ 最优, 用户应根据资金量在明日 T+1 开盘参考信号</li>
             <li><b>历史出清</b>: 最近 30 天平仓记录, 仅作历史参考</li>
@@ -144,7 +144,7 @@ async function loadJSON(p) {
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 <div class="bg-blue-50 rounded-lg p-4">
-                    <h3 class="text-sm font-bold text-blue-900 mb-3">📦 持仓中 (${(s.holding||[]).length})</h3>
+                    <h3 class="text-sm font-bold text-blue-900 mb-3">📦 信号持续中 (${(s.holding||[]).length})</h3>
                     <ul class="space-y-2">${holdHtml}</ul>
                 </div>
                 <div class="bg-red-50 rounded-lg p-4">

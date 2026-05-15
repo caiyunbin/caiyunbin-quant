@@ -136,6 +136,18 @@ function isAdmin() {
     return info && info.role === "admin";
 }
 
+// 查当前登录用户的 ETF 可见性 (从 auth_pool.etf_prefs[token] 读)
+async function isEtfVisibleForCurrentUser() {
+    const info = getAuthInfo();
+    if (!info) return false;
+    if (info.role === "admin") return true;  // admin 总是能看到
+    const pool = await _loadAuthPool();
+    if (!pool || !pool.etf_prefs) return true;  // 默认 true
+    const matched = Object.keys(pool.etf_prefs).find(k => k.startsWith(info.token));
+    if (!matched) return true;
+    return pool.etf_prefs[matched] !== false;
+}
+
 function _gotoLogin(reason) {
     const back = encodeURIComponent(window.location.pathname + window.location.search);
     const isSub = window.location.pathname.includes('/strategies/');

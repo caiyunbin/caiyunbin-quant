@@ -19,7 +19,7 @@
 
     <div class="bg-orange-50 border-l-4 border-orange-500 rounded-lg p-4 sm:p-6">
         <h1 class="text-2xl sm:text-3xl font-bold text-orange-800 mb-2">⚙️ 管理后台</h1>
-        <p class="text-sm text-orange-700">仅管理员可见. 显示账号池状态、ETF 可见性开关、Tushare 接口状态等.</p>
+        <p class="text-sm text-orange-700">仅管理员可见. 包括账号管理、密码修改、ETF 可见性逐用户控制、Tushare 状态.</p>
         <p class="text-xs text-orange-600 mt-1" id="admin-info"></p>
     </div>
 
@@ -27,6 +27,31 @@
     <div id="tushare-alert" class="hidden bg-red-50 border-l-4 border-red-600 rounded-lg p-4 sm:p-6">
         <h2 class="text-xl font-bold text-red-800 mb-2">🚨 Tushare 接口异常</h2>
         <div id="tushare-detail" class="text-sm text-red-700"></div>
+    </div>
+
+    <!-- 修改管理员账号 + 密码 -->
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">🔑 修改管理员账号 / 密码</h2>
+        <p class="text-xs text-gray-500 mb-4">直接在此处填新账号/密码, 点"生成命令" → 复制命令到终端执行. 静态站不能直接写后台, 通过 CLI 同步保证安全.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">新账号 (留空 = 仅改密码)</label>
+                <input type="text" id="new-admin-user" class="w-full px-4 py-2 border border-gray-300 rounded-md font-mono" placeholder="例: admin_xx (a 开头, 8 位)">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">新密码 (必填, ≥ 12 位)</label>
+                <input type="text" id="new-admin-pwd" class="w-full px-4 py-2 border border-gray-300 rounded-md font-mono" placeholder="例: AbCd1234EfGh">
+            </div>
+        </div>
+        <button id="gen-admin-cmd" class="bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-700">生成命令</button>
+        <button id="rand-admin-pwd" class="bg-gray-200 text-gray-700 px-3 py-2 rounded-md text-sm ml-2">🎲 随机密码</button>
+        <div id="admin-cmd-output" class="mt-4 hidden">
+            <p class="text-xs text-gray-600 mb-2">⏬ 复制下面 2 行到终端 (一行一行执行):</p>
+            <pre id="admin-cmd-text" class="bg-gray-900 text-green-300 font-mono text-xs p-3 rounded overflow-x-auto"></pre>
+            <button id="copy-admin-cmd" class="mt-2 bg-indigo-600 text-white px-3 py-1 rounded text-xs">📋 复制到剪贴板</button>
+            <span id="admin-cmd-copied" class="hidden text-green-600 text-xs ml-2">✅ 已复制</span>
+        </div>
     </div>
 
     <!-- 账号统计 -->
@@ -39,10 +64,16 @@
         </div>
     </div>
 
-    <!-- 账号列表 -->
+    <!-- 账号列表 + per-user ETF 开关 -->
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">📜 账号列表 (脱敏)</h2>
-        <p class="text-xs text-gray-500 mb-3">⚠ 网站仅显示 sha256 hash 前 12 位 + 元数据. 完整账号密码请查本机 <code class="bg-gray-100 px-1 rounded">~/.quant-site-accounts.json</code></p>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">📜 账号列表 (含 ETF 可见性开关)</h2>
+        <p class="text-xs text-gray-500 mb-3">⚠ 网站仅显示 sha256 hash 前缀. 完整账号密码在本机 <code class="bg-gray-100 px-1 rounded">~/.quant-site-accounts.json</code></p>
+
+        <div class="mb-3 flex gap-2 flex-wrap">
+            <button id="batch-etf-on" class="bg-green-600 text-white px-3 py-1.5 rounded text-xs">批量: 所有用户 ETF 开启</button>
+            <button id="batch-etf-off" class="bg-red-500 text-white px-3 py-1.5 rounded text-xs">批量: 所有用户 ETF 关闭</button>
+        </div>
+
         <div class="scroll-x">
         <table class="min-w-full text-xs sm:text-sm divide-y">
             <thead class="bg-gray-50">
@@ -53,65 +84,34 @@
                     <th class="px-3 py-2 text-left">到期</th>
                     <th class="px-3 py-2 text-left">备注</th>
                     <th class="px-3 py-2 text-left">状态</th>
+                    <th class="px-3 py-2 text-center">ETF 可见</th>
                 </tr>
             </thead>
             <tbody id="acc-table" class="divide-y"></tbody>
         </table>
         </div>
-    </div>
 
-    <!-- ETF 可见性开关 -->
-    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">🏦 板块轮动 (ETF) 模块可见性</h2>
-        <div class="flex items-center gap-3 mb-3">
-            <span class="text-sm">当前对用户:</span>
-            <span id="etf-status" class="px-3 py-1 rounded font-bold"></span>
-        </div>
-        <p class="text-xs text-gray-500 mb-3">⚠ 静态站不能直接 toggle. 切换可见性需要在本机执行以下命令并 push:</p>
-        <div class="bg-gray-900 text-green-300 font-mono text-xs p-3 rounded overflow-x-auto">
-            <div># 设置为对用户可见</div>
-            <div>python v26_production/manage_accounts.py set-etf-visible 1</div>
-            <div class="mt-2"># 设置为隐藏</div>
-            <div>python v26_production/manage_accounts.py set-etf-visible 0</div>
-            <div class="mt-2"># 让改动生效</div>
-            <div>bash v26_production/automation/run_update_site.sh</div>
+        <!-- 操作命令面板 -->
+        <div id="op-cmd-output" class="mt-4 hidden">
+            <p class="text-xs text-gray-600 mb-2">⏬ 复制以下命令到终端执行:</p>
+            <pre id="op-cmd-text" class="bg-gray-900 text-green-300 font-mono text-xs p-3 rounded overflow-x-auto"></pre>
+            <button id="copy-op-cmd" class="mt-2 bg-indigo-600 text-white px-3 py-1 rounded text-xs">📋 复制</button>
+            <span id="op-cmd-copied" class="hidden text-green-600 text-xs ml-2">✅ 已复制</span>
         </div>
     </div>
 
-    <!-- 改管理员密码 -->
+    <!-- 生成/续期/撤销快捷 -->
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">🔑 修改管理员密码</h2>
-        <p class="text-xs text-gray-500 mb-3">⚠ 静态站不能直接改密码. 在本机执行 (替换 NEW_PWD 为新密码, 建议 12 位以上字母数字):</p>
-        <div class="bg-gray-900 text-green-300 font-mono text-xs p-3 rounded overflow-x-auto">
-            <div>python v26_production/manage_accounts.py admin-change-pwd <span class="text-yellow-300">NEW_PWD</span></div>
-            <div>bash v26_production/automation/run_update_site.sh</div>
-        </div>
-    </div>
-
-    <!-- 生成/管理用户账号 -->
-    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">👥 用户账号操作 (CLI 提示)</h2>
-        <div class="space-y-4 text-xs">
-            <div>
-                <div class="font-bold mb-1 text-gray-700">生成 N 个新账号 (默认 7 天)</div>
-                <code class="block bg-gray-900 text-green-300 font-mono p-3 rounded overflow-x-auto">python v26_production/manage_accounts.py gen 10 --days 7</code>
-            </div>
-            <div>
-                <div class="font-bold mb-1 text-gray-700">批量生成 50 个 (7/30/90/180/365 各 10)</div>
-                <code class="block bg-gray-900 text-green-300 font-mono p-3 rounded overflow-x-auto">python v26_production/manage_accounts.py gen-batch</code>
-            </div>
-            <div>
-                <div class="font-bold mb-1 text-gray-700">撤销账号 (实时生效)</div>
-                <code class="block bg-gray-900 text-green-300 font-mono p-3 rounded overflow-x-auto">python v26_production/manage_accounts.py revoke u2hermd7</code>
-            </div>
-            <div>
-                <div class="font-bold mb-1 text-gray-700">续期账号</div>
-                <code class="block bg-gray-900 text-green-300 font-mono p-3 rounded overflow-x-auto">python v26_production/manage_accounts.py extend u2hermd7 --days 30</code>
-            </div>
-            <div>
-                <div class="font-bold mb-1 text-gray-700">让所有改动生效 (推送到 GitHub)</div>
-                <code class="block bg-gray-900 text-green-300 font-mono p-3 rounded overflow-x-auto">bash v26_production/automation/run_update_site.sh</code>
-            </div>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">👥 用户账号操作 (CLI 速查)</h2>
+        <div class="space-y-3 text-xs">
+            <div><span class="font-bold text-gray-700">生成 N 个用户账号 (默认 7 天)</span><br>
+                <code class="block bg-gray-900 text-green-300 font-mono p-2 rounded mt-1">python v26_production/manage_accounts.py gen 10 --days 7</code></div>
+            <div><span class="font-bold text-gray-700">批量生成 50 个 (7/30/90/180/365 各 10)</span><br>
+                <code class="block bg-gray-900 text-green-300 font-mono p-2 rounded mt-1">python v26_production/manage_accounts.py gen-batch</code></div>
+            <div><span class="font-bold text-gray-700">续期账号</span><br>
+                <code class="block bg-gray-900 text-green-300 font-mono p-2 rounded mt-1">python v26_production/manage_accounts.py extend &lt;user&gt; --days 30</code></div>
+            <div><span class="font-bold text-gray-700">让所有操作生效 (推 GitHub)</span><br>
+                <code class="block bg-gray-900 text-green-300 font-mono p-2 rounded mt-1">bash v26_production/automation/run_update_site.sh</code></div>
         </div>
     </div>
 
@@ -124,26 +124,61 @@
 async function loadAdminMeta() {
     try {
         const r = await fetch("data/admin_meta.json?t=" + Date.now(), {cache: "no-store"});
-        if (!r.ok) return null;
-        return await r.json();
+        if (!r.ok) return null; return await r.json();
     } catch (e) { return null; }
 }
-
 async function loadTushareStatus() {
     try {
         const r = await fetch("data/tushare_status.json?t=" + Date.now(), {cache: "no-store"});
-        if (!r.ok) return null;
-        return await r.json();
+        if (!r.ok) return null; return await r.json();
     } catch (e) { return null; }
+}
+
+function showCmd(boxId, textId, lines) {
+    document.getElementById(boxId).classList.remove('hidden');
+    document.getElementById(textId).textContent = lines.join("\n");
+}
+
+function copyText(text, indicatorId) {
+    navigator.clipboard.writeText(text).then(() => {
+        const $i = document.getElementById(indicatorId);
+        $i.classList.remove('hidden');
+        setTimeout(() => $i.classList.add('hidden'), 2000);
+    });
 }
 
 (async function () {
     const auth = getAuthInfo();
-    if (!auth || auth.role !== "admin") return;   // requireAdmin 已处理跳转
+    if (!auth || auth.role !== "admin") return;
     document.getElementById('admin-info').textContent =
         `当前登录: ${auth.user} (管理员) · 设备 ID ${(auth.device || '').slice(0, 10)} · 凭证有效期至 ${auth.expire}`;
 
-    // 1. 账号统计
+    // === 改账号/密码 ===
+    const $randPwd = document.getElementById('rand-admin-pwd');
+    $randPwd.addEventListener('click', () => {
+        const cs = 'abcdefghjkmnpqrstvwxyzABCDEFGHJKLMNPQRSTVWXYZ23456789';
+        let pwd = '';
+        for (let i = 0; i < 14; i++) pwd += cs[Math.floor(Math.random() * cs.length)];
+        document.getElementById('new-admin-pwd').value = pwd;
+    });
+    document.getElementById('gen-admin-cmd').addEventListener('click', () => {
+        const u = document.getElementById('new-admin-user').value.trim();
+        const p = document.getElementById('new-admin-pwd').value.trim();
+        if (!p || p.length < 8) { alert('新密码至少 8 位'); return; }
+        let cmd;
+        if (u) {
+            cmd = [`python v26_production/manage_accounts.py admin-change-account ${u} '${p}'`,
+                   `bash v26_production/automation/run_update_site.sh`];
+        } else {
+            cmd = [`python v26_production/manage_accounts.py admin-change-pwd '${p}'`,
+                   `bash v26_production/automation/run_update_site.sh`];
+        }
+        showCmd('admin-cmd-output', 'admin-cmd-text', cmd);
+        document.getElementById('copy-admin-cmd').onclick = () =>
+            copyText(cmd.join("\n"), 'admin-cmd-copied');
+    });
+
+    // === 账号统计 ===
     const meta = await loadAdminMeta();
     if (meta) {
         const stats = [
@@ -154,22 +189,13 @@ async function loadTushareStatus() {
             ['已撤销/过期', (meta.n_revoked + meta.n_expired), 'text-red-500'],
         ];
         document.getElementById('acc-stats').innerHTML = stats.map(([k,v,c]) =>
-            `<div class="bg-gray-50 rounded p-3">
-                <div class="text-xs text-gray-500">${k}</div>
-                <div class="text-xl font-bold ${c}">${v}</div>
-            </div>`
+            `<div class="bg-gray-50 rounded p-3"><div class="text-xs text-gray-500">${k}</div><div class="text-xl font-bold ${c}">${v}</div></div>`
+        ).join('');
+        document.getElementById('acc-groups').innerHTML = Object.entries(meta.expire_groups || {}).map(([k,v]) =>
+            `<div class="bg-blue-50 rounded p-2 text-center"><div class="text-gray-600">${k}</div><div class="text-base font-bold text-indigo-600">${v}</div></div>`
         ).join('');
 
-        // 有效期分布
-        const grp = meta.expire_groups || {};
-        document.getElementById('acc-groups').innerHTML = Object.entries(grp).map(([k,v]) =>
-            `<div class="bg-blue-50 rounded p-2 text-center">
-                <div class="text-gray-600">${k}</div>
-                <div class="text-base font-bold text-indigo-600">${v}</div>
-            </div>`
-        ).join('');
-
-        // 账号列表
+        // 账号列表 + ETF 开关
         const tbody = document.getElementById('acc-table');
         tbody.innerHTML = meta.accounts.map(a => {
             const status = a.revoked ? '<span class="text-red-500">🚫 撤销</span>'
@@ -178,6 +204,11 @@ async function loadTushareStatus() {
             const roleBadge = a.role === 'admin'
                 ? '<span class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded text-xs">👑 管理员</span>'
                 : '<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs">👤 用户</span>';
+            const etfBtn = a.role === 'admin'
+                ? '<span class="text-xs text-gray-400">总是可见</span>'
+                : (a.etf_visible !== false
+                    ? `<button class="etf-toggle bg-green-500 text-white px-3 py-1 rounded text-xs" data-hash="${a.hash_prefix}" data-value="0">✅ 开启 → 关闭</button>`
+                    : `<button class="etf-toggle bg-gray-300 text-gray-700 px-3 py-1 rounded text-xs" data-hash="${a.hash_prefix}" data-value="1">🚫 关闭 → 开启</button>`);
             return `<tr class="${a.role === 'admin' ? 'bg-orange-50' : ''}">
                 <td class="px-3 py-2 font-mono">${a.hash_prefix}…</td>
                 <td class="px-3 py-2">${roleBadge}</td>
@@ -185,33 +216,61 @@ async function loadTushareStatus() {
                 <td class="px-3 py-2">${a.expire}</td>
                 <td class="px-3 py-2">${a.note}</td>
                 <td class="px-3 py-2">${status}</td>
+                <td class="px-3 py-2 text-center">${etfBtn}</td>
             </tr>`;
         }).join('');
+
+        // ETF 切换按钮: 因为静态站不能直接改, 用 hash_prefix 反查 user
+        // 但 admin_meta.json 不含 user 明文 (安全考虑), 所以只能让 admin 自己输入 user 名
+        // 简化: 点击后弹一个 prompt 问 user 明文
+        document.querySelectorAll('.etf-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const hashPrefix = btn.dataset.hash;
+                const value = btn.dataset.value;
+                const user = prompt(
+                    `要切换 ETF 可见性的账号 hash 前缀: ${hashPrefix}\n\n请输入对应的明文 user (在你本机 ~/.quant-site-accounts.json 里查):`,
+                    ''
+                );
+                if (!user) return;
+                const cmd = [
+                    `python v26_production/manage_accounts.py set-user-etf ${user.trim()} ${value}`,
+                    `bash v26_production/automation/run_update_site.sh`
+                ];
+                showCmd('op-cmd-output', 'op-cmd-text', cmd);
+                document.getElementById('op-cmd-output').scrollIntoView({behavior:'smooth'});
+                document.getElementById('copy-op-cmd').onclick = () =>
+                    copyText(cmd.join("\n"), 'op-cmd-copied');
+            });
+        });
     }
 
-    // 2. ETF 可见性
-    const cfg = await loadSiteConfig();
-    const elem = document.getElementById('etf-status');
-    if (cfg.etf_visible_to_users !== false) {
-        elem.textContent = '✅ 可见 (用户在导航和主页都能看到)';
-        elem.className = 'px-3 py-1 rounded font-bold bg-green-100 text-green-700';
-    } else {
-        elem.textContent = '🚫 隐藏 (用户看不到 ETF 板块轮动入口)';
-        elem.className = 'px-3 py-1 rounded font-bold bg-red-100 text-red-700';
-    }
+    // 批量 ETF
+    document.getElementById('batch-etf-on').addEventListener('click', () => {
+        const cmd = [
+            `python v26_production/manage_accounts.py set-all-users-etf 1`,
+            `bash v26_production/automation/run_update_site.sh`
+        ];
+        showCmd('op-cmd-output', 'op-cmd-text', cmd);
+        document.getElementById('copy-op-cmd').onclick = () => copyText(cmd.join("\n"), 'op-cmd-copied');
+    });
+    document.getElementById('batch-etf-off').addEventListener('click', () => {
+        const cmd = [
+            `python v26_production/manage_accounts.py set-all-users-etf 0`,
+            `bash v26_production/automation/run_update_site.sh`
+        ];
+        showCmd('op-cmd-output', 'op-cmd-text', cmd);
+        document.getElementById('copy-op-cmd').onclick = () => copyText(cmd.join("\n"), 'op-cmd-copied');
+    });
 
-    // 3. Tushare 状态
+    // Tushare 状态
     const tus = await loadTushareStatus();
     if (tus && tus.status === 'error') {
         document.getElementById('tushare-alert').classList.remove('hidden');
         document.getElementById('tushare-detail').innerHTML = `
             <p class="mb-2"><strong>状态:</strong> ${tus.message || 'API 调用失败'}</p>
             <p class="mb-2"><strong>最后检查:</strong> ${tus.checked_at || '-'}</p>
-            <p class="mb-2"><strong>影响:</strong> 数据更新可能停滞, 网站显示信息将逐渐过期</p>
-            <p class="text-xs">请检查 Tushare 账号积分 / token 有效期, 必要时在 <code class="bg-white px-1 rounded">v26_production/stock_data_daily_update.py</code> 更新 token.</p>
+            <p class="text-xs">请检查 Tushare 积分 / token, 必要时在 v26_production/stock_data_daily_update.py 更新.</p>
         `;
-    } else if (tus && tus.status === 'ok') {
-        // 不显示
     }
 })();
 </script>

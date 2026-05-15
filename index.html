@@ -29,6 +29,35 @@
         </div>
     </div>
 
+    <!-- 信号生成 / 出清 时间节点说明 -->
+    <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4 sm:p-6">
+        <h2 class="text-base sm:text-lg font-bold text-indigo-800 mb-3">⏰ 信号生成与出清的时间节点</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+            <div class="bg-white rounded p-3">
+                <p class="font-bold text-green-700 mb-1">🟢 信号生成 (Signal Generation)</p>
+                <p class="text-xs text-gray-700 leading-relaxed">
+                    每个交易日 <strong>15:00 收盘后</strong>, 引擎读取当日完整 OHLCV + 资金流数据,
+                    在 <strong>18:30 (本地)</strong> 完成信号计算并写入数据库.<br>
+                    <strong>对应入场动作</strong>: 在<strong>次日 (T+1) 9:25-9:30 集合竞价</strong>挂买单,
+                    撮合价以 9:30 开盘价 + 滑点为准.<br>
+                    <strong>不要在盘中追买</strong>, 错过开盘的信号视为放弃.
+                </p>
+            </div>
+            <div class="bg-white rounded p-3">
+                <p class="font-bold text-red-700 mb-1">🔴 信号出清 (Signal Exit)</p>
+                <p class="text-xs text-gray-700 leading-relaxed">
+                    引擎在每日 <strong>15:00 收盘后</strong>基于风控逻辑 (止损 / 快锁 / EarlyStop / MaxHold) 判定出清.<br>
+                    <strong>对应出场动作</strong>: 在<strong>次日 (T+1) 9:25-9:30 集合竞价</strong>挂卖单, 撮合价以 9:30 开盘价 - 滑点为准.<br>
+                    若遇到<strong>跌停封板</strong>或<strong>停牌</strong>, 出清顺延至次日, 引擎自动续判.
+                </p>
+            </div>
+        </div>
+        <p class="text-xs text-indigo-700 mt-3">
+            <strong>📌 本引擎为日频策略, 非日内策略</strong>: 所有信号在 EOD 计算, T+1 集合竞价撮合.
+            用户无需盯盘, 每个交易日 18:30 后管理员微信将收到次日操作清单, 19:00 自动更新本网站.
+        </p>
+    </div>
+
     <!-- 组合关键指标 -->
     <div class="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4" id="combo-metrics"></div>
 
@@ -82,7 +111,6 @@
             <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P15 印花税日期</strong>: 2023-08-28 后由 0.1% → 0.05% 切换</div>
             <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P16 现金生息</strong>: 闲置现金 2.5%/年 (RF) 日化</div>
             <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P17 EarlyStop 路径假设</strong>: 取保守 fallback 价</div>
-            <div class="bg-white rounded p-3 bg-yellow-50"><span class="text-yellow-600 font-bold">△</span> <strong>幸存者偏差</strong>: 数据集含部分退市股 (约 4%), 实际偏差约 +30% (数据层不可修)</div>
         </div>
         <p class="text-xs text-blue-700 mt-3"><strong>数据来源</strong>: Tushare Pro API (A 股日线/资金流/基本面) + 米筐回测准则.
             <strong>回测周期</strong>: 2018-01-02 ~ 2026-05-15 (8.4 年).
@@ -211,7 +239,7 @@ async function loadJSON(path) {
         document.getElementById('etf-grid').innerHTML = `
             <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">最近运行</div><div class="font-mono text-base">${e.last_run_date || '-'}</div></div>
             <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">累计净值</div><div class="font-mono text-base text-green-600">${(e.last_equity || 1.0).toFixed(3)}</div></div>
-            <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">当前持仓</div><div class="font-mono text-base">${(e.holdings || []).length}</div></div>
+            <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">当前信号持续</div><div class="font-mono text-base">${(e.holdings || []).length}</div></div>
             <div class="bg-white rounded p-3"><div class="text-gray-500 text-xs">历史交易</div><div class="font-mono text-base">${(e.trade_history || []).length}</div></div>
         `;
     }
