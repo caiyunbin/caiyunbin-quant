@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="assets/style.css">
     <script src="https://cdn.staticfile.net/echarts/5.4.3/echarts.min.js"></script>
     <script src="assets/auth.js"></script>
+    <script src="assets/compliance.js"></script>
     <script src="assets/nav.js"></script>
     <script>requireAuth();</script>
 </head>
@@ -24,7 +25,7 @@
         <p class="text-xs text-gray-400" id="meta-weights"></p>
         <p class="text-xs text-gray-400 mt-1" id="meta-generated"></p>
         <div class="mt-3">
-            <a href="signals.html" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">⭐ 查看今日推荐信号 →</a>
+            <a href="signals.html" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">⭐ 查看今日信号 →</a>
         </div>
     </div>
 
@@ -57,6 +58,35 @@
         </table>
         </div>
         <p class="text-xs text-gray-500 mt-3">⚠ 板块轮动 (ETF) 为独立策略，每日单独更新数据与信号，<strong>不并入总组合</strong>。</p>
+    </div>
+
+    <!-- 回测合规自查清单 + 米筐引擎说明 -->
+    <div class="bg-blue-50 border border-blue-200 shadow rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-blue-900 mb-2">✅ 回测合规自查清单</h2>
+        <p class="text-xs text-blue-700 mb-3">本回测引擎参考 <strong>米筐 RQAlpha</strong> (开源量化回测框架) 的设计准则, 全面对标其滑点/佣金/印花税/T+1 等模型. 以下回测常见陷阱已逐项排查处理:</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P1 停牌股权益消失</strong>: 用 running cache 持续 mark-to-market</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P2 微盘股流动性</strong>: 信号池要求 amount_20d ≥ 5000 万元</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P3 新股形态噪声</strong>: IPO 后 ≥ 90 个交易日才入场</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P4 涨停日假成交</strong>: 涨停封板时 QuickLock 不能成交</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P5 ST/退市股污染</strong>: close ≥ 5 元 + 过去 20 日 ≥ 18 日正常交易</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P6 复权日跳变</strong>: adj_factor 日变化 > 5% 跳过 entry/exit</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P7 真实滑点</strong>: 固定 15bps (对 amount ≥ 5e7 池合理)</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P8 T+1 持仓限制</strong>: 买入当日不可卖出</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P9 涨停一字板买入</strong>: 开盘 adj_open >= limit_up 时跳过</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P10 跌停无法卖出</strong>: 跌停封单时延后卖出</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P11 单日异常浮盈</strong>: 检测单日 > +15% 触发再核查</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P12 单日集中度</strong>: 单日新建仓 ≤ 2 只</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P13 T+1 资金结算</strong>: 卖出资金 settled / unsettled 分离</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P14 单笔成交量上限</strong>: 单笔 ≤ 5% × amount_20d</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P15 印花税日期</strong>: 2023-08-28 后由 0.1% → 0.05% 切换</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P16 现金生息</strong>: 闲置现金 2.5%/年 (RF) 日化</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P17 EarlyStop 路径假设</strong>: 取保守 fallback 价</div>
+            <div class="bg-white rounded p-3 bg-yellow-50"><span class="text-yellow-600 font-bold">△</span> <strong>幸存者偏差</strong>: 数据集含部分退市股 (约 4%), 实际偏差约 +30% (数据层不可修)</div>
+        </div>
+        <p class="text-xs text-blue-700 mt-3"><strong>数据来源</strong>: Tushare Pro API (A 股日线/资金流/基本面) + 米筐回测准则.
+            <strong>回测周期</strong>: 2018-01-02 ~ 2026-05-15 (8.4 年).
+            <strong>设计目标</strong>: 在严控回测坑的前提下做出可重现的 Sharpe 1.5+ 三策略组合.</p>
     </div>
 
     <!-- 年度收益 -->
@@ -171,8 +201,11 @@ async function loadJSON(path) {
         </tr>`;
     }).join('');
 
-    // ETF 独立卡片
-    if (latest.etf_state) {
+    // ETF 独立卡片 (根据 admin 控制 + 用户角色)
+    const cfg = await loadSiteConfig();
+    const auth = getAuthInfo();
+    const etfVisible = (auth && auth.role === 'admin') || cfg.etf_visible_to_users !== false;
+    if (latest.etf_state && etfVisible) {
         const e = latest.etf_state;
         document.getElementById('etf-card').style.display = '';
         document.getElementById('etf-grid').innerHTML = `

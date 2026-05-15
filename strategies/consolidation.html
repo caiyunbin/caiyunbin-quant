@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../assets/style.css">
     <script src="https://cdn.staticfile.net/echarts/5.4.3/echarts.min.js"></script>
     <script src="../assets/auth.js"></script>
+    <script src="../assets/compliance.js"></script>
     <script src="../assets/nav.js"></script>
     <script>requireAuth();</script>
 </head>
@@ -59,7 +60,7 @@
 
     <!-- 今日信号 (4 卡片) -->
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">⭐ 今日操作建议</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">⭐ 今日信号</h2>
         <div id="strat-signals"></div>
     </div>
 
@@ -200,7 +201,7 @@ async function loadJSON(p) {
         sigHtml += '</div>';
 
         // 卖出
-        sigHtml += '<div class="bg-red-50 rounded-lg p-4"><h3 class="text-sm font-bold text-red-900 mb-3">📤 明日开盘卖出 (' + (s.sell_today||[]).length + ')</h3>';
+        sigHtml += '<div class="bg-red-50 rounded-lg p-4"><h3 class="text-sm font-bold text-red-900 mb-3">📤 明日 T+1 信号出清 (' + (s.sell_today||[]).length + ')</h3>';
         if (s.sell_today && s.sell_today.length > 0) {
             sigHtml += '<ul class="space-y-2">' + s.sell_today.map(x =>
                 `<li class="bg-white px-3 py-2 rounded text-xs">
@@ -215,7 +216,7 @@ async function loadJSON(p) {
         sigHtml += '</div>';
 
         // 买入
-        sigHtml += '<div class="bg-green-50 rounded-lg p-4"><h3 class="text-sm font-bold text-green-900 mb-3">⭐ 明日开盘推荐买入 (' + (s.buy_today||[]).length + ')</h3>';
+        sigHtml += '<div class="bg-green-50 rounded-lg p-4"><h3 class="text-sm font-bold text-green-900 mb-3">⭐ 明日开盘信号生成 (' + (s.buy_today||[]).length + ')</h3>';
         if (s.buy_today && s.buy_today.length > 0) {
             sigHtml += '<ul class="space-y-2">' + s.buy_today.slice(0,8).map((ts,i) => {
                 let star = '';
@@ -231,8 +232,8 @@ async function loadJSON(p) {
         } else sigHtml += '<p class="text-xs text-gray-500">今日无信号</p>';
         sigHtml += '</div>';
 
-        // 已卖出
-        sigHtml += '<div class="bg-gray-100 rounded-lg p-4"><h3 class="text-sm font-bold text-gray-700 mb-3">✓ 最近已卖出 (' + (s.exited_recent||[]).length + ')</h3>';
+        // 历史出清
+        sigHtml += '<div class="bg-gray-100 rounded-lg p-4"><h3 class="text-sm font-bold text-gray-700 mb-3">✓ 最近历史出清 (' + (s.exited_recent||[]).length + ')</h3>';
         if (s.exited_recent && s.exited_recent.length > 0) {
             sigHtml += '<ul class="space-y-2">' + s.exited_recent.slice(-5).reverse().map(x =>
                 `<li class="bg-white px-3 py-2 rounded text-xs">
@@ -243,7 +244,7 @@ async function loadJSON(p) {
                     <div class="text-gray-500 mt-1">入 ${x.entry_date} → 退 ${x.exit_date} · ${x.reason}</div>
                 </li>`
             ).join('') + '</ul>';
-        } else sigHtml += '<p class="text-xs text-gray-500">无已卖出</p>';
+        } else sigHtml += '<p class="text-xs text-gray-500">无历史出清</p>';
         sigHtml += '</div>';
 
         sigHtml += '</div>';

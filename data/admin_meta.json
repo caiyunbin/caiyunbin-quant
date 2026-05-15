@@ -1,0 +1,478 @@
+{
+  "generated_at": "2026-05-15 09:16:35",
+  "n_total": 51,
+  "n_active": 51,
+  "n_admin": 1,
+  "n_user": 50,
+  "n_expired": 0,
+  "n_revoked": 0,
+  "accounts": [
+    {
+      "hash_prefix": "dd7d298e8dcb",
+      "role": "admin",
+      "expire": "2036-05-12",
+      "created": "2026-05-15",
+      "note": "管理员账号 (仅本人, 不可撤销)",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "a7524082c542",
+      "role": "user",
+      "expire": "2026-05-22",
+      "created": "2026-05-15",
+      "note": "批量 7d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "5522e1435d21",
+      "role": "user",
+      "expire": "2026-05-22",
+      "created": "2026-05-15",
+      "note": "批量 7d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "dd5293d71af4",
+      "role": "user",
+      "expire": "2026-05-22",
+      "created": "2026-05-15",
+      "note": "批量 7d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "983aac70d459",
+      "role": "user",
+      "expire": "2026-05-22",
+      "created": "2026-05-15",
+      "note": "批量 7d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "d265d93d990f",
+      "role": "user",
+      "expire": "2026-05-22",
+      "created": "2026-05-15",
+      "note": "批量 7d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "9013b38f546b",
+      "role": "user",
+      "expire": "2026-05-22",
+      "created": "2026-05-15",
+      "note": "批量 7d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "02fe00156775",
+      "role": "user",
+      "expire": "2026-05-22",
+      "created": "2026-05-15",
+      "note": "批量 7d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "b7ca575f54bd",
+      "role": "user",
+      "expire": "2026-05-22",
+      "created": "2026-05-15",
+      "note": "批量 7d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "1ae096fa9dea",
+      "role": "user",
+      "expire": "2026-05-22",
+      "created": "2026-05-15",
+      "note": "批量 7d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "47b3f8536f19",
+      "role": "user",
+      "expire": "2026-05-22",
+      "created": "2026-05-15",
+      "note": "批量 7d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "e45f0cc713e8",
+      "role": "user",
+      "expire": "2026-06-14",
+      "created": "2026-05-15",
+      "note": "批量 30d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "0e9a18cdeb1b",
+      "role": "user",
+      "expire": "2026-06-14",
+      "created": "2026-05-15",
+      "note": "批量 30d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "4d7cc54d9366",
+      "role": "user",
+      "expire": "2026-06-14",
+      "created": "2026-05-15",
+      "note": "批量 30d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "44e45cf808b1",
+      "role": "user",
+      "expire": "2026-06-14",
+      "created": "2026-05-15",
+      "note": "批量 30d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "d38d679eb9ce",
+      "role": "user",
+      "expire": "2026-06-14",
+      "created": "2026-05-15",
+      "note": "批量 30d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "c87b1df94dd3",
+      "role": "user",
+      "expire": "2026-06-14",
+      "created": "2026-05-15",
+      "note": "批量 30d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "de8295e2d6c7",
+      "role": "user",
+      "expire": "2026-06-14",
+      "created": "2026-05-15",
+      "note": "批量 30d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "98d2eb84e269",
+      "role": "user",
+      "expire": "2026-06-14",
+      "created": "2026-05-15",
+      "note": "批量 30d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "f8ad60ff671b",
+      "role": "user",
+      "expire": "2026-06-14",
+      "created": "2026-05-15",
+      "note": "批量 30d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "ec00aafa3e41",
+      "role": "user",
+      "expire": "2026-06-14",
+      "created": "2026-05-15",
+      "note": "批量 30d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "d41475239053",
+      "role": "user",
+      "expire": "2026-08-13",
+      "created": "2026-05-15",
+      "note": "批量 90d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "a5d9c9c52f10",
+      "role": "user",
+      "expire": "2026-08-13",
+      "created": "2026-05-15",
+      "note": "批量 90d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "bee58b79c348",
+      "role": "user",
+      "expire": "2026-08-13",
+      "created": "2026-05-15",
+      "note": "批量 90d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "3ff9e3b946f1",
+      "role": "user",
+      "expire": "2026-08-13",
+      "created": "2026-05-15",
+      "note": "批量 90d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "e811fac86429",
+      "role": "user",
+      "expire": "2026-08-13",
+      "created": "2026-05-15",
+      "note": "批量 90d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "6ca11b9fdba5",
+      "role": "user",
+      "expire": "2026-08-13",
+      "created": "2026-05-15",
+      "note": "批量 90d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "6786bee5ee48",
+      "role": "user",
+      "expire": "2026-08-13",
+      "created": "2026-05-15",
+      "note": "批量 90d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "07a220fb791c",
+      "role": "user",
+      "expire": "2026-08-13",
+      "created": "2026-05-15",
+      "note": "批量 90d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "84b942f4ca01",
+      "role": "user",
+      "expire": "2026-08-13",
+      "created": "2026-05-15",
+      "note": "批量 90d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "45f0985b487a",
+      "role": "user",
+      "expire": "2026-08-13",
+      "created": "2026-05-15",
+      "note": "批量 90d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "abf1563bca98",
+      "role": "user",
+      "expire": "2026-11-11",
+      "created": "2026-05-15",
+      "note": "批量 180d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "44432dede01c",
+      "role": "user",
+      "expire": "2026-11-11",
+      "created": "2026-05-15",
+      "note": "批量 180d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "4b6c043f3100",
+      "role": "user",
+      "expire": "2026-11-11",
+      "created": "2026-05-15",
+      "note": "批量 180d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "c910256aec6e",
+      "role": "user",
+      "expire": "2026-11-11",
+      "created": "2026-05-15",
+      "note": "批量 180d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "b73d28769214",
+      "role": "user",
+      "expire": "2026-11-11",
+      "created": "2026-05-15",
+      "note": "批量 180d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "4f9b06d54b2b",
+      "role": "user",
+      "expire": "2026-11-11",
+      "created": "2026-05-15",
+      "note": "批量 180d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "5bf0c3e1b620",
+      "role": "user",
+      "expire": "2026-11-11",
+      "created": "2026-05-15",
+      "note": "批量 180d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "b392bffa9d85",
+      "role": "user",
+      "expire": "2026-11-11",
+      "created": "2026-05-15",
+      "note": "批量 180d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "b126b94ba923",
+      "role": "user",
+      "expire": "2026-11-11",
+      "created": "2026-05-15",
+      "note": "批量 180d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "6b814ddd6801",
+      "role": "user",
+      "expire": "2026-11-11",
+      "created": "2026-05-15",
+      "note": "批量 180d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "f7eaa92948bb",
+      "role": "user",
+      "expire": "2027-05-15",
+      "created": "2026-05-15",
+      "note": "批量 365d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "7389ac03a615",
+      "role": "user",
+      "expire": "2027-05-15",
+      "created": "2026-05-15",
+      "note": "批量 365d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "7d5f591cb3c8",
+      "role": "user",
+      "expire": "2027-05-15",
+      "created": "2026-05-15",
+      "note": "批量 365d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "3bf55c0030a3",
+      "role": "user",
+      "expire": "2027-05-15",
+      "created": "2026-05-15",
+      "note": "批量 365d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "9dd9aa4afb4d",
+      "role": "user",
+      "expire": "2027-05-15",
+      "created": "2026-05-15",
+      "note": "批量 365d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "ef16a6714b10",
+      "role": "user",
+      "expire": "2027-05-15",
+      "created": "2026-05-15",
+      "note": "批量 365d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "7160b33775f0",
+      "role": "user",
+      "expire": "2027-05-15",
+      "created": "2026-05-15",
+      "note": "批量 365d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "de763967abc6",
+      "role": "user",
+      "expire": "2027-05-15",
+      "created": "2026-05-15",
+      "note": "批量 365d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "41bed634f48b",
+      "role": "user",
+      "expire": "2027-05-15",
+      "created": "2026-05-15",
+      "note": "批量 365d",
+      "revoked": false,
+      "active": true
+    },
+    {
+      "hash_prefix": "b086f9f0e35b",
+      "role": "user",
+      "expire": "2027-05-15",
+      "created": "2026-05-15",
+      "note": "批量 365d",
+      "revoked": false,
+      "active": true
+    }
+  ],
+  "expire_groups": {
+    "≤7天": 10,
+    "8-30天": 10,
+    "31-90天": 10,
+    "91-180天": 10,
+    "181天+": 10,
+    "过期/撤销": 0
+  }
+}

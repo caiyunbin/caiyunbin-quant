@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 · 多子策略决策引擎</title>
+    <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/auth.js"></script>
+    <script src="assets/compliance.js"></script>
+    <script src="assets/nav.js"></script>
+    <script>requireAdmin();</script>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+<script>renderNav(false);</script>
+
+<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 w-full">
+<div class="space-y-6">
+
+    <div class="bg-orange-50 border-l-4 border-orange-500 rounded-lg p-4 sm:p-6">
+        <h1 class="text-2xl sm:text-3xl font-bold text-orange-800 mb-2">⚙️ 管理后台</h1>
+        <p class="text-sm text-orange-700">仅管理员可见. 显示账号池状态、ETF 可见性开关、Tushare 接口状态等.</p>
+        <p class="text-xs text-orange-600 mt-1" id="admin-info"></p>
+    </div>
+
+    <!-- Tushare 状态告警 -->
+    <div id="tushare-alert" class="hidden bg-red-50 border-l-4 border-red-600 rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-red-800 mb-2">🚨 Tushare 接口异常</h2>
+        <div id="tushare-detail" class="text-sm text-red-700"></div>
+    </div>
+
+    <!-- 账号统计 -->
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">📊 账号池统计</h2>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="acc-stats"></div>
+        <div class="mt-4">
+            <h3 class="text-sm font-bold text-gray-600 mb-2">用户账号有效期分布</h3>
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-2 text-xs" id="acc-groups"></div>
+        </div>
+    </div>
+
+    <!-- 账号列表 -->
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">📜 账号列表 (脱敏)</h2>
+        <p class="text-xs text-gray-500 mb-3">⚠ 网站仅显示 sha256 hash 前 12 位 + 元数据. 完整账号密码请查本机 <code class="bg-gray-100 px-1 rounded">~/.quant-site-accounts.json</code></p>
+        <div class="scroll-x">
+        <table class="min-w-full text-xs sm:text-sm divide-y">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-3 py-2 text-left">Token (脱敏)</th>
+                    <th class="px-3 py-2 text-left">角色</th>
+                    <th class="px-3 py-2 text-left">创建</th>
+                    <th class="px-3 py-2 text-left">到期</th>
+                    <th class="px-3 py-2 text-left">备注</th>
+                    <th class="px-3 py-2 text-left">状态</th>
+                </tr>
+            </thead>
+            <tbody id="acc-table" class="divide-y"></tbody>
+        </table>
+        </div>
+    </div>
+
+    <!-- ETF 可见性开关 -->
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">🏦 板块轮动 (ETF) 模块可见性</h2>
+        <div class="flex items-center gap-3 mb-3">
+            <span class="text-sm">当前对用户:</span>
+            <span id="etf-status" class="px-3 py-1 rounded font-bold"></span>
+        </div>
+        <p class="text-xs text-gray-500 mb-3">⚠ 静态站不能直接 toggle. 切换可见性需要在本机执行以下命令并 push:</p>
+        <div class="bg-gray-900 text-green-300 font-mono text-xs p-3 rounded overflow-x-auto">
+            <div># 设置为对用户可见</div>
+            <div>python v26_production/manage_accounts.py set-etf-visible 1</div>
+            <div class="mt-2"># 设置为隐藏</div>
+            <div>python v26_production/manage_accounts.py set-etf-visible 0</div>
+            <div class="mt-2"># 让改动生效</div>
+            <div>bash v26_production/automation/run_update_site.sh</div>
+        </div>
+    </div>
+
+    <!-- 改管理员密码 -->
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">🔑 修改管理员密码</h2>
+        <p class="text-xs text-gray-500 mb-3">⚠ 静态站不能直接改密码. 在本机执行 (替换 NEW_PWD 为新密码, 建议 12 位以上字母数字):</p>
+        <div class="bg-gray-900 text-green-300 font-mono text-xs p-3 rounded overflow-x-auto">
+            <div>python v26_production/manage_accounts.py admin-change-pwd <span class="text-yellow-300">NEW_PWD</span></div>
+            <div>bash v26_production/automation/run_update_site.sh</div>
+        </div>
+    </div>
+
+    <!-- 生成/管理用户账号 -->
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">👥 用户账号操作 (CLI 提示)</h2>
+        <div class="space-y-4 text-xs">
+            <div>
+                <div class="font-bold mb-1 text-gray-700">生成 N 个新账号 (默认 7 天)</div>
+                <code class="block bg-gray-900 text-green-300 font-mono p-3 rounded overflow-x-auto">python v26_production/manage_accounts.py gen 10 --days 7</code>
+            </div>
+            <div>
+                <div class="font-bold mb-1 text-gray-700">批量生成 50 个 (7/30/90/180/365 各 10)</div>
+                <code class="block bg-gray-900 text-green-300 font-mono p-3 rounded overflow-x-auto">python v26_production/manage_accounts.py gen-batch</code>
+            </div>
+            <div>
+                <div class="font-bold mb-1 text-gray-700">撤销账号 (实时生效)</div>
+                <code class="block bg-gray-900 text-green-300 font-mono p-3 rounded overflow-x-auto">python v26_production/manage_accounts.py revoke u2hermd7</code>
+            </div>
+            <div>
+                <div class="font-bold mb-1 text-gray-700">续期账号</div>
+                <code class="block bg-gray-900 text-green-300 font-mono p-3 rounded overflow-x-auto">python v26_production/manage_accounts.py extend u2hermd7 --days 30</code>
+            </div>
+            <div>
+                <div class="font-bold mb-1 text-gray-700">让所有改动生效 (推送到 GitHub)</div>
+                <code class="block bg-gray-900 text-green-300 font-mono p-3 rounded overflow-x-auto">bash v26_production/automation/run_update_site.sh</code>
+            </div>
+        </div>
+    </div>
+
+</div>
+</main>
+
+<script>renderFooter();</script>
+
+<script>
+async function loadAdminMeta() {
+    try {
+        const r = await fetch("data/admin_meta.json?t=" + Date.now(), {cache: "no-store"});
+        if (!r.ok) return null;
+        return await r.json();
+    } catch (e) { return null; }
+}
+
+async function loadTushareStatus() {
+    try {
+        const r = await fetch("data/tushare_status.json?t=" + Date.now(), {cache: "no-store"});
+        if (!r.ok) return null;
+        return await r.json();
+    } catch (e) { return null; }
+}
+
+(async function () {
+    const auth = getAuthInfo();
+    if (!auth || auth.role !== "admin") return;   // requireAdmin 已处理跳转
+    document.getElementById('admin-info').textContent =
+        `当前登录: ${auth.user} (管理员) · 设备 ID ${(auth.device || '').slice(0, 10)} · 凭证有效期至 ${auth.expire}`;
+
+    // 1. 账号统计
+    const meta = await loadAdminMeta();
+    if (meta) {
+        const stats = [
+            ['账号总数', meta.n_total, 'text-gray-700'],
+            ['有效账号', meta.n_active, 'text-green-600'],
+            ['管理员', meta.n_admin, 'text-orange-600'],
+            ['用户 (有效)', meta.n_user, 'text-indigo-600'],
+            ['已撤销/过期', (meta.n_revoked + meta.n_expired), 'text-red-500'],
+        ];
+        document.getElementById('acc-stats').innerHTML = stats.map(([k,v,c]) =>
+            `<div class="bg-gray-50 rounded p-3">
+                <div class="text-xs text-gray-500">${k}</div>
+                <div class="text-xl font-bold ${c}">${v}</div>
+            </div>`
+        ).join('');
+
+        // 有效期分布
+        const grp = meta.expire_groups || {};
+        document.getElementById('acc-groups').innerHTML = Object.entries(grp).map(([k,v]) =>
+            `<div class="bg-blue-50 rounded p-2 text-center">
+                <div class="text-gray-600">${k}</div>
+                <div class="text-base font-bold text-indigo-600">${v}</div>
+            </div>`
+        ).join('');
+
+        // 账号列表
+        const tbody = document.getElementById('acc-table');
+        tbody.innerHTML = meta.accounts.map(a => {
+            const status = a.revoked ? '<span class="text-red-500">🚫 撤销</span>'
+                         : !a.active ? '<span class="text-gray-400">⏰ 过期</span>'
+                         : '<span class="text-green-600">✅ 有效</span>';
+            const roleBadge = a.role === 'admin'
+                ? '<span class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded text-xs">👑 管理员</span>'
+                : '<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs">👤 用户</span>';
+            return `<tr class="${a.role === 'admin' ? 'bg-orange-50' : ''}">
+                <td class="px-3 py-2 font-mono">${a.hash_prefix}…</td>
+                <td class="px-3 py-2">${roleBadge}</td>
+                <td class="px-3 py-2">${a.created}</td>
+                <td class="px-3 py-2">${a.expire}</td>
+                <td class="px-3 py-2">${a.note}</td>
+                <td class="px-3 py-2">${status}</td>
+            </tr>`;
+        }).join('');
+    }
+
+    // 2. ETF 可见性
+    const cfg = await loadSiteConfig();
+    const elem = document.getElementById('etf-status');
+    if (cfg.etf_visible_to_users !== false) {
+        elem.textContent = '✅ 可见 (用户在导航和主页都能看到)';
+        elem.className = 'px-3 py-1 rounded font-bold bg-green-100 text-green-700';
+    } else {
+        elem.textContent = '🚫 隐藏 (用户看不到 ETF 板块轮动入口)';
+        elem.className = 'px-3 py-1 rounded font-bold bg-red-100 text-red-700';
+    }
+
+    // 3. Tushare 状态
+    const tus = await loadTushareStatus();
+    if (tus && tus.status === 'error') {
+        document.getElementById('tushare-alert').classList.remove('hidden');
+        document.getElementById('tushare-detail').innerHTML = `
+            <p class="mb-2"><strong>状态:</strong> ${tus.message || 'API 调用失败'}</p>
+            <p class="mb-2"><strong>最后检查:</strong> ${tus.checked_at || '-'}</p>
+            <p class="mb-2"><strong>影响:</strong> 数据更新可能停滞, 网站显示信息将逐渐过期</p>
+            <p class="text-xs">请检查 Tushare 账号积分 / token 有效期, 必要时在 <code class="bg-white px-1 rounded">v26_production/stock_data_daily_update.py</code> 更新 token.</p>
+        `;
+    } else if (tus && tus.status === 'ok') {
+        // 不显示
+    }
+})();
+</script>
+</body>
+</html>
