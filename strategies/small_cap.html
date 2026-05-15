@@ -80,6 +80,7 @@ const META_MAP = {
         sub:   "涨幅 + 主力 + 量比 三维 rank-delta 跃升 + 低位过滤 + 7 因子综合加权",
         alpha: "捕捉小盘股的「今天突然冒头」 — 主力资金排名跃升 ≥ 21.5% + 涨幅排名跃升 ∈ [7.5, 24]",
         alpha_user: "捕捉小盘股的「今日异动 + 资金跃升」类信号 (具体阈值不公开)",
+        sub_user: "适配中小盘活跃、流动性宽松的市场环境. 当市场风格偏向题材、成长、超跌反弹时, 该策略的 Alpha 爆发最强.",
         pool:  "A 股小盘股池 (无市值上限, 持仓中位流通市值 30-80 亿)",
         weight: 0.05, sigKey: "小盘动量",
     },
@@ -88,6 +89,7 @@ const META_MAP = {
         sub:   "流通市值 ≥ 200 亿 + 连续 3 日主力净流入 + 突破 20 日新高",
         alpha: "捕捉大盘股的趋势性建仓 — 主力建仓 + 突破 + 加固风控 (止损 -3% / MA40 macro)",
         alpha_user: "捕捉大盘股的「主力建仓 + 突破」类趋势信号 (具体阈值不公开)",
+        sub_user: "适配大盘股趋势行情. 当主力资金持续入场、市场风格切到价值蓝筹、突破前期高点时, 该策略的 Alpha 爆发最强.",
         pool:  "A 股大盘股 (流通市值 ≥ 200 亿元)",
         weight: 0.45, sigKey: "大盘突破",
     },
@@ -96,6 +98,7 @@ const META_MAP = {
         sub:   "MA5>MA20>MA60 多头 5-29 天 + 横盘 (MA5 斜率<0.5%) + 紧贴 MA5 (偏离度<2.5%)",
         alpha: "捕捉趋势中段的低波动洗盘窗口, EarlyStop 锁利 +8.4% (rqalpha-grade 17 项坑全修)",
         alpha_user: "捕捉「上涨横盘形态」中的低波动洗盘窗口, 含锁利机制 (具体阈值不公开)",
+        sub_user: "适配震荡上行行情中的低波动洗盘期. 当大盘已在上升通道、个股出现紧贴均线的窄幅盘整时, 该策略的 Alpha 爆发最强.",
         pool:  "A 股 amount_20d ≥ 5000万, IPO 后 ≥ 90 天, close ≥ 5",
         weight: 0.50, sigKey: "上涨横盘",
     },
@@ -104,6 +107,7 @@ const META_MAP = {
         sub:   "首买 z 得分 > 0.60 + 板块排名反转 < -0.30 + 拥挤度 < 0.50 + 周线确认 + 60 日强平",
         alpha: "捕捉板块的机构首买信号 (独立策略, 不并入主组合, 不推送微信)",
         alpha_user: "捕捉板块的「机构首买 + 拥挤度低」类轮动信号 (具体阈值不公开)",
+        sub_user: "适配板块轮动行情. 当某板块出现机构集中首买、拥挤度尚低、周线确认走强时, 该策略的 Alpha 爆发最强.",
         pool:  "45 板块 + 沪深 300 子指数 ETF 池",
         weight: null, sigKey: null,
     },
@@ -123,7 +127,7 @@ async function loadJSON(p) {
     const m = META_MAP[STRAT_KEY];
     document.title = m.title + " · 多子策略决策引擎";
     document.getElementById('strat-title').textContent = m.title;
-    document.getElementById('strat-subtitle').textContent = m.sub;
+    document.getElementById('strat-subtitle').textContent = isAdmin() ? m.sub : (m.sub_user || m.sub);
     document.getElementById('strat-weight').textContent =
         m.weight === null ? "独立运行 — 不并入主组合" : `在 V27 主组合中占比 ${(m.weight*100).toFixed(0)}%`;
     document.getElementById('strat-generated').textContent =
