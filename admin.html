@@ -87,6 +87,20 @@
     </div>
 
 
+    <!-- 解密提示卡 (没解密成功时显示) -->
+    <div id="decrypt-card" class="hidden bg-yellow-50 border-l-4 border-yellow-500 rounded-lg p-4 sm:p-6">
+        <h2 class="text-xl font-bold text-yellow-800 mb-2">🔓 解锁账号明文 (一次即可)</h2>
+        <p class="text-sm text-yellow-700 mb-3">
+            账号列表显示"解密失败"是因为本浏览器还没解密过. 输入你的 <strong>管理员密码</strong>, 用它解锁本机加密的账号清单.<br>
+            解密后**永久保存**在本浏览器, 后续无感. 退出登录时清空.
+        </p>
+        <div class="flex gap-2 flex-wrap items-center">
+            <input type="password" id="decrypt-pwd" class="flex-1 min-w-[200px] px-4 py-3 border border-gray-300 rounded-md font-mono" placeholder="输入管理员密码">
+            <button id="decrypt-btn" class="bg-yellow-600 text-white px-5 py-3 rounded font-bold hover:bg-yellow-700">🔓 解锁</button>
+        </div>
+        <p id="decrypt-status" class="text-sm mt-3"></p>
+    </div>
+
     <!-- ⑥ 分发统计 -->
     <div class="bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 rounded-lg p-4 sm:p-6">
         <h2 class="text-xl font-bold text-purple-800 mb-3">📊 账号分发情况</h2>
@@ -592,10 +606,44 @@ document.getElementById('clear-all-notes').addEventListener('click', () => {
     renderAccGroups(window.__cached_meta_accounts || []);
 });
 
-// 页面加载: 检查是否已解密
-if (getDecryptedAccounts()) {
-    console.log("✅ 已自动解密 " + getDecryptedAccounts().length + " 个账号");
-}
+// 页面加载: 检测解密状态, 没解密则显示解锁卡片
+(function () {
+    const $card = document.getElementById('decrypt-card');
+    const $btn  = document.getElementById('decrypt-btn');
+    const $pwd  = document.getElementById('decrypt-pwd');
+    const $status = document.getElementById('decrypt-status');
+
+    function refreshDecryptState() {
+        if (getDecryptedAccounts()) {
+            $card.classList.add('hidden');
+        } else {
+            $card.classList.remove('hidden');
+            $status.innerHTML = '<span class="text-yellow-700">⚠ 当前未解锁, 复制按钮不可用</span>';
+        }
+    }
+
+    $btn.addEventListener('click', async () => {
+        const pwd = $pwd.value.trim();
+        if (!pwd) { $status.innerHTML = '<span class="text-red-600">⚠ 请输入密码</span>'; return; }
+        $status.innerHTML = '<span class="text-blue-600">⏳ 解密中...</span>';
+        const r = await decryptAdminCreds(pwd);
+        if (r.ok) {
+            $status.innerHTML = `<span class="text-green-600 font-bold">✅ 解锁成功! 已解密 ${r.n} 个账号. 1 秒后刷新列表...</span>`;
+            $pwd.value = '';
+            setTimeout(() => {
+                refreshDecryptState();
+                renderAccGroups(window.__cached_meta_accounts || []);
+            }, 1000);
+        } else {
+            $status.innerHTML = '<span class="text-red-600">❌ ' + r.msg + '</span>';
+        }
+    });
+
+    // 回车提交
+    $pwd.addEventListener('keydown', (e) => { if (e.key === 'Enter') $btn.click(); });
+
+    refreshDecryptState();
+})();
 </script>
 </body>
 </html>

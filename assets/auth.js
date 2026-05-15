@@ -122,7 +122,7 @@ function logout() {
     // 仅清登录态, 保留 device_id 和 compliance (用户身份保留)
     localStorage.removeItem(__AUTH_KEY);
     // admin 的解密明文清单一并清除
-    sessionStorage.removeItem(__CREDS_SESSION_KEY);
+    localStorage.removeItem(__CREDS_LOCAL_KEY);
     const isSub = window.location.pathname.includes('/strategies/');
     window.location.href = isSub ? "../login.html" : "login.html";
 }
@@ -145,9 +145,10 @@ function isAdmin() {
 }
 
 // ============================================================
-// admin 专属: 用密码解密 admin_creds.enc.json → sessionStorage
+// admin 专属: 用密码解密 admin_creds.enc.json → localStorage
+// (改用 localStorage 是因为 sessionStorage 关浏览器就清空, 用户体验差)
 // ============================================================
-const __CREDS_SESSION_KEY = "caiman_creds_session";
+const __CREDS_LOCAL_KEY = "caiman_creds_decrypted_2026";
 
 async function _decryptAesGcm(blob, password) {
     const dec = new TextDecoder();
@@ -178,21 +179,29 @@ async function _loadCredsEnc() {
     } catch (e) { return null; }
 }
 
-// 登录成功后调用: admin 角色才尝试解密
-async function _maybeDecryptAdminCreds(password) {
+// 登录成功后调用, 或 admin 手动重新解密时调用
+// 返回 {ok: true, n: N} 或 {ok: false, msg: ...}
+async function decryptAdminCreds(password) {
     try {
         const blob = await _loadCredsEnc();
-        if (!blob) return;
+        if (!blob) return { ok: false, msg: "admin_creds.enc.json 不存在或无法访问" };
         const plain = await _decryptAesGcm(blob, password);
-        sessionStorage.setItem(__CREDS_SESSION_KEY, plain);
+        localStorage.setItem(__CREDS_LOCAL_KEY, plain);
+        const obj = JSON.parse(plain);
+        return { ok: true, n: (obj.accounts || []).length };
     } catch (e) {
-        console.warn("admin creds 解密失败:", e.message);
-        sessionStorage.removeItem(__CREDS_SESSION_KEY);
+        localStorage.removeItem(__CREDS_LOCAL_KEY);
+        return { ok: false, msg: "解密失败 (密码可能与加密时不一致): " + e.message };
     }
 }
 
+// 兼容旧接口名 (不抛错)
+async function _maybeDecryptAdminCreds(password) {
+    await decryptAdminCreds(password);
+}
+
 function getDecryptedAccounts() {
-    const raw = sessionStorage.getItem(__CREDS_SESSION_KEY);
+    const raw = localStorage.getItem(__CREDS_LOCAL_KEY);
     if (!raw) return null;
     try {
         const obj = JSON.parse(raw);
@@ -201,7 +210,7 @@ function getDecryptedAccounts() {
 }
 
 function clearDecryptedCreds() {
-    sessionStorage.removeItem(__CREDS_SESSION_KEY);
+    localStorage.removeItem(__CREDS_LOCAL_KEY);
 }
 
 // 查当前登录用户的 ETF 可见性 (从 auth_pool.etf_prefs[token] 读)
