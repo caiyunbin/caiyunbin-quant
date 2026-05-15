@@ -9,6 +9,7 @@
     <script src="assets/auth.js"></script>
     <script src="assets/compliance.js"></script>
     <script src="assets/admin_api.js"></script>
+    <script src="assets/pat_wizard.js"></script>
     <script src="assets/nav.js"></script>
     <script>requireAdmin();</script>
 </head>
@@ -26,18 +27,17 @@
 
     <!-- ① GitHub PAT 配置 -->
     <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-blue-800 mb-2">🔑 GitHub PAT 配置 (一次性, 让 toggle 即时生效)</h2>
-        <p class="text-xs text-blue-700 mb-3">PAT 仅保存在你这个浏览器的 LocalStorage, 永不进入 GitHub 仓库. 用于直接调 GitHub API 修改 auth_pool.json. 配置后, 后台所有切换/改密码立即生效.</p>
-        <p class="text-xs text-blue-700 mb-3">
-            ⏬ 还没生成? 点 <a href="https://github.com/settings/tokens/new?scopes=repo&description=caiyunbin-quant-admin" target="_blank" class="text-blue-600 underline font-bold">这里去生成 PAT</a> (scope 选 <code class="bg-white px-1">repo</code>, 建议 90 天到期).
-        </p>
-        <div class="flex gap-2 flex-wrap">
-            <input type="password" id="pat-input" placeholder="粘贴 PAT (ghp_xxx...)" class="flex-1 min-w-[200px] px-3 py-2 border border-gray-300 rounded-md font-mono text-sm">
-            <button id="save-pat" class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-blue-700">保存</button>
-            <button id="test-pat" class="bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm font-medium hover:bg-gray-300">测试</button>
-            <button id="clear-pat" class="bg-red-500 text-white px-4 py-2 rounded text-sm font-medium hover:bg-red-600">清除</button>
+        <h2 class="text-xl font-bold text-blue-800 mb-2">🔑 GitHub PAT 状态</h2>
+        <p class="text-xs text-blue-700 mb-3">首次进入时已自动弹出向导. 后续如需换 PAT, 点下方按钮重新打开向导.</p>
+        <div class="flex gap-2 flex-wrap items-center">
+            <button id="open-wizard" class="bg-orange-600 text-white px-5 py-2 rounded text-sm font-bold hover:bg-orange-700">🧙 重新打开配置向导</button>
+            <button id="test-pat" class="bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm font-medium hover:bg-gray-300">🔄 测试当前 PAT</button>
+            <button id="clear-pat" class="bg-red-500 text-white px-4 py-2 rounded text-sm font-medium hover:bg-red-600">🗑️ 清除 PAT</button>
         </div>
         <p id="pat-status" class="text-sm mt-3"></p>
+        <!-- 隐藏的输入框 (向导用) -->
+        <input type="hidden" id="pat-input">
+        <button id="save-pat" class="hidden"></button>
     </div>
 
     <!-- ② Tushare 状态告警 -->
@@ -130,33 +130,30 @@ function showStatus(elId, msg, type) {
                     type === 'warn' ? 'text-yellow-600 text-sm' : 'text-gray-600 text-sm';
 }
 
-// === PAT 配置 ===
-(function () {
-    const $input = document.getElementById('pat-input');
+// === PAT 状态显示 ===
+function refreshPATStatus() {
     if (adminHasPAT()) {
-        $input.value = '••••••••••••' + adminGetPAT().slice(-4);
-        showStatus('pat-status', '✅ 已配置 PAT (' + adminGetPAT().slice(0, 7) + '...' + adminGetPAT().slice(-4) + ')', 'ok');
+        const pat = adminGetPAT();
+        showStatus('pat-status', '✅ 已配置 PAT (' + pat.slice(0, 7) + '...' + pat.slice(-4) + ') · 后台所有操作可即时生效', 'ok');
     } else {
-        showStatus('pat-status', '⚠ 未配置 PAT, 所有 toggle/改密码无法生效', 'warn');
+        showStatus('pat-status', '⚠ 未配置 PAT, 点 "🧙 重新打开配置向导" 1 分钟搞定', 'warn');
     }
-    document.getElementById('save-pat').addEventListener('click', () => {
-        const v = $input.value.trim();
-        if (!v || v.startsWith('•')) { showStatus('pat-status', '请输入新 PAT', 'err'); return; }
-        adminSetPAT(v);
-        $input.value = '••••••••••••' + v.slice(-4);
-        showStatus('pat-status', '✅ PAT 已保存, 建议先点"测试"', 'ok');
-    });
+}
+(function () {
+    refreshPATStatus();
+    document.getElementById('open-wizard').addEventListener('click', () => showPATWizard());
     document.getElementById('test-pat').addEventListener('click', async () => {
+        if (!adminHasPAT()) { showStatus('pat-status', '⚠ 还没配置 PAT, 请先用向导配置', 'warn'); return; }
         showStatus('pat-status', '⏳ 测试中...', 'info');
         const r = await adminTestPAT();
         if (r.ok) showStatus('pat-status', '✅ PAT 正常 (可读 auth_pool.json)', 'ok');
         else showStatus('pat-status', '❌ ' + r.msg, 'err');
     });
     document.getElementById('clear-pat').addEventListener('click', () => {
-        if (confirm('确定清除已保存的 PAT? 之后所有 toggle/改密码会失效, 必须重新配置.')) {
+        if (confirm('确定清除已保存的 PAT? 之后所有 toggle/改密码会失效.')) {
             adminClearPAT();
-            $input.value = '';
-            showStatus('pat-status', '✅ PAT 已清除', 'warn');
+            refreshPATStatus();
+            if (typeof updateChangeCredUI === 'function') updateChangeCredUI();
         }
     });
 })();
@@ -225,6 +222,9 @@ updateChangeCredUI();
     if (!auth || auth.role !== "admin") return;
     document.getElementById('admin-info').textContent =
         `当前登录: ${auth.user} (管理员) · 设备 ID ${(auth.device || '').slice(0, 10)} · 凭证有效期至 ${auth.expire}`;
+
+    // ⭐ 首次进入 (没配 PAT 或 PAT 失效) 弹出向导
+    setTimeout(() => showPATWizardIfNeeded(), 800);
 
     const meta = await loadAdminMeta();
     if (meta) {
