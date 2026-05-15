@@ -48,23 +48,30 @@
 
     <!-- ③ 改管理员账号 / 密码 -->
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">🔐 修改管理员账号 / 密码</h2>
-        <p class="text-xs text-gray-500 mb-4">填好后点"💾 保存", 立即生效. 下次登录用新账号密码. 当前浏览器登录态会自动延续, 不会被踢出.</p>
+        <h2 class="text-xl font-bold text-gray-800 mb-2">🔐 修改管理员账号 / 密码</h2>
+        <div id="pat-warning-admin" class="hidden bg-yellow-50 border border-yellow-300 rounded p-3 mb-4 text-sm text-yellow-800">
+            ⚠ <strong>请先在上方"GitHub PAT 配置"模块保存 PAT</strong>, 否则保存按钮无效. PAT 是让网页能改 GitHub 文件的钥匙, 仅本浏览器存一次.
+        </div>
+        <div id="pat-ok-admin" class="hidden bg-green-50 border border-green-300 rounded p-3 mb-4 text-sm text-green-800">
+            ✅ PAT 已配置, 可以直接保存. 流程: ① 填新密码 → ② 点"💾 保存" → ③ 立即生效 + 弹窗显示新账号密码 → ④ 截图保存.
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">新账号 <span class="text-gray-400 text-xs">(留空 = 仅改密码)</span></label>
-                <input type="text" id="new-admin-user" class="w-full px-4 py-2 border border-gray-300 rounded-md font-mono" placeholder="例: admin_xxx (a 开头)">
+                <label class="block text-sm font-medium text-gray-700 mb-1">新账号</label>
+                <input type="text" id="new-admin-user" class="w-full px-4 py-3 border border-gray-300 rounded-md font-mono text-base" placeholder="留空 = 账号不变, 仅改密码">
+                <p class="text-xs text-gray-400 mt-1">当前账号: <code class="bg-gray-100 px-1" id="cur-admin-user">-</code></p>
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">新密码 <span class="text-red-500 text-xs">必填, ≥ 8 位</span></label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">新密码 <span class="text-red-500 text-xs">必填, 至少 8 位</span></label>
                 <div class="flex gap-1">
-                    <input type="text" id="new-admin-pwd" class="flex-1 px-4 py-2 border border-gray-300 rounded-md font-mono" placeholder="例: AbCd1234EfGh">
-                    <button id="rand-admin-pwd" class="bg-gray-200 text-gray-700 px-3 rounded text-sm">🎲</button>
+                    <input type="text" id="new-admin-pwd" class="flex-1 px-4 py-3 border border-gray-300 rounded-md font-mono text-base" placeholder="例: AbCd1234EfGh">
+                    <button id="rand-admin-pwd" class="bg-gray-200 text-gray-700 px-3 rounded text-sm" title="随机生成 14 位强密码">🎲</button>
                 </div>
+                <p class="text-xs text-gray-400 mt-1">⚠ 点保存后立即生效, 旧密码失效. 务必先记下新密码.</p>
             </div>
         </div>
-        <button id="save-admin-cred" class="bg-orange-600 text-white px-6 py-2 rounded-md font-medium hover:bg-orange-700">💾 保存</button>
+        <button id="save-admin-cred" class="bg-orange-600 text-white px-8 py-3 rounded-md font-bold hover:bg-orange-700 disabled:opacity-40 disabled:cursor-not-allowed" disabled>💾 保存 (尚未配置 PAT)</button>
         <span id="admin-cred-result" class="ml-3 text-sm"></span>
     </div>
 
@@ -168,6 +175,26 @@ function showStatus(elId, msg, type) {
 })();
 
 // === 改管理员账号/密码 ===
+function updateChangeCredUI() {
+    const auth = getAuthInfo();
+    const $curU = document.getElementById('cur-admin-user');
+    if ($curU && auth) $curU.textContent = auth.user;
+
+    const has = adminHasPAT();
+    const $warn = document.getElementById('pat-warning-admin');
+    const $ok   = document.getElementById('pat-ok-admin');
+    const $btn  = document.getElementById('save-admin-cred');
+    if (has) {
+        $warn?.classList.add('hidden');
+        $ok?.classList.remove('hidden');
+        if ($btn) { $btn.disabled = false; $btn.textContent = '💾 保存'; }
+    } else {
+        $warn?.classList.remove('hidden');
+        $ok?.classList.add('hidden');
+        if ($btn) { $btn.disabled = true; $btn.textContent = '💾 保存 (尚未配置 PAT)'; }
+    }
+}
+
 (function () {
     const $u = document.getElementById('new-admin-user');
     const $p = document.getElementById('new-admin-pwd');
@@ -182,17 +209,28 @@ function showStatus(elId, msg, type) {
         const newUser = $u.value.trim();
         const newPwd  = $p.value.trim();
         if (!newPwd || newPwd.length < 8) { showStatus('admin-cred-result', '⚠ 新密码至少 8 位', 'err'); return; }
+        if (!confirm(`即将保存:\n  ${newUser ? '账号: ' + newUser : '账号: 不变'}\n  密码: ${newPwd}\n\n保存后旧密码立即失效. 已记下新密码?`)) return;
         showStatus('admin-cred-result', '⏳ 保存中...', 'info');
         try {
             const r = await adminChangeAccount(newUser, newPwd);
-            showStatus('admin-cred-result', `✅ 已保存: ${r.user} / ${newPwd} (到期 ${r.expire})`, 'ok');
-            alert(`✅ 新账号已生效\n\n账号: ${r.user}\n密码: ${newPwd}\n到期: ${r.expire}\n\n请立即保存. 下次登录用新账号密码. 当前浏览器登录态已自动延续.`);
+            showStatus('admin-cred-result', `✅ 已保存`, 'ok');
+            alert(`✅ 已生效, 下次登录用:\n\n账号: ${r.user}\n密码: ${newPwd}\n到期: ${r.expire}\n\n截图保存! 当前浏览器登录态已延续, 不会被踢出.`);
             $u.value = ''; $p.value = '';
+            // 立即刷新页面顶部的 admin 信息
+            updateChangeCredUI();
+            const $info = document.getElementById('admin-info');
+            if ($info) $info.textContent = `当前登录: ${r.user} (管理员) · 凭证有效期至 ${r.expire}`;
         } catch (e) {
             showStatus('admin-cred-result', '❌ ' + e.message, 'err');
         }
     });
 })();
+
+// PAT 保存/清除时, 实时刷新改密码 UI 状态
+document.getElementById('save-pat').addEventListener('click', () => setTimeout(updateChangeCredUI, 50));
+document.getElementById('clear-pat').addEventListener('click', () => setTimeout(updateChangeCredUI, 50));
+// 页面打开时也刷一次
+updateChangeCredUI();
 
 // === 账号统计 + ETF 开关 ===
 (async function () {

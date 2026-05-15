@@ -10,7 +10,7 @@ async function renderNav(isSubdir) {
         ? `<a href="${prefix}strategies/etf.html" class="nav-strat-btn"><span class="label-2x2">板块轮动</span></a>`
         : '';
     const adminLink = showAdmin
-        ? `<a href="${prefix}admin.html" class="text-orange-600 font-bold hover:text-orange-800 px-3 py-2 rounded-md text-sm">⚙️ 管理后台</a>`
+        ? `<a href="${prefix}admin.html" class="nav-strat-btn text-orange-600 font-bold hover:bg-orange-50"><span class="label-2x2">管理后台</span></a>`
         : '';
     const userBadge = auth
         ? `<span class="hidden md:inline text-xs text-gray-400">${auth.role === 'admin' ? '👑' : '👤'} ${auth.user}</span>`
@@ -24,8 +24,8 @@ async function renderNav(isSubdir) {
                 <a href="${prefix}index.html" class="text-base sm:text-xl font-bold text-indigo-600 whitespace-nowrap">🚀 多子策略决策引擎</a>
             </div>
             <div class="nav-desktop items-center space-x-2">
-                <a href="${prefix}index.html" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">总览</a>
-                <a href="${prefix}signals.html" class="text-indigo-600 font-bold hover:text-indigo-800 px-3 py-2 rounded-md text-sm">⭐ 今日信号</a>
+                <a href="${prefix}index.html" class="nav-strat-btn"><span class="label-2x2">总览首页</span></a>
+                <a href="${prefix}signals.html" class="nav-strat-btn text-indigo-600 font-bold hover:bg-indigo-50"><span class="label-2x2">今日信号</span></a>
                 <a href="${prefix}strategies/small_cap.html"     class="nav-strat-btn"><span class="label-2x2">小盘动量</span></a>
                 <a href="${prefix}strategies/large_cap.html"     class="nav-strat-btn"><span class="label-2x2">大盘突破</span></a>
                 <a href="${prefix}strategies/consolidation.html" class="nav-strat-btn"><span class="label-2x2">上涨横盘</span></a>

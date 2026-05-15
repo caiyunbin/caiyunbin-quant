@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15 09:38:47",
+  "generated_at": "2026-05-15 11:12:31",
   "n_total": 51,
   "n_active": 51,
   "n_admin": 1,
@@ -25,7 +25,7 @@
       "note": "批量 7d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "5522e1435d21",
@@ -35,7 +35,7 @@
       "note": "批量 7d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "dd5293d71af4",
@@ -45,7 +45,7 @@
       "note": "批量 7d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "983aac70d459",
@@ -55,7 +55,7 @@
       "note": "批量 7d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "d265d93d990f",
@@ -65,7 +65,7 @@
       "note": "批量 7d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "9013b38f546b",
@@ -75,7 +75,7 @@
       "note": "批量 7d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "02fe00156775",
@@ -85,7 +85,7 @@
       "note": "批量 7d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "b7ca575f54bd",
@@ -95,7 +95,7 @@
       "note": "批量 7d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "1ae096fa9dea",
@@ -105,7 +105,7 @@
       "note": "批量 7d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "47b3f8536f19",
@@ -115,7 +115,7 @@
       "note": "批量 7d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "e45f0cc713e8",
@@ -125,7 +125,7 @@
       "note": "批量 30d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "0e9a18cdeb1b",
@@ -135,7 +135,7 @@
       "note": "批量 30d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "4d7cc54d9366",
@@ -145,7 +145,7 @@
       "note": "批量 30d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "44e45cf808b1",
@@ -155,7 +155,7 @@
       "note": "批量 30d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "d38d679eb9ce",
@@ -165,7 +165,7 @@
       "note": "批量 30d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "c87b1df94dd3",
@@ -175,7 +175,7 @@
       "note": "批量 30d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "de8295e2d6c7",
@@ -185,7 +185,7 @@
       "note": "批量 30d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "98d2eb84e269",
@@ -195,7 +195,7 @@
       "note": "批量 30d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "f8ad60ff671b",
@@ -205,7 +205,7 @@
       "note": "批量 30d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "ec00aafa3e41",
@@ -215,7 +215,7 @@
       "note": "批量 30d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "d41475239053",
@@ -225,7 +225,7 @@
       "note": "批量 90d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "a5d9c9c52f10",
@@ -235,7 +235,7 @@
       "note": "批量 90d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "bee58b79c348",
@@ -245,7 +245,7 @@
       "note": "批量 90d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "3ff9e3b946f1",
@@ -255,7 +255,7 @@
       "note": "批量 90d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "e811fac86429",
@@ -265,7 +265,7 @@
       "note": "批量 90d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "6ca11b9fdba5",
@@ -275,7 +275,7 @@
       "note": "批量 90d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "6786bee5ee48",
@@ -285,7 +285,7 @@
       "note": "批量 90d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "07a220fb791c",
@@ -295,7 +295,7 @@
       "note": "批量 90d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "84b942f4ca01",
@@ -305,7 +305,7 @@
       "note": "批量 90d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "45f0985b487a",
@@ -315,7 +315,7 @@
       "note": "批量 90d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "abf1563bca98",
@@ -325,7 +325,7 @@
       "note": "批量 180d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "44432dede01c",
@@ -335,7 +335,7 @@
       "note": "批量 180d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "4b6c043f3100",
@@ -345,7 +345,7 @@
       "note": "批量 180d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "c910256aec6e",
@@ -355,7 +355,7 @@
       "note": "批量 180d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "b73d28769214",
@@ -365,7 +365,7 @@
       "note": "批量 180d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "4f9b06d54b2b",
@@ -375,7 +375,7 @@
       "note": "批量 180d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "5bf0c3e1b620",
@@ -385,7 +385,7 @@
       "note": "批量 180d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "b392bffa9d85",
@@ -395,7 +395,7 @@
       "note": "批量 180d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "b126b94ba923",
@@ -405,7 +405,7 @@
       "note": "批量 180d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "6b814ddd6801",
@@ -415,7 +415,7 @@
       "note": "批量 180d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "f7eaa92948bb",
@@ -425,7 +425,7 @@
       "note": "批量 365d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "7389ac03a615",
@@ -435,7 +435,7 @@
       "note": "批量 365d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "7d5f591cb3c8",
@@ -445,7 +445,7 @@
       "note": "批量 365d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "3bf55c0030a3",
@@ -455,7 +455,7 @@
       "note": "批量 365d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "9dd9aa4afb4d",
@@ -465,7 +465,7 @@
       "note": "批量 365d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "ef16a6714b10",
@@ -475,7 +475,7 @@
       "note": "批量 365d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "7160b33775f0",
@@ -485,7 +485,7 @@
       "note": "批量 365d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "de763967abc6",
@@ -495,7 +495,7 @@
       "note": "批量 365d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "41bed634f48b",
@@ -505,7 +505,7 @@
       "note": "批量 365d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     },
     {
       "hash_prefix": "b086f9f0e35b",
@@ -515,7 +515,7 @@
       "note": "批量 365d",
       "revoked": false,
       "active": true,
-      "etf_visible": true
+      "etf_visible": false
     }
   ],
   "expire_groups": {
