@@ -458,7 +458,14 @@ function renderAccGroups(accounts) {
                     <button class="op-card bg-purple-500 text-white px-2 py-1 rounded text-xs hover:bg-purple-600"
                             data-user="${cred.user}" data-pwd="${cred.password}" data-expire="${a.expire}"
                             title="下载卡片">🖼️</button>
-                </div>` : '<span class="text-gray-300 text-xs">-</span>';
+                    ${a.role !== 'admin' ? `
+                    <button class="op-extend bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700"
+                            data-hash="${a.hash_prefix}" data-group="${gKey}" data-expire="${a.expire}"
+                            title="续期账号">🔄</button>` : ''}
+                </div>` : (a.role !== 'admin' ? `
+                <button class="op-extend bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700"
+                        data-hash="${a.hash_prefix}" data-group="${gKey}" data-expire="${a.expire}"
+                        title="续期账号">🔄 续期</button>` : '<span class="text-gray-300 text-xs">-</span>');
 
             return `<tr class="${isDist ? 'bg-green-50' : ''}">
                 <td class="px-2 py-2">${credCell}</td>
@@ -549,6 +556,41 @@ function bindOps() {
             }
             if (rows.length === 0) { alert('该组无可导出账号'); return; }
             downloadCSV(`accounts_${gKey}_${new Date().toISOString().slice(0,10)}.csv`, generateCSV(rows));
+        });
+    });
+
+    // 续期按钮
+    document.querySelectorAll('.op-extend').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            if (!adminHasPAT()) { alert("请先配置 GitHub PAT (左侧"密钥配置")"); return; }
+            const hash    = btn.dataset.hash;
+            const gKey    = btn.dataset.group;     // 用作默认续期周期
+            const expire  = btn.dataset.expire;
+            // 推断默认续期天数 (按所在组的周期), 用户可改
+            const defaultDays = {
+                '7d': 7, '30d': 30, '90d': 90, '180d': 180, '365d': 365,
+                'expired': 7, 'revoked': 7, 'other': 30,
+            }[gKey] || 30;
+            const choice = prompt(
+                `🔄 账号续期\n\n当前 hash: ${hash}\n当前到期: ${expire}\n\n续期多少天? (在原到期日基础上延长; 若已过期, 从今天算起)\n常用: 7 / 30 / 90 / 180 / 365`,
+                String(defaultDays)
+            );
+            if (choice === null) return;
+            const days = parseInt(choice.trim(), 10);
+            if (!days || days <= 0 || days > 3650) { alert('请输入 1-3650 之间的整数'); return; }
+            const orig = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = '⏳';
+            try {
+                const r = await adminExtendAccount(hash, days);
+                btn.textContent = '✅';
+                alert(`✅ 续期成功!\n\nhash: ${r.hash_prefix}\n原到期: ${r.old_expire}\n新到期: ${r.new_expire}\n(+${r.days} 天)\n\n⚠ 注意: 远程已更新, 但本机 ~/.quant-site-accounts.json 还需同步.\n在本机跑:\n  python v26_production/manage_accounts.py pull_remote_expires\n(或下次手动 sync 时统一处理)`);
+                setTimeout(() => location.reload(), 800);
+            } catch (e) {
+                btn.textContent = orig;
+                btn.disabled = false;
+                alert('❌ 续期失败: ' + e.message);
+            }
         });
     });
 
