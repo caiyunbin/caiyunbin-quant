@@ -2,7 +2,7 @@
   "meta": {
     "version": "V27.2-5/25/70 (V16.F + S2.G13 + S4.V4, 5-18 完整数据 + 权重重优)",
     "data_date": "2026-05-18",
-    "generated_at": "2026-05-19 13:50:22",
+    "generated_at": "2026-05-19 13:53:40",
     "n_strategies": 3
   },
   "weights": {
@@ -116,7 +116,16 @@
   },
   "daily_signals": {
     "小盘动量": {
-      "buy_today": [],
+      "buy_today": [
+        "000796.SZ",
+        "300459.SZ",
+        "002373.SZ",
+        "300182.SZ",
+        "601360.SH",
+        "600775.SH",
+        "600895.SH",
+        "000576.SZ"
+      ],
       "holding": [],
       "sell_today": [],
       "exited_recent": [
@@ -228,7 +237,13 @@
       ]
     },
     "大盘突破": {
-      "buy_today": [],
+      "buy_today": [
+        "601728.SH",
+        "600941.SH",
+        "688213.SH",
+        "300001.SZ",
+        "600023.SH"
+      ],
       "holding": [
         {
           "ts_code": "000651.SZ",
@@ -247,8 +262,48 @@
           "entry_date": "2026-05-18"
         }
       ],
-      "sell_today": [],
+      "sell_today": [
+        {
+          "ts_code": "300394.SZ",
+          "entry_date": "2026-05-15",
+          "ret": -0.04050470839607771,
+          "reason": "HardSL"
+        },
+        {
+          "ts_code": "300782.SZ",
+          "entry_date": "2026-05-15",
+          "ret": -0.07122312530944534,
+          "reason": "HardSL"
+        },
+        {
+          "ts_code": "300131.SZ",
+          "entry_date": "2026-05-15",
+          "ret": 0.011122411676547943,
+          "reason": "HardSL"
+        }
+      ],
       "exited_recent": [
+        {
+          "ts_code": "000066.SZ",
+          "entry_date": "2026-04-30",
+          "exit_date": "2026-05-06",
+          "ret": 0.14679504273008342,
+          "reason": "QuickLock"
+        },
+        {
+          "ts_code": "000636.SZ",
+          "entry_date": "2026-04-30",
+          "exit_date": "2026-05-06",
+          "ret": -0.027926296921199804,
+          "reason": "HardSL"
+        },
+        {
+          "ts_code": "000066.SZ",
+          "entry_date": "2026-05-06",
+          "exit_date": "2026-05-07",
+          "ret": 0.09945026215190987,
+          "reason": "EarlyStop"
+        },
         {
           "ts_code": "688256.SH",
           "entry_date": "2026-05-06",
@@ -332,32 +387,15 @@
           "exit_date": "2026-05-15",
           "ret": -0.049500969324542836,
           "reason": "HardSL"
-        },
-        {
-          "ts_code": "300394.SZ",
-          "entry_date": "2026-05-15",
-          "exit_date": "2026-05-18",
-          "ret": -0.04050470839607771,
-          "reason": "HardSL"
-        },
-        {
-          "ts_code": "300782.SZ",
-          "entry_date": "2026-05-15",
-          "exit_date": "2026-05-18",
-          "ret": -0.07122312530944534,
-          "reason": "HardSL"
-        },
-        {
-          "ts_code": "300131.SZ",
-          "entry_date": "2026-05-15",
-          "exit_date": "2026-05-18",
-          "ret": 0.011122411676547943,
-          "reason": "HardSL"
         }
       ]
     },
     "上涨横盘": {
-      "buy_today": [],
+      "buy_today": [
+        "601789.SH",
+        "301638.SZ",
+        "300456.SZ"
+      ],
       "holding": [
         {
           "ts_code": "600508.SH",
