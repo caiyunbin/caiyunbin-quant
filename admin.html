@@ -260,8 +260,20 @@ updateChangeCredUI();
 
 // === 账号统计 + ETF 开关 ===
 (async function () {
+    const _renderErr = (msg) => {
+        document.getElementById('acc-stats').innerHTML =
+            `<div class="col-span-5 bg-red-50 border border-red-300 rounded p-4 text-sm text-red-700">${msg}</div>`;
+    };
     const auth = getAuthInfo();
-    if (!auth || auth.role !== "admin") return;
+    console.log('[admin] auth state:', auth);
+    if (!auth) {
+        _renderErr('⚠ 未检测到登录态. 请<a href="login.html" class="underline font-bold">重新登录</a>.');
+        return;
+    }
+    if (auth.role !== "admin") {
+        _renderErr(`⚠ 当前账号角色是 <code>${auth.role || 'undefined'}</code>, 非 admin. 请用 admin 账号 (caiman) 登录. <a href="login.html" class="underline font-bold">去登录</a>`);
+        return;
+    }
     document.getElementById('admin-info').textContent =
         `当前登录: ${auth.user} (管理员) · 设备 ID ${(auth.device || '').slice(0, 10)} · 凭证有效期至 ${auth.expire}`;
 
@@ -269,7 +281,12 @@ updateChangeCredUI();
     setTimeout(() => showPATWizardIfNeeded(), 800);
 
     const meta = await loadAdminMeta();
-    if (meta) {
+    console.log('[admin] loadAdminMeta:', meta ? `n_total=${meta.n_total}` : 'null');
+    if (!meta) {
+        _renderErr('⚠ 加载 admin_meta.json 失败. 检查网络 + 控制台错误. 试试 Cmd+Shift+R 强刷.');
+        return;
+    }
+    {
         const stats = [
             ['账号总数', meta.n_total, 'text-gray-700'],
             ['有效账号', meta.n_active, 'text-green-600'],
