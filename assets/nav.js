@@ -68,8 +68,8 @@ async function renderNav(isSubdir) {
     const menu = document.getElementById('mobile-menu');
     const overlay = document.getElementById('mobile-menu-overlay');
     const close = () => { menu.classList.remove('open'); overlay.classList.remove('open'); };
-    btn?.addEventListener('click', () => { menu.classList.add('open'); overlay.classList.add('open'); });
-    overlay?.addEventListener('click', close);
+    if (btn) btn.addEventListener('click', () => { menu.classList.add('open'); overlay.classList.add('open'); });
+    if (overlay) overlay.addEventListener('click', close);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
     // 触发合规弹窗 (仅用户身份)

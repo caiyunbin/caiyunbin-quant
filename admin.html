@@ -228,12 +228,12 @@ function updateChangeCredUI() {
     const $ok   = document.getElementById('pat-ok-admin');
     const $btn  = document.getElementById('save-admin-cred');
     if (has) {
-        $warn?.classList.add('hidden');
-        $ok?.classList.remove('hidden');
+        $warn && $warn.classList.add('hidden');
+        $ok && $ok.classList.remove('hidden');
         if ($btn) { $btn.disabled = false; $btn.textContent = '💾 保存'; }
     } else {
-        $warn?.classList.remove('hidden');
-        $ok?.classList.add('hidden');
+        $warn && $warn.classList.remove('hidden');
+        $ok && $ok.classList.add('hidden');
         if ($btn) { $btn.disabled = true; $btn.textContent = '💾 保存 (尚未配置 PAT)'; }
     }
 }
@@ -459,7 +459,7 @@ function renderAccGroups(accounts) {
     const groups = {};
     for (const a of accounts) {
         const g = _classifyAccount(a);
-        (groups[g] ??= []).push(a);
+        if (!groups[g]) groups[g] = []; groups[g].push(a);
     }
     const $c = document.getElementById('acc-groups-container');
     $c.innerHTML = '';
@@ -475,7 +475,7 @@ function renderAccGroups(accounts) {
 
         // 计算该组已分发率
         let groupDist = 0;
-        list.forEach(a => { if (a.role !== 'admin' && getNote(a.hash_prefix)?.distributed) groupDist++; });
+        list.forEach(a => { if (a.role !== 'admin' && (function(){var _n=getNote(a.hash_prefix);return _n&&_n.distributed;})()) groupDist++; });
 
         const section = document.createElement('div');
         section.className = `border-l-4 ${meta.color} rounded p-3 sm:p-4`;
@@ -514,7 +514,7 @@ function renderAccGroups(accounts) {
         tbody.innerHTML = list.map(a => {
             const cred = hasCreds ? _findCredByHash(a.hash_prefix) : null;
             const note = getNote(a.hash_prefix);
-            const isDist = note?.distributed;
+            const isDist = note && note.distributed;
 
             const credCell = cred
                 ? `<div class="font-mono text-xs leading-tight">
@@ -526,9 +526,9 @@ function renderAccGroups(accounts) {
 
             const noteCell = `
                 <div class="text-xs">
-                    ${note?.recipient ? `<div class="text-green-700">👤 <strong>${note.recipient}</strong></div>` : '<div class="text-gray-400">未分发</div>'}
-                    ${note?.note ? `<div class="text-gray-600">📝 ${note.note}</div>` : ''}
-                    ${note?.distributed_at ? `<div class="text-gray-400 text-[10px]">${note.distributed_at.slice(0, 10)}</div>` : ''}
+                    ${(note && note.recipient) ? `<div class="text-green-700">👤 <strong>${note.recipient}</strong></div>` : '<div class="text-gray-400">未分发</div>'}
+                    ${(note && note.note) ? `<div class="text-gray-600">📝 ${note.note}</div>` : ''}
+                    ${(note && note.distributed_at) ? `<div class="text-gray-400 text-[10px]">${note.distributed_at.slice(0, 10)}</div>` : ''}
                 </div>`;
 
             let etfCell;

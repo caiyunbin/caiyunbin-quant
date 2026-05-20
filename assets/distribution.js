@@ -203,8 +203,8 @@ function getDistributionStats(accounts) {
         if (a.revoked) { revoked++; continue; }
         if (!a.active) { expired++; continue; }
         const note = getNote(a.hash_prefix);
-        if (note?.distributed) distributed++;
-        if (note?.note || note?.recipient) withNote++;
+        if (note && note.distributed) distributed++;
+        if (note && (note.note || note.recipient)) withNote++;
     }
     return {
         total, distributed,
