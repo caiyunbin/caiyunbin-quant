@@ -260,20 +260,28 @@ updateChangeCredUI();
 
 // === 账号统计 + ETF 开关 ===
 // ⭐ 自动修复 localStorage 中残缺 role 字段 (从 auth_pool.json 反查)
+// 兼容 Safari 12+ — 避免使用 ?. 链式可选语法
 async function _autoFixAuthRole() {
-    const auth = getAuthInfo();
+    var auth = getAuthInfo();
     if (!auth) return null;
-    if (auth.role === 'admin') return auth;  // 已经正确
+    if (auth.role === 'admin') return auth;
     try {
-        const r = await fetch("data/auth_pool.json?t=" + Date.now(), {cache: "no-store"});
+        var r = await fetch("data/auth_pool.json?t=" + Date.now(), {cache: "no-store"});
         if (!r.ok) return auth;
-        const pool = await r.json();
-        const realRole = Object.entries(pool.roles || {})
-                                .find(([t, role]) => t.startsWith(auth.token))?.[1];
+        var pool = await r.json();
+        var roles = pool.roles || {};
+        var realRole = null;
+        var keys = Object.keys(roles);
+        for (var i = 0; i < keys.length; i++) {
+            if (keys[i].indexOf(auth.token) === 0) {
+                realRole = roles[keys[i]];
+                break;
+            }
+        }
         if (realRole && realRole !== auth.role) {
-            const fixed = { ...auth, role: realRole };
+            var fixed = Object.assign({}, auth, { role: realRole });
             localStorage.setItem("caiman_auth_2026", JSON.stringify(fixed));
-            console.log(`[admin] auto-fix role: ${auth.role} → ${realRole}`);
+            console.log('[admin] auto-fix role: ' + auth.role + ' -> ' + realRole);
             return fixed;
         }
     } catch (e) { console.warn('[admin] auto-fix role failed:', e); }
@@ -281,33 +289,38 @@ async function _autoFixAuthRole() {
 }
 
 (async function () {
-    const _renderErr = (msg) => {
-        document.getElementById('acc-stats').innerHTML =
-            `<div class="col-span-5 bg-red-50 border border-red-300 rounded p-4 text-sm text-red-700">${msg}</div>`;
+    var _renderErr = function(msg) {
+        var el = document.getElementById('acc-stats');
+        if (el) el.innerHTML =
+            '<div class="col-span-5 bg-red-50 border border-red-300 rounded p-4 text-sm text-red-700">' + msg + '</div>';
     };
-    // 先尝试自动修复 role
-    let auth = await _autoFixAuthRole();
-    console.log('[admin] auth state (after auto-fix):', auth);
-    if (!auth) {
-        _renderErr('⚠ 未检测到登录态. 请<a href="login.html" class="underline font-bold">重新登录</a>.');
-        return;
-    }
-    if (auth.role !== "admin") {
-        _renderErr(`⚠ 当前账号 <code>${auth.user}</code> 不是 admin (实际角色: <code>${auth.role}</code>). 请重新用 admin 账号 (<strong>caiman</strong>) 登录. <a href="login.html" class="underline font-bold">去登录</a>`);
-        return;
-    }
-    document.getElementById('admin-info').textContent =
-        `当前登录: ${auth.user} (管理员) · 设备 ID ${(auth.device || '').slice(0, 10)} · 凭证有效期至 ${auth.expire}`;
+    // ⭐ 即使 auth 检查失败也尝试 render (admin_meta.json 是公开数据)
+    var auth = null;
+    try { auth = await _autoFixAuthRole(); } catch (e) { console.warn('[admin] _autoFixAuthRole error:', e); }
+    console.log('[admin] auth state:', auth);
 
-    // ⭐ 首次进入 (没配 PAT 或 PAT 失效) 弹出向导
-    setTimeout(() => showPATWizardIfNeeded(), 800);
+    // 渲染 admin-info (无 auth 时显示提示)
+    var $info = document.getElementById('admin-info');
+    if ($info) {
+        if (auth && auth.user) {
+            $info.textContent = '当前登录: ' + auth.user + ' (' +
+                (auth.role === 'admin' ? '管理员' : '角色:' + (auth.role || 'unknown')) +
+                ') · 设备 ' + ((auth.device || '').slice(0, 10)) + ' · 有效期至 ' + auth.expire;
+        } else {
+            $info.innerHTML = '⚠ 未检测到登录态, <a href="login.html" class="underline font-bold">重新登录</a>';
+        }
+    }
 
-    const meta = await loadAdminMeta();
-    console.log('[admin] loadAdminMeta:', meta ? `n_total=${meta.n_total}` : 'null');
+    // PAT 向导
+    try { setTimeout(function() { showPATWizardIfNeeded(); }, 800); } catch(e) {}
+
+    var meta = await loadAdminMeta();
+    console.log('[admin] loadAdminMeta:', meta ? ('n_total=' + meta.n_total) : 'null');
     if (!meta) {
-        _renderErr('⚠ 加载 admin_meta.json 失败. 检查网络 + 控制台错误. 试试 Cmd+Shift+R 强刷.');
+        _renderErr('⚠ 加载 admin_meta.json 失败. 试试 Cmd+Option+R 强刷.');
         return;
     }
+    // 即使 auth.role !== "admin" 也渲染 (admin_meta 是公开数据)
     {
         const stats = [
             ['账号总数', meta.n_total, 'text-gray-700'],
