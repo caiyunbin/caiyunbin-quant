@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>账号列表(简化版)</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; max-width: 1200px; margin: 20px auto; padding: 20px; }
+        h1 { color: #333; }
+        .err { background: #fee; border-left: 4px solid #c00; padding: 12px; margin: 10px 0; font-family: monospace; font-size: 12px; }
+        .ok { background: #efe; border-left: 4px solid #0a0; padding: 12px; margin: 10px 0; }
+        .stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 20px 0; }
+        .stat { background: #f5f5f5; padding: 15px; border-radius: 6px; text-align: center; }
+        .stat .v { font-size: 28px; font-weight: bold; color: #333; }
+        .stat .k { font-size: 12px; color: #888; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; }
+        th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8f8f8; }
+        tr:hover { background: #fafafa; }
+        .admin { background: #fff8e1; }
+        .role { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
+        .role-admin { background: #ff9800; color: white; }
+        .role-user { background: #2196f3; color: white; }
+    </style>
+</head>
+<body>
+    <h1>📜 账号列表 (简化版,无登录检查)</h1>
+    <p style="color: #666; font-size: 14px;">这个页面绕过所有 auth / 缓存 / role 检查, 直接 fetch admin_meta.json 显示账号统计.<br>
+    如果这里能看到数据, 主 admin 页面只是 UI 渲染问题. 如果这里也看不到, 是数据本身有问题.</p>
+    <div id="content"></div>
+
+<script>
+async function load() {
+    const $c = document.getElementById('content');
+    const urls = [
+        'data/admin_meta.json?t=' + Date.now(),
+        location.origin + '/caiyunbin-quant/data/admin_meta.json?t=' + Date.now(),
+        'https://caiyunbin.github.io/caiyunbin-quant/data/admin_meta.json?t=' + Date.now(),
+    ];
+
+    let data = null;
+    let usedUrl = '';
+    let attempts = '';
+
+    for (const url of urls) {
+        attempts += '<div>尝试 ' + url + ' ...</div>';
+        try {
+            const r = await fetch(url, {cache: 'no-store'});
+            attempts += '<div>  → HTTP ' + r.status + '</div>';
+            if (r.ok) {
+                data = await r.json();
+                usedUrl = url;
+                break;
+            }
+        } catch (e) {
+            attempts += '<div>  → 异常: ' + e.message + '</div>';
+        }
+    }
+
+    if (!data) {
+        $c.innerHTML = '<div class="err"><strong>❌ 所有 URL 都失败</strong><br><br>' + attempts + '</div>';
+        return;
+    }
+
+    $c.innerHTML = '<div class="ok">✅ 加载成功: ' + usedUrl + '<br>generated_at: ' + data.generated_at + '</div>';
+
+    // 统计
+    let html = '<div class="stat-grid">';
+    html += '<div class="stat"><div class="k">账号总数</div><div class="v">' + data.n_total + '</div></div>';
+    html += '<div class="stat"><div class="k">有效账号</div><div class="v" style="color:#0a0">' + data.n_active + '</div></div>';
+    html += '<div class="stat"><div class="k">管理员</div><div class="v" style="color:#ff9800">' + data.n_admin + '</div></div>';
+    html += '<div class="stat"><div class="k">用户</div><div class="v" style="color:#2196f3">' + data.n_user + '</div></div>';
+    html += '<div class="stat"><div class="k">撤销/过期</div><div class="v" style="color:#c00">' + (data.n_revoked + data.n_expired) + '</div></div>';
+    html += '</div>';
+
+    // 表格
+    html += '<table><thead><tr><th>Hash 前缀</th><th>角色</th><th>到期</th><th>创建</th><th>ETF</th><th>备注</th></tr></thead><tbody>';
+    for (const a of data.accounts) {
+        const cls = a.role === 'admin' ? 'admin' : '';
+        const roleCls = a.role === 'admin' ? 'role-admin' : 'role-user';
+        const roleIcon = a.role === 'admin' ? '👑 admin' : '👤 user';
+        const etf = a.etf_visible === false ? '🚫' : '✅';
+        html += '<tr class="' + cls + '">';
+        html += '<td><code>' + (a.hash_prefix || '?') + '</code></td>';
+        html += '<td><span class="role ' + roleCls + '">' + roleIcon + '</span></td>';
+        html += '<td>' + a.expire + '</td>';
+        html += '<td>' + a.created + '</td>';
+        html += '<td>' + etf + '</td>';
+        html += '<td>' + (a.note || '-') + '</td>';
+        html += '</tr>';
+    }
+    html += '</tbody></table>';
+
+    $c.innerHTML += html;
+}
+
+load();
+</script>
+</body>
+</html>
