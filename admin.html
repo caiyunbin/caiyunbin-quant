@@ -657,7 +657,7 @@ function bindOps() {
     // 续期按钮
     document.querySelectorAll('.op-extend').forEach(btn => {
         btn.addEventListener('click', async () => {
-            if (!adminHasPAT()) { alert("请先配置 GitHub PAT (左侧"密钥配置")"); return; }
+            if (!adminHasPAT()) { alert('请先配置 GitHub PAT (左侧"密钥配置")'); return; }
             const hash    = btn.dataset.hash;
             const gKey    = btn.dataset.group;     // 用作默认续期周期
             const expire  = btn.dataset.expire;
