@@ -227,14 +227,17 @@ async function loadJSON(p) {
         // 买入
         sigHtml += '<div class="bg-green-50 rounded-lg p-4"><h3 class="text-sm font-bold text-green-900 mb-3">⭐ 明日开盘信号生成 (' + (s.buy_today||[]).length + ')</h3>';
         if (s.buy_today && s.buy_today.length > 0) {
-            sigHtml += '<ul class="space-y-2">' + s.buy_today.slice(0,8).map((ts,i) => {
+            sigHtml += '<ul class="space-y-2">' + s.buy_today.slice(0,8).map((item,i) => {
+                const ts = (typeof item === 'string') ? item : (item.ts_code || '?');
+                const p_up = (typeof item === 'object' && item.p_up != null) ? item.p_up : null;
                 let star = '';
                 if (i===0) star = '<span class="text-yellow-500 text-lg">★★★</span><span class="text-xs text-gray-400 ml-1">最优</span>';
                 else if (i===1) star = '<span class="text-yellow-500">★★</span>';
                 else if (i===2) star = '<span class="text-yellow-500">★</span>';
                 else star = '<span class="text-xs text-gray-400">候选</span>';
+                const pupBadge = (p_up !== null) ? `<span class="text-xs text-blue-600 ml-2" title="次日上涨概率 ensemble (1d/3d/5d)">P_up ${(p_up*100).toFixed(0)}%</span>` : '';
                 return `<li class="bg-white px-3 py-2 rounded text-xs flex justify-between items-center">
-                    <span class="font-mono font-bold text-green-700">${ts}</span>
+                    <span class="flex items-center"><span class="font-mono font-bold text-green-700">${ts}</span>${pupBadge}</span>
                     <span>${star}</span>
                 </li>`;
             }).join('') + '</ul>';
