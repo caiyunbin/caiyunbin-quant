@@ -259,19 +259,41 @@ document.getElementById('clear-pat').addEventListener('click', () => setTimeout(
 updateChangeCredUI();
 
 // === 账号统计 + ETF 开关 ===
+// ⭐ 自动修复 localStorage 中残缺 role 字段 (从 auth_pool.json 反查)
+async function _autoFixAuthRole() {
+    const auth = getAuthInfo();
+    if (!auth) return null;
+    if (auth.role === 'admin') return auth;  // 已经正确
+    try {
+        const r = await fetch("data/auth_pool.json?t=" + Date.now(), {cache: "no-store"});
+        if (!r.ok) return auth;
+        const pool = await r.json();
+        const realRole = Object.entries(pool.roles || {})
+                                .find(([t, role]) => t.startsWith(auth.token))?.[1];
+        if (realRole && realRole !== auth.role) {
+            const fixed = { ...auth, role: realRole };
+            localStorage.setItem("caiman_auth_2026", JSON.stringify(fixed));
+            console.log(`[admin] auto-fix role: ${auth.role} → ${realRole}`);
+            return fixed;
+        }
+    } catch (e) { console.warn('[admin] auto-fix role failed:', e); }
+    return auth;
+}
+
 (async function () {
     const _renderErr = (msg) => {
         document.getElementById('acc-stats').innerHTML =
             `<div class="col-span-5 bg-red-50 border border-red-300 rounded p-4 text-sm text-red-700">${msg}</div>`;
     };
-    const auth = getAuthInfo();
-    console.log('[admin] auth state:', auth);
+    // 先尝试自动修复 role
+    let auth = await _autoFixAuthRole();
+    console.log('[admin] auth state (after auto-fix):', auth);
     if (!auth) {
         _renderErr('⚠ 未检测到登录态. 请<a href="login.html" class="underline font-bold">重新登录</a>.');
         return;
     }
     if (auth.role !== "admin") {
-        _renderErr(`⚠ 当前账号角色是 <code>${auth.role || 'undefined'}</code>, 非 admin. 请用 admin 账号 (caiman) 登录. <a href="login.html" class="underline font-bold">去登录</a>`);
+        _renderErr(`⚠ 当前账号 <code>${auth.user}</code> 不是 admin (实际角色: <code>${auth.role}</code>). 请重新用 admin 账号 (<strong>caiman</strong>) 登录. <a href="login.html" class="underline font-bold">去登录</a>`);
         return;
     }
     document.getElementById('admin-info').textContent =
