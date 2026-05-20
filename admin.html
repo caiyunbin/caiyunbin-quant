@@ -151,15 +151,32 @@
 <script>renderFooter();</script>
 
 <script>
+// 用 location.origin 拼绝对 URL, 兼容 /admin.html 和 /admin 两种路径
+function _absUrl(rel) {
+    // 移除 admin.html / admin 等 last segment, 拼 data/...
+    var path = location.pathname.replace(/[^/]*$/, '');  // 取目录部分
+    return location.origin + path + rel;
+}
+
 async function loadAdminMeta() {
+    var url = _absUrl("data/admin_meta.json") + "?t=" + Date.now();
+    console.log('[admin] fetching:', url);
     try {
-        const r = await fetch("data/admin_meta.json?t=" + Date.now(), {cache: "no-store"});
-        if (!r.ok) return null; return await r.json();
-    } catch (e) { return null; }
+        var r = await fetch(url, {cache: "no-store"});
+        console.log('[admin] fetch response:', r.status, r.ok);
+        if (!r.ok) {
+            console.warn('[admin] non-200:', r.status, await r.text());
+            return null;
+        }
+        return await r.json();
+    } catch (e) {
+        console.error('[admin] fetch error:', e);
+        return null;
+    }
 }
 async function loadTushareStatus() {
     try {
-        const r = await fetch("data/tushare_status.json?t=" + Date.now(), {cache: "no-store"});
+        var r = await fetch(_absUrl("data/tushare_status.json") + "?t=" + Date.now(), {cache: "no-store"});
         if (!r.ok) return null; return await r.json();
     } catch (e) { return null; }
 }
@@ -317,7 +334,18 @@ async function _autoFixAuthRole() {
     var meta = await loadAdminMeta();
     console.log('[admin] loadAdminMeta:', meta ? ('n_total=' + meta.n_total) : 'null');
     if (!meta) {
-        _renderErr('⚠ 加载 admin_meta.json 失败. 试试 Cmd+Option+R 强刷.');
+        // 最后兜底: 直接从 GitHub Pages 原站拉 (绝对 URL, 绕过任何 redirect/CDN 问题)
+        console.log('[admin] fallback: try absolute GitHub Pages URL');
+        try {
+            var r2 = await fetch("https://caiyunbin.github.io/caiyunbin-quant/data/admin_meta.json?t=" + Date.now(), {cache: "no-store"});
+            if (r2.ok) {
+                meta = await r2.json();
+                console.log('[admin] fallback OK: n_total=' + meta.n_total);
+            }
+        } catch (e) { console.warn('[admin] fallback failed:', e); }
+    }
+    if (!meta) {
+        _renderErr('⚠ 加载 admin_meta.json 失败. 当前页面: ' + location.href + '<br>F12 看 Console 错误.');
         return;
     }
     // 即使 auth.role !== "admin" 也渲染 (admin_meta 是公开数据)
