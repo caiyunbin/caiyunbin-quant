@@ -48,13 +48,13 @@
 // 详细参数 (admin 才能看) + 模糊行情描述 (user 看)
 const STRATEGY_INFO_ADMIN = {
     "小盘动量":   {icon: "🎯", weight: 0.05, pool: "A 股小盘股 — 涨幅+主力+量比 三维 rank-delta 跃升"},
-    "大盘突破":   {icon: "🏛️", weight: 0.45, pool: "A 股大盘股 (流通市值 ≥ 200 亿) — 连 3 日主力净流入 + 突破 20 日新高"},
-    "上涨横盘":   {icon: "📈", weight: 0.50, pool: "A 股 amount_20d ≥ 5000万 — MA5>MA20>MA60 多头 5-29 天 + 横盘紧贴 MA5"},
+    "大盘突破":   {icon: "🏛️", weight: 0.25, pool: "A 股大盘股 (流通市值 ≥ 200 亿) — 连 3 日主力净流入 + 突破 20 日新高"},
+    "上涨横盘":   {icon: "📈", weight: 0.70, pool: "A 股 amount_20d ≥ 5000万 — MA5>MA20>MA60 多头 5-29 天 + 横盘紧贴 MA5"},
 };
 const STRATEGY_INFO_USER = {
     "小盘动量":   {icon: "🎯", weight: 0.05, pool: "适配中小盘活跃 + 资金面宽松的市场环境. 在题材股启动、成长股放量、超跌反弹阶段的 Alpha 爆发最强."},
-    "大盘突破":   {icon: "🏛️", weight: 0.45, pool: "适配大盘股趋势行情. 在主力资金持续入场、市场风格切到价值蓝筹、指数突破前期高点时的 Alpha 爆发最强."},
-    "上涨横盘":   {icon: "📈", weight: 0.50, pool: "适配震荡上行行情中的低波动洗盘期. 在大盘已在上升通道, 个股进入紧贴均线的窄幅盘整时的 Alpha 爆发最强."},
+    "大盘突破":   {icon: "🏛️", weight: 0.25, pool: "适配大盘股趋势行情. 在主力资金持续入场、市场风格切到价值蓝筹、指数突破前期高点时的 Alpha 爆发最强."},
+    "上涨横盘":   {icon: "📈", weight: 0.70, pool: "适配震荡上行行情中的低波动洗盘期. 在大盘已在上升通道, 个股进入紧贴均线的窄幅盘整时的 Alpha 爆发最强."},
 };
 const STRATEGY_INFO = (typeof isAdmin === 'function' && isAdmin())
     ? STRATEGY_INFO_ADMIN : STRATEGY_INFO_USER;
