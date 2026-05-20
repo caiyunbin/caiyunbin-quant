@@ -345,7 +345,22 @@ async function _autoFixAuthRole() {
         } catch (e) { console.warn('[admin] fallback failed:', e); }
     }
     if (!meta) {
-        _renderErr('⚠ 加载 admin_meta.json 失败. 当前页面: ' + location.href + '<br>F12 看 Console 错误.');
+        // 详细诊断信息直接写到页面 (用户无需打开调试器)
+        var diagMsg = '<strong>⚠ 加载 admin_meta.json 失败</strong><br><br>';
+        diagMsg += '<div class="text-xs font-mono bg-white p-3 rounded mt-2 break-all">';
+        diagMsg += '🔍 当前页面 URL: <code>' + location.href + '</code><br>';
+        diagMsg += '🔍 域名: <code>' + location.host + '</code><br>';
+        diagMsg += '🔍 浏览器: <code>' + navigator.userAgent.slice(0, 80) + '</code><br>';
+        diagMsg += '🔍 登录态: <code>' + (auth ? (auth.user + ' / role=' + auth.role) : 'null') + '</code><br>';
+        diagMsg += '🔍 LocalStorage 大小: <code>' + (JSON.stringify(localStorage).length) + ' B</code><br>';
+        diagMsg += '</div>';
+        diagMsg += '<br><strong>👇 建议操作</strong>:<br>';
+        diagMsg += '1. 完全退出 Safari (Cmd+Q), 重开<br>';
+        diagMsg += '2. 直接访问 <a href="https://caiyunbin.github.io/caiyunbin-quant/login.html" class="underline font-bold">https://caiyunbin.github.io/caiyunbin-quant/login.html</a><br>';
+        diagMsg += '3. 重新登录 caiman / caiyunbin3344<br>';
+        diagMsg += '4. 然后 <a href="https://caiyunbin.github.io/caiyunbin-quant/admin.html" class="underline font-bold">点这里进 admin</a><br>';
+        diagMsg += '5. 如果还不行, 截图这段诊断信息给开发者';
+        _renderErr(diagMsg);
         return;
     }
     // 即使 auth.role !== "admin" 也渲染 (admin_meta 是公开数据)
