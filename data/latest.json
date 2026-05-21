@@ -2,7 +2,7 @@
   "meta": {
     "version": "V27.2-5/25/70 (V16.F + S2.G13 + S4.V4, 5-18 完整数据 + 权重重优)",
     "data_date": "2026-05-20",
-    "generated_at": "2026-05-20 21:10:03",
+    "generated_at": "2026-05-21 19:00:07",
     "n_strategies": 3
   },
   "weights": {
@@ -615,7 +615,7 @@
     }
   },
   "etf_state": {
-    "last_run_date": "2026-05-20",
+    "last_run_date": "2026-05-21",
     "last_equity": 2.7867496418110798,
     "holdings": [],
     "trade_history": []
