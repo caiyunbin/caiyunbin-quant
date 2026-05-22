@@ -1,6 +1,10 @@
 {
-  "status": "error",
-  "message": "trade_cal 返回空, 可能 API 不通",
-  "checked_at": "2026-05-21 19:00:07",
-  "details": {}
+  "status": "ok",
+  "message": "Tushare API 正常",
+  "checked_at": "2026-05-22 09:47:54",
+  "details": {
+    "trade_cal_rows": 11,
+    "last_trade_date": "20260520",
+    "daily_rows": 5498
+  }
 }
