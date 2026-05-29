@@ -163,9 +163,10 @@ function evRenderCard(grp, rank_num, threshold) {
                     <span class="px-2 py-0.5 bg-purple-100 text-purple-700 rounded font-bold text-sm" title="该股综合评分">${EV_FMT(st.rank_score, 0)}</span>
                 </div>
             </div>
-            ${st.leader_detail ? `<div class="text-xs text-gray-400 mt-1">
-                🏆 流通市值 ${st.leader_detail.circ_mv_yi >= 10000 ? (st.leader_detail.circ_mv_yi/10000).toFixed(1)+'万亿' : st.leader_detail.circ_mv_yi+'亿'}
-                · 近3日主力 <span class="${st.leader_detail.main_net_3d_yi >= 0 ? 'text-red-600' : 'text-green-600'}">${st.leader_detail.main_net_3d_yi >= 0 ? '+' : ''}${st.leader_detail.main_net_3d_yi}亿</span>
+            ${st.leader_detail ? `<div class="text-xs text-gray-400 mt-1" title="相对该股自己过去20日的资金/涨幅异动 (z-score, 越高越异常)">
+                📊 资金异动 <span class="${(st.leader_detail.mf_z||0) >= 0.8 ? 'text-red-600 font-semibold' : ((st.leader_detail.mf_z||0) < -0.5 ? 'text-green-600' : 'text-gray-500')}">z=${(st.leader_detail.mf_z!=null?st.leader_detail.mf_z:'—')}</span>
+                · 涨幅异动 <span class="${(st.leader_detail.ret_z||0) >= 0.8 ? 'text-red-600 font-semibold' : 'text-gray-500'}">z=${(st.leader_detail.ret_z!=null?st.leader_detail.ret_z:'—')}</span>${st.leader_detail.ret_3d_pct!=null?` (近3日${st.leader_detail.ret_3d_pct>=0?'+':''}${st.leader_detail.ret_3d_pct}%)`:''}
+                · 市值${st.leader_detail.circ_mv_yi >= 10000 ? (st.leader_detail.circ_mv_yi/10000).toFixed(1)+'万亿' : st.leader_detail.circ_mv_yi+'亿'}
             </div>` : ''}
             <div class="text-xs text-gray-600 mt-2 leading-relaxed">
                 <span class="text-gray-400 font-medium">📌 理由:</span> ${(st.rec_reason || '').slice(0, 180)}
