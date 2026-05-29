@@ -159,6 +159,10 @@ function evRenderCard(grp, rank_num, threshold) {
                     <span class="px-2 py-0.5 bg-purple-100 text-purple-700 rounded font-bold text-sm" title="该股综合评分">${EV_FMT(st.rank_score, 0)}</span>
                 </div>
             </div>
+            ${st.leader_detail ? `<div class="text-xs text-gray-400 mt-1">
+                🏆 流通市值 ${st.leader_detail.circ_mv_yi >= 10000 ? (st.leader_detail.circ_mv_yi/10000).toFixed(1)+'万亿' : st.leader_detail.circ_mv_yi+'亿'}
+                · 近3日主力 <span class="${st.leader_detail.main_net_3d_yi >= 0 ? 'text-red-600' : 'text-green-600'}">${st.leader_detail.main_net_3d_yi >= 0 ? '+' : ''}${st.leader_detail.main_net_3d_yi}亿</span>
+            </div>` : ''}
             <div class="text-xs text-gray-600 mt-2 leading-relaxed">
                 <span class="text-gray-400 font-medium">📌 理由:</span> ${(st.rec_reason || '').slice(0, 180)}
             </div>
