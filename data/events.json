@@ -1,8 +1,8 @@
 {
   "meta": {
-    "generated_at": "2026-05-30 01:00:44",
-    "next_update": "02:00",
-    "last_snapshot": "2026-05-30 01:00",
+    "generated_at": "2026-05-30 02:00:41",
+    "next_update": "03:00",
+    "last_snapshot": "2026-05-30 02:00",
     "threshold": 34.0,
     "threshold_config": {
       "version": "v5",
@@ -1442,7 +1442,7 @@
         "similar_cases": []
       }
     ],
-    "n_pool": 179,
+    "n_pool": 180,
     "max_rank": 47.14,
     "n_qualified": 12
   },
@@ -1756,9 +1756,95 @@
           },
           "max_rank_pre_stale": 42.56,
           "similar_cases": []
+        },
+        {
+          "source_news_hash": "1f48fccab09efcc34c6b31fc4198c93c",
+          "news_channel": "港美股",
+          "event_headline": "TEMPUS AI目标三年营收增25%",
+          "topic_class": "海外巨头动态",
+          "applied_pattern": "P01",
+          "transmission_chain": "Step -1 判断: 新闻为TEMPUS AI（美股AI医疗公司）发布营收增长目标，属于具体事件驱动(event_driven)。Step 0 判断影响范围: TEMPUS AI是美股AI医疗龙头，其营收增长目标反映AI医疗商业化加速，影响A股AI医疗产业链多家公司，故为multi_company。Step 1 归类: 海外巨头动态。Step 2 查矩阵: 海外巨头动态最优范式为[P01]海外映射(win=69%, comp=+0.17)。Step 3 推理链: 新闻X→TEMPUS AI（美股AI医疗龙头）设定未来三年营收增长25%目标→表明AI辅助诊断/精准医疗商业化落地加速，海外AI医疗赛道景气度确认→资金按估值对标逻辑，寻找A股中对标TEMPUS AI业务模式（AI+医疗影像/病理/药物发现）的公司→受益标的特征：1)已有AI医疗产品落地并产生营收；2)与医院/药企有深度合作；3)在医疗影像AI或AI制药细分赛道有先发优势。注意：该新闻强度中等（仅目标增速，非超预期财报或产品突破），不宜过度炒作。",
+          "impact_scope": "multi_company",
+          "scope_emoji": "🔗",
+          "scope_cn": "产业链",
+          "scope_multiplier": 0.7,
+          "event_type": "event_driven",
+          "raw_title": "",
+          "raw_content": "财联社5月30日电，TEMPUS AI目标未来三年营收增长25%。",
+          "news_pub_time": "2026-05-30 01:44",
+          "news_pub_date": "2026-05-30",
+          "strength_score": 55,
+          "novelty_score": 66,
+          "max_heat": 36,
+          "max_accept": 58,
+          "max_rank": 13.35,
+          "stocks": [
+            {
+              "ts_code": "300015.SZ",
+              "stock_name": "爱尔眼科",
+              "segment": "AI医疗/眼科诊疗",
+              "rec_reason": "公司作为眼科医疗龙头，已布局AI辅助诊断（如AI眼底筛查），且与多家AI医疗公司有合作。TEMPUS AI营收增长目标映射AI医疗在临床端的渗透加速，爱尔眼科作为应用场景方受益于AI医疗商业化提速。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 5.0,
+              "expected_duration_days": 7,
+              "expected_window": "T+5-10",
+              "heat_score": 36,
+              "acceptance_score": 58,
+              "rank_score": 33.37,
+              "pre_run_up_3d": 0.55,
+              "overheated": false,
+              "leader_score": 42.5,
+              "leader_detail": {
+                "circ_mv_yi": 726.0,
+                "ret_3d_pct": 0.55,
+                "ret_z": 0.14,
+                "main_net_3d_yi": 0.26,
+                "mf_z": 0.21,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "688228.SH",
+              "stock_name": "开普云",
+              "segment": "AI医疗/智慧医疗",
+              "rec_reason": "公司AI医疗业务布局包括AI辅助诊断和医疗大数据平台，与TEMPUS AI业务模式高度对标。公司已与多家三甲医院合作落地AI医疗产品，具备商业化基础。海外AI医疗龙头营收目标增长映射A股同类标的估值提升逻辑。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 31,
+              "acceptance_score": 36,
+              "rank_score": 30.31,
+              "pre_run_up_3d": -14.56,
+              "overheated": false,
+              "leader_score": 23.5,
+              "leader_detail": {
+                "circ_mv_yi": 60.0,
+                "ret_3d_pct": -14.56,
+                "ret_z": -2.16,
+                "main_net_3d_yi": -0.06,
+                "mf_z": -0.39,
+                "ret_anomaly_score": 12,
+                "mf_anomaly_score": 35
+              }
+            }
+          ],
+          "any_overheated": false,
+          "staleness_factor": 0.4,
+          "staleness_detail": {
+            "prior_theme_count": 27,
+            "keywords": [
+              "TEMPUS",
+              "AI",
+              "目标"
+            ]
+          },
+          "max_rank_pre_stale": 33.37,
+          "similar_cases": []
         }
       ],
-      "n_pool": 3,
+      "n_pool": 4,
       "max_rank": 46.76,
       "date": "2026-05-30",
       "label": "今日",
