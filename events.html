@@ -109,6 +109,34 @@ const EV_SCOPE_LABEL = {
     industry: ['🏭', '全行业'], multi_company: ['🔗', '产业链'],
     single_company: ['🏢', '单公司'], local: ['📍', '区域性'],
 };
+const HOT_THRESHOLD = 60;  // 爆款档 (高于合格档 34)
+
+// 📖 把 LLM 输出的 "Step X" 格式转成人话 + 分行
+const STEP_LABELS = {
+    '-1': '📰 事件性质判断',
+    '0':  '🌐 影响范围判断',
+    '1':  '🏷️ 新闻类型分类',
+    '2':  '🎯 推理范式选择',
+    '3':  '⚡ 因果传导链路',
+    '4':  '🎁 受益主体特征',
+};
+function formatChain(chain) {
+    if (!chain) return '';
+    // 处理 【Step X xxx】 → 占位符
+    let out = chain.replace(/【\s*Step\s*(-?\d+)[^】]*】[:：、,，\s]*/g, '@@STEP_$1@@');
+    // 处理 Step X xxx: 或 Step X (xxx):
+    out = out.replace(/Step\s*(-?\d+)\s*[（(]?\s*[a-zA-Z_一-龥]*\s*[)）]?\s*[:：]\s*/g, '@@STEP_$1@@');
+    // 替换占位符为人话标题
+    out = out.replace(/@@STEP_(-?\d+)@@/g, (_, n) => {
+        const label = STEP_LABELS[n] || `✨ 步骤 ${n}`;
+        return `\n\n<div class="font-bold text-purple-700 mt-3 mb-1 text-sm">${label}</div>`;
+    });
+    // 多个空行合并
+    out = out.replace(/\n{2,}/g, '\n\n');
+    // 普通换行变 br
+    out = out.replace(/\n/g, '<br>');
+    return out.trim();
+}
 
 function evRenderCard(grp, rank_num, threshold) {
     const scope_info = EV_SCOPE_LABEL[grp.impact_scope] || ['❓', '?'];
@@ -183,10 +211,14 @@ function evRenderCard(grp, rank_num, threshold) {
                 </div>
                 <div class="text-right flex-shrink-0">
                     <div class="big-score">${EV_FMT(grp.max_rank, 1)}</div>
-                    <div class="text-xs mt-1">
-                        ${qualified
+                    <div class="text-xs mt-1 space-y-1">
+                        ${grp.max_rank >= HOT_THRESHOLD
+                            ? `<div><span class="inline-block bg-gradient-to-r from-orange-500 to-red-500 text-white px-2.5 py-0.5 rounded-full font-bold shadow-sm">🔥 爆款 ≥${HOT_THRESHOLD}</span></div>`
+                            : ''}
+                        <div>${qualified
                             ? `<span class="inline-block bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">✅ 合格 ≥${Math.round(threshold)}</span>`
                             : `<span class="inline-block bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">观察 &lt;${Math.round(threshold)}</span>`}
+                        </div>
                     </div>
                     ${decay_chip}
                 </div>
@@ -216,8 +248,8 @@ function evRenderCard(grp, rank_num, threshold) {
                 <summary class="cursor-pointer font-semibold text-sm text-gray-700 flex items-center gap-2 hover:text-purple-700">
                     💡 事件传导逻辑 <span class="chev text-gray-400">▼</span>
                 </summary>
-                <div class="mt-2 p-3 bg-purple-50 rounded-lg text-sm text-gray-700 leading-relaxed border-l-4 border-purple-300">
-                    ${grp.transmission_chain.slice(0, 600)}${grp.transmission_chain.length > 600 ? '...' : ''}
+                <div class="mt-2 p-4 bg-purple-50 rounded-lg text-sm text-gray-700 leading-relaxed border-l-4 border-purple-300">
+                    ${formatChain(grp.transmission_chain.length > 1200 ? grp.transmission_chain.slice(0, 1200) + '...' : grp.transmission_chain)}
                 </div>
             </details>` : ''}
 
@@ -285,11 +317,11 @@ async function evLoadAndRender() {
         <div class="bg-white/15 backdrop-blur px-3 py-2 rounded-lg text-center min-w-[100px]">
             <div class="text-xs opacity-80">最高分</div><div class="text-xl font-bold">${EV_FMT(d.weekly.max_rank, 1)}</div>
         </div>`;
-    const cfg = m.threshold_config || {};
     document.getElementById('events-threshold-desc').innerHTML =
-        `系统从 <strong>${cfg.n_samples || 263}</strong> 个真实事件回测, <strong class="text-purple-700">综合分 ≥ ${Math.round(th)}</strong> 为合格信号
-         (F1 <strong>${cfg.f1_score || 87.7}%</strong> · 召回 <strong>${cfg.recall_big_success || 91}%</strong> · 准确率 <strong>${cfg.precision_success_plus || 85}%</strong>).
-         <span class="font-mono text-green-700">≥50</span> 实时推送 · <span class="font-mono text-orange-600">${Math.round(th)}–50</span> 入榜单 · <span class="font-mono text-gray-500">&lt;${Math.round(th)}</span> 过滤.`;
+        `系统从海量历史事件中训练得出综合评分模型, <strong class="text-purple-700">综合分 ≥ ${Math.round(th)}</strong> 即为合格信号.
+         <span class="font-mono text-red-600">≥${HOT_THRESHOLD}</span> <strong class="text-red-600">🔥 爆款级</strong> ·
+         <span class="font-mono text-green-700">${Math.round(th)}–${HOT_THRESHOLD - 1}</span> ✅ 合格观察 ·
+         <span class="font-mono text-gray-500">&lt;${Math.round(th)}</span> 弱信号过滤.`;
 
     // 7 日汇总
     const wHtml = (d.weekly.top10 || []).map((g, i) => evRenderCard(g, i+1, th)).join('') ||
