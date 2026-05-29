@@ -104,6 +104,10 @@
 
 <script>
 const EV_FMT = (x, d) => (typeof x === 'number') ? x.toFixed(d || 1) : '—';
+// 全局状态: 记住用户当前看哪个 tab / 哪一天, in-place 刷新不丢失
+let EV_DATA = null;          // 最近一次 fetch 的 events.json
+let EV_CUR_DAY = 0;          // 当前选中日 (0=今/1=昨/2=前)
+let EV_CUR_SUBTAB = 'weekly';// 当前子tab (weekly/daily)
 const EV_SCOPE_LABEL = {
     paradigm_shift: ['🌟', '范式突破'], global: ['🌍', '全球级'],
     industry: ['🏭', '全行业'], multi_company: ['🔗', '产业链'],
@@ -338,46 +342,51 @@ async function evLoadAndRender() {
             </div>
         </div>${wHtml}`;
 
-    // 日榜 sub-tabs
+    // 日榜 sub-tabs (active 用记忆的 EV_CUR_DAY)
+    EV_DATA = d;
     document.getElementById('events-day-tabs').innerHTML = d.days.map((dd, i) => `
-        <button class="day-btn ${i === 0 ? 'active' : ''}" data-day="${i}">
+        <button class="day-btn ${i === EV_CUR_DAY ? 'active' : ''}" data-day="${i}">
             ${dd.label} ${dd.date} <span class="text-gray-400">周${dd.weekday}</span>
             <span class="day-count">${(dd.top10 || []).length}</span>
         </button>`).join('');
-
-    function renderDay(idx) {
-        const dd = d.days[idx];
-        const html = (dd.top10 || []).map((g, i) => evRenderCard(g, i+1, th)).join('') ||
-                     evRenderEmpty(`${dd.label} ${dd.date}`, dd.n_pool, dd.max_rank, th);
-        document.getElementById('events-day-content').innerHTML = `
-            <div class="text-sm text-gray-500 px-2 mb-2">
-                <strong class="text-purple-700">${dd.label} (${dd.date} 周${dd.weekday})</strong> · 池子 ${dd.n_pool} · 达标 ${dd.n_qualified}
-            </div>${html}`;
-    }
-    renderDay(0);
+    renderDay(EV_CUR_DAY);   // 恢复用户当前看的那一天
     document.querySelectorAll('.day-btn').forEach(b => {
         b.addEventListener('click', () => {
+            EV_CUR_DAY = parseInt(b.dataset.day);
             document.querySelectorAll('.day-btn').forEach(x => x.classList.toggle('active', x.dataset.day === b.dataset.day));
-            renderDay(parseInt(b.dataset.day));
+            renderDay(EV_CUR_DAY);
         });
     });
 }
 
-// 事件子 Tab 切换
+// 渲染某一天 (全局, 供 in-place 刷新复用)
+function renderDay(idx) {
+    const d = EV_DATA; if (!d) return;
+    const dd = d.days[idx]; if (!dd) return;
+    const th = d.meta.threshold;
+    const html = (dd.top10 || []).map((g, i) => evRenderCard(g, i+1, th)).join('') ||
+                 evRenderEmpty(`${dd.label} ${dd.date}`, dd.n_pool, dd.max_rank, th);
+    document.getElementById('events-day-content').innerHTML = `
+        <div class="text-sm text-gray-500 px-2 mb-2">
+            <strong class="text-purple-700">${dd.label} (${dd.date} 周${dd.weekday})</strong> · 池子 ${dd.n_pool} · 达标 ${dd.n_qualified}
+        </div>${html}`;
+}
+
+// 事件子 Tab 切换 (记忆当前 subtab)
 document.querySelectorAll('#events-subtabs .event-subtab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-        const t = btn.dataset.subtab;
-        document.querySelectorAll('#events-subtabs .event-subtab-btn').forEach(b => b.classList.toggle('active', b.dataset.subtab === t));
-        document.getElementById('events-weekly').hidden = (t !== 'weekly');
-        document.getElementById('events-daily').hidden = (t !== 'daily');
+        EV_CUR_SUBTAB = btn.dataset.subtab;
+        document.querySelectorAll('#events-subtabs .event-subtab-btn').forEach(b => b.classList.toggle('active', b.dataset.subtab === EV_CUR_SUBTAB));
+        document.getElementById('events-weekly').hidden = (EV_CUR_SUBTAB !== 'weekly');
+        document.getElementById('events-daily').hidden = (EV_CUR_SUBTAB !== 'daily');
     });
 });
 
 // 自动加载
 evLoadAndRender();
 
-// 60s 自动 reload
-setTimeout(() => location.reload(), 60000);
+// 60s 原地刷新数据 (不整页 reload, 保持当前 tab / 当前那一天 / 滚动位置)
+setInterval(evLoadAndRender, 60000);
 </script>
 </body>
 </html>
