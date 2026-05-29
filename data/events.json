@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-05-29 14:00:14",
+    "generated_at": "2026-05-29 14:20:54",
     "next_update": "15:00",
     "last_snapshot": "2026-05-29 14:00",
     "threshold": 34.0,
@@ -1182,11 +1182,239 @@
         "decay_factor": 1.0,
         "day_offset": 0,
         "similar_cases": []
+      },
+      {
+        "source_news_hash": "9fa358c343d489b4e8ef4bd368482f44",
+        "news_channel": "港美股",
+        "event_headline": "360亿美元融资为Anthropic采购AI芯片",
+        "topic_class": "海外巨头动态",
+        "applied_pattern": "P01",
+        "transmission_chain": "【Step -1 事件类型判断】新闻为财联社报道的\"阿波罗寻求投资者参与360亿美元债务交易为Anthropic采购AI芯片\"，属于具体的新事件（私募信贷交易+芯片采购），非传闻/评论/盘面综述，判定为 event_driven。\n\n【Step 0 影响范围判断】该事件涉及Anthropic（OpenAI竞品）、谷歌（TPU提供方）、博通（TPU芯片设计方）、阿波罗/黑石（融资方）等多方，且360亿美元为史上最大芯片融资债务交易之一，影响AI算力产业链多家公司，判定为 multi_company（×0.70）。\n\n【Step 1-2 范式选择】新闻类型为\"海外巨头动态\"，查矩阵最优范式为 [P01] 海外映射（win=69%, comp=+0.17）。同时，博通作为TPU芯片设计方直接受益，可辅以 [P08] 产业链传导。\n\n【Step 3 因果链推演】新闻核心：阿波罗/黑石牵头360亿美元债务融资 → 用于购买谷歌TPU芯片 → Anthropic租用这些芯片构建AI基础设施 → 博通为TPU芯片设计方（协助谷歌开发），为交易最大部分付款提供支持 → 美股博通盘后涨1.9%。映射到A股：1）博通在A股的对标/供应商（光模块/交换机/ASIC设计服务）；2）谷歌TPU产业链的A股供应商（算力基建）；3）AI基础设施大规模建设利好算力全链。盘后博通和谷歌股价上涨已验证海外映射逻辑。\n",
+        "impact_scope": "multi_company",
+        "scope_emoji": "🔗",
+        "scope_cn": "产业链",
+        "scope_multiplier": 0.7,
+        "event_type": "event_driven",
+        "raw_title": "阿波罗寻求投资者参与360亿美元债务交易 为Anthropic采购AI芯片",
+        "raw_content": "【阿波罗寻求投资者参与360亿美元债务交易 为Anthropic采购AI芯片】财联社5月29日电，据报道，阿波罗全球管理公司和黑石集团正寻求为一项约360亿美元的债务融资交易引入更多投资者，以帮助Anthropic PBC构建其人工智能(AI)基础设施。知情人士称，这笔债务融资将用于购买谷歌的定制芯片TPU，即张量处理单元，Anthropic随后将租用这些芯片。知情人士称，协助谷歌开发这些芯片的博通为交易中规模最大的部分付款提供支持。这将成为有史以来规模最大的私募信贷交易之一，也将是规模最大的芯片融资债务交易。该交易旨在利用博通的信用资质，为估值刚刚超越竞争对手OpenAI的Anthropic提供算力获取渠道。消息传出后，博通和谷歌母公司Alphabet Inc.的股价在盘后交易中上涨。博通一度上涨1.9%，至盘后高点434.84美元；Alphabet一度上涨1.2%，至394.81美元。",
+        "news_pub_time": "2026-05-29 07:23",
+        "news_pub_date": "2026-05-29",
+        "strength_score": 78,
+        "novelty_score": 43,
+        "max_heat": 62,
+        "max_accept": 87,
+        "max_rank": 41.57,
+        "stocks": [
+          {
+            "ts_code": "300308.SZ",
+            "stock_name": "中际旭创",
+            "segment": "算力基建-光模块",
+            "rec_reason": "博通是谷歌TPU数据中心网络芯片核心供应商，中际旭创作为全球光模块龙头，长期向谷歌/博通供应800G/1.6T光模块。360亿美元级AI基建融资直接拉动数据中心光模块需求，海外映射逻辑清晰（博通盘后涨1.9%）。",
+            "applied_pattern": "P01",
+            "expected_return_pct": 12.0,
+            "expected_duration_days": 8,
+            "expected_window": "T+1-3",
+            "heat_score": 62,
+            "acceptance_score": 87,
+            "rank_score": 48.91,
+            "pre_run_up_3d": 9.61,
+            "overheated": false,
+            "leader_score": 66.0,
+            "leader_detail": {
+              "circ_mv_yi": 13277.0,
+              "ret_3d_pct": 9.61,
+              "ret_z": 1.68,
+              "main_net_3d_yi": 20.29,
+              "mf_z": 0.64,
+              "ret_anomaly_score": 82,
+              "mf_anomaly_score": 50
+            }
+          },
+          {
+            "ts_code": "300502.SZ",
+            "stock_name": "新易盛",
+            "segment": "算力基建-光模块",
+            "rec_reason": "谷歌数据中心光模块核心供应商之一，400G/800G光模块持续放量。Anthropic大规模采购谷歌TPU建设AI基础设施，直接拉动谷歌数据中心光模块需求，海外映射逻辑下A股光模块标的跟涨。",
+            "applied_pattern": "P01",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 7,
+            "expected_window": "T+1-3",
+            "heat_score": 62,
+            "acceptance_score": 87,
+            "rank_score": 25.5,
+            "pre_run_up_3d": 9.0,
+            "overheated": true,
+            "leader_score": 57.5,
+            "leader_detail": {
+              "circ_mv_yi": 6374.0,
+              "ret_3d_pct": 9.0,
+              "ret_z": 1.09,
+              "main_net_3d_yi": 13.94,
+              "mf_z": 0.48,
+              "ret_anomaly_score": 65,
+              "mf_anomaly_score": 50
+            }
+          },
+          {
+            "ts_code": "002916.SZ",
+            "stock_name": "深南电路",
+            "segment": "算力基建-PCB/封装基板",
+            "rec_reason": "博通ASIC芯片（包括谷歌TPU）的PCB/封装基板核心供应商，AI芯片大规模采购直接拉动高端PCB需求。360亿美元级交易为史上最大芯片融资债务交易，深南电路作为博通供应链A股核心标的直接受益。",
+            "applied_pattern": "P08",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 7,
+            "expected_window": "T+1-3",
+            "heat_score": 36,
+            "acceptance_score": 60,
+            "rank_score": 39.68,
+            "pre_run_up_3d": -0.43,
+            "overheated": false,
+            "leader_score": 42.5,
+            "leader_detail": {
+              "circ_mv_yi": 2648.0,
+              "ret_3d_pct": -0.43,
+              "ret_z": -0.07,
+              "main_net_3d_yi": 4.41,
+              "mf_z": 0.29,
+              "ret_anomaly_score": 35,
+              "mf_anomaly_score": 50
+            }
+          }
+        ],
+        "any_overheated": true,
+        "staleness_factor": 0.85,
+        "staleness_detail": {
+          "prior_theme_count": 1,
+          "keywords": [
+            "亿美元",
+            "融资",
+            "Anthropic"
+          ]
+        },
+        "max_rank_pre_stale": 48.91,
+        "raw_rank": 41.57,
+        "decay_factor": 1.0,
+        "day_offset": 0,
+        "similar_cases": []
+      },
+      {
+        "source_news_hash": "4252ab20bf86b02602d61a850d617be8",
+        "news_channel": "加红",
+        "event_headline": "李强调研舟山宁波：加快建设大宗商品枢纽",
+        "topic_class": "政策出台",
+        "applied_pattern": "P04",
+        "transmission_chain": "【Step -1 事件类型判断】新闻为国务院总理李强实地调研并发表讲话，明确要求\"加快建设大宗商品资源配置枢纽\"，属于国家级政策信号，为 event_driven 事件驱动。\n\n【Step 0 影响范围判断】该政策涉及大宗商品储备（石油、粮食）、港口物流、交易平台建设等多个环节，影响整个大宗商品供应链和港口物流行业，非单公司事件，判断为 industry 级别。\n\n【Step 1 主题分类】政策出台。\n\n【Step 2 范式选择】根据矩阵，政策出台类最优范式为 [P04] 政策驱动（win=61%, comp=+0.09）。同时，新闻中总理明确提到\"宁波舟山港\"建设世界一流强港、大宗商品交易中心等，涉及港口物流基础设施升级，可结合 [P08] 产业链传导（港口建设→设备需求→信息化升级）。\n\n【Step 3 因果链推演】新闻X：李强总理调研舟山宁波，强调加快建设大宗商品资源配置枢纽（石油储备、粮食储备、港口建设、交易中心）→ 政策力度大（总理亲自调研+新华社通稿），明确要求\"扩大储备容量\"\"补齐短板\"\"四港联动\"\"世界一流强港\"→ 直接利好：1）港口运营企业（吞吐量提升、费率改善）；2）大宗商品储运/贸易服务企业（交易量提升、仓储需求增加）；3）港口信息化/智能化改造供应商。受益标的特征：浙江/宁波舟山港相关、大宗商品仓储贸易、港口数智化服务商。",
+        "impact_scope": "industry",
+        "scope_emoji": "🏭",
+        "scope_cn": "全行业",
+        "scope_multiplier": 0.85,
+        "event_type": "event_driven",
+        "raw_title": "李强在浙江舟山宁波调研时强调 加快建设大宗商品资源配置枢纽 为统筹发展和安全提供可靠保障",
+        "raw_content": "【李强在浙江舟山宁波调研时强调 加快建设大宗商品资源配置枢纽 为统筹发展和安全提供可靠保障】中共中央政治局常委、国务院总理李强5月25日至27日在浙江省舟山市、宁波市调研。他强调，要深入贯彻落实习近平总书记关于构建大国储备体系的重要论述和指示精神，坚持政府主导、社会共建、多元互补，做好大宗商品和重要物资储备调节，强化战略保障、宏观调控和应对急需功能，持续提升产业链供应链韧性，加快建设大宗商品资源配置枢纽，为统筹发展和安全提供可靠保障。\n\n李强来到舟山国家石油储备基地、大宗农产品储运基地和宁波大榭商业石油储备项目，听取石油、粮食等储备工作汇报，察看储备洞库等设施，了解项目建设运营情况。李强指出，面对外部环境变化带来的挑战，“手中有粮，心中不慌”。做好大宗商品和重要物资储备，对于经济社会稳定运行意义重大。要科学规划布局，优化储备结构，充分发挥多种主体作用，大力推进多种类型储备设施建设，加快补齐短板，进一步扩大储备容量。要加大科研攻关力度，推动储备和管理技术革新，提高信息化智能化水平。要深化体制机制改革，促进战略储备、商业储备等协同运作，完善轮换动用和市场调节机制，全面提升收储、管理、调配效",
+        "news_pub_time": "2026-05-27 19:36",
+        "news_pub_date": "2026-05-27",
+        "strength_score": 72,
+        "novelty_score": 78,
+        "max_heat": 71,
+        "max_accept": 44,
+        "max_rank": 40.72,
+        "stocks": [
+          {
+            "ts_code": "601018.SH",
+            "stock_name": "宁波港",
+            "segment": "港口运营",
+            "rec_reason": "宁波舟山港是政策直接指向的核心载体，总理明确要求'建设世界一流强港'，宁波港作为运营主体直接受益于吞吐量提升、费率改善和四港联动政策红利。",
+            "applied_pattern": "P04",
+            "expected_return_pct": 12.0,
+            "expected_duration_days": 10,
+            "expected_window": "T+5-10",
+            "heat_score": 71,
+            "acceptance_score": 44,
+            "rank_score": 59.88,
+            "pre_run_up_3d": -2.27,
+            "overheated": false,
+            "leader_score": 38.5,
+            "leader_detail": {
+              "circ_mv_yi": 667.0,
+              "ret_3d_pct": -3.92,
+              "ret_z": -1.95,
+              "main_net_3d_yi": 0.46,
+              "mf_z": 1.16,
+              "ret_anomaly_score": 12,
+              "mf_anomaly_score": 65
+            }
+          },
+          {
+            "ts_code": "002930.SZ",
+            "stock_name": "宏川智慧",
+            "segment": "石化仓储",
+            "rec_reason": "总理调研中专门察看石油储备洞库和商业石油储备项目，强调'扩大储备容量''补齐短板'。宏川智慧是国内领先的石化仓储龙头，在长三角布局多个储罐基地，直接受益于国家战略储备扩容需求。",
+            "applied_pattern": "P04",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 8,
+            "expected_window": "T+5-10",
+            "heat_score": 71,
+            "acceptance_score": 36,
+            "rank_score": 54.25,
+            "pre_run_up_3d": -11.87,
+            "overheated": false,
+            "leader_score": 28.5,
+            "leader_detail": {
+              "circ_mv_yi": 54.0,
+              "ret_3d_pct": -10.38,
+              "ret_z": -1.31,
+              "main_net_3d_yi": -0.24,
+              "mf_z": -0.04,
+              "ret_anomaly_score": 22,
+              "mf_anomaly_score": 35
+            }
+          },
+          {
+            "ts_code": "600798.SH",
+            "stock_name": "宁波海运",
+            "segment": "大宗商品航运",
+            "rec_reason": "宁波舟山港大宗商品资源配置枢纽建设将大幅提升大宗商品海运需求，宁波海运主营沿海及国际大宗散货运输，与宁波舟山港深度绑定，直接受益于枢纽建设带来的运量增长。",
+            "applied_pattern": "P04",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 8,
+            "expected_window": "T+5-10",
+            "heat_score": 71,
+            "acceptance_score": 38,
+            "rank_score": 54.56,
+            "pre_run_up_3d": -6.78,
+            "overheated": false,
+            "leader_score": 23.5,
+            "leader_detail": {
+              "circ_mv_yi": 43.0,
+              "ret_3d_pct": -4.34,
+              "ret_z": -1.61,
+              "main_net_3d_yi": 0.03,
+              "mf_z": 0.04,
+              "ret_anomaly_score": 12,
+              "mf_anomaly_score": 35
+            }
+          }
+        ],
+        "any_overheated": false,
+        "staleness_factor": 0.85,
+        "staleness_detail": {
+          "prior_theme_count": 1,
+          "keywords": [
+            "李强",
+            "调研",
+            "舟山"
+          ]
+        },
+        "max_rank_pre_stale": 59.88,
+        "raw_rank": 50.9,
+        "decay_factor": 0.8,
+        "day_offset": 2,
+        "similar_cases": []
       }
     ],
     "n_pool": 176,
     "max_rank": 53.76,
-    "n_qualified": 10
+    "n_qualified": 12
   },
   "days": [
     {
@@ -2244,6 +2472,177 @@
             ]
           },
           "similar_cases": []
+        },
+        {
+          "source_news_hash": "049830502fdfaf9a3eb77268ef12bf01",
+          "news_channel": "公司",
+          "event_headline": "尼康将推低价光刻机挑战ASML",
+          "topic_class": "海外巨头动态",
+          "applied_pattern": "P02",
+          "transmission_chain": "【Step -1 事件类型判断】新闻为尼康CEO公开表态推出低价芯片制造设备，属于具体的新事件/战略动态，选 event_driven。\n\n【Step 0 影响范围判断】尼康是光刻机领域全球第二大厂商（仅次于ASML），其低价设备战略将影响全球光刻机竞争格局，进而影响A股半导体设备/光刻胶/掩模版等产业链环节。影响范围涉及多条产业链多家公司，选 multi_company（×0.70）。\n\n【Step 1-2 范式选择】新闻类型=海外巨头动态，查矩阵最优范式为 [P01] 海外映射（n=59 win=69% comp=+0.17）。同时，尼康低价设备若成功，将打破ASML垄断，利好国产光刻机产业链的替代逻辑，可叠加 [P02] 国产替代。\n\n【Step 3 因果链推演】新闻：尼康CEO宣布将推出低价芯片制造设备，与ASML竞争 → 影响X：全球光刻机市场格局可能从ASML单极垄断转向双极竞争，中低端光刻机价格有望下行 → 推动Y：1）A股光刻机/半导体设备国产替代情绪升温（尼康路线与国产设备有技术同源性）；2）光刻胶、掩模版等配套耗材受益于设备放量；3）国内晶圆厂设备采购成本下降利好扩产 → 利好Z类公司：光刻机国产替代核心标的、尼康供应链配套企业、半导体设备零部件龙头。\n\n【Step 4 特征条件】受益标的特征：1）与光刻机直接相关的国产设备龙头（有产品落地）；2）尼康/光刻机产",
+          "impact_scope": "multi_company",
+          "scope_emoji": "🔗",
+          "scope_cn": "产业链",
+          "scope_multiplier": 0.7,
+          "event_type": "event_driven",
+          "raw_title": "",
+          "raw_content": "尼康首席执行官称，尼康将推出低价芯片制造设备，与阿斯麦竞争。",
+          "news_pub_time": "2026-05-29 09:25",
+          "news_pub_date": "2026-05-29",
+          "strength_score": 65,
+          "novelty_score": 86,
+          "max_heat": 36,
+          "max_accept": 29,
+          "max_rank": 38.32,
+          "stocks": [
+            {
+              "ts_code": "688037.SH",
+              "stock_name": "芯源微",
+              "segment": "半导体设备",
+              "rec_reason": "国内涂胶显影设备龙头，产品与光刻机前后道工艺紧密配套，尼康低价设备若放量将带动配套设备需求，同时公司也是国产替代核心标的。",
+              "applied_pattern": "P02",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+5-10",
+              "heat_score": 36,
+              "acceptance_score": 29,
+              "rank_score": 38.32,
+              "pre_run_up_3d": -8.9,
+              "overheated": false,
+              "leader_score": 22.0,
+              "leader_detail": {
+                "circ_mv_yi": 530.0,
+                "ret_3d_pct": -8.9,
+                "ret_z": -0.77,
+                "main_net_3d_yi": -1.99,
+                "mf_z": -1.03,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 22
+              }
+            },
+            {
+              "ts_code": "002338.SZ",
+              "stock_name": "奥普光电",
+              "segment": "光刻机核心部件",
+              "rec_reason": "控股子公司长光辰芯是国内高端CMOS图像传感器龙头，同时公司是国产光刻机曝光光学系统核心供应商，直接受益于光刻机国产替代/竞争格局变化带来的产业链关注度提升。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 36,
+              "acceptance_score": 29,
+              "rank_score": 35.04,
+              "pre_run_up_3d": -7.64,
+              "overheated": false,
+              "leader_score": 17.0,
+              "leader_detail": {
+                "circ_mv_yi": 145.0,
+                "ret_3d_pct": -7.64,
+                "ret_z": -1.76,
+                "main_net_3d_yi": -1.26,
+                "mf_z": -0.76,
+                "ret_anomaly_score": 12,
+                "mf_anomaly_score": 22
+              }
+            }
+          ],
+          "any_overheated": false,
+          "staleness_factor": 1.0,
+          "staleness_detail": {
+            "prior_theme_count": 0,
+            "keywords": [
+              "尼康",
+              "低价",
+              "光刻机"
+            ]
+          },
+          "similar_cases": []
+        },
+        {
+          "source_news_hash": "055f80328d858d1fc4f011d95c5907a0",
+          "news_channel": "公司",
+          "event_headline": "摩根大通下调茅台五粮液评级",
+          "topic_class": "海外巨头动态",
+          "applied_pattern": "P01",
+          "transmission_chain": "Step -1 事件类型判断: 这是一条投行评级下调新闻, 属于具体的新信息(评级变动+目标价大幅下调), 不是盘面综述或评论, 因此选 event_driven.\n\nStep 0 影响范围判断: 摩根大通同时下调茅台/五粮液/泸州老窖三大白酒龙头评级, 目标价下调幅度巨大(茅台1930→1420, 五粮液130→74), 直接影响整个白酒板块的估值锚和资金情绪, 属于 industry 级别影响.\n\nStep 1-2 范式选择: 新闻类型为\"海外巨头动态\"(摩根大通是全球顶级投行), 最优范式为 [P01] 海外映射(反向). 但这里不是海外映射上涨, 而是海外投行下调评级引发A股白酒板块估值重估. 同时可参考 [P04] 政策驱动(反向) — 但这里没有政策. 核心逻辑是: 海外权威投行下调评级+大幅砍目标价 → 外资持仓白酒的资金面临减仓压力 → 板块整体估值中枢下移.\n\nStep 3 因果链: 摩根大通作为全球顶级投行, 其评级调整对北向资金/外资有强指引效应. 茅台/五粮液/泸州老窖是外资重仓股, 评级下调+目标价大幅砍杀(茅台-26%, 五粮液-43%)将触发外资减仓. 同时, 会计重述问题削弱五粮液投资者信任, 渠道库存可持续性存疑. 虽然摩根大通认为行业复苏指日可待, 但\"复苏更缓慢\"的表述意味着短期基本面承压.\n\nStep 4 受益特征: 这是利空事件, 白酒板块",
+          "impact_scope": "industry",
+          "scope_emoji": "🏭",
+          "scope_cn": "全行业",
+          "scope_multiplier": 0.85,
+          "event_type": "event_driven",
+          "raw_title": "",
+          "raw_content": "【摩根大通基于盈利增长前景下调茅台、五粮液评级】摩根大通将中国白酒制造商贵州茅台的评级从“增持”下调至“中性”，理由是其盈利低于预期，且缺乏2026财年的业绩指引。分析师Jessie Xu表示，由于五粮液进行了重大会计重述，削弱了投资者信任，并引发了对盈利质量和渠道库存可持续性的质疑，该券商将五粮液的评级从“中性”下调至“减持”。摩根大通将贵州茅台目标价由1930元下调至1420元；五粮液目标价由130元下调至74元；将泸州老窖评级同样从增持下调至中性，目标价由155元下调至105元。尽管如此，摩根大通认为该行业复苏指日可待，并已出现企稳的早期迹象；但预计复苏过程将更为缓慢。",
+          "news_pub_time": "2026-05-29 09:19",
+          "news_pub_date": "2026-05-29",
+          "strength_score": 75,
+          "novelty_score": 72,
+          "max_heat": 62,
+          "max_accept": 44,
+          "max_rank": 38.32,
+          "stocks": [
+            {
+              "ts_code": "600519.SH",
+              "stock_name": "贵州茅台",
+              "segment": "高端白酒",
+              "rec_reason": "摩根大通将评级从增持下调至中性，目标价从1930元砍至1420元(-26%)，且缺乏2026财年业绩指引。作为外资重仓第一股，北向资金减仓压力最大，短期承压明显。但茅台基本面仍为白酒板块最扎实，若因评级下调超跌，中期有修复机会。",
+              "applied_pattern": "P01",
+              "expected_return_pct": -5.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 62,
+              "acceptance_score": 44,
+              "rank_score": 45.08,
+              "pre_run_up_3d": -0.77,
+              "overheated": false,
+              "leader_score": 42.5,
+              "leader_detail": {
+                "circ_mv_yi": 15951.0,
+                "ret_3d_pct": -0.77,
+                "ret_z": -0.39,
+                "main_net_3d_yi": -0.18,
+                "mf_z": 0.45,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "000858.SZ",
+              "stock_name": "五粮液",
+              "segment": "高端白酒",
+              "rec_reason": "摩根大通将评级从中性下调至减持，目标价从130元砍至74元(-43%)，且指出会计重述削弱投资者信任、渠道库存可持续性存疑。利空程度在三家中最大，短期抛压最重。",
+              "applied_pattern": "P01",
+              "expected_return_pct": -8.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 62,
+              "acceptance_score": 20,
+              "rank_score": 41.41,
+              "pre_run_up_3d": -3.15,
+              "overheated": false,
+              "leader_score": 43.5,
+              "leader_detail": {
+                "circ_mv_yi": 3163.0,
+                "ret_3d_pct": -3.15,
+                "ret_z": -1.46,
+                "main_net_3d_yi": -3.32,
+                "mf_z": 0.83,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 65
+              }
+            }
+          ],
+          "any_overheated": false,
+          "staleness_factor": 0.85,
+          "staleness_detail": {
+            "prior_theme_count": 1,
+            "keywords": [
+              "摩根",
+              "大通",
+              "下调"
+            ]
+          },
+          "max_rank_pre_stale": 45.08,
+          "similar_cases": []
         }
       ],
       "n_pool": 42,
@@ -2251,7 +2650,7 @@
       "date": "2026-05-29",
       "label": "今日",
       "weekday": "五",
-      "n_qualified": 10
+      "n_qualified": 12
     },
     {
       "top10": [
@@ -3264,6 +3663,228 @@
           },
           "max_rank_pre_stale": 53.91,
           "similar_cases": []
+        },
+        {
+          "source_news_hash": "79341603df1b05dae52d97ef13ba30ed",
+          "news_channel": "港美股",
+          "event_headline": "黄仁勋下周访韩，HBM供应链预期升温",
+          "topic_class": "海外巨头动态",
+          "applied_pattern": "P01",
+          "transmission_chain": "[Step -1] 新闻类型判断：财联社报道英伟达CEO黄仁勋将访问韩国，属于具体事件驱动(event_driven)，非传闻或评论。[Step 0] 影响范围判断：黄仁勋访问韩国，核心议题大概率涉及HBM（高带宽内存）供应、三星电子代工合作等AI半导体产业链关键环节。韩国是HBM和存储芯片全球重镇，此访影响英伟达供应链格局，涉及多家韩国及A股相关公司，故判定为multi_company。[Step 1-2] 新闻属于\"海外巨头动态\"，最优范式为[P01]海外映射（win%=69, comp=+0.17）。[Step 3] 推理链：黄仁勋访韩→重点议题包括：①三星HBM3E/4认证进展（英伟达GPU急需HBM产能）；②三星先进封装（CoWoS-like）合作；③存储芯片供应链协同。这些议题直接映射A股：HBM产业链（材料/设备/封测）、存储芯片配套、以及英伟达供应链中的韩国业务关联公司。黄仁勋访韩往往伴随HBM认证通过或扩产订单落地预期，A股相关标的将受比价效应和供应链预期驱动。[Step 4] 受益特征：HBM核心材料供应商（前驱体/封装材料）、与三星/海力士有深度绑定的设备/材料公司、英伟达GPU封装测试供应链。",
+          "impact_scope": "multi_company",
+          "scope_emoji": "🔗",
+          "scope_cn": "产业链",
+          "scope_multiplier": 0.7,
+          "event_type": "event_driven",
+          "raw_title": "",
+          "raw_content": "财联社5月28日电，英伟达CEO黄仁勋将于下周访问韩国。",
+          "news_pub_time": "2026-05-28 17:46",
+          "news_pub_date": "2026-05-28",
+          "strength_score": 68,
+          "novelty_score": 74,
+          "max_heat": 48,
+          "max_accept": 29,
+          "max_rank": 34.95,
+          "stocks": [
+            {
+              "ts_code": "300567.SZ",
+              "stock_name": "精测电子",
+              "segment": "HBM检测设备",
+              "rec_reason": "公司半导体检测设备已进入三星、海力士供应链，HBM扩产带动检测设备需求激增。黄仁勋访韩若推动三星HBM认证加速，检测设备订单预期升温，海外映射逻辑清晰。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 12.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+5-10",
+              "heat_score": 36,
+              "acceptance_score": 29,
+              "rank_score": 41.12,
+              "pre_run_up_3d": -6.26,
+              "overheated": false,
+              "leader_score": 22.0,
+              "leader_detail": {
+                "circ_mv_yi": 478.0,
+                "ret_3d_pct": -6.26,
+                "ret_z": -0.69,
+                "main_net_3d_yi": -1.54,
+                "mf_z": -1.45,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 22
+              }
+            },
+            {
+              "ts_code": "002409.SZ",
+              "stock_name": "雅克科技",
+              "segment": "HBM封装材料",
+              "rec_reason": "子公司UP Chemical是SK海力士HBM前驱体核心供应商，同时供应三星电子。黄仁勋访韩聚焦HBM供应，公司作为海力士/三星双料供应商弹性最大，历史映射效应显著。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 7,
+              "expected_window": "T+1-3",
+              "heat_score": 48,
+              "acceptance_score": 22,
+              "rank_score": 37.47,
+              "pre_run_up_3d": -9.98,
+              "overheated": false,
+              "leader_score": 22.0,
+              "leader_detail": {
+                "circ_mv_yi": 367.0,
+                "ret_3d_pct": -9.98,
+                "ret_z": -1.32,
+                "main_net_3d_yi": -5.7,
+                "mf_z": -1.01,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 22
+              }
+            },
+            {
+              "ts_code": "300346.SZ",
+              "stock_name": "南大光电",
+              "segment": "HBM前驱体材料",
+              "rec_reason": "公司是HBM核心前驱体材料（High-K/ALD前驱体）国内龙头，已进入三星、海力士供应链。黄仁勋访韩若推动HBM认证/扩产，前驱体需求直接受益，国产替代逻辑强化。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 31,
+              "acceptance_score": 20,
+              "rank_score": 32.51,
+              "pre_run_up_3d": -5.07,
+              "overheated": false,
+              "leader_score": 22.0,
+              "leader_detail": {
+                "circ_mv_yi": 380.0,
+                "ret_3d_pct": -5.07,
+                "ret_z": -0.85,
+                "main_net_3d_yi": -7.47,
+                "mf_z": -0.87,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 22
+              }
+            }
+          ],
+          "any_overheated": false,
+          "staleness_factor": 0.85,
+          "staleness_detail": {
+            "prior_theme_count": 1,
+            "keywords": [
+              "黄仁勋",
+              "下周",
+              "访韩"
+            ]
+          },
+          "max_rank_pre_stale": 41.12,
+          "similar_cases": []
+        },
+        {
+          "source_news_hash": "ffb70c99b0b5d557019c27c79087aa35",
+          "news_channel": "港美股",
+          "event_headline": "广东推动1000亿战新产业基金集群",
+          "topic_class": "政策出台",
+          "applied_pattern": "P04",
+          "transmission_chain": "【Stage A 推演】Step -1: 新闻为广东省副省长在深交所全球投资者大会上的正式发言，属于官方政策表态，选 event_driven。Step 0: 影响范围判断——1000亿战略性新兴产业引导基金+500亿大湾区创投基金，覆盖集成电路、量子科技、先进制造、生物医药等多个产业，属于省级重大产业政策，影响面广但非全国级，选 industry (×0.85)。Step 1: topic_class = 政策出台。Step 2: 查矩阵，政策出台最优范式为 [P04] (n=77 win=61% comp=+0.09)，无错配风险。Step 3 因果链: 新闻→广东省政府明确推动1000亿战略性新兴产业引导基金+500亿大湾区创投基金与社会资本联动→形成\"长钱长投\"产业基金集群→直接利好广东省内集成电路、量子科技、先进制造、生物医药等领域的拟上市/已上市企业→资金沿两条路径受益: (1)已上市且注册地在广东的战略新兴产业龙头，获得产业资本加持和估值溢价；(2)广东本地创投/股权投资平台，管理基金规模扩张带来管理费收入增长。Step 4 特征条件: (1)注册地在广东省/大湾区；(2)属于集成电路/量子科技/先进制造/生物医药四大方向之一；(3)已有产业基金合作背景或国资背景；(4)创投类公司需有政府引导基金管理经验。",
+          "impact_scope": "industry",
+          "scope_emoji": "🏭",
+          "scope_cn": "全行业",
+          "scope_multiplier": 0.85,
+          "event_type": "event_driven",
+          "raw_title": "广东省副省长李运：推动1000亿战略性新兴产业投资引导基金与社会资本联动",
+          "raw_content": "【广东省副省长李运：推动1000亿战略性新兴产业投资引导基金与社会资本联动】财联社5月28日电，在2026年深交所全球投资者大会上，广东省政府副省长李运指出，未来，将从三方面打造金融创新高地。一是加快推进新质生产力高质量发展。聚焦集成电路、量子科技、先进制造、生物医药等战略性新兴产业和未来产业。二是持续壮大优质上市企业梯队，提升全省IPO上市规模和质量。三是完善全链条创投支撑生态。推动1000亿元战略性新兴产业投资引导基金、500亿元粤港澳大湾区创业投资基金等省引导基金与社会资本携手联动，打造“长钱长投”的产业基金集群。（财联社记者 赵昕睿 陈俊兰 周晓雅）",
+          "news_pub_time": "2026-05-28 18:26",
+          "news_pub_date": "2026-05-28",
+          "strength_score": 72,
+          "novelty_score": 86,
+          "max_heat": 46,
+          "max_accept": 60,
+          "max_rank": 34.81,
+          "stocks": [
+            {
+              "ts_code": "002916.SZ",
+              "stock_name": "深南电路",
+              "segment": "集成电路-封装基板",
+              "rec_reason": "注册地深圳，国内IC载板龙头，直接受益于广东省1000亿战新产业基金对集成电路方向的资本注入。广东省明确聚焦集成电路产业，深南电路作为省内半导体封装基板核心标的，有望获得产业基金直接赋能和估值提升。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+5-10",
+              "heat_score": 46,
+              "acceptance_score": 60,
+              "rank_score": 53.56,
+              "pre_run_up_3d": -0.43,
+              "overheated": false,
+              "leader_score": 42.5,
+              "leader_detail": {
+                "circ_mv_yi": 2648.0,
+                "ret_3d_pct": -0.43,
+                "ret_z": -0.07,
+                "main_net_3d_yi": 4.41,
+                "mf_z": 0.29,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "000987.SZ",
+              "stock_name": "越秀资本",
+              "segment": "创投/金融",
+              "rec_reason": "注册地广州，广东省属金控平台，旗下越秀产业基金具有丰富的政府引导基金管理经验。广东省推动1000亿战新基金与社会资本联动，越秀资本作为省内头部创投平台，直接受益于管理规模扩张和管理费收入增长。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 7.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+5-10",
+              "heat_score": 46,
+              "acceptance_score": 44,
+              "rank_score": 50.23,
+              "pre_run_up_3d": -2.33,
+              "overheated": false,
+              "leader_score": 36.0,
+              "leader_detail": {
+                "circ_mv_yi": 399.0,
+                "ret_3d_pct": -2.33,
+                "ret_z": -0.95,
+                "main_net_3d_yi": -0.46,
+                "mf_z": 0.4,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "002938.SZ",
+              "stock_name": "鹏鼎控股",
+              "segment": "先进制造-PCB",
+              "rec_reason": "注册地深圳，全球PCB龙头，先进制造方向核心标的。广东省战新基金重点投向先进制造领域，鹏鼎控股作为全球最大PCB厂商且总部在深圳，有望受益于产业资本联动带来的产业链整合与估值重估。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 6.0,
+              "expected_duration_days": 7,
+              "expected_window": "T+5-10",
+              "heat_score": 46,
+              "acceptance_score": 23,
+              "rank_score": 45.48,
+              "pre_run_up_3d": -7.28,
+              "overheated": false,
+              "leader_score": 17.0,
+              "leader_detail": {
+                "circ_mv_yi": 2448.0,
+                "ret_3d_pct": -7.28,
+                "ret_z": -0.87,
+                "main_net_3d_yi": -20.87,
+                "mf_z": -2.83,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 12
+              }
+            }
+          ],
+          "any_overheated": false,
+          "staleness_factor": 0.65,
+          "staleness_detail": {
+            "prior_theme_count": 4,
+            "keywords": [
+              "广东",
+              "亿战",
+              "产业"
+            ]
+          },
+          "max_rank_pre_stale": 53.56,
+          "similar_cases": []
         }
       ],
       "n_pool": 69,
@@ -3271,7 +3892,7 @@
       "date": "2026-05-28",
       "label": "昨日",
       "weekday": "四",
-      "n_qualified": 10
+      "n_qualified": 12
     },
     {
       "top10": [
@@ -4233,6 +4854,203 @@
             ]
           },
           "max_rank_pre_stale": 60.41,
+          "similar_cases": []
+        },
+        {
+          "source_news_hash": "1cddd4d914ae4af73f83acdb9e769411",
+          "news_channel": "加红",
+          "event_headline": "伊美披露备忘录，霍尔木兹海峡通行将恢复",
+          "topic_class": "地缘政治",
+          "applied_pattern": "P05",
+          "transmission_chain": "【Step -1: event_type】新闻为财联社/新华社披露的伊美谅解备忘录非正式文件，属于具体新事件，选 event_driven。\n\n【Step 0: impact_scope】霍尔木兹海峡是全球最重要的石油运输通道（约占全球海运石油1/3），通行量恢复至战前水平将直接影响全球油价中枢和海运格局，影响范围覆盖全球能源市场，选 global。\n\n【Step 1: topic_class】地缘政治缓和事件。\n\n【Step 2: 范式选择】参考矩阵，地缘缓和类新闻最优范式需谨慎。结合历史教训2和3：地缘缓和/谈判类新闻不要直接套用\"成本下降利好炼化\"逻辑，除非油价已真实暴跌3%+；也不要立即押注航空/燃油成本受益股，应等待油价实际下行信号确认。因此选用【P05 事件催化】的变体——地缘缓和带来的\"风险溢价消退\"逻辑，以及【P03 供需共振】的变体——海峡通行恢复=供给端约束解除。\n\n【Step 3: 因果链】新闻：伊美披露谅解备忘录非正式文件，霍尔木兹海峡通行量将恢复至战前水平 → 影响1：全球原油供给端约束解除，伊朗原油（约150-200万桶/日潜在增量）可能重返市场，油价短期承压下行 → 影响2：地缘风险溢价消退，此前因中东紧张局势受益的航运/军工板块面临回调压力 → 影响3：油价下行利好下游用油成本敏感型行业（航运燃油成本下降、化工原料成本下降），但需注意历史教训：地缘缓",
+          "impact_scope": "global",
+          "scope_emoji": "🌍",
+          "scope_cn": "全球级",
+          "scope_multiplier": 1.0,
+          "event_type": "event_driven",
+          "raw_title": "伊美谅解备忘录初步非正式文件内容披露 海峡通行量或将恢复至战前水平",
+          "raw_content": "【伊美谅解备忘录初步非正式文件内容披露 海峡通行量或将恢复至战前水平】财联社5月27日电，据隶属于伊朗司法部的“平衡”通讯社27日报道，一份有关伊朗与美国谅解备忘录框架的“初步非正式文件”被披露，内容涉及霍尔木兹海峡、地区军事部署及未来协议安排等问题。根据文件，美国承诺解除针对伊朗的“海上封锁”，并撤出部署在伊朗周边区域的部分军事力量。作为交换，伊朗将于一个月内逐步把霍尔木兹海峡商业船只通行量恢复至局势升级前水平，但不包括军事船只。船只通行的管理和航线安排，将由伊朗与阿曼共同协调。文件显示，如果伊美能在60天内达成最终协议，相关内容可能以具有约束力的联合国安理会决议形式获得确认。报道称，伊朗方面强调，在完成“切实可验证”的核查之前，伊方不会采取任何实际行动。 (新华社)",
+          "news_pub_time": "2026-05-27 20:10",
+          "news_pub_date": "2026-05-27",
+          "strength_score": 45,
+          "novelty_score": 34,
+          "max_heat": 48,
+          "max_accept": 36,
+          "max_rank": 23.32,
+          "stocks": [
+            {
+              "ts_code": "601872.SH",
+              "stock_name": "招商轮船",
+              "segment": "油运/航运",
+              "rec_reason": "霍尔木兹海峡通行量恢复至战前水平，全球油运航线恢复正常化，招商轮船作为全球最大VLCC船东之一，中东-远东航线是其核心收入来源，海峡通行恢复将直接提升航线运营效率和船舶周转率。同时地缘风险溢价消退后，油运板块估值压制因素解除。但需注意历史教训：地缘缓和初期信号对航运股的脉冲效应有限，不宜追高。",
+              "applied_pattern": "P05",
+              "expected_return_pct": 5.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+5-10",
+              "heat_score": 48,
+              "acceptance_score": 36,
+              "rank_score": 35.87,
+              "pre_run_up_3d": -9.9,
+              "overheated": false,
+              "leader_score": 17.0,
+              "leader_detail": {
+                "circ_mv_yi": 1299.0,
+                "ret_3d_pct": -9.45,
+                "ret_z": -1.83,
+                "main_net_3d_yi": -2.32,
+                "mf_z": -0.91,
+                "ret_anomaly_score": 12,
+                "mf_anomaly_score": 22
+              }
+            },
+            {
+              "ts_code": "600026.SH",
+              "stock_name": "中远海能",
+              "segment": "油运/航运",
+              "rec_reason": "主营原油及成品油运输，中东航线占比高。霍尔木兹海峡通行恢复后，伊朗原油出口有望逐步回升，带动油运需求增量。同时此前因地缘风险导致的航线绕行/保险费率上升等成本因素将缓解。但参考历史教训，地缘缓和类事件信号强度应打3折，短期涨幅有限。",
+              "applied_pattern": "P05",
+              "expected_return_pct": 5.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+5-10",
+              "heat_score": 36,
+              "acceptance_score": 29,
+              "rank_score": 32.45,
+              "pre_run_up_3d": -10.96,
+              "overheated": false,
+              "leader_score": 12.0,
+              "leader_detail": {
+                "circ_mv_yi": 759.0,
+                "ret_3d_pct": -9.28,
+                "ret_z": -2.11,
+                "main_net_3d_yi": -2.48,
+                "mf_z": -1.65,
+                "ret_anomaly_score": 12,
+                "mf_anomaly_score": 12
+              }
+            }
+          ],
+          "any_overheated": false,
+          "staleness_factor": 0.65,
+          "staleness_detail": {
+            "prior_theme_count": 3,
+            "keywords": [
+              "伊美",
+              "披露",
+              "备忘录"
+            ]
+          },
+          "max_rank_pre_stale": 35.87,
+          "similar_cases": []
+        },
+        {
+          "source_news_hash": "d93052aa171fe0938eaf154b24271872",
+          "news_channel": "加红",
+          "event_headline": "长鑫科技科创板IPO过会",
+          "topic_class": "海外巨头动态",
+          "applied_pattern": "P08",
+          "transmission_chain": "【Step -1】事件类型判断：长鑫科技科创板IPO获上市委会议通过，属于明确的重大事件驱动（event_driven），非传闻/评论/复盘。【Step 0】影响范围判断：长鑫科技是国内DRAM存储器龙头，其IPO过会+千亿级营收/百亿级利润的亮眼数据，将直接提振整个半导体存储产业链的估值和关注度，影响范围覆盖多家产业链公司，但尚未达到改变全市场regime的global级别，故判定为industry。【Step 1】话题分类：海外巨头动态——长鑫科技对标全球DRAM巨头三星、SK海力士、美光，其IPO过会意味着国产DRAM进入大规模商业化阶段，属于\"海外映射\"的逆向版本（国产巨头崛起映射A股供应链）。【Step 2】范式选择：最优范式为[P01]海外映射——长鑫科技作为国产DRAM龙头IPO过会，其供应链上的设备/材料/封测公司将直接受益于产能扩张和资本开支；同时[P08]产业链传导也适用——长鑫295亿募资投向晶圆制造产线升级，将沿产业链向上游设备/材料环节传导需求增量。【Step 3】因果链：长鑫IPO过会（营收1100-1200亿/净利500-570亿，同比暴增6-25倍）→ 公司进入大规模扩产阶段（295亿募资用于产线升级）→ 上游国产半导体设备/材料供应商获得大量订单 → A股相关供应链标的受益。【Step 4】特征条件：① 已进入长鑫供应链的国产半导体设备商；② DR",
+          "impact_scope": "industry",
+          "scope_emoji": "🏭",
+          "scope_cn": "全行业",
+          "scope_multiplier": 0.85,
+          "event_type": "event_driven",
+          "raw_title": "长鑫科技科创板IPO获上市委会议通过",
+          "raw_content": "【长鑫科技科创板IPO获上市委会议通过】财联社5月27日电，长鑫科技集团股份有限公司科创板IPO获上市委会议通过，符合发行条件、上市条件和信息披露要求。长鑫科技招股说明书（申报稿）显示，公司预计2026年上半年实现营业收入1100亿元至1200亿元，同比增长612.53%至677.31%；实现归母净利润500亿元至570亿元，同比增长2244.03%至2544.19%。公司此次IPO拟募资295亿元，用于存储器晶圆制造量产线技术升级改造项目、DRAM存储器技术升级项目、动态随机存取存储器前瞻技术研究与开发项目等项目。",
+          "news_pub_time": "2026-05-27 17:03",
+          "news_pub_date": "2026-05-27",
+          "strength_score": 82,
+          "novelty_score": 75,
+          "max_heat": 57,
+          "max_accept": 51,
+          "max_rank": 23.13,
+          "stocks": [
+            {
+              "ts_code": "688126.SH",
+              "stock_name": "沪硅产业",
+              "segment": "半导体硅片",
+              "rec_reason": "长鑫DRAM制造核心原材料——300mm大硅片的国产主力供应商，沪硅产业已通过长鑫认证并批量供货，长鑫营收暴增6倍意味着硅片消耗量同步激增，硅片需求弹性大",
+              "applied_pattern": "P08",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+1-3",
+              "heat_score": 57,
+              "acceptance_score": 51,
+              "rank_score": 57.55,
+              "pre_run_up_3d": 0.93,
+              "overheated": false,
+              "leader_score": 42.5,
+              "leader_detail": {
+                "circ_mv_yi": 836.0,
+                "ret_3d_pct": 5.37,
+                "ret_z": 0.59,
+                "main_net_3d_yi": 0.11,
+                "mf_z": 0.15,
+                "ret_anomaly_score": 50,
+                "mf_anomaly_score": 35
+              }
+            },
+            {
+              "ts_code": "002371.SZ",
+              "stock_name": "北方华创",
+              "segment": "半导体设备平台",
+              "rec_reason": "国产半导体设备龙头，刻蚀/薄膜沉积/清洗设备全面覆盖DRAM制造流程，已深度进入长鑫供应链，长鑫千亿营收+295亿募资扩产将带来持续的设备采购需求，北方华创作为平台型龙头受益最充分",
+              "applied_pattern": "P08",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+1-3",
+              "heat_score": 57,
+              "acceptance_score": 29,
+              "rank_score": 56.69,
+              "pre_run_up_3d": -2.13,
+              "overheated": false,
+              "leader_score": 22.0,
+              "leader_detail": {
+                "circ_mv_yi": 4773.0,
+                "ret_3d_pct": -5.61,
+                "ret_z": -1.07,
+                "main_net_3d_yi": -9.78,
+                "mf_z": -0.96,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 22
+              }
+            },
+            {
+              "ts_code": "688012.SH",
+              "stock_name": "中微公司",
+              "segment": "半导体刻蚀设备",
+              "rec_reason": "长鑫DRAM扩产核心设备供应商，中微公司等离子体刻蚀设备已进入长鑫产线，DRAM制造对刻蚀设备需求量大（尤其是高深宽比刻蚀），长鑫295亿募资投向产线升级将直接拉动设备采购订单",
+              "applied_pattern": "P08",
+              "expected_return_pct": 12.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+1-3",
+              "heat_score": 57,
+              "acceptance_score": 20,
+              "rank_score": 57.83,
+              "pre_run_up_3d": -3.1,
+              "overheated": false,
+              "leader_score": 17.0,
+              "leader_detail": {
+                "circ_mv_yi": 2849.0,
+                "ret_3d_pct": -6.63,
+                "ret_z": -0.92,
+                "main_net_3d_yi": -6.2,
+                "mf_z": -1.87,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 12
+              }
+            }
+          ],
+          "any_overheated": false,
+          "staleness_factor": 0.4,
+          "staleness_detail": {
+            "prior_theme_count": 14,
+            "keywords": [
+              "长鑫",
+              "科技",
+              "科创板"
+            ]
+          },
+          "max_rank_pre_stale": 57.83,
           "similar_cases": []
         }
       ],
