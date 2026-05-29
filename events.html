@@ -215,6 +215,7 @@ function evRenderCard(grp, rank_num, threshold) {
                         ${grp.topic_class ? `<span class="chip chip-topic">🏷️ ${grp.topic_class}</span>` : ''}
                         ${grp.applied_pattern ? `<span class="chip chip-pattern">${grp.applied_pattern}</span>` : ''}
                         <span class="scope-badge scope-${grp.impact_scope}">${scope_info[0]} ${scope_info[1]} ×${EV_FMT(grp.scope_multiplier, 2)}</span>
+                        ${(grp.staleness_factor != null && grp.staleness_factor < 1) ? `<span class="chip" style="background:#fef3c7;color:#92400e" title="该主题过去7天已上榜${(grp.staleness_detail||{}).prior_theme_count||0}次, 属老主线延续, 已降权×${grp.staleness_factor}">🔄 老主线延续 ×${grp.staleness_factor}</span>` : ''}
                         ${grp.any_overheated ? '<span class="chip" style="background:#fee2e2;color:#991b1b">🔥 过热警告</span>' : ''}
                     </div>
                 </div>
