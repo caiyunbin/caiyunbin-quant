@@ -6,44 +6,6 @@
     <title>今日信号 · 多子策略决策引擎</title>
     <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
-    <style>
-      /* 事件驱动样式 */
-      .tab-btn { color: #6b7280; background: transparent; border: 0; cursor: pointer; }
-      .tab-btn.active { background: linear-gradient(135deg, #6366f1, #a855f7); color: white; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
-      .event-subtab-btn { color: #6b7280; background: transparent; border: 0; cursor: pointer; }
-      .event-subtab-btn.active { background: linear-gradient(135deg, #a855f7, #ec4899); color: white; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3); }
-      .day-btn { padding: 6px 14px; border-radius: 7px; font-weight: 500; font-size: 13px; color: #4b5563; background: transparent; border: 0; cursor: pointer; transition: all 0.18s; display: flex; align-items: center; gap: 6px; }
-      .day-btn.active { background: white; color: #6366f1; box-shadow: 0 1px 4px rgba(0,0,0,0.08); font-weight: 600; }
-      .day-btn .day-count { background: #fef3c7; color: #92400e; padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: 700; }
-      .day-btn.active .day-count { background: #ddd6fe; color: #5b21b6; }
-      .event-card { position: relative; background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.04); border: 1px solid #e5e7eb; transition: all 0.25s ease; }
-      .event-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.08); }
-      .rank-badge { position: absolute; top: 0; left: 0; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: white; border-bottom-right-radius: 14px; z-index: 2; }
-      .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
-      .rank-2 { background: linear-gradient(135deg, #94a3b8, #64748b); }
-      .rank-3 { background: linear-gradient(135deg, #fdba74, #f97316); }
-      .rank-other { background: linear-gradient(135deg, #818cf8, #6366f1); font-size: 18px; }
-      .chip { display: inline-flex; align-items: center; gap: 3px; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 500; }
-      .chip-channel { background: #fef3c7; color: #92400e; }
-      .chip-time { background: #f3f4f6; color: #4b5563; }
-      .chip-topic { background: #e0e7ff; color: #4338ca; }
-      .chip-pattern { background: #fce7f3; color: #be185d; font-family: monospace; }
-      .scope-badge { display: inline-flex; align-items: center; gap: 3px; padding: 3px 9px; border-radius: 7px; font-weight: 600; font-size: 12px; }
-      .scope-paradigm_shift { background: #fae8ff; color: #86198f; }
-      .scope-global { background: #dbeafe; color: #1e40af; }
-      .scope-industry { background: #dcfce7; color: #166534; }
-      .scope-multi_company { background: #fef3c7; color: #92400e; }
-      .scope-single_company { background: #fee2e2; color: #991b1b; }
-      .scope-local { background: #f3e8ff; color: #6b21a8; }
-      .big-score { font-size: 44px; font-weight: 800; line-height: 1; background: linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-      .dim-card { background: #f9fafb; border-radius: 8px; padding: 8px 10px; border: 1px solid #e5e7eb; }
-      .score-bar { position: relative; height: 5px; background: #e5e7eb; border-radius: 3px; overflow: hidden; }
-      .score-bar-fill { position: absolute; top: 0; left: 0; bottom: 0; border-radius: 3px; background: linear-gradient(90deg, #f59e0b, #ef4444 50%, #10b981); }
-      .similar-case { background: linear-gradient(135deg, #fef9c3, #fef3c7); border-left: 4px solid #f59e0b; border-radius: 8px; padding: 10px; }
-      .stock-row { background: #fafbfc; border-radius: 8px; padding: 8px 12px; border: 1px solid #e5e7eb; }
-      details[open] summary .chev { transform: rotate(180deg); }
-      .chev { transition: transform 0.2s ease; display: inline-block; }
-    </style>
     <script src="assets/auth.js"></script>
     <script src="assets/activity.js"></script>
     <script src="assets/compliance.js"></script>
@@ -56,82 +18,25 @@
 <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 w-full">
 <div class="space-y-6">
 
-    <!-- 主 Tab: 三策略信号 / 事件驱动 -->
-    <div class="flex items-center justify-center">
-        <div class="inline-flex bg-white rounded-xl p-1 shadow-sm border border-gray-200" id="main-tabs">
-            <button class="tab-btn active px-4 sm:px-6 py-2 rounded-lg font-semibold text-sm transition" data-tab="signals">🎯 三策略信号</button>
-            <button class="tab-btn px-4 sm:px-6 py-2 rounded-lg font-semibold text-sm transition" data-tab="events">📡 事件驱动</button>
-        </div>
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
+        <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-1">🎯 今日信号</h1>
+        <p class="text-gray-500 text-sm">三个子决策树当日候选股票 + 信号持续状态 + 信号出清建议 (T+1 开盘价撮合)</p>
+        <p class="text-xs text-gray-400 mt-2" id="meta-info"></p>
     </div>
 
-    <!-- ────────── Tab 1: 三策略信号 (原有) ────────── -->
-    <div id="tab-signals" class="space-y-6">
-        <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-            <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-1">🎯 今日信号</h1>
-            <p class="text-gray-500 text-sm">三个子决策树当日候选股票 + 信号持续状态 + 信号出清建议 (T+1 开盘价撮合)</p>
-            <p class="text-xs text-gray-400 mt-2" id="meta-info"></p>
-        </div>
-
-        <div id="strategy-cards" class="space-y-6">
-            <!-- by JS: 每个策略 1 张大卡片 + 4 个状态分块 -->
-        </div>
-
-        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
-            <h3 class="font-bold text-sm text-blue-900 mb-2">📖 状态说明</h3>
-            <ul class="text-xs text-blue-900 list-disc list-inside space-y-1">
-                <li><b>信号持续</b>: 该标的目前处于信号持续期, 继续保留观察</li>
-                <li><b>明日 T+1 信号出清</b>: 系统判定明日 T+1 集合竞价出清, 可作为出清参考</li>
-                <li><b>明日开盘信号生成</b>: 候选标的池, ★★★ 最优, 用户应根据资金量在明日 T+1 开盘参考信号</li>
-                <li><b>历史出清</b>: 最近 30 天的历史出清记录, 仅作研究参考</li>
-            </ul>
-            <p class="text-xs text-blue-700 mt-2">⚠️ 本系统输出"信号参考", 不真实下单, 不构成投资建议. 用户应自主判断、独立决策、风险自担.</p>
-        </div>
+    <div id="strategy-cards" class="space-y-6">
+        <!-- by JS: 每个策略 1 张大卡片 + 4 个状态分块 -->
     </div>
 
-    <!-- ────────── Tab 2: 事件驱动 ────────── -->
-    <div id="tab-events" class="space-y-6" hidden>
-        <!-- 顶部 banner -->
-        <div class="bg-gradient-to-r from-purple-600 via-pink-500 to-rose-500 rounded-2xl p-5 sm:p-6 text-white shadow-lg">
-            <div class="flex items-center justify-between flex-wrap gap-3">
-                <div>
-                    <h1 class="text-2xl sm:text-3xl font-bold mb-1">📡 事件驱动 · 实时榜单</h1>
-                    <p class="text-purple-100 text-xs sm:text-sm">财联社 加红 / 港美股 / 公司 / 提醒 · Engine_M v7 · ECS 每小时整点刷新</p>
-                    <p class="text-purple-100/80 text-xs mt-1" id="events-meta">加载中…</p>
-                </div>
-                <div class="flex gap-2 flex-wrap" id="events-stats"></div>
-            </div>
-        </div>
-
-        <!-- 阈值说明 -->
-        <div class="bg-white shadow rounded-xl p-4 sm:p-5 border-l-4 border-purple-500">
-            <div class="flex items-start gap-3">
-                <div class="text-2xl">🎯</div>
-                <div class="flex-grow text-xs sm:text-sm text-gray-600 leading-relaxed">
-                    <div class="font-bold text-gray-800 mb-1">什么样的分数算"高重要度"?</div>
-                    <span id="events-threshold-desc">回测得出…</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- 子 Tab: 7日 / 日榜 -->
-        <div class="flex items-center justify-center">
-            <div class="inline-flex bg-white rounded-xl p-1 shadow-sm border border-gray-200" id="events-subtabs">
-                <button class="event-subtab-btn active px-4 py-2 rounded-lg font-semibold text-sm transition" data-subtab="weekly">📊 7日汇总</button>
-                <button class="event-subtab-btn px-4 py-2 rounded-lg font-semibold text-sm transition" data-subtab="daily">📅 日榜单</button>
-            </div>
-        </div>
-
-        <div id="events-weekly" class="space-y-4">
-            <!-- by JS: weekly Top 10 -->
-        </div>
-        <div id="events-daily" class="space-y-4" hidden>
-            <div class="bg-white rounded-xl p-3 shadow-sm flex items-center justify-center">
-                <div class="inline-flex bg-gray-100 rounded-lg p-1 gap-1" id="events-day-tabs">
-                    <!-- by JS: 今/昨/前 -->
-                </div>
-            </div>
-            <div id="events-day-content" class="space-y-4"></div>
-        </div>
+    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
+        <h3 class="font-bold text-sm text-blue-900 mb-2">📖 状态说明</h3>
+        <ul class="text-xs text-blue-900 list-disc list-inside space-y-1">
+            <li><b>信号持续</b>: 该标的目前处于信号持续期, 继续保留观察</li>
+            <li><b>明日 T+1 信号出清</b>: 系统判定明日 T+1 集合竞价出清, 可作为出清参考</li>
+            <li><b>明日开盘信号生成</b>: 候选标的池, ★★★ 最优, 用户应根据资金量在明日 T+1 开盘参考信号</li>
+            <li><b>历史出清</b>: 最近 30 天的历史出清记录, 仅作研究参考</li>
+        </ul>
+        <p class="text-xs text-blue-700 mt-2">⚠️ 本系统输出"信号参考", 不真实下单, 不构成投资建议. 用户应自主判断、独立决策、风险自担.</p>
     </div>
 
 </div>
@@ -277,261 +182,7 @@ async function loadJSON(p) {
 })();
 </script>
 
-<!-- ──────────── 事件驱动 JS ──────────── -->
-<script>
-const EV_FMT = (x, d) => (typeof x === 'number') ? x.toFixed(d || 1) : '—';
-const EV_SCOPE_LABEL = {
-    paradigm_shift: ['🌟', '范式突破'], global: ['🌍', '全球级'],
-    industry: ['🏭', '全行业'], multi_company: ['🔗', '产业链'],
-    single_company: ['🏢', '单公司'], local: ['📍', '区域性'],
-};
-
-function evRenderCard(grp, rank_num, threshold) {
-    const scope_info = EV_SCOPE_LABEL[grp.impact_scope] || ['❓', '?'];
-    const rank_class = rank_num === 1 ? 'rank-1' : rank_num === 2 ? 'rank-2' : rank_num === 3 ? 'rank-3' : 'rank-other';
-    const rank_label = rank_num === 1 ? '🥇' : rank_num === 2 ? '🥈' : rank_num === 3 ? '🥉' : '#' + rank_num;
-    const qualified = grp.max_rank >= threshold;
-
-    const stocks_html = (grp.stocks || []).map(st => `
-        <div class="stock-row">
-            <div class="flex items-center justify-between flex-wrap gap-2">
-                <div class="flex items-center gap-2 flex-grow min-w-0">
-                    <code class="text-xs text-gray-500 font-mono">${st.ts_code}</code>
-                    <strong class="text-gray-800">${st.stock_name || ''}</strong>
-                    <span class="chip chip-topic">${(st.segment || '—').slice(0,14)}</span>
-                    ${st.overheated ? `<span class="text-xs text-red-600">🔥 已过热${st.pre_run_up_3d ? '+' + st.pre_run_up_3d.toFixed(1) + '%' : ''}</span>` : ''}
-                </div>
-                <div class="flex items-center gap-2 text-xs">
-                    <span class="text-green-700 font-semibold">+${EV_FMT(st.expected_return_pct, 1)}% / ${st.expected_duration_days || 0}d</span>
-                    <span class="text-gray-500">${st.expected_window || ''}</span>
-                    <span class="px-2 py-0.5 bg-purple-100 text-purple-700 rounded font-bold text-sm">${EV_FMT(st.rank_score, 0)}</span>
-                </div>
-            </div>
-            <div class="text-xs text-gray-600 mt-2 leading-relaxed">
-                <span class="text-gray-400 font-medium">📌 理由:</span> ${(st.rec_reason || '').slice(0, 180)}
-            </div>
-        </div>
-    `).join('');
-
-    const similar_html = (grp.similar_cases || []).map(c => `
-        <div class="similar-case">
-            <div class="flex items-center justify-between gap-2 mb-2">
-                <div class="flex items-center gap-2">
-                    <span class="text-xs text-amber-700 font-mono">${c.event_date}</span>
-                    <strong class="text-amber-900 text-sm">${(c.event_headline || '').slice(0, 50)}</strong>
-                </div>
-                <span class="bg-amber-200 text-amber-900 px-2 py-0.5 rounded font-bold text-xs">${c.label}</span>
-            </div>
-            <div class="text-xs text-amber-900 space-y-1">
-                <div><strong>${c.ts_code} ${c.stock_name}</strong> <span class="text-amber-700">(${c.segment || ''})</span></div>
-                <div class="grid grid-cols-3 gap-2 text-xs bg-white/50 rounded p-2">
-                    <div>T+5: <strong class="text-green-700">${((c.return_5d || 0)*100).toFixed(1)}%</strong></div>
-                    <div>峰值: <strong class="text-green-700">${((c.peak_return || 0)*100).toFixed(1)}%</strong> @d${c.peak_day || 0}</div>
-                    <div>持续: <strong>${c.days_above_3pct || 0}</strong>天</div>
-                </div>
-                <div class="text-amber-800 mt-1">📌 当时理由: ${(c.rec_reason || '').slice(0, 100)}</div>
-            </div>
-        </div>
-    `).join('');
-
-    const decay_chip = (grp.day_offset && grp.day_offset > 0) ? `
-        <div class="text-xs mt-1 text-gray-400" title="原始分 ${EV_FMT(grp.raw_rank, 1)}, 衰减 ×${EV_FMT(grp.decay_factor, 2)}">
-            🕒 ${grp.day_offset} 天前 · 原始 ${EV_FMT(grp.raw_rank, 1)}
-        </div>` : '';
-
-    return `
-    <div class="event-card">
-        <div class="rank-badge ${rank_class}">${rank_label}</div>
-        <div class="p-4 sm:p-5 pl-16 sm:pl-20">
-            <div class="flex items-start justify-between gap-3 flex-wrap mb-3">
-                <div class="flex-grow min-w-0">
-                    <h3 class="text-base sm:text-lg font-bold text-gray-800 leading-snug">
-                        ${grp.event_headline || (grp.raw_title || '').slice(0,40)}
-                    </h3>
-                    <div class="flex items-center flex-wrap gap-1.5 mt-2">
-                        <span class="chip chip-channel">🔵 ${grp.news_channel || '未分类'}</span>
-                        ${grp.news_pub_time ? `<span class="chip chip-time">⏰ ${grp.news_pub_time.slice(5, 16)}</span>` : ''}
-                        ${grp.topic_class ? `<span class="chip chip-topic">🏷️ ${grp.topic_class}</span>` : ''}
-                        ${grp.applied_pattern ? `<span class="chip chip-pattern">${grp.applied_pattern}</span>` : ''}
-                        <span class="scope-badge scope-${grp.impact_scope}">${scope_info[0]} ${scope_info[1]} ×${EV_FMT(grp.scope_multiplier, 2)}</span>
-                        ${grp.any_overheated ? '<span class="chip" style="background:#fee2e2;color:#991b1b">🔥 过热警告</span>' : ''}
-                    </div>
-                </div>
-                <div class="text-right flex-shrink-0">
-                    <div class="big-score">${EV_FMT(grp.max_rank, 1)}</div>
-                    <div class="text-xs mt-1">
-                        ${qualified
-                            ? `<span class="inline-block bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">✅ 合格 ≥${Math.round(threshold)}</span>`
-                            : `<span class="inline-block bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">观察 &lt;${Math.round(threshold)}</span>`}
-                    </div>
-                    ${decay_chip}
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
-                <div class="dim-card">
-                    <div class="flex justify-between text-xs mb-1"><span class="text-gray-500">🔥 重磅</span><span class="font-bold">${grp.strength_score}</span></div>
-                    <div class="score-bar"><div class="score-bar-fill" style="width:${grp.strength_score}%"></div></div>
-                </div>
-                <div class="dim-card">
-                    <div class="flex justify-between text-xs mb-1"><span class="text-gray-500">✨ 新颖</span><span class="font-bold">${grp.novelty_score}</span></div>
-                    <div class="score-bar"><div class="score-bar-fill" style="width:${grp.novelty_score}%"></div></div>
-                </div>
-                <div class="dim-card">
-                    <div class="flex justify-between text-xs mb-1"><span class="text-gray-500">🌡️ 发酵</span><span class="font-bold">${grp.max_heat}</span></div>
-                    <div class="score-bar"><div class="score-bar-fill" style="width:${grp.max_heat}%"></div></div>
-                </div>
-                <div class="dim-card">
-                    <div class="flex justify-between text-xs mb-1"><span class="text-gray-500">💰 认可</span><span class="font-bold">${grp.max_accept}</span></div>
-                    <div class="score-bar"><div class="score-bar-fill" style="width:${grp.max_accept}%"></div></div>
-                </div>
-            </div>
-
-            ${grp.transmission_chain ? `
-            <details class="mt-4" open>
-                <summary class="cursor-pointer font-semibold text-sm text-gray-700 flex items-center gap-2 hover:text-purple-700">
-                    💡 事件传导逻辑 <span class="chev text-gray-400">▼</span>
-                </summary>
-                <div class="mt-2 p-3 bg-purple-50 rounded-lg text-sm text-gray-700 leading-relaxed border-l-4 border-purple-300">
-                    ${grp.transmission_chain.slice(0, 600)}${grp.transmission_chain.length > 600 ? '...' : ''}
-                </div>
-            </details>` : ''}
-
-            ${grp.raw_content && grp.raw_content.length > 50 ? `
-            <details class="mt-3">
-                <summary class="cursor-pointer font-semibold text-sm text-gray-700 flex items-center gap-2 hover:text-purple-700">
-                    📝 新闻原文 <span class="chev text-gray-400">▼</span>
-                </summary>
-                <div class="mt-2 p-3 bg-gray-50 rounded-lg text-sm text-gray-700">
-                    <div class="font-medium text-gray-800 mb-1">${grp.raw_title}</div>
-                    <div class="text-gray-600">${grp.raw_content.slice(0, 500)}</div>
-                </div>
-            </details>` : ''}
-
-            <div class="mt-4">
-                <div class="font-semibold text-sm text-gray-700 mb-2 flex items-center gap-2">
-                    🎯 关联个股 <span class="text-gray-400 text-xs">(${(grp.stocks || []).length} 只)</span>
-                </div>
-                <div class="space-y-2">${stocks_html}</div>
-            </div>
-
-            ${similar_html ? `
-            <details class="mt-4" open>
-                <summary class="cursor-pointer font-semibold text-sm text-amber-700 flex items-center gap-2 hover:text-amber-800">
-                    📚 为什么这是高潜力? · 历史相似案例 <span class="chev text-gray-400">▼</span>
-                </summary>
-                <div class="mt-2 space-y-2">${similar_html}</div>
-            </details>` : ''}
-        </div>
-    </div>`;
-}
-
-function evRenderEmpty(label, n_pool, max_rank, threshold) {
-    return `
-    <div class="bg-white shadow rounded-2xl p-8 sm:p-12 text-center">
-        <div class="text-5xl sm:text-6xl mb-4">📭</div>
-        <h2 class="text-xl sm:text-2xl font-bold text-gray-700 mb-2">${label} 无高重要度事件</h2>
-        <p class="text-gray-500 text-sm">候选信号 <strong>${n_pool}</strong> 条, 最高综合分 <strong class="text-purple-700">${EV_FMT(max_rank, 1)}</strong>
-            ${max_rank < threshold ? `, 低于推送阈值 <strong>${Math.round(threshold)}</strong>` : ''}.</p>
-        <p class="text-gray-400 text-xs mt-2">复盘 / 午评 / 涨跌幅排行类已自动过滤</p>
-    </div>`;
-}
-
-async function evLoadAndRender() {
-    let d = null;
-    try { d = await (await fetch('data/events.json?t=' + Date.now())).json(); }
-    catch (e) {
-        document.getElementById('events-weekly').innerHTML =
-            '<div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded"><h3 class="font-bold text-yellow-900">⚠ events.json 尚未生成</h3><p class="text-sm text-yellow-700 mt-1">ECS 每小时整点自动生成. 请稍后刷新.</p></div>';
-        return;
-    }
-    const m = d.meta;
-    const th = m.threshold;
-    document.getElementById('events-meta').innerHTML =
-        `⏱️ <strong>下次更新</strong> <span class="font-mono font-bold text-white">${m.next_update}</span> &nbsp;·&nbsp;
-         上次榜单: <span class="font-mono">${m.last_snapshot || '—'}</span> &nbsp;·&nbsp;
-         页面生成: <span class="font-mono">${m.generated_at.slice(11)}</span>`;
-    document.getElementById('events-stats').innerHTML = `
-        <div class="bg-white/15 backdrop-blur px-3 py-2 rounded-lg text-center min-w-[100px]">
-            <div class="text-xs opacity-80">7日池子</div><div class="text-xl font-bold">${d.weekly.n_pool}</div>
-        </div>
-        <div class="bg-white/15 backdrop-blur px-3 py-2 rounded-lg text-center min-w-[100px]">
-            <div class="text-xs opacity-80">达标 ≥${Math.round(th)}</div><div class="text-xl font-bold">${d.weekly.n_qualified}</div>
-        </div>
-        <div class="bg-white/15 backdrop-blur px-3 py-2 rounded-lg text-center min-w-[100px]">
-            <div class="text-xs opacity-80">最高分</div><div class="text-xl font-bold">${EV_FMT(d.weekly.max_rank, 1)}</div>
-        </div>`;
-    const cfg = m.threshold_config || {};
-    document.getElementById('events-threshold-desc').innerHTML =
-        `系统从 <strong>${cfg.n_samples || 263}</strong> 个真实事件回测, <strong class="text-purple-700">综合分 ≥ ${Math.round(th)}</strong> 为合格信号
-         (F1 <strong>${cfg.f1_score || 87.7}%</strong> · 召回 <strong>${cfg.recall_big_success || 91}%</strong> · 准确率 <strong>${cfg.precision_success_plus || 85}%</strong>).
-         <span class="font-mono text-green-700">≥50</span> 实时推送 · <span class="font-mono text-orange-600">${Math.round(th)}–50</span> 入榜单 · <span class="font-mono text-gray-500">&lt;${Math.round(th)}</span> 过滤.`;
-
-    // 7 日汇总
-    const wHtml = (d.weekly.top10 || []).map((g, i) => evRenderCard(g, i+1, th)).join('') ||
-                  evRenderEmpty('最近 7 日', d.weekly.n_pool, d.weekly.max_rank, th);
-    document.getElementById('events-weekly').innerHTML = `
-        <div class="bg-white rounded-xl px-4 py-3 shadow-sm flex items-center justify-between flex-wrap gap-2">
-            <div class="text-sm text-gray-600"><strong class="text-purple-700">最近 7 日 (168h)</strong> 高重要度事件 Top ${(d.weekly.top10 || []).length}
-                <span class="text-xs text-gray-400 ml-2">⏳ 衰减: 当天×1.0 / 1天前×0.9 / 6天前×0.5</span>
-            </div>
-        </div>${wHtml}`;
-
-    // 日榜 sub-tabs
-    document.getElementById('events-day-tabs').innerHTML = d.days.map((dd, i) => `
-        <button class="day-btn ${i === 0 ? 'active' : ''}" data-day="${i}">
-            ${dd.label} ${dd.date} <span class="text-gray-400">周${dd.weekday}</span>
-            <span class="day-count">${(dd.top10 || []).length}</span>
-        </button>`).join('');
-
-    function renderDay(idx) {
-        const dd = d.days[idx];
-        const html = (dd.top10 || []).map((g, i) => evRenderCard(g, i+1, th)).join('') ||
-                     evRenderEmpty(`${dd.label} ${dd.date}`, dd.n_pool, dd.max_rank, th);
-        document.getElementById('events-day-content').innerHTML = `
-            <div class="text-sm text-gray-500 px-2 mb-2">
-                <strong class="text-purple-700">${dd.label} (${dd.date} 周${dd.weekday})</strong> · 池子 ${dd.n_pool} · 达标 ${dd.n_qualified}
-            </div>${html}`;
-    }
-    renderDay(0);
-    document.querySelectorAll('.day-btn').forEach(b => {
-        b.addEventListener('click', () => {
-            document.querySelectorAll('.day-btn').forEach(x => x.classList.toggle('active', x.dataset.day === b.dataset.day));
-            renderDay(parseInt(b.dataset.day));
-        });
-    });
-}
-
-// 主 Tab 切换
-document.querySelectorAll('#main-tabs .tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const t = btn.dataset.tab;
-        document.querySelectorAll('#main-tabs .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
-        document.getElementById('tab-signals').hidden = (t !== 'signals');
-        document.getElementById('tab-events').hidden = (t !== 'events');
-    });
-});
-
-// 事件子 Tab 切换
-document.querySelectorAll('#events-subtabs .event-subtab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const t = btn.dataset.subtab;
-        document.querySelectorAll('#events-subtabs .event-subtab-btn').forEach(b => b.classList.toggle('active', b.dataset.subtab === t));
-        document.getElementById('events-weekly').hidden = (t !== 'weekly');
-        document.getElementById('events-daily').hidden = (t !== 'daily');
-    });
-});
-
-// 自动加载
-evLoadAndRender();
-
-// 如果 URL 含 #events, 自动切到事件 tab
-if (location.hash === '#events') {
-    document.querySelector('#main-tabs .tab-btn[data-tab="events"]').click();
-}
-
-// 60s 自动 reload
-setTimeout(() => location.reload(), 60000);
-</script>
+<!-- 60s 自动 reload -->
+<script>setTimeout(() => location.reload(), 60000);</script>
 </body>
 </html>
