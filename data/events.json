@@ -1,8 +1,8 @@
 {
   "meta": {
-    "generated_at": "2026-05-29 18:00:19",
-    "next_update": "19:00",
-    "last_snapshot": "2026-05-29 18:00",
+    "generated_at": "2026-05-29 19:00:28",
+    "next_update": "20:00",
+    "last_snapshot": "2026-05-29 19:00",
     "threshold": 34.0,
     "threshold_config": {
       "version": "v5",
@@ -121,31 +121,6 @@
         "max_rank": 53.76,
         "stocks": [
           {
-            "ts_code": "600150.SH",
-            "stock_name": "中国船舶",
-            "segment": "造船总装-行业龙头",
-            "rec_reason": "中船集团旗下核心造船平台，与沪东中华同属中船体系，LNG船是当前最紧缺的高端船型（单船造价约2.5亿美元），国产化率提升增强接单能力和利润率，公司LNG船在手订单饱满。",
-            "applied_pattern": "P07",
-            "expected_return_pct": 8.0,
-            "expected_duration_days": 6,
-            "expected_window": "T+5-10",
-            "heat_score": 50,
-            "acceptance_score": 69,
-            "rank_score": 53.33,
-            "pre_run_up_3d": 0.74,
-            "overheated": false,
-            "leader_score": 42.5,
-            "leader_detail": {
-              "circ_mv_yi": 2318.0,
-              "ret_3d_pct": 0.74,
-              "ret_z": 0.14,
-              "main_net_3d_yi": 2.47,
-              "mf_z": 0.54,
-              "ret_anomaly_score": 35,
-              "mf_anomaly_score": 50
-            }
-          },
-          {
             "ts_code": "603699.SH",
             "stock_name": "纽威股份",
             "segment": "低温阀门-核心配套",
@@ -161,11 +136,36 @@
             "overheated": false,
             "leader_score": 36.0,
             "leader_detail": {
-              "circ_mv_yi": 442.0,
-              "ret_3d_pct": -3.71,
+              "circ_mv_yi": 436.0,
+              "ret_3d_pct": -4.25,
+              "ret_z": -0.83,
+              "main_net_3d_yi": 0.04,
+              "mf_z": 0.34,
+              "ret_anomaly_score": 22,
+              "mf_anomaly_score": 50
+            }
+          },
+          {
+            "ts_code": "600150.SH",
+            "stock_name": "中国船舶",
+            "segment": "造船总装-行业龙头",
+            "rec_reason": "中船集团旗下核心造船平台，与沪东中华同属中船体系，LNG船是当前最紧缺的高端船型（单船造价约2.5亿美元），国产化率提升增强接单能力和利润率，公司LNG船在手订单饱满。",
+            "applied_pattern": "P07",
+            "expected_return_pct": 8.0,
+            "expected_duration_days": 6,
+            "expected_window": "T+5-10",
+            "heat_score": 50,
+            "acceptance_score": 69,
+            "rank_score": 53.33,
+            "pre_run_up_3d": 0.74,
+            "overheated": false,
+            "leader_score": 36.0,
+            "leader_detail": {
+              "circ_mv_yi": 2270.0,
+              "ret_3d_pct": -3.39,
               "ret_z": -0.72,
-              "main_net_3d_yi": 0.07,
-              "mf_z": 0.54,
+              "main_net_3d_yi": 3.25,
+              "mf_z": 0.65,
               "ret_anomaly_score": 22,
               "mf_anomaly_score": 50
             }
@@ -186,11 +186,11 @@
             "overheated": false,
             "leader_score": 35.0,
             "leader_detail": {
-              "circ_mv_yi": 49.0,
-              "ret_3d_pct": 0.23,
-              "ret_z": 0.05,
-              "main_net_3d_yi": -0.31,
-              "mf_z": 0.1,
+              "circ_mv_yi": 46.0,
+              "ret_3d_pct": -0.48,
+              "ret_z": -0.09,
+              "main_net_3d_yi": -0.45,
+              "mf_z": -0.03,
               "ret_anomaly_score": 35,
               "mf_anomaly_score": 35
             }
@@ -234,6 +234,31 @@
         "max_rank": 53.03,
         "stocks": [
           {
+            "ts_code": "002371.SZ",
+            "stock_name": "北方华创",
+            "segment": "半导体设备",
+            "rec_reason": "国内半导体设备平台型龙头，刻蚀/薄膜沉积/清洗等设备覆盖芯片制造全流程。韬定律下芯片架构创新对制造工艺提出新要求，设备升级需求增加；同时华为芯片自主化加速带动国产设备采购，北方华创作为国产设备龙头直接受益。",
+            "applied_pattern": "P07",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 12,
+            "expected_window": "T+5-10",
+            "heat_score": 70,
+            "acceptance_score": 20,
+            "rank_score": 67.34,
+            "pre_run_up_3d": -5.61,
+            "overheated": false,
+            "leader_score": 22.0,
+            "leader_detail": {
+              "circ_mv_yi": 4562.0,
+              "ret_3d_pct": -6.02,
+              "ret_z": -1.07,
+              "main_net_3d_yi": -13.02,
+              "mf_z": -1.03,
+              "ret_anomaly_score": 22,
+              "mf_anomaly_score": 22
+            }
+          },
+          {
             "ts_code": "688981.SH",
             "stock_name": "中芯国际",
             "segment": "晶圆代工",
@@ -247,14 +272,14 @@
             "rank_score": 64.75,
             "pre_run_up_3d": -1.47,
             "overheated": false,
-            "leader_score": 28.5,
+            "leader_score": 22.0,
             "leader_detail": {
-              "circ_mv_yi": 3073.0,
-              "ret_3d_pct": -1.47,
-              "ret_z": -0.15,
-              "main_net_3d_yi": -10.59,
-              "mf_z": -0.87,
-              "ret_anomaly_score": 35,
+              "circ_mv_yi": 2798.0,
+              "ret_3d_pct": -6.21,
+              "ret_z": -0.64,
+              "main_net_3d_yi": -13.94,
+              "mf_z": -1.1,
+              "ret_anomaly_score": 22,
               "mf_anomaly_score": 22
             }
           },
@@ -272,39 +297,14 @@
             "rank_score": 69.32,
             "pre_run_up_3d": -0.58,
             "overheated": false,
-            "leader_score": 23.5,
+            "leader_score": 17.0,
             "leader_detail": {
-              "circ_mv_yi": 1052.0,
-              "ret_3d_pct": -0.58,
-              "ret_z": -0.08,
-              "main_net_3d_yi": -45.74,
-              "mf_z": -2.38,
-              "ret_anomaly_score": 35,
-              "mf_anomaly_score": 12
-            }
-          },
-          {
-            "ts_code": "002371.SZ",
-            "stock_name": "北方华创",
-            "segment": "半导体设备",
-            "rec_reason": "国内半导体设备平台型龙头，刻蚀/薄膜沉积/清洗等设备覆盖芯片制造全流程。韬定律下芯片架构创新对制造工艺提出新要求，设备升级需求增加；同时华为芯片自主化加速带动国产设备采购，北方华创作为国产设备龙头直接受益。",
-            "applied_pattern": "P07",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 12,
-            "expected_window": "T+5-10",
-            "heat_score": 70,
-            "acceptance_score": 20,
-            "rank_score": 67.34,
-            "pre_run_up_3d": -5.61,
-            "overheated": false,
-            "leader_score": 22.0,
-            "leader_detail": {
-              "circ_mv_yi": 4773.0,
-              "ret_3d_pct": -5.61,
-              "ret_z": -1.07,
-              "main_net_3d_yi": -9.78,
-              "mf_z": -0.96,
-              "ret_anomaly_score": 22,
+              "circ_mv_yi": 1002.0,
+              "ret_3d_pct": -12.36,
+              "ret_z": -1.64,
+              "main_net_3d_yi": -37.19,
+              "mf_z": -1.49,
+              "ret_anomaly_score": 12,
               "mf_anomaly_score": 22
             }
           }
@@ -348,31 +348,6 @@
         "max_rank": 48.76,
         "stocks": [
           {
-            "ts_code": "002241.SZ",
-            "stock_name": "歌尔股份",
-            "segment": "消费电子/声学器件",
-            "rec_reason": "海外营收占比超70%，对美出口占比较高；此前受关税和地缘风险压制估值，关税缓和后估值修复空间大，Meta/苹果核心供应商",
-            "applied_pattern": "P13",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 10,
-            "expected_window": "T+5-10",
-            "heat_score": 37,
-            "acceptance_score": 88,
-            "rank_score": 63.74,
-            "pre_run_up_3d": 11.42,
-            "overheated": false,
-            "leader_score": 88.5,
-            "leader_detail": {
-              "circ_mv_yi": 893.0,
-              "ret_3d_pct": 11.42,
-              "ret_z": 3.48,
-              "main_net_3d_yi": 14.24,
-              "mf_z": 2.46,
-              "ret_anomaly_score": 95,
-              "mf_anomaly_score": 82
-            }
-          },
-          {
             "ts_code": "000333.SZ",
             "stock_name": "美的集团",
             "segment": "家电出口",
@@ -386,15 +361,40 @@
             "rank_score": 53.19,
             "pre_run_up_3d": -1.08,
             "overheated": false,
-            "leader_score": 28.5,
+            "leader_score": 73.5,
             "leader_detail": {
-              "circ_mv_yi": 5416.0,
-              "ret_3d_pct": -1.08,
-              "ret_z": -0.66,
-              "main_net_3d_yi": 2.21,
-              "mf_z": 0.03,
-              "ret_anomaly_score": 22,
-              "mf_anomaly_score": 35
+              "circ_mv_yi": 5547.0,
+              "ret_3d_pct": 1.63,
+              "ret_z": 1.01,
+              "main_net_3d_yi": 7.42,
+              "mf_z": 1.77,
+              "ret_anomaly_score": 65,
+              "mf_anomaly_score": 82
+            }
+          },
+          {
+            "ts_code": "002241.SZ",
+            "stock_name": "歌尔股份",
+            "segment": "消费电子/声学器件",
+            "rec_reason": "海外营收占比超70%，对美出口占比较高；此前受关税和地缘风险压制估值，关税缓和后估值修复空间大，Meta/苹果核心供应商",
+            "applied_pattern": "P13",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 10,
+            "expected_window": "T+5-10",
+            "heat_score": 37,
+            "acceptance_score": 88,
+            "rank_score": 63.74,
+            "pre_run_up_3d": 11.42,
+            "overheated": false,
+            "leader_score": 42.5,
+            "leader_detail": {
+              "circ_mv_yi": 843.0,
+              "ret_3d_pct": -1.02,
+              "ret_z": -0.25,
+              "main_net_3d_yi": 3.34,
+              "mf_z": 0.5,
+              "ret_anomaly_score": 35,
+              "mf_anomaly_score": 50
             }
           },
           {
@@ -411,14 +411,14 @@
             "rank_score": 51.61,
             "pre_run_up_3d": -1.94,
             "overheated": false,
-            "leader_score": 28.5,
+            "leader_score": 42.5,
             "leader_detail": {
-              "circ_mv_yi": 2092.0,
-              "ret_3d_pct": -1.94,
-              "ret_z": -0.77,
-              "main_net_3d_yi": 0.36,
-              "mf_z": -0.12,
-              "ret_anomaly_score": 22,
+              "circ_mv_yi": 2163.0,
+              "ret_3d_pct": 0.75,
+              "ret_z": 0.29,
+              "main_net_3d_yi": 1.95,
+              "mf_z": 0.1,
+              "ret_anomaly_score": 50,
               "mf_anomaly_score": 35
             }
           }
@@ -475,38 +475,13 @@
             "rank_score": 48.28,
             "pre_run_up_3d": 9.61,
             "overheated": false,
-            "leader_score": 66.0,
-            "leader_detail": {
-              "circ_mv_yi": 13277.0,
-              "ret_3d_pct": 9.61,
-              "ret_z": 1.68,
-              "main_net_3d_yi": 20.29,
-              "mf_z": 0.64,
-              "ret_anomaly_score": 82,
-              "mf_anomaly_score": 50
-            }
-          },
-          {
-            "ts_code": "300502.SZ",
-            "stock_name": "新易盛",
-            "segment": "算力基建-光模块",
-            "rec_reason": "北美云厂商高速光模块核心供应商，400G/800G产品批量出货，Claude新模型上线推动AWS算力扩容，光模块需求弹性大。历史案例：英伟达H200出口利好→新易盛T+9峰值+10.8%。",
-            "applied_pattern": "P01",
-            "expected_return_pct": 6.0,
-            "expected_duration_days": 8,
-            "expected_window": "T+1-3",
-            "heat_score": 62,
-            "acceptance_score": 87,
-            "rank_score": 25.05,
-            "pre_run_up_3d": 9.0,
-            "overheated": true,
             "leader_score": 57.5,
             "leader_detail": {
-              "circ_mv_yi": 6374.0,
-              "ret_3d_pct": 9.0,
-              "ret_z": 1.09,
-              "main_net_3d_yi": 13.94,
-              "mf_z": 0.48,
+              "circ_mv_yi": 12869.0,
+              "ret_3d_pct": 5.27,
+              "ret_z": 0.92,
+              "main_net_3d_yi": 8.58,
+              "mf_z": 0.38,
               "ret_anomaly_score": 65,
               "mf_anomaly_score": 50
             }
@@ -527,13 +502,38 @@
             "overheated": true,
             "leader_score": 57.5,
             "leader_detail": {
-              "circ_mv_yi": 3480.0,
-              "ret_3d_pct": 12.81,
-              "ret_z": 1.46,
-              "main_net_3d_yi": 26.31,
-              "mf_z": 0.7,
+              "circ_mv_yi": 3540.0,
+              "ret_3d_pct": 11.91,
+              "ret_z": 1.43,
+              "main_net_3d_yi": 11.45,
+              "mf_z": 0.3,
               "ret_anomaly_score": 65,
               "mf_anomaly_score": 50
+            }
+          },
+          {
+            "ts_code": "300502.SZ",
+            "stock_name": "新易盛",
+            "segment": "算力基建-光模块",
+            "rec_reason": "北美云厂商高速光模块核心供应商，400G/800G产品批量出货，Claude新模型上线推动AWS算力扩容，光模块需求弹性大。历史案例：英伟达H200出口利好→新易盛T+9峰值+10.8%。",
+            "applied_pattern": "P01",
+            "expected_return_pct": 6.0,
+            "expected_duration_days": 8,
+            "expected_window": "T+1-3",
+            "heat_score": 62,
+            "acceptance_score": 87,
+            "rank_score": 25.05,
+            "pre_run_up_3d": 9.0,
+            "overheated": true,
+            "leader_score": 35.0,
+            "leader_detail": {
+              "circ_mv_yi": 6268.0,
+              "ret_3d_pct": 0.92,
+              "ret_z": 0.11,
+              "main_net_3d_yi": -2.14,
+              "mf_z": 0.14,
+              "ret_anomaly_score": 35,
+              "mf_anomaly_score": 35
             }
           }
         ],
@@ -575,31 +575,6 @@
         "max_rank": 47.0,
         "stocks": [
           {
-            "ts_code": "300455.SZ",
-            "stock_name": "航天智装",
-            "segment": "量子通信与信息安全",
-            "rec_reason": "子公司航天科工量子通信技术国内领先，量子计算+量子通信协同效应强。IBM百亿美元投资强化量子赛道整体景气度，量子通信作为量子技术另一重要分支将同步受益于资金关注度外溢。",
-            "applied_pattern": "P01",
-            "expected_return_pct": 8.0,
-            "expected_duration_days": 4,
-            "expected_window": "T+1-3",
-            "heat_score": 36,
-            "acceptance_score": 36,
-            "rank_score": 43.92,
-            "pre_run_up_3d": -5.95,
-            "overheated": false,
-            "leader_score": 36.0,
-            "leader_detail": {
-              "circ_mv_yi": 165.0,
-              "ret_3d_pct": -5.95,
-              "ret_z": -1.31,
-              "main_net_3d_yi": -0.3,
-              "mf_z": 0.4,
-              "ret_anomaly_score": 22,
-              "mf_anomaly_score": 50
-            }
-          },
-          {
             "ts_code": "600120.SH",
             "stock_name": "国盾量子",
             "segment": "量子计算硬件-超导量子计算机",
@@ -615,13 +590,38 @@
             "overheated": false,
             "leader_score": 28.5,
             "leader_detail": {
-              "circ_mv_yi": 166.0,
-              "ret_3d_pct": -3.18,
-              "ret_z": -0.85,
-              "main_net_3d_yi": -0.03,
-              "mf_z": -0.04,
+              "circ_mv_yi": 165.0,
+              "ret_3d_pct": -5.3,
+              "ret_z": -1.45,
+              "main_net_3d_yi": -0.12,
+              "mf_z": -0.37,
               "ret_anomaly_score": 22,
               "mf_anomaly_score": 35
+            }
+          },
+          {
+            "ts_code": "300455.SZ",
+            "stock_name": "航天智装",
+            "segment": "量子通信与信息安全",
+            "rec_reason": "子公司航天科工量子通信技术国内领先，量子计算+量子通信协同效应强。IBM百亿美元投资强化量子赛道整体景气度，量子通信作为量子技术另一重要分支将同步受益于资金关注度外溢。",
+            "applied_pattern": "P01",
+            "expected_return_pct": 8.0,
+            "expected_duration_days": 4,
+            "expected_window": "T+1-3",
+            "heat_score": 36,
+            "acceptance_score": 36,
+            "rank_score": 43.92,
+            "pre_run_up_3d": -5.95,
+            "overheated": false,
+            "leader_score": 31.0,
+            "leader_detail": {
+              "circ_mv_yi": 154.0,
+              "ret_3d_pct": -8.9,
+              "ret_z": -1.89,
+              "main_net_3d_yi": -0.38,
+              "mf_z": 0.28,
+              "ret_anomaly_score": 12,
+              "mf_anomaly_score": 50
             }
           },
           {
@@ -640,11 +640,11 @@
             "overheated": false,
             "leader_score": 28.5,
             "leader_detail": {
-              "circ_mv_yi": 467.0,
-              "ret_3d_pct": -9.45,
-              "ret_z": -1.39,
-              "main_net_3d_yi": -0.49,
-              "mf_z": -0.39,
+              "circ_mv_yi": 450.0,
+              "ret_3d_pct": -9.28,
+              "ret_z": -1.35,
+              "main_net_3d_yi": -0.01,
+              "mf_z": 0.1,
               "ret_anomaly_score": 22,
               "mf_anomaly_score": 35
             }
@@ -703,11 +703,11 @@
             "overheated": false,
             "leader_score": 22.0,
             "leader_detail": {
-              "circ_mv_yi": 4773.0,
-              "ret_3d_pct": -5.61,
+              "circ_mv_yi": 4562.0,
+              "ret_3d_pct": -6.02,
               "ret_z": -1.07,
-              "main_net_3d_yi": -9.78,
-              "mf_z": -0.96,
+              "main_net_3d_yi": -13.02,
+              "mf_z": -1.03,
               "ret_anomaly_score": 22,
               "mf_anomaly_score": 22
             }
@@ -726,15 +726,15 @@
             "rank_score": 52.33,
             "pre_run_up_3d": -6.63,
             "overheated": false,
-            "leader_score": 17.0,
+            "leader_score": 22.0,
             "leader_detail": {
-              "circ_mv_yi": 2849.0,
-              "ret_3d_pct": -6.63,
-              "ret_z": -0.92,
-              "main_net_3d_yi": -6.2,
-              "mf_z": -1.87,
+              "circ_mv_yi": 2789.0,
+              "ret_3d_pct": -4.23,
+              "ret_z": -0.56,
+              "main_net_3d_yi": -4.97,
+              "mf_z": -1.27,
               "ret_anomaly_score": 22,
-              "mf_anomaly_score": 12
+              "mf_anomaly_score": 22
             }
           }
         ],
@@ -777,31 +777,6 @@
         "max_rank": 45.7,
         "stocks": [
           {
-            "ts_code": "600938.SH",
-            "stock_name": "中国海油",
-            "segment": "上游油气开采-海上原油",
-            "rec_reason": "国内最大海上原油生产商，桶油成本控制优异（约30美元/桶），油价弹性极大；全球供应缺口下海上原油增产空间大，直接受益油价上涨",
-            "applied_pattern": "P03",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 10,
-            "expected_window": "T+1-3",
-            "heat_score": 47,
-            "acceptance_score": 38,
-            "rank_score": 65.98,
-            "pre_run_up_3d": -0.46,
-            "overheated": false,
-            "leader_score": 35.0,
-            "leader_detail": {
-              "circ_mv_yi": 1030.0,
-              "ret_3d_pct": -0.46,
-              "ret_z": -0.13,
-              "main_net_3d_yi": -0.93,
-              "mf_z": -0.47,
-              "ret_anomaly_score": 35,
-              "mf_anomaly_score": 35
-            }
-          },
-          {
             "ts_code": "600871.SH",
             "stock_name": "石化油服",
             "segment": "油服-钻井工程",
@@ -815,15 +790,15 @@
             "rank_score": 70.3,
             "pre_run_up_3d": -2.88,
             "overheated": false,
-            "leader_score": 22.0,
+            "leader_score": 28.5,
             "leader_detail": {
-              "circ_mv_yi": 320.0,
-              "ret_3d_pct": -2.88,
-              "ret_z": -0.71,
-              "main_net_3d_yi": -0.21,
-              "mf_z": -0.54,
+              "circ_mv_yi": 314.0,
+              "ret_3d_pct": -3.73,
+              "ret_z": -0.94,
+              "main_net_3d_yi": -0.13,
+              "mf_z": -0.33,
               "ret_anomaly_score": 22,
-              "mf_anomaly_score": 22
+              "mf_anomaly_score": 35
             }
           },
           {
@@ -840,15 +815,40 @@
             "rank_score": 68.93,
             "pre_run_up_3d": -2.24,
             "overheated": false,
-            "leader_score": 17.0,
+            "leader_score": 28.5,
             "leader_detail": {
-              "circ_mv_yi": 4558.0,
-              "ret_3d_pct": -2.24,
-              "ret_z": -1.89,
-              "main_net_3d_yi": -1.17,
-              "mf_z": -0.54,
-              "ret_anomaly_score": 12,
+              "circ_mv_yi": 4595.0,
+              "ret_3d_pct": -0.41,
+              "ret_z": -0.35,
+              "main_net_3d_yi": -1.4,
+              "mf_z": -0.81,
+              "ret_anomaly_score": 35,
               "mf_anomaly_score": 22
+            }
+          },
+          {
+            "ts_code": "600938.SH",
+            "stock_name": "中国海油",
+            "segment": "上游油气开采-海上原油",
+            "rec_reason": "国内最大海上原油生产商，桶油成本控制优异（约30美元/桶），油价弹性极大；全球供应缺口下海上原油增产空间大，直接受益油价上涨",
+            "applied_pattern": "P03",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 10,
+            "expected_window": "T+1-3",
+            "heat_score": 47,
+            "acceptance_score": 38,
+            "rank_score": 65.98,
+            "pre_run_up_3d": -0.46,
+            "overheated": false,
+            "leader_score": 28.5,
+            "leader_detail": {
+              "circ_mv_yi": 1029.0,
+              "ret_3d_pct": -2.19,
+              "ret_z": -0.62,
+              "main_net_3d_yi": -0.68,
+              "mf_z": -0.28,
+              "ret_anomaly_score": 22,
+              "mf_anomaly_score": 35
             }
           }
         ],
@@ -904,14 +904,14 @@
             "rank_score": 44.64,
             "pre_run_up_3d": 9.61,
             "overheated": false,
-            "leader_score": 66.0,
+            "leader_score": 57.5,
             "leader_detail": {
-              "circ_mv_yi": 13277.0,
-              "ret_3d_pct": 9.61,
-              "ret_z": 1.68,
-              "main_net_3d_yi": 20.29,
-              "mf_z": 0.64,
-              "ret_anomaly_score": 82,
+              "circ_mv_yi": 12869.0,
+              "ret_3d_pct": 5.27,
+              "ret_z": 0.92,
+              "main_net_3d_yi": 8.58,
+              "mf_z": 0.38,
+              "ret_anomaly_score": 65,
               "mf_anomaly_score": 50
             }
           },
@@ -929,15 +929,15 @@
             "rank_score": 37.45,
             "pre_run_up_3d": -0.11,
             "overheated": false,
-            "leader_score": 35.0,
+            "leader_score": 22.0,
             "leader_detail": {
-              "circ_mv_yi": 646.0,
-              "ret_3d_pct": -0.11,
-              "ret_z": -0.02,
-              "main_net_3d_yi": -0.42,
-              "mf_z": 0.03,
-              "ret_anomaly_score": 35,
-              "mf_anomaly_score": 35
+              "circ_mv_yi": 607.0,
+              "ret_3d_pct": -7.23,
+              "ret_z": -1.21,
+              "main_net_3d_yi": -3.9,
+              "mf_z": -0.52,
+              "ret_anomaly_score": 22,
+              "mf_anomaly_score": 22
             }
           },
           {
@@ -954,15 +954,15 @@
             "rank_score": 35.17,
             "pre_run_up_3d": -2.71,
             "overheated": false,
-            "leader_score": 22.0,
+            "leader_score": 12.0,
             "leader_detail": {
-              "circ_mv_yi": 257.0,
-              "ret_3d_pct": -2.71,
-              "ret_z": -0.79,
-              "main_net_3d_yi": -2.09,
-              "mf_z": -1.07,
-              "ret_anomaly_score": 22,
-              "mf_anomaly_score": 22
+              "circ_mv_yi": 232.0,
+              "ret_3d_pct": -14.97,
+              "ret_z": -4.16,
+              "main_net_3d_yi": -6.9,
+              "mf_z": -3.31,
+              "ret_anomaly_score": 12,
+              "mf_anomaly_score": 12
             }
           }
         ],
@@ -1004,31 +1004,6 @@
         "max_rank": 44.59,
         "stocks": [
           {
-            "ts_code": "600021.SH",
-            "stock_name": "上海电力",
-            "segment": "华东区域火电+虚拟电厂",
-            "rec_reason": "华东区域电力龙头，火电装机占比高，同时布局虚拟电厂和需求侧响应业务。发改委要求'精细化开展电力需求侧管理'、'市场化需求响应优先'，上海电力在长三角电力市场交易活跃，迎峰度夏期间顶峰发电+需求侧响应双重受益。",
-            "applied_pattern": "P04",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 12,
-            "expected_window": "T+5-10",
-            "heat_score": 29,
-            "acceptance_score": 68,
-            "rank_score": 56.21,
-            "pre_run_up_3d": 14.24,
-            "overheated": false,
-            "leader_score": 72.5,
-            "leader_detail": {
-              "circ_mv_yi": 598.0,
-              "ret_3d_pct": 14.24,
-              "ret_z": 2.51,
-              "main_net_3d_yi": 3.36,
-              "mf_z": 0.74,
-              "ret_anomaly_score": 95,
-              "mf_anomaly_score": 50
-            }
-          },
-          {
             "ts_code": "600011.SH",
             "stock_name": "华能国际",
             "segment": "火电龙头",
@@ -1042,15 +1017,15 @@
             "rank_score": 58.29,
             "pre_run_up_3d": 8.04,
             "overheated": false,
-            "leader_score": 58.5,
+            "leader_score": 72.5,
             "leader_detail": {
-              "circ_mv_yi": 886.0,
-              "ret_3d_pct": 8.04,
-              "ret_z": 2.41,
-              "main_net_3d_yi": -0.33,
-              "mf_z": 0.1,
-              "ret_anomaly_score": 82,
-              "mf_anomaly_score": 35
+              "circ_mv_yi": 975.0,
+              "ret_3d_pct": 18.11,
+              "ret_z": 5.43,
+              "main_net_3d_yi": 0.16,
+              "mf_z": 0.55,
+              "ret_anomaly_score": 95,
+              "mf_anomaly_score": 50
             }
           },
           {
@@ -1067,13 +1042,38 @@
             "rank_score": 55.29,
             "pre_run_up_3d": 3.06,
             "overheated": false,
+            "leader_score": 52.0,
+            "leader_detail": {
+              "circ_mv_yi": 7738.0,
+              "ret_3d_pct": 4.73,
+              "ret_z": 2.03,
+              "main_net_3d_yi": 0.52,
+              "mf_z": -0.58,
+              "ret_anomaly_score": 82,
+              "mf_anomaly_score": 22
+            }
+          },
+          {
+            "ts_code": "600021.SH",
+            "stock_name": "上海电力",
+            "segment": "华东区域火电+虚拟电厂",
+            "rec_reason": "华东区域电力龙头，火电装机占比高，同时布局虚拟电厂和需求侧响应业务。发改委要求'精细化开展电力需求侧管理'、'市场化需求响应优先'，上海电力在长三角电力市场交易活跃，迎峰度夏期间顶峰发电+需求侧响应双重受益。",
+            "applied_pattern": "P04",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 12,
+            "expected_window": "T+5-10",
+            "heat_score": 29,
+            "acceptance_score": 68,
+            "rank_score": 56.21,
+            "pre_run_up_3d": 14.24,
+            "overheated": false,
             "leader_score": 50.0,
             "leader_detail": {
-              "circ_mv_yi": 7611.0,
-              "ret_3d_pct": 3.06,
-              "ret_z": 1.21,
-              "main_net_3d_yi": 1.32,
-              "mf_z": 0.03,
+              "circ_mv_yi": 629.0,
+              "ret_3d_pct": 9.27,
+              "ret_z": 1.37,
+              "main_net_3d_yi": -1.19,
+              "mf_z": -0.46,
               "ret_anomaly_score": 65,
               "mf_anomaly_score": 35
             }
@@ -1131,15 +1131,15 @@
             "rank_score": 41.75,
             "pre_run_up_3d": 0.78,
             "overheated": false,
-            "leader_score": 42.5,
+            "leader_score": 28.5,
             "leader_detail": {
-              "circ_mv_yi": 1037.0,
-              "ret_3d_pct": 0.78,
-              "ret_z": 0.16,
-              "main_net_3d_yi": 1.05,
-              "mf_z": 0.61,
-              "ret_anomaly_score": 35,
-              "mf_anomaly_score": 50
+              "circ_mv_yi": 999.0,
+              "ret_3d_pct": -5.85,
+              "ret_z": -1.24,
+              "main_net_3d_yi": -2.31,
+              "mf_z": 0.04,
+              "ret_anomaly_score": 22,
+              "mf_anomaly_score": 35
             }
           },
           {
@@ -1158,11 +1158,11 @@
             "overheated": false,
             "leader_score": 17.0,
             "leader_detail": {
-              "circ_mv_yi": 470.0,
-              "ret_3d_pct": -5.09,
-              "ret_z": -1.91,
-              "main_net_3d_yi": -0.56,
-              "mf_z": -1.23,
+              "circ_mv_yi": 460.0,
+              "ret_3d_pct": -6.65,
+              "ret_z": -2.54,
+              "main_net_3d_yi": -0.35,
+              "mf_z": -0.84,
               "ret_anomaly_score": 12,
               "mf_anomaly_score": 22
             }
@@ -1219,38 +1219,13 @@
             "rank_score": 48.91,
             "pre_run_up_3d": 9.61,
             "overheated": false,
-            "leader_score": 66.0,
-            "leader_detail": {
-              "circ_mv_yi": 13277.0,
-              "ret_3d_pct": 9.61,
-              "ret_z": 1.68,
-              "main_net_3d_yi": 20.29,
-              "mf_z": 0.64,
-              "ret_anomaly_score": 82,
-              "mf_anomaly_score": 50
-            }
-          },
-          {
-            "ts_code": "300502.SZ",
-            "stock_name": "新易盛",
-            "segment": "算力基建-光模块",
-            "rec_reason": "谷歌数据中心光模块核心供应商之一，400G/800G光模块持续放量。Anthropic大规模采购谷歌TPU建设AI基础设施，直接拉动谷歌数据中心光模块需求，海外映射逻辑下A股光模块标的跟涨。",
-            "applied_pattern": "P01",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 7,
-            "expected_window": "T+1-3",
-            "heat_score": 62,
-            "acceptance_score": 87,
-            "rank_score": 25.5,
-            "pre_run_up_3d": 9.0,
-            "overheated": true,
             "leader_score": 57.5,
             "leader_detail": {
-              "circ_mv_yi": 6374.0,
-              "ret_3d_pct": 9.0,
-              "ret_z": 1.09,
-              "main_net_3d_yi": 13.94,
-              "mf_z": 0.48,
+              "circ_mv_yi": 12869.0,
+              "ret_3d_pct": 5.27,
+              "ret_z": 0.92,
+              "main_net_3d_yi": 8.58,
+              "mf_z": 0.38,
               "ret_anomaly_score": 65,
               "mf_anomaly_score": 50
             }
@@ -1269,15 +1244,40 @@
             "rank_score": 39.68,
             "pre_run_up_3d": -0.43,
             "overheated": false,
-            "leader_score": 42.5,
+            "leader_score": 28.5,
             "leader_detail": {
-              "circ_mv_yi": 2648.0,
-              "ret_3d_pct": -0.43,
-              "ret_z": -0.07,
-              "main_net_3d_yi": 4.41,
-              "mf_z": 0.29,
+              "circ_mv_yi": 2735.0,
+              "ret_3d_pct": -1.33,
+              "ret_z": -0.21,
+              "main_net_3d_yi": -3.61,
+              "mf_z": -0.69,
               "ret_anomaly_score": 35,
-              "mf_anomaly_score": 50
+              "mf_anomaly_score": 22
+            }
+          },
+          {
+            "ts_code": "300502.SZ",
+            "stock_name": "新易盛",
+            "segment": "算力基建-光模块",
+            "rec_reason": "谷歌数据中心光模块核心供应商之一，400G/800G光模块持续放量。Anthropic大规模采购谷歌TPU建设AI基础设施，直接拉动谷歌数据中心光模块需求，海外映射逻辑下A股光模块标的跟涨。",
+            "applied_pattern": "P01",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 7,
+            "expected_window": "T+1-3",
+            "heat_score": 62,
+            "acceptance_score": 87,
+            "rank_score": 25.5,
+            "pre_run_up_3d": 9.0,
+            "overheated": true,
+            "leader_score": 35.0,
+            "leader_detail": {
+              "circ_mv_yi": 6268.0,
+              "ret_3d_pct": 0.92,
+              "ret_z": 0.11,
+              "main_net_3d_yi": -2.14,
+              "mf_z": 0.14,
+              "ret_anomaly_score": 35,
+              "mf_anomaly_score": 35
             }
           }
         ],
@@ -1333,15 +1333,40 @@
             "rank_score": 59.88,
             "pre_run_up_3d": -2.27,
             "overheated": false,
-            "leader_score": 38.5,
+            "leader_score": 35.0,
             "leader_detail": {
-              "circ_mv_yi": 667.0,
-              "ret_3d_pct": -3.92,
-              "ret_z": -1.95,
-              "main_net_3d_yi": 0.46,
-              "mf_z": 1.16,
-              "ret_anomaly_score": 12,
-              "mf_anomaly_score": 65
+              "circ_mv_yi": 677.0,
+              "ret_3d_pct": -0.57,
+              "ret_z": -0.27,
+              "main_net_3d_yi": 0.19,
+              "mf_z": 0.0,
+              "ret_anomaly_score": 35,
+              "mf_anomaly_score": 35
+            }
+          },
+          {
+            "ts_code": "600798.SH",
+            "stock_name": "宁波海运",
+            "segment": "大宗商品航运",
+            "rec_reason": "宁波舟山港大宗商品资源配置枢纽建设将大幅提升大宗商品海运需求，宁波海运主营沿海及国际大宗散货运输，与宁波舟山港深度绑定，直接受益于枢纽建设带来的运量增长。",
+            "applied_pattern": "P04",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 8,
+            "expected_window": "T+5-10",
+            "heat_score": 71,
+            "acceptance_score": 38,
+            "rank_score": 54.56,
+            "pre_run_up_3d": -6.78,
+            "overheated": false,
+            "leader_score": 36.0,
+            "leader_detail": {
+              "circ_mv_yi": 42.0,
+              "ret_3d_pct": -4.16,
+              "ret_z": -1.49,
+              "main_net_3d_yi": 0.06,
+              "mf_z": 0.38,
+              "ret_anomaly_score": 22,
+              "mf_anomaly_score": 50
             }
           },
           {
@@ -1360,37 +1385,12 @@
             "overheated": false,
             "leader_score": 28.5,
             "leader_detail": {
-              "circ_mv_yi": 54.0,
-              "ret_3d_pct": -10.38,
-              "ret_z": -1.31,
-              "main_net_3d_yi": -0.24,
-              "mf_z": -0.04,
+              "circ_mv_yi": 51.0,
+              "ret_3d_pct": -11.12,
+              "ret_z": -1.37,
+              "main_net_3d_yi": -0.31,
+              "mf_z": -0.11,
               "ret_anomaly_score": 22,
-              "mf_anomaly_score": 35
-            }
-          },
-          {
-            "ts_code": "600798.SH",
-            "stock_name": "宁波海运",
-            "segment": "大宗商品航运",
-            "rec_reason": "宁波舟山港大宗商品资源配置枢纽建设将大幅提升大宗商品海运需求，宁波海运主营沿海及国际大宗散货运输，与宁波舟山港深度绑定，直接受益于枢纽建设带来的运量增长。",
-            "applied_pattern": "P04",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 8,
-            "expected_window": "T+5-10",
-            "heat_score": 71,
-            "acceptance_score": 38,
-            "rank_score": 54.56,
-            "pre_run_up_3d": -6.78,
-            "overheated": false,
-            "leader_score": 23.5,
-            "leader_detail": {
-              "circ_mv_yi": 43.0,
-              "ret_3d_pct": -4.34,
-              "ret_z": -1.61,
-              "main_net_3d_yi": 0.03,
-              "mf_z": 0.04,
-              "ret_anomaly_score": 12,
               "mf_anomaly_score": 35
             }
           }
@@ -1442,31 +1442,6 @@
           "max_rank": 53.76,
           "stocks": [
             {
-              "ts_code": "600150.SH",
-              "stock_name": "中国船舶",
-              "segment": "造船总装-行业龙头",
-              "rec_reason": "中船集团旗下核心造船平台，与沪东中华同属中船体系，LNG船是当前最紧缺的高端船型（单船造价约2.5亿美元），国产化率提升增强接单能力和利润率，公司LNG船在手订单饱满。",
-              "applied_pattern": "P07",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 6,
-              "expected_window": "T+5-10",
-              "heat_score": 50,
-              "acceptance_score": 69,
-              "rank_score": 53.33,
-              "pre_run_up_3d": 0.74,
-              "overheated": false,
-              "leader_score": 42.5,
-              "leader_detail": {
-                "circ_mv_yi": 2318.0,
-                "ret_3d_pct": 0.74,
-                "ret_z": 0.14,
-                "main_net_3d_yi": 2.47,
-                "mf_z": 0.54,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
               "ts_code": "603699.SH",
               "stock_name": "纽威股份",
               "segment": "低温阀门-核心配套",
@@ -1482,11 +1457,36 @@
               "overheated": false,
               "leader_score": 36.0,
               "leader_detail": {
-                "circ_mv_yi": 442.0,
-                "ret_3d_pct": -3.71,
+                "circ_mv_yi": 436.0,
+                "ret_3d_pct": -4.25,
+                "ret_z": -0.83,
+                "main_net_3d_yi": 0.04,
+                "mf_z": 0.34,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "600150.SH",
+              "stock_name": "中国船舶",
+              "segment": "造船总装-行业龙头",
+              "rec_reason": "中船集团旗下核心造船平台，与沪东中华同属中船体系，LNG船是当前最紧缺的高端船型（单船造价约2.5亿美元），国产化率提升增强接单能力和利润率，公司LNG船在手订单饱满。",
+              "applied_pattern": "P07",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 6,
+              "expected_window": "T+5-10",
+              "heat_score": 50,
+              "acceptance_score": 69,
+              "rank_score": 53.33,
+              "pre_run_up_3d": 0.74,
+              "overheated": false,
+              "leader_score": 36.0,
+              "leader_detail": {
+                "circ_mv_yi": 2270.0,
+                "ret_3d_pct": -3.39,
                 "ret_z": -0.72,
-                "main_net_3d_yi": 0.07,
-                "mf_z": 0.54,
+                "main_net_3d_yi": 3.25,
+                "mf_z": 0.65,
                 "ret_anomaly_score": 22,
                 "mf_anomaly_score": 50
               }
@@ -1507,11 +1507,11 @@
               "overheated": false,
               "leader_score": 35.0,
               "leader_detail": {
-                "circ_mv_yi": 49.0,
-                "ret_3d_pct": 0.23,
-                "ret_z": 0.05,
-                "main_net_3d_yi": -0.31,
-                "mf_z": 0.1,
+                "circ_mv_yi": 46.0,
+                "ret_3d_pct": -0.48,
+                "ret_z": -0.09,
+                "main_net_3d_yi": -0.45,
+                "mf_z": -0.03,
                 "ret_anomaly_score": 35,
                 "mf_anomaly_score": 35
               }
@@ -1565,38 +1565,13 @@
               "rank_score": 48.28,
               "pre_run_up_3d": 9.61,
               "overheated": false,
-              "leader_score": 66.0,
-              "leader_detail": {
-                "circ_mv_yi": 13277.0,
-                "ret_3d_pct": 9.61,
-                "ret_z": 1.68,
-                "main_net_3d_yi": 20.29,
-                "mf_z": 0.64,
-                "ret_anomaly_score": 82,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
-              "ts_code": "300502.SZ",
-              "stock_name": "新易盛",
-              "segment": "算力基建-光模块",
-              "rec_reason": "北美云厂商高速光模块核心供应商，400G/800G产品批量出货，Claude新模型上线推动AWS算力扩容，光模块需求弹性大。历史案例：英伟达H200出口利好→新易盛T+9峰值+10.8%。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 6.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 87,
-              "rank_score": 25.05,
-              "pre_run_up_3d": 9.0,
-              "overheated": true,
               "leader_score": 57.5,
               "leader_detail": {
-                "circ_mv_yi": 6374.0,
-                "ret_3d_pct": 9.0,
-                "ret_z": 1.09,
-                "main_net_3d_yi": 13.94,
-                "mf_z": 0.48,
+                "circ_mv_yi": 12869.0,
+                "ret_3d_pct": 5.27,
+                "ret_z": 0.92,
+                "main_net_3d_yi": 8.58,
+                "mf_z": 0.38,
                 "ret_anomaly_score": 65,
                 "mf_anomaly_score": 50
               }
@@ -1617,13 +1592,38 @@
               "overheated": true,
               "leader_score": 57.5,
               "leader_detail": {
-                "circ_mv_yi": 3480.0,
-                "ret_3d_pct": 12.81,
-                "ret_z": 1.46,
-                "main_net_3d_yi": 26.31,
-                "mf_z": 0.7,
+                "circ_mv_yi": 3540.0,
+                "ret_3d_pct": 11.91,
+                "ret_z": 1.43,
+                "main_net_3d_yi": 11.45,
+                "mf_z": 0.3,
                 "ret_anomaly_score": 65,
                 "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "300502.SZ",
+              "stock_name": "新易盛",
+              "segment": "算力基建-光模块",
+              "rec_reason": "北美云厂商高速光模块核心供应商，400G/800G产品批量出货，Claude新模型上线推动AWS算力扩容，光模块需求弹性大。历史案例：英伟达H200出口利好→新易盛T+9峰值+10.8%。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 6.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+1-3",
+              "heat_score": 62,
+              "acceptance_score": 87,
+              "rank_score": 25.05,
+              "pre_run_up_3d": 9.0,
+              "overheated": true,
+              "leader_score": 35.0,
+              "leader_detail": {
+                "circ_mv_yi": 6268.0,
+                "ret_3d_pct": 0.92,
+                "ret_z": 0.11,
+                "main_net_3d_yi": -2.14,
+                "mf_z": 0.14,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 35
               }
             }
           ],
@@ -1662,31 +1662,6 @@
           "max_rank": 47.0,
           "stocks": [
             {
-              "ts_code": "300455.SZ",
-              "stock_name": "航天智装",
-              "segment": "量子通信与信息安全",
-              "rec_reason": "子公司航天科工量子通信技术国内领先，量子计算+量子通信协同效应强。IBM百亿美元投资强化量子赛道整体景气度，量子通信作为量子技术另一重要分支将同步受益于资金关注度外溢。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 4,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 36,
-              "rank_score": 43.92,
-              "pre_run_up_3d": -5.95,
-              "overheated": false,
-              "leader_score": 36.0,
-              "leader_detail": {
-                "circ_mv_yi": 165.0,
-                "ret_3d_pct": -5.95,
-                "ret_z": -1.31,
-                "main_net_3d_yi": -0.3,
-                "mf_z": 0.4,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
               "ts_code": "600120.SH",
               "stock_name": "国盾量子",
               "segment": "量子计算硬件-超导量子计算机",
@@ -1702,13 +1677,38 @@
               "overheated": false,
               "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 166.0,
-                "ret_3d_pct": -3.18,
-                "ret_z": -0.85,
-                "main_net_3d_yi": -0.03,
-                "mf_z": -0.04,
+                "circ_mv_yi": 165.0,
+                "ret_3d_pct": -5.3,
+                "ret_z": -1.45,
+                "main_net_3d_yi": -0.12,
+                "mf_z": -0.37,
                 "ret_anomaly_score": 22,
                 "mf_anomaly_score": 35
+              }
+            },
+            {
+              "ts_code": "300455.SZ",
+              "stock_name": "航天智装",
+              "segment": "量子通信与信息安全",
+              "rec_reason": "子公司航天科工量子通信技术国内领先，量子计算+量子通信协同效应强。IBM百亿美元投资强化量子赛道整体景气度，量子通信作为量子技术另一重要分支将同步受益于资金关注度外溢。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 4,
+              "expected_window": "T+1-3",
+              "heat_score": 36,
+              "acceptance_score": 36,
+              "rank_score": 43.92,
+              "pre_run_up_3d": -5.95,
+              "overheated": false,
+              "leader_score": 31.0,
+              "leader_detail": {
+                "circ_mv_yi": 154.0,
+                "ret_3d_pct": -8.9,
+                "ret_z": -1.89,
+                "main_net_3d_yi": -0.38,
+                "mf_z": 0.28,
+                "ret_anomaly_score": 12,
+                "mf_anomaly_score": 50
               }
             },
             {
@@ -1727,11 +1727,11 @@
               "overheated": false,
               "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 467.0,
-                "ret_3d_pct": -9.45,
-                "ret_z": -1.39,
-                "main_net_3d_yi": -0.49,
-                "mf_z": -0.39,
+                "circ_mv_yi": 450.0,
+                "ret_3d_pct": -9.28,
+                "ret_z": -1.35,
+                "main_net_3d_yi": -0.01,
+                "mf_z": 0.1,
                 "ret_anomaly_score": 22,
                 "mf_anomaly_score": 35
               }
@@ -1787,11 +1787,11 @@
               "overheated": false,
               "leader_score": 22.0,
               "leader_detail": {
-                "circ_mv_yi": 4773.0,
-                "ret_3d_pct": -5.61,
+                "circ_mv_yi": 4562.0,
+                "ret_3d_pct": -6.02,
                 "ret_z": -1.07,
-                "main_net_3d_yi": -9.78,
-                "mf_z": -0.96,
+                "main_net_3d_yi": -13.02,
+                "mf_z": -1.03,
                 "ret_anomaly_score": 22,
                 "mf_anomaly_score": 22
               }
@@ -1810,15 +1810,15 @@
               "rank_score": 52.33,
               "pre_run_up_3d": -6.63,
               "overheated": false,
-              "leader_score": 17.0,
+              "leader_score": 22.0,
               "leader_detail": {
-                "circ_mv_yi": 2849.0,
-                "ret_3d_pct": -6.63,
-                "ret_z": -0.92,
-                "main_net_3d_yi": -6.2,
-                "mf_z": -1.87,
+                "circ_mv_yi": 2789.0,
+                "ret_3d_pct": -4.23,
+                "ret_z": -0.56,
+                "main_net_3d_yi": -4.97,
+                "mf_z": -1.27,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 12
+                "mf_anomaly_score": 22
               }
             }
           ],
@@ -1858,31 +1858,6 @@
           "max_rank": 45.7,
           "stocks": [
             {
-              "ts_code": "600938.SH",
-              "stock_name": "中国海油",
-              "segment": "上游油气开采-海上原油",
-              "rec_reason": "国内最大海上原油生产商，桶油成本控制优异（约30美元/桶），油价弹性极大；全球供应缺口下海上原油增产空间大，直接受益油价上涨",
-              "applied_pattern": "P03",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+1-3",
-              "heat_score": 47,
-              "acceptance_score": 38,
-              "rank_score": 65.98,
-              "pre_run_up_3d": -0.46,
-              "overheated": false,
-              "leader_score": 35.0,
-              "leader_detail": {
-                "circ_mv_yi": 1030.0,
-                "ret_3d_pct": -0.46,
-                "ret_z": -0.13,
-                "main_net_3d_yi": -0.93,
-                "mf_z": -0.47,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 35
-              }
-            },
-            {
               "ts_code": "600871.SH",
               "stock_name": "石化油服",
               "segment": "油服-钻井工程",
@@ -1896,15 +1871,15 @@
               "rank_score": 70.3,
               "pre_run_up_3d": -2.88,
               "overheated": false,
-              "leader_score": 22.0,
+              "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 320.0,
-                "ret_3d_pct": -2.88,
-                "ret_z": -0.71,
-                "main_net_3d_yi": -0.21,
-                "mf_z": -0.54,
+                "circ_mv_yi": 314.0,
+                "ret_3d_pct": -3.73,
+                "ret_z": -0.94,
+                "main_net_3d_yi": -0.13,
+                "mf_z": -0.33,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
+                "mf_anomaly_score": 35
               }
             },
             {
@@ -1921,15 +1896,40 @@
               "rank_score": 68.93,
               "pre_run_up_3d": -2.24,
               "overheated": false,
-              "leader_score": 17.0,
+              "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 4558.0,
-                "ret_3d_pct": -2.24,
-                "ret_z": -1.89,
-                "main_net_3d_yi": -1.17,
-                "mf_z": -0.54,
-                "ret_anomaly_score": 12,
+                "circ_mv_yi": 4595.0,
+                "ret_3d_pct": -0.41,
+                "ret_z": -0.35,
+                "main_net_3d_yi": -1.4,
+                "mf_z": -0.81,
+                "ret_anomaly_score": 35,
                 "mf_anomaly_score": 22
+              }
+            },
+            {
+              "ts_code": "600938.SH",
+              "stock_name": "中国海油",
+              "segment": "上游油气开采-海上原油",
+              "rec_reason": "国内最大海上原油生产商，桶油成本控制优异（约30美元/桶），油价弹性极大；全球供应缺口下海上原油增产空间大，直接受益油价上涨",
+              "applied_pattern": "P03",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+1-3",
+              "heat_score": 47,
+              "acceptance_score": 38,
+              "rank_score": 65.98,
+              "pre_run_up_3d": -0.46,
+              "overheated": false,
+              "leader_score": 28.5,
+              "leader_detail": {
+                "circ_mv_yi": 1029.0,
+                "ret_3d_pct": -2.19,
+                "ret_z": -0.62,
+                "main_net_3d_yi": -0.68,
+                "mf_z": -0.28,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 35
               }
             }
           ],
@@ -1982,14 +1982,14 @@
               "rank_score": 44.64,
               "pre_run_up_3d": 9.61,
               "overheated": false,
-              "leader_score": 66.0,
+              "leader_score": 57.5,
               "leader_detail": {
-                "circ_mv_yi": 13277.0,
-                "ret_3d_pct": 9.61,
-                "ret_z": 1.68,
-                "main_net_3d_yi": 20.29,
-                "mf_z": 0.64,
-                "ret_anomaly_score": 82,
+                "circ_mv_yi": 12869.0,
+                "ret_3d_pct": 5.27,
+                "ret_z": 0.92,
+                "main_net_3d_yi": 8.58,
+                "mf_z": 0.38,
+                "ret_anomaly_score": 65,
                 "mf_anomaly_score": 50
               }
             },
@@ -2007,15 +2007,15 @@
               "rank_score": 37.45,
               "pre_run_up_3d": -0.11,
               "overheated": false,
-              "leader_score": 35.0,
+              "leader_score": 22.0,
               "leader_detail": {
-                "circ_mv_yi": 646.0,
-                "ret_3d_pct": -0.11,
-                "ret_z": -0.02,
-                "main_net_3d_yi": -0.42,
-                "mf_z": 0.03,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 35
+                "circ_mv_yi": 607.0,
+                "ret_3d_pct": -7.23,
+                "ret_z": -1.21,
+                "main_net_3d_yi": -3.9,
+                "mf_z": -0.52,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 22
               }
             },
             {
@@ -2032,15 +2032,15 @@
               "rank_score": 35.17,
               "pre_run_up_3d": -2.71,
               "overheated": false,
-              "leader_score": 22.0,
+              "leader_score": 12.0,
               "leader_detail": {
-                "circ_mv_yi": 257.0,
-                "ret_3d_pct": -2.71,
-                "ret_z": -0.79,
-                "main_net_3d_yi": -2.09,
-                "mf_z": -1.07,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
+                "circ_mv_yi": 232.0,
+                "ret_3d_pct": -14.97,
+                "ret_z": -4.16,
+                "main_net_3d_yi": -6.9,
+                "mf_z": -3.31,
+                "ret_anomaly_score": 12,
+                "mf_anomaly_score": 12
               }
             }
           ],
@@ -2092,38 +2092,13 @@
               "rank_score": 48.91,
               "pre_run_up_3d": 9.61,
               "overheated": false,
-              "leader_score": 66.0,
-              "leader_detail": {
-                "circ_mv_yi": 13277.0,
-                "ret_3d_pct": 9.61,
-                "ret_z": 1.68,
-                "main_net_3d_yi": 20.29,
-                "mf_z": 0.64,
-                "ret_anomaly_score": 82,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
-              "ts_code": "300502.SZ",
-              "stock_name": "新易盛",
-              "segment": "算力基建-光模块",
-              "rec_reason": "谷歌数据中心光模块核心供应商之一，400G/800G光模块持续放量。Anthropic大规模采购谷歌TPU建设AI基础设施，直接拉动谷歌数据中心光模块需求，海外映射逻辑下A股光模块标的跟涨。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 7,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 87,
-              "rank_score": 25.5,
-              "pre_run_up_3d": 9.0,
-              "overheated": true,
               "leader_score": 57.5,
               "leader_detail": {
-                "circ_mv_yi": 6374.0,
-                "ret_3d_pct": 9.0,
-                "ret_z": 1.09,
-                "main_net_3d_yi": 13.94,
-                "mf_z": 0.48,
+                "circ_mv_yi": 12869.0,
+                "ret_3d_pct": 5.27,
+                "ret_z": 0.92,
+                "main_net_3d_yi": 8.58,
+                "mf_z": 0.38,
                 "ret_anomaly_score": 65,
                 "mf_anomaly_score": 50
               }
@@ -2142,15 +2117,40 @@
               "rank_score": 39.68,
               "pre_run_up_3d": -0.43,
               "overheated": false,
-              "leader_score": 42.5,
+              "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 2648.0,
-                "ret_3d_pct": -0.43,
-                "ret_z": -0.07,
-                "main_net_3d_yi": 4.41,
-                "mf_z": 0.29,
+                "circ_mv_yi": 2735.0,
+                "ret_3d_pct": -1.33,
+                "ret_z": -0.21,
+                "main_net_3d_yi": -3.61,
+                "mf_z": -0.69,
                 "ret_anomaly_score": 35,
-                "mf_anomaly_score": 50
+                "mf_anomaly_score": 22
+              }
+            },
+            {
+              "ts_code": "300502.SZ",
+              "stock_name": "新易盛",
+              "segment": "算力基建-光模块",
+              "rec_reason": "谷歌数据中心光模块核心供应商之一，400G/800G光模块持续放量。Anthropic大规模采购谷歌TPU建设AI基础设施，直接拉动谷歌数据中心光模块需求，海外映射逻辑下A股光模块标的跟涨。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 7,
+              "expected_window": "T+1-3",
+              "heat_score": 62,
+              "acceptance_score": 87,
+              "rank_score": 25.5,
+              "pre_run_up_3d": 9.0,
+              "overheated": true,
+              "leader_score": 35.0,
+              "leader_detail": {
+                "circ_mv_yi": 6268.0,
+                "ret_3d_pct": 0.92,
+                "ret_z": 0.11,
+                "main_net_3d_yi": -2.14,
+                "mf_z": 0.14,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 35
               }
             }
           ],
@@ -2203,15 +2203,15 @@
               "rank_score": 41.75,
               "pre_run_up_3d": 0.78,
               "overheated": false,
-              "leader_score": 42.5,
+              "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 1037.0,
-                "ret_3d_pct": 0.78,
-                "ret_z": 0.16,
-                "main_net_3d_yi": 1.05,
-                "mf_z": 0.61,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 50
+                "circ_mv_yi": 999.0,
+                "ret_3d_pct": -5.85,
+                "ret_z": -1.24,
+                "main_net_3d_yi": -2.31,
+                "mf_z": 0.04,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 35
               }
             },
             {
@@ -2230,11 +2230,11 @@
               "overheated": false,
               "leader_score": 17.0,
               "leader_detail": {
-                "circ_mv_yi": 470.0,
-                "ret_3d_pct": -5.09,
-                "ret_z": -1.91,
-                "main_net_3d_yi": -0.56,
-                "mf_z": -1.23,
+                "circ_mv_yi": 460.0,
+                "ret_3d_pct": -6.65,
+                "ret_z": -2.54,
+                "main_net_3d_yi": -0.35,
+                "mf_z": -0.84,
                 "ret_anomaly_score": 12,
                 "mf_anomaly_score": 22
               }
@@ -2288,15 +2288,15 @@
               "rank_score": 61.99,
               "pre_run_up_3d": -2.17,
               "overheated": false,
-              "leader_score": 22.0,
+              "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 730.0,
-                "ret_3d_pct": -2.17,
-                "ret_z": -0.66,
-                "main_net_3d_yi": -0.44,
-                "mf_z": -0.69,
+                "circ_mv_yi": 740.0,
+                "ret_3d_pct": -1.96,
+                "ret_z": -0.6,
+                "main_net_3d_yi": -0.05,
+                "mf_z": -0.19,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
+                "mf_anomaly_score": 35
               }
             },
             {
@@ -2313,15 +2313,15 @@
               "rank_score": 56.84,
               "pre_run_up_3d": -6.66,
               "overheated": false,
-              "leader_score": 22.0,
+              "leader_score": 23.5,
               "leader_detail": {
-                "circ_mv_yi": 1214.0,
-                "ret_3d_pct": -6.66,
-                "ret_z": -1.32,
-                "main_net_3d_yi": -0.86,
-                "mf_z": -0.53,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
+                "circ_mv_yi": 1210.0,
+                "ret_3d_pct": -8.03,
+                "ret_z": -1.56,
+                "main_net_3d_yi": -0.81,
+                "mf_z": -0.48,
+                "ret_anomaly_score": 12,
+                "mf_anomaly_score": 35
               }
             },
             {
@@ -2340,11 +2340,11 @@
               "overheated": false,
               "leader_score": 17.0,
               "leader_detail": {
-                "circ_mv_yi": 1299.0,
-                "ret_3d_pct": -9.45,
-                "ret_z": -1.83,
-                "main_net_3d_yi": -2.32,
-                "mf_z": -0.91,
+                "circ_mv_yi": 1281.0,
+                "ret_3d_pct": -8.11,
+                "ret_z": -1.56,
+                "main_net_3d_yi": -1.91,
+                "mf_z": -0.74,
                 "ret_anomaly_score": 12,
                 "mf_anomaly_score": 22
               }
@@ -2386,31 +2386,6 @@
           "max_rank": 38.8,
           "stocks": [
             {
-              "ts_code": "002230.SZ",
-              "stock_name": "科大讯飞",
-              "segment": "脑机接口-AI+脑科学",
-              "rec_reason": "科大讯飞在脑机接口领域有明确布局（与华南理工大学等合作脑机接口语音交互），且与腾讯在AI领域有长期合作关系。腾讯入股脑机接口公司，强化了AI+脑科学的产业趋势，科大讯飞作为AI龙头有望受益于赛道情绪提振和估值联动。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 4.0,
-              "expected_duration_days": 3,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 71,
-              "rank_score": 38.8,
-              "pre_run_up_3d": 0.92,
-              "overheated": false,
-              "leader_score": 57.5,
-              "leader_detail": {
-                "circ_mv_yi": 1076.0,
-                "ret_3d_pct": 0.92,
-                "ret_z": 0.27,
-                "main_net_3d_yi": 4.96,
-                "mf_z": 1.28,
-                "ret_anomaly_score": 50,
-                "mf_anomaly_score": 65
-              }
-            },
-            {
               "ts_code": "300003.SZ",
               "stock_name": "乐普医疗",
               "segment": "脑机接口-医疗应用",
@@ -2424,13 +2399,38 @@
               "rank_score": 34.16,
               "pre_run_up_3d": -3.57,
               "overheated": false,
+              "leader_score": 42.5,
+              "leader_detail": {
+                "circ_mv_yi": 199.0,
+                "ret_3d_pct": -0.63,
+                "ret_z": -0.23,
+                "main_net_3d_yi": -0.15,
+                "mf_z": 0.61,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "002230.SZ",
+              "stock_name": "科大讯飞",
+              "segment": "脑机接口-AI+脑科学",
+              "rec_reason": "科大讯飞在脑机接口领域有明确布局（与华南理工大学等合作脑机接口语音交互），且与腾讯在AI领域有长期合作关系。腾讯入股脑机接口公司，强化了AI+脑科学的产业趋势，科大讯飞作为AI龙头有望受益于赛道情绪提振和估值联动。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 4.0,
+              "expected_duration_days": 3,
+              "expected_window": "T+1-3",
+              "heat_score": 36,
+              "acceptance_score": 71,
+              "rank_score": 38.8,
+              "pre_run_up_3d": 0.92,
+              "overheated": false,
               "leader_score": 36.0,
               "leader_detail": {
-                "circ_mv_yi": 196.0,
-                "ret_3d_pct": -3.57,
-                "ret_z": -0.82,
-                "main_net_3d_yi": -0.64,
-                "mf_z": 0.25,
+                "circ_mv_yi": 1049.0,
+                "ret_3d_pct": -2.74,
+                "ret_z": -0.81,
+                "main_net_3d_yi": 0.39,
+                "mf_z": 0.48,
                 "ret_anomaly_score": 22,
                 "mf_anomaly_score": 50
               }
@@ -2451,11 +2451,11 @@
               "overheated": false,
               "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 32.0,
-                "ret_3d_pct": -3.35,
-                "ret_z": -1.11,
-                "main_net_3d_yi": -0.09,
-                "mf_z": 0.07,
+                "circ_mv_yi": 31.0,
+                "ret_3d_pct": -3.74,
+                "ret_z": -1.27,
+                "main_net_3d_yi": -0.11,
+                "mf_z": -0.05,
                 "ret_anomaly_score": 22,
                 "mf_anomaly_score": 35
               }
@@ -2511,11 +2511,11 @@
               "overheated": false,
               "leader_score": 22.0,
               "leader_detail": {
-                "circ_mv_yi": 530.0,
-                "ret_3d_pct": -8.9,
-                "ret_z": -0.77,
-                "main_net_3d_yi": -1.99,
-                "mf_z": -1.03,
+                "circ_mv_yi": 495.0,
+                "ret_3d_pct": -8.6,
+                "ret_z": -0.72,
+                "main_net_3d_yi": -2.02,
+                "mf_z": -0.88,
                 "ret_anomaly_score": 22,
                 "mf_anomaly_score": 22
               }
@@ -2534,15 +2534,15 @@
               "rank_score": 35.04,
               "pre_run_up_3d": -7.64,
               "overheated": false,
-              "leader_score": 17.0,
+              "leader_score": 23.5,
               "leader_detail": {
-                "circ_mv_yi": 145.0,
-                "ret_3d_pct": -7.64,
-                "ret_z": -1.76,
-                "main_net_3d_yi": -1.26,
-                "mf_z": -0.76,
+                "circ_mv_yi": 134.0,
+                "ret_3d_pct": -10.26,
+                "ret_z": -2.34,
+                "main_net_3d_yi": -0.52,
+                "mf_z": -0.19,
                 "ret_anomaly_score": 12,
-                "mf_anomaly_score": 22
+                "mf_anomaly_score": 35
               }
             }
           ],
@@ -2581,31 +2581,6 @@
           "max_rank": 38.32,
           "stocks": [
             {
-              "ts_code": "600519.SH",
-              "stock_name": "贵州茅台",
-              "segment": "高端白酒",
-              "rec_reason": "摩根大通将评级从增持下调至中性，目标价从1930元砍至1420元(-26%)，且缺乏2026财年业绩指引。作为外资重仓第一股，北向资金减仓压力最大，短期承压明显。但茅台基本面仍为白酒板块最扎实，若因评级下调超跌，中期有修复机会。",
-              "applied_pattern": "P01",
-              "expected_return_pct": -5.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 44,
-              "rank_score": 45.08,
-              "pre_run_up_3d": -0.77,
-              "overheated": false,
-              "leader_score": 42.5,
-              "leader_detail": {
-                "circ_mv_yi": 15951.0,
-                "ret_3d_pct": -0.77,
-                "ret_z": -0.39,
-                "main_net_3d_yi": -0.18,
-                "mf_z": 0.45,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
               "ts_code": "000858.SZ",
               "stock_name": "五粮液",
               "segment": "高端白酒",
@@ -2619,15 +2594,40 @@
               "rank_score": 41.41,
               "pre_run_up_3d": -3.15,
               "overheated": false,
-              "leader_score": 43.5,
+              "leader_score": 73.5,
               "leader_detail": {
-                "circ_mv_yi": 3163.0,
-                "ret_3d_pct": -3.15,
-                "ret_z": -1.46,
-                "main_net_3d_yi": -3.32,
-                "mf_z": 0.83,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 65
+                "circ_mv_yi": 3295.0,
+                "ret_3d_pct": 1.84,
+                "ret_z": 0.88,
+                "main_net_3d_yi": 6.04,
+                "mf_z": 1.81,
+                "ret_anomaly_score": 65,
+                "mf_anomaly_score": 82
+              }
+            },
+            {
+              "ts_code": "600519.SH",
+              "stock_name": "贵州茅台",
+              "segment": "高端白酒",
+              "rec_reason": "摩根大通将评级从增持下调至中性，目标价从1930元砍至1420元(-26%)，且缺乏2026财年业绩指引。作为外资重仓第一股，北向资金减仓压力最大，短期承压明显。但茅台基本面仍为白酒板块最扎实，若因评级下调超跌，中期有修复机会。",
+              "applied_pattern": "P01",
+              "expected_return_pct": -5.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 62,
+              "acceptance_score": 44,
+              "rank_score": 45.08,
+              "pre_run_up_3d": -0.77,
+              "overheated": false,
+              "leader_score": 66.0,
+              "leader_detail": {
+                "circ_mv_yi": 16576.0,
+                "ret_3d_pct": 4.13,
+                "ret_z": 2.12,
+                "main_net_3d_yi": -0.26,
+                "mf_z": 0.45,
+                "ret_anomaly_score": 82,
+                "mf_anomaly_score": 50
               }
             }
           ],
@@ -2677,6 +2677,31 @@
           "max_rank": 58.92,
           "stocks": [
             {
+              "ts_code": "002371.SZ",
+              "stock_name": "北方华创",
+              "segment": "半导体设备",
+              "rec_reason": "国内半导体设备平台型龙头，刻蚀/薄膜沉积/清洗等设备覆盖芯片制造全流程。韬定律下芯片架构创新对制造工艺提出新要求，设备升级需求增加；同时华为芯片自主化加速带动国产设备采购，北方华创作为国产设备龙头直接受益。",
+              "applied_pattern": "P07",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 12,
+              "expected_window": "T+5-10",
+              "heat_score": 70,
+              "acceptance_score": 20,
+              "rank_score": 67.34,
+              "pre_run_up_3d": -5.61,
+              "overheated": false,
+              "leader_score": 22.0,
+              "leader_detail": {
+                "circ_mv_yi": 4562.0,
+                "ret_3d_pct": -6.02,
+                "ret_z": -1.07,
+                "main_net_3d_yi": -13.02,
+                "mf_z": -1.03,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 22
+              }
+            },
+            {
               "ts_code": "688981.SH",
               "stock_name": "中芯国际",
               "segment": "晶圆代工",
@@ -2690,14 +2715,14 @@
               "rank_score": 64.75,
               "pre_run_up_3d": -1.47,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 22.0,
               "leader_detail": {
-                "circ_mv_yi": 3073.0,
-                "ret_3d_pct": -1.47,
-                "ret_z": -0.15,
-                "main_net_3d_yi": -10.59,
-                "mf_z": -0.87,
-                "ret_anomaly_score": 35,
+                "circ_mv_yi": 2798.0,
+                "ret_3d_pct": -6.21,
+                "ret_z": -0.64,
+                "main_net_3d_yi": -13.94,
+                "mf_z": -1.1,
+                "ret_anomaly_score": 22,
                 "mf_anomaly_score": 22
               }
             },
@@ -2715,39 +2740,14 @@
               "rank_score": 69.32,
               "pre_run_up_3d": -0.58,
               "overheated": false,
-              "leader_score": 23.5,
+              "leader_score": 17.0,
               "leader_detail": {
-                "circ_mv_yi": 1052.0,
-                "ret_3d_pct": -0.58,
-                "ret_z": -0.08,
-                "main_net_3d_yi": -45.74,
-                "mf_z": -2.38,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 12
-              }
-            },
-            {
-              "ts_code": "002371.SZ",
-              "stock_name": "北方华创",
-              "segment": "半导体设备",
-              "rec_reason": "国内半导体设备平台型龙头，刻蚀/薄膜沉积/清洗等设备覆盖芯片制造全流程。韬定律下芯片架构创新对制造工艺提出新要求，设备升级需求增加；同时华为芯片自主化加速带动国产设备采购，北方华创作为国产设备龙头直接受益。",
-              "applied_pattern": "P07",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 12,
-              "expected_window": "T+5-10",
-              "heat_score": 70,
-              "acceptance_score": 20,
-              "rank_score": 67.34,
-              "pre_run_up_3d": -5.61,
-              "overheated": false,
-              "leader_score": 22.0,
-              "leader_detail": {
-                "circ_mv_yi": 4773.0,
-                "ret_3d_pct": -5.61,
-                "ret_z": -1.07,
-                "main_net_3d_yi": -9.78,
-                "mf_z": -0.96,
-                "ret_anomaly_score": 22,
+                "circ_mv_yi": 1002.0,
+                "ret_3d_pct": -12.36,
+                "ret_z": -1.64,
+                "main_net_3d_yi": -37.19,
+                "mf_z": -1.49,
+                "ret_anomaly_score": 12,
                 "mf_anomaly_score": 22
               }
             }
@@ -2788,31 +2788,6 @@
           "max_rank": 54.18,
           "stocks": [
             {
-              "ts_code": "002241.SZ",
-              "stock_name": "歌尔股份",
-              "segment": "消费电子/声学器件",
-              "rec_reason": "海外营收占比超70%，对美出口占比较高；此前受关税和地缘风险压制估值，关税缓和后估值修复空间大，Meta/苹果核心供应商",
-              "applied_pattern": "P13",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 37,
-              "acceptance_score": 88,
-              "rank_score": 63.74,
-              "pre_run_up_3d": 11.42,
-              "overheated": false,
-              "leader_score": 88.5,
-              "leader_detail": {
-                "circ_mv_yi": 893.0,
-                "ret_3d_pct": 11.42,
-                "ret_z": 3.48,
-                "main_net_3d_yi": 14.24,
-                "mf_z": 2.46,
-                "ret_anomaly_score": 95,
-                "mf_anomaly_score": 82
-              }
-            },
-            {
               "ts_code": "000333.SZ",
               "stock_name": "美的集团",
               "segment": "家电出口",
@@ -2826,15 +2801,40 @@
               "rank_score": 53.19,
               "pre_run_up_3d": -1.08,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 73.5,
               "leader_detail": {
-                "circ_mv_yi": 5416.0,
-                "ret_3d_pct": -1.08,
-                "ret_z": -0.66,
-                "main_net_3d_yi": 2.21,
-                "mf_z": 0.03,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
+                "circ_mv_yi": 5547.0,
+                "ret_3d_pct": 1.63,
+                "ret_z": 1.01,
+                "main_net_3d_yi": 7.42,
+                "mf_z": 1.77,
+                "ret_anomaly_score": 65,
+                "mf_anomaly_score": 82
+              }
+            },
+            {
+              "ts_code": "002241.SZ",
+              "stock_name": "歌尔股份",
+              "segment": "消费电子/声学器件",
+              "rec_reason": "海外营收占比超70%，对美出口占比较高；此前受关税和地缘风险压制估值，关税缓和后估值修复空间大，Meta/苹果核心供应商",
+              "applied_pattern": "P13",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+5-10",
+              "heat_score": 37,
+              "acceptance_score": 88,
+              "rank_score": 63.74,
+              "pre_run_up_3d": 11.42,
+              "overheated": false,
+              "leader_score": 42.5,
+              "leader_detail": {
+                "circ_mv_yi": 843.0,
+                "ret_3d_pct": -1.02,
+                "ret_z": -0.25,
+                "main_net_3d_yi": 3.34,
+                "mf_z": 0.5,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 50
               }
             },
             {
@@ -2851,14 +2851,14 @@
               "rank_score": 51.61,
               "pre_run_up_3d": -1.94,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 42.5,
               "leader_detail": {
-                "circ_mv_yi": 2092.0,
-                "ret_3d_pct": -1.94,
-                "ret_z": -0.77,
-                "main_net_3d_yi": 0.36,
-                "mf_z": -0.12,
-                "ret_anomaly_score": 22,
+                "circ_mv_yi": 2163.0,
+                "ret_3d_pct": 0.75,
+                "ret_z": 0.29,
+                "main_net_3d_yi": 1.95,
+                "mf_z": 0.1,
+                "ret_anomaly_score": 50,
                 "mf_anomaly_score": 35
               }
             }
@@ -2899,31 +2899,6 @@
           "max_rank": 49.55,
           "stocks": [
             {
-              "ts_code": "600021.SH",
-              "stock_name": "上海电力",
-              "segment": "华东区域火电+虚拟电厂",
-              "rec_reason": "华东区域电力龙头，火电装机占比高，同时布局虚拟电厂和需求侧响应业务。发改委要求'精细化开展电力需求侧管理'、'市场化需求响应优先'，上海电力在长三角电力市场交易活跃，迎峰度夏期间顶峰发电+需求侧响应双重受益。",
-              "applied_pattern": "P04",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 12,
-              "expected_window": "T+5-10",
-              "heat_score": 29,
-              "acceptance_score": 68,
-              "rank_score": 56.21,
-              "pre_run_up_3d": 14.24,
-              "overheated": false,
-              "leader_score": 72.5,
-              "leader_detail": {
-                "circ_mv_yi": 598.0,
-                "ret_3d_pct": 14.24,
-                "ret_z": 2.51,
-                "main_net_3d_yi": 3.36,
-                "mf_z": 0.74,
-                "ret_anomaly_score": 95,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
               "ts_code": "600011.SH",
               "stock_name": "华能国际",
               "segment": "火电龙头",
@@ -2937,15 +2912,15 @@
               "rank_score": 58.29,
               "pre_run_up_3d": 8.04,
               "overheated": false,
-              "leader_score": 58.5,
+              "leader_score": 72.5,
               "leader_detail": {
-                "circ_mv_yi": 886.0,
-                "ret_3d_pct": 8.04,
-                "ret_z": 2.41,
-                "main_net_3d_yi": -0.33,
-                "mf_z": 0.1,
-                "ret_anomaly_score": 82,
-                "mf_anomaly_score": 35
+                "circ_mv_yi": 975.0,
+                "ret_3d_pct": 18.11,
+                "ret_z": 5.43,
+                "main_net_3d_yi": 0.16,
+                "mf_z": 0.55,
+                "ret_anomaly_score": 95,
+                "mf_anomaly_score": 50
               }
             },
             {
@@ -2962,13 +2937,38 @@
               "rank_score": 55.29,
               "pre_run_up_3d": 3.06,
               "overheated": false,
+              "leader_score": 52.0,
+              "leader_detail": {
+                "circ_mv_yi": 7738.0,
+                "ret_3d_pct": 4.73,
+                "ret_z": 2.03,
+                "main_net_3d_yi": 0.52,
+                "mf_z": -0.58,
+                "ret_anomaly_score": 82,
+                "mf_anomaly_score": 22
+              }
+            },
+            {
+              "ts_code": "600021.SH",
+              "stock_name": "上海电力",
+              "segment": "华东区域火电+虚拟电厂",
+              "rec_reason": "华东区域电力龙头，火电装机占比高，同时布局虚拟电厂和需求侧响应业务。发改委要求'精细化开展电力需求侧管理'、'市场化需求响应优先'，上海电力在长三角电力市场交易活跃，迎峰度夏期间顶峰发电+需求侧响应双重受益。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 12,
+              "expected_window": "T+5-10",
+              "heat_score": 29,
+              "acceptance_score": 68,
+              "rank_score": 56.21,
+              "pre_run_up_3d": 14.24,
+              "overheated": false,
               "leader_score": 50.0,
               "leader_detail": {
-                "circ_mv_yi": 7611.0,
-                "ret_3d_pct": 3.06,
-                "ret_z": 1.21,
-                "main_net_3d_yi": 1.32,
-                "mf_z": 0.03,
+                "circ_mv_yi": 629.0,
+                "ret_3d_pct": 9.27,
+                "ret_z": 1.37,
+                "main_net_3d_yi": -1.19,
+                "mf_z": -0.46,
                 "ret_anomaly_score": 65,
                 "mf_anomaly_score": 35
               }
@@ -3023,14 +3023,14 @@
               "rank_score": 49.05,
               "pre_run_up_3d": 3.62,
               "overheated": false,
-              "leader_score": 50.0,
+              "leader_score": 36.0,
               "leader_detail": {
-                "circ_mv_yi": 716.0,
-                "ret_3d_pct": 3.62,
-                "ret_z": 0.59,
-                "main_net_3d_yi": 0.84,
-                "mf_z": 0.31,
-                "ret_anomaly_score": 50,
+                "circ_mv_yi": 675.0,
+                "ret_3d_pct": -4.24,
+                "ret_z": -0.71,
+                "main_net_3d_yi": 1.5,
+                "mf_z": 0.52,
+                "ret_anomaly_score": 22,
                 "mf_anomaly_score": 50
               }
             },
@@ -3048,15 +3048,15 @@
               "rank_score": 50.05,
               "pre_run_up_3d": -3.58,
               "overheated": false,
-              "leader_score": 43.5,
+              "leader_score": 31.0,
               "leader_detail": {
-                "circ_mv_yi": 104.0,
-                "ret_3d_pct": -3.58,
-                "ret_z": -0.65,
-                "main_net_3d_yi": 0.34,
-                "mf_z": 1.31,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 65
+                "circ_mv_yi": 93.0,
+                "ret_3d_pct": -9.91,
+                "ret_z": -1.77,
+                "main_net_3d_yi": 0.18,
+                "mf_z": 0.64,
+                "ret_anomaly_score": 12,
+                "mf_anomaly_score": 50
               }
             },
             {
@@ -3075,11 +3075,11 @@
               "overheated": false,
               "leader_score": 22.0,
               "leader_detail": {
-                "circ_mv_yi": 409.0,
-                "ret_3d_pct": -7.1,
-                "ret_z": -1.05,
-                "main_net_3d_yi": -1.14,
-                "mf_z": -0.86,
+                "circ_mv_yi": 393.0,
+                "ret_3d_pct": -7.94,
+                "ret_z": -1.17,
+                "main_net_3d_yi": -1.33,
+                "mf_z": -0.99,
                 "ret_anomaly_score": 22,
                 "mf_anomaly_score": 22
               }
@@ -3121,31 +3121,6 @@
           "max_rank": 42.53,
           "stocks": [
             {
-              "ts_code": "600519.SH",
-              "stock_name": "贵州茅台",
-              "segment": "消费核心资产",
-              "rec_reason": "外资持有A股市值最大的个股之一，陆股通持仓市值超千亿，高ROE+高确定性+大市值流动性极佳，是外资增配A股的首选核心资产，直接受益于外资持续流入预期。",
-              "applied_pattern": "P04",
-              "expected_return_pct": 5.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+5-10",
-              "heat_score": 45,
-              "acceptance_score": 44,
-              "rank_score": 48.7,
-              "pre_run_up_3d": -0.77,
-              "overheated": false,
-              "leader_score": 42.5,
-              "leader_detail": {
-                "circ_mv_yi": 15951.0,
-                "ret_3d_pct": -0.77,
-                "ret_z": -0.39,
-                "main_net_3d_yi": -0.18,
-                "mf_z": 0.45,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
               "ts_code": "000333.SZ",
               "stock_name": "美的集团",
               "segment": "家电龙头/核心资产",
@@ -3159,15 +3134,40 @@
               "rank_score": 50.03,
               "pre_run_up_3d": -1.08,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 73.5,
               "leader_detail": {
-                "circ_mv_yi": 5416.0,
-                "ret_3d_pct": -1.08,
-                "ret_z": -0.66,
-                "main_net_3d_yi": 2.21,
-                "mf_z": 0.03,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
+                "circ_mv_yi": 5547.0,
+                "ret_3d_pct": 1.63,
+                "ret_z": 1.01,
+                "main_net_3d_yi": 7.42,
+                "mf_z": 1.77,
+                "ret_anomaly_score": 65,
+                "mf_anomaly_score": 82
+              }
+            },
+            {
+              "ts_code": "600519.SH",
+              "stock_name": "贵州茅台",
+              "segment": "消费核心资产",
+              "rec_reason": "外资持有A股市值最大的个股之一，陆股通持仓市值超千亿，高ROE+高确定性+大市值流动性极佳，是外资增配A股的首选核心资产，直接受益于外资持续流入预期。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 5.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+5-10",
+              "heat_score": 45,
+              "acceptance_score": 44,
+              "rank_score": 48.7,
+              "pre_run_up_3d": -0.77,
+              "overheated": false,
+              "leader_score": 66.0,
+              "leader_detail": {
+                "circ_mv_yi": 16576.0,
+                "ret_3d_pct": 4.13,
+                "ret_z": 2.12,
+                "main_net_3d_yi": -0.26,
+                "mf_z": 0.45,
+                "ret_anomaly_score": 82,
+                "mf_anomaly_score": 50
               }
             },
             {
@@ -3184,14 +3184,14 @@
               "rank_score": 46.07,
               "pre_run_up_3d": -3.23,
               "overheated": false,
-              "leader_score": 23.5,
+              "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 5593.0,
-                "ret_3d_pct": -3.23,
-                "ret_z": -1.54,
-                "main_net_3d_yi": 0.39,
-                "mf_z": 0.07,
-                "ret_anomaly_score": 12,
+                "circ_mv_yi": 5703.0,
+                "ret_3d_pct": -1.42,
+                "ret_z": -0.67,
+                "main_net_3d_yi": -1.31,
+                "mf_z": -0.44,
+                "ret_anomaly_score": 22,
                 "mf_anomaly_score": 35
               }
             }
@@ -3245,14 +3245,14 @@
               "rank_score": 49.16,
               "pre_run_up_3d": -1.94,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 42.5,
               "leader_detail": {
-                "circ_mv_yi": 2092.0,
-                "ret_3d_pct": -1.94,
-                "ret_z": -0.77,
-                "main_net_3d_yi": 0.36,
-                "mf_z": -0.12,
-                "ret_anomaly_score": 22,
+                "circ_mv_yi": 2163.0,
+                "ret_3d_pct": 0.75,
+                "ret_z": 0.29,
+                "main_net_3d_yi": 1.95,
+                "mf_z": 0.1,
+                "ret_anomaly_score": 50,
                 "mf_anomaly_score": 35
               }
             },
@@ -3272,11 +3272,11 @@
               "overheated": false,
               "leader_score": 12.0,
               "leader_detail": {
-                "circ_mv_yi": 1144.0,
-                "ret_3d_pct": -8.44,
-                "ret_z": -1.71,
-                "main_net_3d_yi": -5.0,
-                "mf_z": -2.13,
+                "circ_mv_yi": 1084.0,
+                "ret_3d_pct": -12.22,
+                "ret_z": -2.55,
+                "main_net_3d_yi": -6.42,
+                "mf_z": -2.81,
                 "ret_anomaly_score": 12,
                 "mf_anomaly_score": 12
               }
@@ -3331,15 +3331,15 @@
               "rank_score": 48.2,
               "pre_run_up_3d": -6.61,
               "overheated": false,
-              "leader_score": 36.0,
+              "leader_score": 28.5,
               "leader_detail": {
                 "circ_mv_yi": 34.0,
-                "ret_3d_pct": -6.61,
-                "ret_z": -1.07,
-                "main_net_3d_yi": -0.07,
-                "mf_z": 0.25,
+                "ret_3d_pct": -6.65,
+                "ret_z": -1.08,
+                "main_net_3d_yi": -0.14,
+                "mf_z": 0.07,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 50
+                "mf_anomaly_score": 35
               }
             },
             {
@@ -3356,15 +3356,15 @@
               "rank_score": 45.5,
               "pre_run_up_3d": -4.1,
               "overheated": false,
-              "leader_score": 22.0,
+              "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 62.0,
-                "ret_3d_pct": -4.1,
-                "ret_z": -1.32,
-                "main_net_3d_yi": -0.12,
-                "mf_z": -0.67,
+                "circ_mv_yi": 61.0,
+                "ret_3d_pct": -3.27,
+                "ret_z": -1.01,
+                "main_net_3d_yi": -0.04,
+                "mf_z": -0.07,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
+                "mf_anomaly_score": 35
               }
             }
           ],
@@ -3417,15 +3417,15 @@
               "rank_score": 46.12,
               "pre_run_up_3d": -5.73,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 36.0,
               "leader_detail": {
-                "circ_mv_yi": 125.0,
-                "ret_3d_pct": -5.73,
-                "ret_z": -0.65,
-                "main_net_3d_yi": -1.16,
-                "mf_z": -0.44,
+                "circ_mv_yi": 124.0,
+                "ret_3d_pct": -5.22,
+                "ret_z": -0.62,
+                "main_net_3d_yi": 0.22,
+                "mf_z": 0.28,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
+                "mf_anomaly_score": 50
               }
             },
             {
@@ -3442,14 +3442,14 @@
               "rank_score": 44.08,
               "pre_run_up_3d": -1.69,
               "overheated": false,
-              "leader_score": 22.0,
+              "leader_score": 17.0,
               "leader_detail": {
-                "circ_mv_yi": 209.0,
-                "ret_3d_pct": -1.69,
-                "ret_z": -0.79,
-                "main_net_3d_yi": -0.98,
-                "mf_z": -0.64,
-                "ret_anomaly_score": 22,
+                "circ_mv_yi": 206.0,
+                "ret_3d_pct": -3.1,
+                "ret_z": -1.53,
+                "main_net_3d_yi": -1.34,
+                "mf_z": -1.1,
+                "ret_anomaly_score": 12,
                 "mf_anomaly_score": 22
               }
             }
@@ -3490,31 +3490,6 @@
           "max_rank": 35.48,
           "stocks": [
             {
-              "ts_code": "300274.SZ",
-              "stock_name": "阳光电源",
-              "segment": "储能逆变器/系统集成",
-              "rec_reason": "欧洲储能龙头，在英国有大量储能项目部署经验。电站停机导致电价短期飙升，将刺激英国用户侧和电网侧储能调峰需求激增，阳光电源作为全球逆变器+储能系统出货量第一的企业直接受益订单弹性。",
-              "applied_pattern": "P03",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 74,
-              "rank_score": 41.74,
-              "pre_run_up_3d": 13.66,
-              "overheated": false,
-              "leader_score": 73.5,
-              "leader_detail": {
-                "circ_mv_yi": 3022.0,
-                "ret_3d_pct": 13.66,
-                "ret_z": 2.01,
-                "main_net_3d_yi": 32.1,
-                "mf_z": 0.94,
-                "ret_anomaly_score": 82,
-                "mf_anomaly_score": 65
-              }
-            },
-            {
               "ts_code": "688390.SH",
               "stock_name": "固德威",
               "segment": "户用储能/逆变器",
@@ -3528,15 +3503,40 @@
               "rank_score": 35.8,
               "pre_run_up_3d": 4.61,
               "overheated": false,
-              "leader_score": 57.5,
+              "leader_score": 42.5,
               "leader_detail": {
-                "circ_mv_yi": 363.0,
-                "ret_3d_pct": 4.61,
-                "ret_z": 0.52,
-                "main_net_3d_yi": 0.25,
-                "mf_z": 0.81,
-                "ret_anomaly_score": 50,
-                "mf_anomaly_score": 65
+                "circ_mv_yi": 341.0,
+                "ret_3d_pct": 1.35,
+                "ret_z": 0.15,
+                "main_net_3d_yi": 0.03,
+                "mf_z": 0.75,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "300274.SZ",
+              "stock_name": "阳光电源",
+              "segment": "储能逆变器/系统集成",
+              "rec_reason": "欧洲储能龙头，在英国有大量储能项目部署经验。电站停机导致电价短期飙升，将刺激英国用户侧和电网侧储能调峰需求激增，阳光电源作为全球逆变器+储能系统出货量第一的企业直接受益订单弹性。",
+              "applied_pattern": "P03",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 62,
+              "acceptance_score": 74,
+              "rank_score": 41.74,
+              "pre_run_up_3d": 13.66,
+              "overheated": false,
+              "leader_score": 28.5,
+              "leader_detail": {
+                "circ_mv_yi": 2830.0,
+                "ret_3d_pct": -0.56,
+                "ret_z": -0.08,
+                "main_net_3d_yi": -7.34,
+                "mf_z": -0.51,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 22
               }
             }
           ],
@@ -3576,6 +3576,31 @@
           "max_rank": 35.04,
           "stocks": [
             {
+              "ts_code": "002271.SZ",
+              "stock_name": "东方雨虹",
+              "segment": "市政建材-防水/管材",
+              "rec_reason": "建筑防水材料市占率第一（约20%），同时布局管道业务（雨虹管业），受益于城镇基础设施向乡村延伸带来的管网和防水需求增量，县域渠道布局完善，政策驱动下业绩弹性大。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 12.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+5-10",
+              "heat_score": 50,
+              "acceptance_score": 29,
+              "rank_score": 53.91,
+              "pre_run_up_3d": -4.82,
+              "overheated": false,
+              "leader_score": 35.0,
+              "leader_detail": {
+                "circ_mv_yi": 261.0,
+                "ret_3d_pct": -2.92,
+                "ret_z": -0.48,
+                "main_net_3d_yi": -0.93,
+                "mf_z": -0.06,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 35
+              }
+            },
+            {
               "ts_code": "600323.SH",
               "stock_name": "瀚蓝环境",
               "segment": "环保水务-县城污水",
@@ -3591,37 +3616,12 @@
               "overheated": false,
               "leader_score": 35.0,
               "leader_detail": {
-                "circ_mv_yi": 242.0,
-                "ret_3d_pct": -0.97,
-                "ret_z": -0.29,
-                "main_net_3d_yi": -0.04,
-                "mf_z": -0.02,
+                "circ_mv_yi": 250.0,
+                "ret_3d_pct": 0.52,
+                "ret_z": 0.16,
+                "main_net_3d_yi": -0.01,
+                "mf_z": 0.16,
                 "ret_anomaly_score": 35,
-                "mf_anomaly_score": 35
-              }
-            },
-            {
-              "ts_code": "002271.SZ",
-              "stock_name": "东方雨虹",
-              "segment": "市政建材-防水/管材",
-              "rec_reason": "建筑防水材料市占率第一（约20%），同时布局管道业务（雨虹管业），受益于城镇基础设施向乡村延伸带来的管网和防水需求增量，县域渠道布局完善，政策驱动下业绩弹性大。",
-              "applied_pattern": "P04",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 50,
-              "acceptance_score": 29,
-              "rank_score": 53.91,
-              "pre_run_up_3d": -4.82,
-              "overheated": false,
-              "leader_score": 28.5,
-              "leader_detail": {
-                "circ_mv_yi": 257.0,
-                "ret_3d_pct": -4.82,
-                "ret_z": -0.8,
-                "main_net_3d_yi": -0.92,
-                "mf_z": -0.04,
-                "ret_anomaly_score": 22,
                 "mf_anomaly_score": 35
               }
             },
@@ -3639,14 +3639,14 @@
               "rank_score": 48.02,
               "pre_run_up_3d": -5.66,
               "overheated": false,
-              "leader_score": 23.5,
+              "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 308.0,
-                "ret_3d_pct": -5.66,
-                "ret_z": -1.88,
-                "main_net_3d_yi": -0.15,
-                "mf_z": -0.28,
-                "ret_anomaly_score": 12,
+                "circ_mv_yi": 309.0,
+                "ret_3d_pct": -2.25,
+                "ret_z": -0.7,
+                "main_net_3d_yi": -0.06,
+                "mf_z": 0.05,
+                "ret_anomaly_score": 22,
                 "mf_anomaly_score": 35
               }
             }
@@ -3700,15 +3700,15 @@
               "rank_score": 41.12,
               "pre_run_up_3d": -6.26,
               "overheated": false,
-              "leader_score": 22.0,
+              "leader_score": 17.0,
               "leader_detail": {
-                "circ_mv_yi": 478.0,
-                "ret_3d_pct": -6.26,
-                "ret_z": -0.69,
-                "main_net_3d_yi": -1.54,
-                "mf_z": -1.45,
+                "circ_mv_yi": 441.0,
+                "ret_3d_pct": -10.84,
+                "ret_z": -1.21,
+                "main_net_3d_yi": -2.92,
+                "mf_z": -1.6,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
+                "mf_anomaly_score": 12
               }
             },
             {
@@ -3725,14 +3725,14 @@
               "rank_score": 37.47,
               "pre_run_up_3d": -9.98,
               "overheated": false,
-              "leader_score": 22.0,
+              "leader_score": 17.0,
               "leader_detail": {
-                "circ_mv_yi": 367.0,
-                "ret_3d_pct": -9.98,
-                "ret_z": -1.32,
-                "main_net_3d_yi": -5.7,
-                "mf_z": -1.01,
-                "ret_anomaly_score": 22,
+                "circ_mv_yi": 343.0,
+                "ret_3d_pct": -12.61,
+                "ret_z": -1.63,
+                "main_net_3d_yi": -5.69,
+                "mf_z": -0.86,
+                "ret_anomaly_score": 12,
                 "mf_anomaly_score": 22
               }
             },
@@ -3750,14 +3750,14 @@
               "rank_score": 32.51,
               "pre_run_up_3d": -5.07,
               "overheated": false,
-              "leader_score": 22.0,
+              "leader_score": 17.0,
               "leader_detail": {
-                "circ_mv_yi": 380.0,
-                "ret_3d_pct": -5.07,
-                "ret_z": -0.85,
-                "main_net_3d_yi": -7.47,
-                "mf_z": -0.87,
-                "ret_anomaly_score": 22,
+                "circ_mv_yi": 338.0,
+                "ret_3d_pct": -13.35,
+                "ret_z": -2.2,
+                "main_net_3d_yi": -9.19,
+                "mf_z": -0.93,
+                "ret_anomaly_score": 12,
                 "mf_anomaly_score": 22
               }
             }
@@ -3798,31 +3798,6 @@
           "max_rank": 34.81,
           "stocks": [
             {
-              "ts_code": "002916.SZ",
-              "stock_name": "深南电路",
-              "segment": "集成电路-封装基板",
-              "rec_reason": "注册地深圳，国内IC载板龙头，直接受益于广东省1000亿战新产业基金对集成电路方向的资本注入。广东省明确聚焦集成电路产业，深南电路作为省内半导体封装基板核心标的，有望获得产业基金直接赋能和估值提升。",
-              "applied_pattern": "P04",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+5-10",
-              "heat_score": 46,
-              "acceptance_score": 60,
-              "rank_score": 53.56,
-              "pre_run_up_3d": -0.43,
-              "overheated": false,
-              "leader_score": 42.5,
-              "leader_detail": {
-                "circ_mv_yi": 2648.0,
-                "ret_3d_pct": -0.43,
-                "ret_z": -0.07,
-                "main_net_3d_yi": 4.41,
-                "mf_z": 0.29,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
               "ts_code": "000987.SZ",
               "stock_name": "越秀资本",
               "segment": "创投/金融",
@@ -3838,13 +3813,38 @@
               "overheated": false,
               "leader_score": 36.0,
               "leader_detail": {
-                "circ_mv_yi": 399.0,
-                "ret_3d_pct": -2.33,
-                "ret_z": -0.95,
-                "main_net_3d_yi": -0.46,
-                "mf_z": 0.4,
+                "circ_mv_yi": 403.0,
+                "ret_3d_pct": -2.31,
+                "ret_z": -0.92,
+                "main_net_3d_yi": -0.51,
+                "mf_z": 0.29,
                 "ret_anomaly_score": 22,
                 "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "002916.SZ",
+              "stock_name": "深南电路",
+              "segment": "集成电路-封装基板",
+              "rec_reason": "注册地深圳，国内IC载板龙头，直接受益于广东省1000亿战新产业基金对集成电路方向的资本注入。广东省明确聚焦集成电路产业，深南电路作为省内半导体封装基板核心标的，有望获得产业基金直接赋能和估值提升。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+5-10",
+              "heat_score": 46,
+              "acceptance_score": 60,
+              "rank_score": 53.56,
+              "pre_run_up_3d": -0.43,
+              "overheated": false,
+              "leader_score": 28.5,
+              "leader_detail": {
+                "circ_mv_yi": 2735.0,
+                "ret_3d_pct": -1.33,
+                "ret_z": -0.21,
+                "main_net_3d_yi": -3.61,
+                "mf_z": -0.69,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 22
               }
             },
             {
@@ -3861,15 +3861,15 @@
               "rank_score": 45.48,
               "pre_run_up_3d": -7.28,
               "overheated": false,
-              "leader_score": 17.0,
+              "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 2448.0,
-                "ret_3d_pct": -7.28,
-                "ret_z": -0.87,
-                "main_net_3d_yi": -20.87,
-                "mf_z": -2.83,
+                "circ_mv_yi": 2425.0,
+                "ret_3d_pct": -9.47,
+                "ret_z": -1.14,
+                "main_net_3d_yi": -5.24,
+                "mf_z": -0.43,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 12
+                "mf_anomaly_score": 35
               }
             }
           ],
@@ -3932,15 +3932,40 @@
               "rank_score": 59.88,
               "pre_run_up_3d": -2.27,
               "overheated": false,
-              "leader_score": 38.5,
+              "leader_score": 35.0,
               "leader_detail": {
-                "circ_mv_yi": 667.0,
-                "ret_3d_pct": -3.92,
-                "ret_z": -1.95,
-                "main_net_3d_yi": 0.46,
-                "mf_z": 1.16,
-                "ret_anomaly_score": 12,
-                "mf_anomaly_score": 65
+                "circ_mv_yi": 677.0,
+                "ret_3d_pct": -0.57,
+                "ret_z": -0.27,
+                "main_net_3d_yi": 0.19,
+                "mf_z": 0.0,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 35
+              }
+            },
+            {
+              "ts_code": "600798.SH",
+              "stock_name": "宁波海运",
+              "segment": "大宗商品航运",
+              "rec_reason": "宁波舟山港大宗商品资源配置枢纽建设将大幅提升大宗商品海运需求，宁波海运主营沿海及国际大宗散货运输，与宁波舟山港深度绑定，直接受益于枢纽建设带来的运量增长。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+5-10",
+              "heat_score": 71,
+              "acceptance_score": 38,
+              "rank_score": 54.56,
+              "pre_run_up_3d": -6.78,
+              "overheated": false,
+              "leader_score": 36.0,
+              "leader_detail": {
+                "circ_mv_yi": 42.0,
+                "ret_3d_pct": -4.16,
+                "ret_z": -1.49,
+                "main_net_3d_yi": 0.06,
+                "mf_z": 0.38,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 50
               }
             },
             {
@@ -3959,37 +3984,12 @@
               "overheated": false,
               "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 54.0,
-                "ret_3d_pct": -10.38,
-                "ret_z": -1.31,
-                "main_net_3d_yi": -0.24,
-                "mf_z": -0.04,
+                "circ_mv_yi": 51.0,
+                "ret_3d_pct": -11.12,
+                "ret_z": -1.37,
+                "main_net_3d_yi": -0.31,
+                "mf_z": -0.11,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
-              }
-            },
-            {
-              "ts_code": "600798.SH",
-              "stock_name": "宁波海运",
-              "segment": "大宗商品航运",
-              "rec_reason": "宁波舟山港大宗商品资源配置枢纽建设将大幅提升大宗商品海运需求，宁波海运主营沿海及国际大宗散货运输，与宁波舟山港深度绑定，直接受益于枢纽建设带来的运量增长。",
-              "applied_pattern": "P04",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+5-10",
-              "heat_score": 71,
-              "acceptance_score": 38,
-              "rank_score": 54.56,
-              "pre_run_up_3d": -6.78,
-              "overheated": false,
-              "leader_score": 23.5,
-              "leader_detail": {
-                "circ_mv_yi": 43.0,
-                "ret_3d_pct": -4.34,
-                "ret_z": -1.61,
-                "main_net_3d_yi": 0.03,
-                "mf_z": 0.04,
-                "ret_anomaly_score": 12,
                 "mf_anomaly_score": 35
               }
             }
@@ -4030,31 +4030,6 @@
           "max_rank": 42.61,
           "stocks": [
             {
-              "ts_code": "688981.SH",
-              "stock_name": "中芯国际",
-              "segment": "重点工业产品/半导体",
-              "rec_reason": "政策整治重点工业产品领域内卷式竞争，半导体行业长期存在低价抢单、恶性竞争问题。中芯国际作为国内晶圆代工龙头，合规经营、技术领先，在行业出清中受益于集中度提升和价格秩序恢复。",
-              "applied_pattern": "P15",
-              "expected_return_pct": 6.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 62,
-              "acceptance_score": 60,
-              "rank_score": 50.13,
-              "pre_run_up_3d": 11.34,
-              "overheated": false,
-              "leader_score": 28.5,
-              "leader_detail": {
-                "circ_mv_yi": 3073.0,
-                "ret_3d_pct": -1.47,
-                "ret_z": -0.15,
-                "main_net_3d_yi": -10.59,
-                "mf_z": -0.87,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 22
-              }
-            },
-            {
               "ts_code": "300413.SZ",
               "stock_name": "芒果超媒",
               "segment": "直播带货/内容电商",
@@ -4068,15 +4043,40 @@
               "rank_score": 43.17,
               "pre_run_up_3d": -2.47,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 36.0,
               "leader_detail": {
                 "circ_mv_yi": 178.0,
-                "ret_3d_pct": -2.69,
-                "ret_z": -0.96,
-                "main_net_3d_yi": -0.6,
-                "mf_z": 0.13,
+                "ret_3d_pct": -1.52,
+                "ret_z": -0.54,
+                "main_net_3d_yi": -0.45,
+                "mf_z": 0.27,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
+                "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "688981.SH",
+              "stock_name": "中芯国际",
+              "segment": "重点工业产品/半导体",
+              "rec_reason": "政策整治重点工业产品领域内卷式竞争，半导体行业长期存在低价抢单、恶性竞争问题。中芯国际作为国内晶圆代工龙头，合规经营、技术领先，在行业出清中受益于集中度提升和价格秩序恢复。",
+              "applied_pattern": "P15",
+              "expected_return_pct": 6.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+5-10",
+              "heat_score": 62,
+              "acceptance_score": 60,
+              "rank_score": 50.13,
+              "pre_run_up_3d": 11.34,
+              "overheated": false,
+              "leader_score": 22.0,
+              "leader_detail": {
+                "circ_mv_yi": 2798.0,
+                "ret_3d_pct": -6.21,
+                "ret_z": -0.64,
+                "main_net_3d_yi": -13.94,
+                "mf_z": -1.1,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 22
               }
             }
           ],
@@ -4129,14 +4129,14 @@
               "rank_score": 43.98,
               "pre_run_up_3d": -0.4,
               "overheated": false,
-              "leader_score": 35.0,
+              "leader_score": 42.5,
               "leader_detail": {
-                "circ_mv_yi": 134.0,
-                "ret_3d_pct": 0.16,
-                "ret_z": 0.04,
-                "main_net_3d_yi": 0.12,
-                "mf_z": 0.02,
-                "ret_anomaly_score": 35,
+                "circ_mv_yi": 136.0,
+                "ret_3d_pct": 1.37,
+                "ret_z": 0.3,
+                "main_net_3d_yi": 0.11,
+                "mf_z": 0.0,
+                "ret_anomaly_score": 50,
                 "mf_anomaly_score": 35
               }
             },
@@ -4154,15 +4154,15 @@
               "rank_score": 44.02,
               "pre_run_up_3d": -2.44,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 36.0,
               "leader_detail": {
                 "circ_mv_yi": 133.0,
-                "ret_3d_pct": -2.7,
-                "ret_z": -1.06,
-                "main_net_3d_yi": 0.06,
-                "mf_z": 0.19,
+                "ret_3d_pct": -3.87,
+                "ret_z": -1.48,
+                "main_net_3d_yi": 0.1,
+                "mf_z": 0.34,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
+                "mf_anomaly_score": 50
               }
             }
           ],
@@ -4215,14 +4215,14 @@
               "rank_score": 42.47,
               "pre_run_up_3d": 2.28,
               "overheated": false,
-              "leader_score": 73.5,
+              "leader_score": 66.0,
               "leader_detail": {
-                "circ_mv_yi": 198.0,
-                "ret_3d_pct": 3.55,
-                "ret_z": 0.84,
-                "main_net_3d_yi": 1.08,
-                "mf_z": 1.76,
-                "ret_anomaly_score": 65,
+                "circ_mv_yi": 192.0,
+                "ret_3d_pct": 3.03,
+                "ret_z": 0.71,
+                "main_net_3d_yi": 1.54,
+                "mf_z": 2.2,
+                "ret_anomaly_score": 50,
                 "mf_anomaly_score": 82
               }
             },
@@ -4242,11 +4242,11 @@
               "overheated": false,
               "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 255.0,
-                "ret_3d_pct": -3.23,
-                "ret_z": -1.01,
-                "main_net_3d_yi": -0.1,
-                "mf_z": -0.31,
+                "circ_mv_yi": 248.0,
+                "ret_3d_pct": -4.14,
+                "ret_z": -1.29,
+                "main_net_3d_yi": 0.01,
+                "mf_z": -0.01,
                 "ret_anomaly_score": 22,
                 "mf_anomaly_score": 35
               }
@@ -4301,14 +4301,14 @@
               "rank_score": 42.5,
               "pre_run_up_3d": 1.26,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 42.5,
               "leader_detail": {
-                "circ_mv_yi": 2022.0,
-                "ret_3d_pct": -1.12,
-                "ret_z": -0.72,
-                "main_net_3d_yi": 0.09,
-                "mf_z": -0.26,
-                "ret_anomaly_score": 22,
+                "circ_mv_yi": 2076.0,
+                "ret_3d_pct": 0.52,
+                "ret_z": 0.31,
+                "main_net_3d_yi": 0.94,
+                "mf_z": 0.17,
+                "ret_anomaly_score": 50,
                 "mf_anomaly_score": 35
               }
             },
@@ -4326,14 +4326,14 @@
               "rank_score": 42.83,
               "pre_run_up_3d": -0.39,
               "overheated": false,
-              "leader_score": 12.0,
+              "leader_score": 23.5,
               "leader_detail": {
-                "circ_mv_yi": 3087.0,
-                "ret_3d_pct": -3.21,
-                "ret_z": -1.68,
-                "main_net_3d_yi": -3.81,
-                "mf_z": -2.46,
-                "ret_anomaly_score": 12,
+                "circ_mv_yi": 3172.0,
+                "ret_3d_pct": -0.61,
+                "ret_z": -0.32,
+                "main_net_3d_yi": -4.55,
+                "mf_z": -2.39,
+                "ret_anomaly_score": 35,
                 "mf_anomaly_score": 12
               }
             }
@@ -4387,14 +4387,39 @@
               "rank_score": 37.88,
               "pre_run_up_3d": -6.71,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 35.0,
               "leader_detail": {
-                "circ_mv_yi": 449.0,
-                "ret_3d_pct": -2.38,
-                "ret_z": -0.28,
-                "main_net_3d_yi": -7.58,
-                "mf_z": -0.9,
+                "circ_mv_yi": 421.0,
+                "ret_3d_pct": -3.5,
+                "ret_z": -0.41,
+                "main_net_3d_yi": -5.72,
+                "mf_z": -0.5,
                 "ret_anomaly_score": 35,
+                "mf_anomaly_score": 35
+              }
+            },
+            {
+              "ts_code": "688012.SH",
+              "stock_name": "中微公司",
+              "segment": "半导体刻蚀设备",
+              "rec_reason": "公司等离子体刻蚀设备已进入三星、SK海力士存储芯片产线，3D NAND层数提升及HBM扩产增加刻蚀设备需求，海外存储龙头股价新高映射设备端景气。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 5.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 62,
+              "acceptance_score": 20,
+              "rank_score": 38.56,
+              "pre_run_up_3d": -3.1,
+              "overheated": false,
+              "leader_score": 22.0,
+              "leader_detail": {
+                "circ_mv_yi": 2789.0,
+                "ret_3d_pct": -4.23,
+                "ret_z": -0.56,
+                "main_net_3d_yi": -4.97,
+                "mf_z": -1.27,
+                "ret_anomaly_score": 22,
                 "mf_anomaly_score": 22
               }
             },
@@ -4412,40 +4437,15 @@
               "rank_score": 42.06,
               "pre_run_up_3d": 1.64,
               "overheated": false,
-              "leader_score": 22.0,
-              "leader_detail": {
-                "circ_mv_yi": 367.0,
-                "ret_3d_pct": -9.98,
-                "ret_z": -1.32,
-                "main_net_3d_yi": -5.7,
-                "mf_z": -1.01,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
-              }
-            },
-            {
-              "ts_code": "688012.SH",
-              "stock_name": "中微公司",
-              "segment": "半导体刻蚀设备",
-              "rec_reason": "公司等离子体刻蚀设备已进入三星、SK海力士存储芯片产线，3D NAND层数提升及HBM扩产增加刻蚀设备需求，海外存储龙头股价新高映射设备端景气。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 5.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 20,
-              "rank_score": 38.56,
-              "pre_run_up_3d": -3.1,
-              "overheated": false,
               "leader_score": 17.0,
               "leader_detail": {
-                "circ_mv_yi": 2849.0,
-                "ret_3d_pct": -6.63,
-                "ret_z": -0.92,
-                "main_net_3d_yi": -6.2,
-                "mf_z": -1.87,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 12
+                "circ_mv_yi": 343.0,
+                "ret_3d_pct": -12.61,
+                "ret_z": -1.63,
+                "main_net_3d_yi": -5.69,
+                "mf_z": -0.86,
+                "ret_anomaly_score": 12,
+                "mf_anomaly_score": 22
               }
             }
           ],
@@ -4498,15 +4498,15 @@
               "rank_score": 54.54,
               "pre_run_up_3d": 2.69,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 36.0,
               "leader_detail": {
-                "circ_mv_yi": 788.0,
-                "ret_3d_pct": -2.45,
-                "ret_z": -0.66,
-                "main_net_3d_yi": 0.12,
-                "mf_z": -0.16,
+                "circ_mv_yi": 793.0,
+                "ret_3d_pct": -2.16,
+                "ret_z": -0.6,
+                "main_net_3d_yi": 0.41,
+                "mf_z": 0.23,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
+                "mf_anomaly_score": 50
               }
             },
             {
@@ -4523,15 +4523,15 @@
               "rank_score": 53.5,
               "pre_run_up_3d": -13.3,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 36.0,
               "leader_detail": {
-                "circ_mv_yi": 228.0,
-                "ret_3d_pct": -11.57,
-                "ret_z": -1.42,
-                "main_net_3d_yi": 0.42,
-                "mf_z": -0.31,
+                "circ_mv_yi": 227.0,
+                "ret_3d_pct": -7.95,
+                "ret_z": -0.95,
+                "main_net_3d_yi": 1.45,
+                "mf_z": 0.2,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
+                "mf_anomaly_score": 50
               }
             }
           ],
@@ -4584,15 +4584,15 @@
               "rank_score": 52.27,
               "pre_run_up_3d": 2.69,
               "overheated": false,
-              "leader_score": 28.5,
+              "leader_score": 36.0,
               "leader_detail": {
-                "circ_mv_yi": 788.0,
-                "ret_3d_pct": -2.45,
-                "ret_z": -0.66,
-                "main_net_3d_yi": 0.12,
-                "mf_z": -0.16,
+                "circ_mv_yi": 793.0,
+                "ret_3d_pct": -2.16,
+                "ret_z": -0.6,
+                "main_net_3d_yi": 0.41,
+                "mf_z": 0.23,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
+                "mf_anomaly_score": 50
               }
             },
             {
@@ -4609,15 +4609,15 @@
               "rank_score": 54.18,
               "pre_run_up_3d": 3.4,
               "overheated": false,
-              "leader_score": 22.0,
+              "leader_score": 28.5,
               "leader_detail": {
-                "circ_mv_yi": 730.0,
-                "ret_3d_pct": -2.17,
-                "ret_z": -0.66,
-                "main_net_3d_yi": -0.44,
-                "mf_z": -0.69,
+                "circ_mv_yi": 740.0,
+                "ret_3d_pct": -1.96,
+                "ret_z": -0.6,
+                "main_net_3d_yi": -0.05,
+                "mf_z": -0.19,
                 "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
+                "mf_anomaly_score": 35
               }
             },
             {
@@ -4634,15 +4634,15 @@
               "rank_score": 50.29,
               "pre_run_up_3d": -4.75,
               "overheated": false,
-              "leader_score": 22.0,
+              "leader_score": 23.5,
               "leader_detail": {
-                "circ_mv_yi": 1214.0,
-                "ret_3d_pct": -6.66,
-                "ret_z": -1.32,
-                "main_net_3d_yi": -0.86,
-                "mf_z": -0.53,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
+                "circ_mv_yi": 1210.0,
+                "ret_3d_pct": -8.03,
+                "ret_z": -1.56,
+                "main_net_3d_yi": -0.81,
+                "mf_z": -0.48,
+                "ret_anomaly_score": 12,
+                "mf_anomaly_score": 35
               }
             }
           ],
@@ -4682,6 +4682,31 @@
           "max_rank": 25.58,
           "stocks": [
             {
+              "ts_code": "300058.SZ",
+              "stock_name": "蓝色光标",
+              "segment": "AI营销龙头",
+              "rec_reason": "国内数字营销龙头，旗下蓝标传媒已接入AI广告投放系统，海外营收占比超60%，与Applovin在程序化广告领域业务模式高度对标，直接受益于AI广告效率提升趋势的海外映射。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 36,
+              "acceptance_score": 20,
+              "rank_score": 29.89,
+              "pre_run_up_3d": -7.83,
+              "overheated": false,
+              "leader_score": 50.0,
+              "leader_detail": {
+                "circ_mv_yi": 581.0,
+                "ret_3d_pct": 2.77,
+                "ret_z": 0.39,
+                "main_net_3d_yi": -0.4,
+                "mf_z": 0.61,
+                "ret_anomaly_score": 50,
+                "mf_anomaly_score": 50
+              }
+            },
+            {
               "ts_code": "002400.SZ",
               "stock_name": "省广集团",
               "segment": "程序化广告平台",
@@ -4697,38 +4722,13 @@
               "overheated": false,
               "leader_score": 42.5,
               "leader_detail": {
-                "circ_mv_yi": 141.0,
-                "ret_3d_pct": -0.85,
-                "ret_z": -0.15,
-                "main_net_3d_yi": 0.5,
-                "mf_z": 0.37,
+                "circ_mv_yi": 140.0,
+                "ret_3d_pct": 0.87,
+                "ret_z": 0.15,
+                "main_net_3d_yi": 1.05,
+                "mf_z": 0.58,
                 "ret_anomaly_score": 35,
                 "mf_anomaly_score": 50
-              }
-            },
-            {
-              "ts_code": "300058.SZ",
-              "stock_name": "蓝色光标",
-              "segment": "AI营销龙头",
-              "rec_reason": "国内数字营销龙头，旗下蓝标传媒已接入AI广告投放系统，海外营收占比超60%，与Applovin在程序化广告领域业务模式高度对标，直接受益于AI广告效率提升趋势的海外映射。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 20,
-              "rank_score": 29.89,
-              "pre_run_up_3d": -7.83,
-              "overheated": false,
-              "leader_score": 28.5,
-              "leader_detail": {
-                "circ_mv_yi": 562.0,
-                "ret_3d_pct": -3.69,
-                "ret_z": -0.52,
-                "main_net_3d_yi": -9.87,
-                "mf_z": 0.18,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
               }
             }
           ],
@@ -4781,14 +4781,14 @@
               "rank_score": 60.41,
               "pre_run_up_3d": 7.07,
               "overheated": false,
-              "leader_score": 66.0,
+              "leader_score": 57.5,
               "leader_detail": {
-                "circ_mv_yi": 13277.0,
-                "ret_3d_pct": 9.61,
-                "ret_z": 1.68,
-                "main_net_3d_yi": 20.29,
-                "mf_z": 0.64,
-                "ret_anomaly_score": 82,
+                "circ_mv_yi": 12869.0,
+                "ret_3d_pct": 5.27,
+                "ret_z": 0.92,
+                "main_net_3d_yi": 8.58,
+                "mf_z": 0.38,
+                "ret_anomaly_score": 65,
                 "mf_anomaly_score": 50
               }
             },
@@ -4806,14 +4806,14 @@
               "rank_score": 52.63,
               "pre_run_up_3d": 4.35,
               "overheated": false,
-              "leader_score": 50.0,
+              "leader_score": 42.5,
               "leader_detail": {
-                "circ_mv_yi": 14883.0,
-                "ret_3d_pct": 6.69,
-                "ret_z": 1.08,
-                "main_net_3d_yi": -2.87,
-                "mf_z": 0.08,
-                "ret_anomaly_score": 65,
+                "circ_mv_yi": 14566.0,
+                "ret_3d_pct": 4.89,
+                "ret_z": 0.79,
+                "main_net_3d_yi": -6.64,
+                "mf_z": -0.15,
+                "ret_anomaly_score": 50,
                 "mf_anomaly_score": 35
               }
             },
@@ -4831,14 +4831,14 @@
               "rank_score": 47.62,
               "pre_run_up_3d": 12.47,
               "overheated": false,
-              "leader_score": 50.0,
+              "leader_score": 35.0,
               "leader_detail": {
-                "circ_mv_yi": 2558.0,
-                "ret_3d_pct": 8.58,
-                "ret_z": 1.4,
-                "main_net_3d_yi": -5.16,
-                "mf_z": -0.03,
-                "ret_anomaly_score": 65,
+                "circ_mv_yi": 2539.0,
+                "ret_3d_pct": -0.99,
+                "ret_z": -0.15,
+                "main_net_3d_yi": -10.63,
+                "mf_z": -0.34,
+                "ret_anomaly_score": 35,
                 "mf_anomaly_score": 35
               }
             }
@@ -4894,11 +4894,11 @@
               "overheated": false,
               "leader_score": 17.0,
               "leader_detail": {
-                "circ_mv_yi": 1299.0,
-                "ret_3d_pct": -9.45,
-                "ret_z": -1.83,
-                "main_net_3d_yi": -2.32,
-                "mf_z": -0.91,
+                "circ_mv_yi": 1281.0,
+                "ret_3d_pct": -8.11,
+                "ret_z": -1.56,
+                "main_net_3d_yi": -1.91,
+                "mf_z": -0.74,
                 "ret_anomaly_score": 12,
                 "mf_anomaly_score": 22
               }
@@ -4917,15 +4917,15 @@
               "rank_score": 32.45,
               "pre_run_up_3d": -10.96,
               "overheated": false,
-              "leader_score": 12.0,
+              "leader_score": 17.0,
               "leader_detail": {
-                "circ_mv_yi": 759.0,
-                "ret_3d_pct": -9.28,
-                "ret_z": -2.11,
-                "main_net_3d_yi": -2.48,
-                "mf_z": -1.65,
+                "circ_mv_yi": 745.0,
+                "ret_3d_pct": -8.24,
+                "ret_z": -1.84,
+                "main_net_3d_yi": -2.13,
+                "mf_z": -1.39,
                 "ret_anomaly_score": 12,
-                "mf_anomaly_score": 12
+                "mf_anomaly_score": 22
               }
             }
           ],
@@ -4978,15 +4978,40 @@
               "rank_score": 57.55,
               "pre_run_up_3d": 0.93,
               "overheated": false,
-              "leader_score": 42.5,
+              "leader_score": 57.5,
               "leader_detail": {
-                "circ_mv_yi": 836.0,
-                "ret_3d_pct": 5.37,
-                "ret_z": 0.59,
-                "main_net_3d_yi": 0.11,
-                "mf_z": 0.15,
+                "circ_mv_yi": 757.0,
+                "ret_3d_pct": 2.97,
+                "ret_z": 0.31,
+                "main_net_3d_yi": 2.17,
+                "mf_z": 1.0,
                 "ret_anomaly_score": 50,
-                "mf_anomaly_score": 35
+                "mf_anomaly_score": 65
+              }
+            },
+            {
+              "ts_code": "688012.SH",
+              "stock_name": "中微公司",
+              "segment": "半导体刻蚀设备",
+              "rec_reason": "长鑫DRAM扩产核心设备供应商，中微公司等离子体刻蚀设备已进入长鑫产线，DRAM制造对刻蚀设备需求量大（尤其是高深宽比刻蚀），长鑫295亿募资投向产线升级将直接拉动设备采购订单",
+              "applied_pattern": "P08",
+              "expected_return_pct": 12.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+1-3",
+              "heat_score": 57,
+              "acceptance_score": 20,
+              "rank_score": 57.83,
+              "pre_run_up_3d": -3.1,
+              "overheated": false,
+              "leader_score": 22.0,
+              "leader_detail": {
+                "circ_mv_yi": 2789.0,
+                "ret_3d_pct": -4.23,
+                "ret_z": -0.56,
+                "main_net_3d_yi": -4.97,
+                "mf_z": -1.27,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 22
               }
             },
             {
@@ -5005,38 +5030,13 @@
               "overheated": false,
               "leader_score": 22.0,
               "leader_detail": {
-                "circ_mv_yi": 4773.0,
-                "ret_3d_pct": -5.61,
+                "circ_mv_yi": 4562.0,
+                "ret_3d_pct": -6.02,
                 "ret_z": -1.07,
-                "main_net_3d_yi": -9.78,
-                "mf_z": -0.96,
+                "main_net_3d_yi": -13.02,
+                "mf_z": -1.03,
                 "ret_anomaly_score": 22,
                 "mf_anomaly_score": 22
-              }
-            },
-            {
-              "ts_code": "688012.SH",
-              "stock_name": "中微公司",
-              "segment": "半导体刻蚀设备",
-              "rec_reason": "长鑫DRAM扩产核心设备供应商，中微公司等离子体刻蚀设备已进入长鑫产线，DRAM制造对刻蚀设备需求量大（尤其是高深宽比刻蚀），长鑫295亿募资投向产线升级将直接拉动设备采购订单",
-              "applied_pattern": "P08",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+1-3",
-              "heat_score": 57,
-              "acceptance_score": 20,
-              "rank_score": 57.83,
-              "pre_run_up_3d": -3.1,
-              "overheated": false,
-              "leader_score": 17.0,
-              "leader_detail": {
-                "circ_mv_yi": 2849.0,
-                "ret_3d_pct": -6.63,
-                "ret_z": -0.92,
-                "main_net_3d_yi": -6.2,
-                "mf_z": -1.87,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 12
               }
             }
           ],
