@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-05-29 11:00:10",
+    "generated_at": "2026-05-29 11:39:19",
     "next_update": "12:00",
     "last_snapshot": "2026-05-29 11:00",
     "threshold": 34.0,
@@ -116,10 +116,32 @@
         "news_pub_date": "2026-05-29",
         "strength_score": 82,
         "novelty_score": 72,
-        "max_heat": 53,
+        "max_heat": 62,
         "max_accept": 44,
-        "max_rank": 68.32,
+        "max_rank": 73.0,
         "stocks": [
+          {
+            "ts_code": "600028.SH",
+            "stock_name": "中国石化",
+            "segment": "上游油气开采",
+            "rec_reason": "国内最大原油生产商之一，油价每涨10美元/桶，年化利润增厚超百亿级别；资源储量丰富，直接受益于全球原油供应缺口驱动的油价上行周期",
+            "applied_pattern": "P03",
+            "expected_return_pct": 12.0,
+            "expected_duration_days": 10,
+            "expected_window": "T+1-3",
+            "heat_score": 62,
+            "acceptance_score": 38,
+            "rank_score": 71.63,
+            "pre_run_up_3d": -2.24,
+            "overheated": false,
+            "leader_score": 65.0,
+            "leader_detail": {
+              "circ_mv_yi": 4558.0,
+              "main_net_3d_yi": -1.17,
+              "mv_score": 95,
+              "mf_score": 35
+            }
+          },
           {
             "ts_code": "600871.SH",
             "stock_name": "石化油服",
@@ -129,11 +151,18 @@
             "expected_return_pct": 15.0,
             "expected_duration_days": 12,
             "expected_window": "T+1-3",
-            "heat_score": 36,
+            "heat_score": 62,
             "acceptance_score": 44,
-            "rank_score": 68.32,
+            "rank_score": 73.0,
             "pre_run_up_3d": -2.88,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 57.5,
+            "leader_detail": {
+              "circ_mv_yi": 320.0,
+              "main_net_3d_yi": -0.21,
+              "mv_score": 65,
+              "mf_score": 50
+            }
           },
           {
             "ts_code": "600938.SH",
@@ -144,30 +173,22 @@
             "expected_return_pct": 10.0,
             "expected_duration_days": 10,
             "expected_window": "T+1-3",
-            "heat_score": 53,
+            "heat_score": 62,
             "acceptance_score": 38,
-            "rank_score": 67.06,
+            "rank_score": 68.68,
             "pre_run_up_3d": -0.46,
-            "overheated": false
-          },
-          {
-            "ts_code": "600028.SH",
-            "stock_name": "中国石化",
-            "segment": "上游油气开采",
-            "rec_reason": "国内最大原油生产商之一，油价每涨10美元/桶，年化利润增厚超百亿级别；资源储量丰富，直接受益于全球原油供应缺口驱动的油价上行周期",
-            "applied_pattern": "P03",
-            "expected_return_pct": 12.0,
-            "expected_duration_days": 10,
-            "expected_window": "T+1-3",
-            "heat_score": 31,
-            "acceptance_score": 38,
-            "rank_score": 66.05,
-            "pre_run_up_3d": -2.24,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 57.5,
+            "leader_detail": {
+              "circ_mv_yi": 1030.0,
+              "main_net_3d_yi": -0.93,
+              "mv_score": 80,
+              "mf_score": 35
+            }
           }
         ],
         "any_overheated": false,
-        "raw_rank": 68.32,
+        "raw_rank": 73.0,
         "decay_factor": 1.0,
         "day_offset": 0,
         "similar_cases": []
@@ -190,7 +211,7 @@
         "news_pub_date": "2026-05-29",
         "strength_score": 68,
         "novelty_score": 86,
-        "max_heat": 48,
+        "max_heat": 36,
         "max_accept": 44,
         "max_rank": 63.61,
         "stocks": [
@@ -207,7 +228,14 @@
             "acceptance_score": 44,
             "rank_score": 63.61,
             "pre_run_up_3d": -2.17,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 65.0,
+            "leader_detail": {
+              "circ_mv_yi": 730.0,
+              "main_net_3d_yi": -0.44,
+              "mv_score": 80,
+              "mf_score": 50
+            }
           },
           {
             "ts_code": "600346.SH",
@@ -218,11 +246,18 @@
             "expected_return_pct": 10.0,
             "expected_duration_days": 10,
             "expected_window": "T+5-10",
-            "heat_score": 31,
+            "heat_score": 36,
             "acceptance_score": 29,
-            "rank_score": 57.56,
+            "rank_score": 58.46,
             "pre_run_up_3d": -6.66,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 57.5,
+            "leader_detail": {
+              "circ_mv_yi": 1214.0,
+              "main_net_3d_yi": -0.86,
+              "mv_score": 80,
+              "mf_score": 35
+            }
           },
           {
             "ts_code": "601872.SH",
@@ -233,91 +268,24 @@
             "expected_return_pct": 10.0,
             "expected_duration_days": 8,
             "expected_window": "T+5-10",
-            "heat_score": 48,
+            "heat_score": 36,
             "acceptance_score": 20,
-            "rank_score": 56.55,
+            "rank_score": 54.39,
             "pre_run_up_3d": -9.45,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 47.5,
+            "leader_detail": {
+              "circ_mv_yi": 1299.0,
+              "main_net_3d_yi": -2.32,
+              "mv_score": 80,
+              "mf_score": 15
+            }
           }
         ],
         "any_overheated": false,
         "raw_rank": 63.61,
         "decay_factor": 1.0,
         "day_offset": 0,
-        "similar_cases": []
-      },
-      {
-        "source_news_hash": "314ab85940f3cf08f3057d1d6e697950",
-        "news_channel": "加红",
-        "event_headline": "中美对等降税框架推进，出口链受益",
-        "topic_class": "地缘政治/贸易缓和",
-        "applied_pattern": "P13",
-        "transmission_chain": "【Step -1 事件类型判断】新闻为商务部正式回应中美关税谈判进展，包含具体降税框架（300亿美元对等降税），属于官方确认的实质性政策进展，判定为 event_driven。\n\n【Step 0 影响范围判断】中美关税谈判涉及全球最大两个经济体的贸易关系，影响A股出口导向型产业链（家电、机械、电子、纺织等）的估值和盈利预期，属于 global 级别。\n\n【Step 1-2 范式选择】根据矩阵，地缘缓和类新闻最优范式为 [P13] 出口利好（海外需求复苏/关税减免）。历史教训（教训1、教训2）明确指出：地缘谈判类新闻不要套用\"成本下降\"逻辑（P03/P08），应聚焦关税减免直接受益的出口型企业。\n\n【Step 3 因果链推演】新闻X：中美双方原则同意在贸易理事会项下讨论同等规模产品对等降税框架安排，规模各为300亿美元或更多 → 关税减免预期升温 → 此前受高关税压制的对美出口型企业将显著受益，利润率修复+订单预期改善 → 利好海外营收占比高、对美出口敞口大、此前受关税压制明显的细分行业龙头。\n\n【Step 4 特征条件】受益标的特征：1) 海外营收占比>40%；2) 对美出口占比较高；3) 此前受关税影响毛利率承压；4) 行业出口龙头、定价能力强。",
-        "impact_scope": "global",
-        "scope_emoji": "🌍",
-        "scope_cn": "全球级",
-        "scope_multiplier": 1.0,
-        "event_type": "event_driven",
-        "raw_title": "商务部回应中美关税谈判进展：双方经贸团队将商定具体安排并尽快推动实施",
-        "raw_content": "【商务部回应中美关税谈判进展：双方经贸团队将商定具体安排并尽快推动实施】财联社5月28日电，商务部新闻发言人何亚东28日在例行新闻发布会上回应关于中美关税谈判进展的提问时表示，关税一直是中美经贸关系中的关键问题之一。在两国元首战略引领下，中美经贸团队围绕关税问题深入沟通，就有关双边关税做出安排。我想重申，希望美方信守承诺，为双方拓展经贸合作创造积极条件。同时，双方原则同意在贸易理事会项下讨论同等规模产品对等降税框架安排，规模各为300亿美元或更多。双方经贸团队将保持密切沟通，商定具体安排并尽快推动实施。",
-        "news_pub_time": "2026-05-28 15:11",
-        "news_pub_date": "2026-05-28",
-        "strength_score": 65,
-        "novelty_score": 63,
-        "max_heat": 61,
-        "max_accept": 88,
-        "max_rank": 61.25,
-        "stocks": [
-          {
-            "ts_code": "002241.SZ",
-            "stock_name": "歌尔股份",
-            "segment": "消费电子/声学器件",
-            "rec_reason": "海外营收占比超70%，对美出口占比较高；此前受关税和地缘风险压制估值，关税缓和后估值修复空间大，Meta/苹果核心供应商",
-            "applied_pattern": "P13",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 10,
-            "expected_window": "T+5-10",
-            "heat_score": 61,
-            "acceptance_score": 88,
-            "rank_score": 68.06,
-            "pre_run_up_3d": 11.42,
-            "overheated": false
-          },
-          {
-            "ts_code": "000651.SZ",
-            "stock_name": "格力电器",
-            "segment": "家电出口",
-            "rec_reason": "对美出口敞口大，空调等大家电此前受25%关税压制严重；关税减免后利润率修复弹性显著，海外营收占比约15%且持续提升，白电龙头定价能力强",
-            "applied_pattern": "P13",
-            "expected_return_pct": 8.0,
-            "expected_duration_days": 8,
-            "expected_window": "T+5-10",
-            "heat_score": 53,
-            "acceptance_score": 44,
-            "rank_score": 54.49,
-            "pre_run_up_3d": -1.94,
-            "overheated": false
-          },
-          {
-            "ts_code": "000333.SZ",
-            "stock_name": "美的集团",
-            "segment": "家电出口",
-            "rec_reason": "全球家电龙头，海外营收占比超40%，对美出口规模大；关税减免直接增厚出口利润，且海外自有品牌布局完善，受益弹性大",
-            "applied_pattern": "P13",
-            "expected_return_pct": 7.0,
-            "expected_duration_days": 8,
-            "expected_window": "T+5-10",
-            "heat_score": 36,
-            "acceptance_score": 58,
-            "rank_score": 53.01,
-            "pre_run_up_3d": -1.08,
-            "overheated": false
-          }
-        ],
-        "any_overheated": false,
-        "raw_rank": 68.06,
-        "decay_factor": 0.9,
-        "day_offset": 1,
         "similar_cases": []
       },
       {
@@ -338,25 +306,10 @@
         "news_pub_date": "2026-05-28",
         "strength_score": 92,
         "novelty_score": 41,
-        "max_heat": 62,
+        "max_heat": 73,
         "max_accept": 32,
-        "max_rank": 59.63,
+        "max_rank": 62.87,
         "stocks": [
-          {
-            "ts_code": "002156.SZ",
-            "stock_name": "通富微电",
-            "segment": "先进封装",
-            "rec_reason": "华为海思核心封测供应商，深度参与麒麟芯片先进封装（2.5D/3D封装）。韬芯片架构复杂度提升、晶体管密度跳跃性增长，对先进封装能力要求更高，通富微电作为国内先进封装龙头直接受益于韬芯片量产带来的封测订单增量。",
-            "applied_pattern": "P07",
-            "expected_return_pct": 12.0,
-            "expected_duration_days": 10,
-            "expected_window": "T+1-3",
-            "heat_score": 53,
-            "acceptance_score": 31,
-            "rank_score": 66.26,
-            "pre_run_up_3d": -0.58,
-            "overheated": false
-          },
           {
             "ts_code": "002371.SZ",
             "stock_name": "北方华创",
@@ -366,11 +319,18 @@
             "expected_return_pct": 10.0,
             "expected_duration_days": 12,
             "expected_window": "T+5-10",
-            "heat_score": 62,
+            "heat_score": 73,
             "acceptance_score": 20,
-            "rank_score": 65.9,
+            "rank_score": 67.88,
             "pre_run_up_3d": -5.61,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 55.0,
+            "leader_detail": {
+              "circ_mv_yi": 4773.0,
+              "main_net_3d_yi": -9.78,
+              "mv_score": 95,
+              "mf_score": 15
+            }
           },
           {
             "ts_code": "688981.SH",
@@ -381,15 +341,44 @@
             "expected_return_pct": 8.0,
             "expected_duration_days": 10,
             "expected_window": "T+5-10",
-            "heat_score": 62,
+            "heat_score": 73,
             "acceptance_score": 32,
-            "rank_score": 63.31,
+            "rank_score": 65.29,
             "pre_run_up_3d": -1.47,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 55.0,
+            "leader_detail": {
+              "circ_mv_yi": 3073.0,
+              "main_net_3d_yi": -10.59,
+              "mv_score": 95,
+              "mf_score": 15
+            }
+          },
+          {
+            "ts_code": "002156.SZ",
+            "stock_name": "通富微电",
+            "segment": "先进封装",
+            "rec_reason": "华为海思核心封测供应商，深度参与麒麟芯片先进封装（2.5D/3D封装）。韬芯片架构复杂度提升、晶体管密度跳跃性增长，对先进封装能力要求更高，通富微电作为国内先进封装龙头直接受益于韬芯片量产带来的封测订单增量。",
+            "applied_pattern": "P07",
+            "expected_return_pct": 12.0,
+            "expected_duration_days": 10,
+            "expected_window": "T+1-3",
+            "heat_score": 73,
+            "acceptance_score": 31,
+            "rank_score": 69.86,
+            "pre_run_up_3d": -0.58,
+            "overheated": false,
+            "leader_score": 47.5,
+            "leader_detail": {
+              "circ_mv_yi": 1052.0,
+              "main_net_3d_yi": -45.74,
+              "mv_score": 80,
+              "mf_score": 15
+            }
           }
         ],
         "any_overheated": false,
-        "raw_rank": 66.26,
+        "raw_rank": 69.86,
         "decay_factor": 0.9,
         "day_offset": 1,
         "similar_cases": []
@@ -412,25 +401,10 @@
         "news_pub_date": "2026-05-28",
         "strength_score": 78,
         "novelty_score": 74,
-        "max_heat": 36,
+        "max_heat": 66,
         "max_accept": 58,
-        "max_rank": 54.71,
+        "max_rank": 59.57,
         "stocks": [
-          {
-            "ts_code": "600871.SH",
-            "stock_name": "石化油服",
-            "segment": "油服",
-            "rec_reason": "油价跳涨后油公司资本开支预期提升，油服订单弹性最大。公司在中东有大量业务布局，地缘冲突后中东油服需求有望加速。",
-            "applied_pattern": "P05",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 8,
-            "expected_window": "T+1-3",
-            "heat_score": 36,
-            "acceptance_score": 44,
-            "rank_score": 60.79,
-            "pre_run_up_3d": -2.88,
-            "overheated": false
-          },
           {
             "ts_code": "600028.SH",
             "stock_name": "中国石化",
@@ -440,11 +414,18 @@
             "expected_return_pct": 8.0,
             "expected_duration_days": 10,
             "expected_window": "T+1-3",
-            "heat_score": 31,
+            "heat_score": 66,
             "acceptance_score": 38,
-            "rank_score": 58.81,
+            "rank_score": 65.11,
             "pre_run_up_3d": -2.24,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 65.0,
+            "leader_detail": {
+              "circ_mv_yi": 4558.0,
+              "main_net_3d_yi": -1.17,
+              "mv_score": 95,
+              "mf_score": 35
+            }
           },
           {
             "ts_code": "600188.SH",
@@ -455,15 +436,44 @@
             "expected_return_pct": 6.0,
             "expected_duration_days": 7,
             "expected_window": "T+1-3",
-            "heat_score": 36,
+            "heat_score": 66,
             "acceptance_score": 58,
-            "rank_score": 57.98,
+            "rank_score": 63.38,
             "pre_run_up_3d": 3.51,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 65.0,
+            "leader_detail": {
+              "circ_mv_yi": 1282.0,
+              "main_net_3d_yi": 0.18,
+              "mv_score": 80,
+              "mf_score": 50
+            }
+          },
+          {
+            "ts_code": "600871.SH",
+            "stock_name": "石化油服",
+            "segment": "油服",
+            "rec_reason": "油价跳涨后油公司资本开支预期提升，油服订单弹性最大。公司在中东有大量业务布局，地缘冲突后中东油服需求有望加速。",
+            "applied_pattern": "P05",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 8,
+            "expected_window": "T+1-3",
+            "heat_score": 66,
+            "acceptance_score": 44,
+            "rank_score": 66.19,
+            "pre_run_up_3d": -2.88,
+            "overheated": false,
+            "leader_score": 57.5,
+            "leader_detail": {
+              "circ_mv_yi": 320.0,
+              "main_net_3d_yi": -0.21,
+              "mv_score": 65,
+              "mf_score": 50
+            }
           }
         ],
         "any_overheated": false,
-        "raw_rank": 60.79,
+        "raw_rank": 66.19,
         "decay_factor": 0.9,
         "day_offset": 1,
         "similar_cases": []
@@ -486,10 +496,32 @@
         "news_pub_date": "2026-05-28",
         "strength_score": 72,
         "novelty_score": 72,
-        "max_heat": 61,
+        "max_heat": 63,
         "max_accept": 68,
-        "max_rank": 54.17,
+        "max_rank": 57.14,
         "stocks": [
+          {
+            "ts_code": "600021.SH",
+            "stock_name": "上海电力",
+            "segment": "华东区域火电+虚拟电厂",
+            "rec_reason": "华东区域电力龙头，火电装机占比高，同时布局虚拟电厂和需求侧响应业务。发改委要求'精细化开展电力需求侧管理'、'市场化需求响应优先'，上海电力在长三角电力市场交易活跃，迎峰度夏期间顶峰发电+需求侧响应双重受益。",
+            "applied_pattern": "P04",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 12,
+            "expected_window": "T+5-10",
+            "heat_score": 63,
+            "acceptance_score": 68,
+            "rank_score": 61.41,
+            "pre_run_up_3d": 14.24,
+            "overheated": false,
+            "leader_score": 80.0,
+            "leader_detail": {
+              "circ_mv_yi": 598.0,
+              "main_net_3d_yi": 3.36,
+              "mv_score": 80,
+              "mf_score": 80
+            }
+          },
           {
             "ts_code": "601088.SH",
             "stock_name": "中国神华",
@@ -499,11 +531,18 @@
             "expected_return_pct": 8.0,
             "expected_duration_days": 15,
             "expected_window": "T+5-10",
-            "heat_score": 61,
+            "heat_score": 63,
             "acceptance_score": 62,
-            "rank_score": 60.19,
+            "rank_score": 60.5,
             "pre_run_up_3d": 3.06,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 80.0,
+            "leader_detail": {
+              "circ_mv_yi": 7611.0,
+              "main_net_3d_yi": 1.32,
+              "mv_score": 95,
+              "mf_score": 65
+            }
           },
           {
             "ts_code": "600011.SH",
@@ -514,104 +553,22 @@
             "expected_return_pct": 12.0,
             "expected_duration_days": 15,
             "expected_window": "T+5-10",
-            "heat_score": 36,
+            "heat_score": 63,
             "acceptance_score": 68,
-            "rank_score": 59.36,
+            "rank_score": 63.49,
             "pre_run_up_3d": 8.04,
-            "overheated": false
-          },
-          {
-            "ts_code": "600021.SH",
-            "stock_name": "上海电力",
-            "segment": "华东区域火电+虚拟电厂",
-            "rec_reason": "华东区域电力龙头，火电装机占比高，同时布局虚拟电厂和需求侧响应业务。发改委要求'精细化开展电力需求侧管理'、'市场化需求响应优先'，上海电力在长三角电力市场交易活跃，迎峰度夏期间顶峰发电+需求侧响应双重受益。",
-            "applied_pattern": "P04",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 12,
-            "expected_window": "T+5-10",
-            "heat_score": 36,
-            "acceptance_score": 68,
-            "rank_score": 57.28,
-            "pre_run_up_3d": 14.24,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 65.0,
+            "leader_detail": {
+              "circ_mv_yi": 886.0,
+              "main_net_3d_yi": -0.33,
+              "mv_score": 80,
+              "mf_score": 50
+            }
           }
         ],
         "any_overheated": false,
-        "raw_rank": 60.19,
-        "decay_factor": 0.9,
-        "day_offset": 1,
-        "similar_cases": []
-      },
-      {
-        "source_news_hash": "26a66a93afffff91dc8c86d116237917",
-        "news_channel": "加红",
-        "event_headline": "伊朗向美油轮开火，霍尔木兹海峡危机",
-        "topic_class": "地缘政治",
-        "applied_pattern": "P05",
-        "transmission_chain": "【Step -1: event_type=event_driven】新闻为伊朗官方通讯社发布的地缘冲突事件，涉及霍尔木兹海峡军事对峙与开火，属于新事件驱动，非评论/传闻/复盘。\n\n【Step 0: impact_scope=global】霍尔木兹海峡是全球最重要的石油运输咽喉（全球约20-30%石油海运通过），伊朗革命卫队向美国油轮开火并迫使折返，属于实质性军事对峙升级，影响全球原油供应安全预期，级别远超局部地缘事件，应判为global。\n\n【Step 1: topic_class=地缘政治】\n\n【Step 2: 范式选择】查矩阵，地缘政治类最优范式为[P05]事件催化（win%高）。同时结合历史教训：教训1指出\"只有出现实质性交火、制裁升级或关键设施被攻击时，黄金/石油才有短期脉冲机会\"——本新闻恰好满足\"实质性开火+关键海峡封锁\"条件，信号强度不应打折。同时可叠加[P03]供需共振逻辑：霍尔木兹海峡受阻直接威胁全球石油供给，短期供给收缩预期+地缘溢价推升油价。\n\n【Step 3: 因果链】伊朗革命卫队向美国油轮开火并迫使其折返 → 霍尔木兹海峡通行安全受到实质性威胁 → 市场担忧海峡封锁或进一步军事升级 → 布伦特/WTI原油短期脉冲上涨（地缘溢价） → 同时全球航运保险费用飙升，油轮绕行增加运输成本 → 利好：①A股油气开采/油服板块（油价上涨直接受益）；②航运板块（运价上涨",
-        "impact_scope": "global",
-        "scope_emoji": "🌍",
-        "scope_cn": "全球级",
-        "scope_multiplier": 1.0,
-        "event_type": "event_driven",
-        "raw_title": "伊朗媒体称一艘试图穿越霍尔木兹海峡的美国油轮被迫折返",
-        "raw_content": "【伊朗媒体称一艘试图穿越霍尔木兹海峡的美国油轮被迫折返】财联社5月28日电，伊朗塔斯尼姆通讯社28日援引一名军方消息人士的话称，几小时前，一艘美国油轮试图关闭雷达系统穿越霍尔木兹海峡，但由于伊朗伊斯兰革命卫队海军部队迅速果断行动，向其开火射击，油轮被迫停下并折返。 (新华社)",
-        "news_pub_time": "2026-05-28 09:08",
-        "news_pub_date": "2026-05-28",
-        "strength_score": 78,
-        "novelty_score": 58,
-        "max_heat": 62,
-        "max_accept": 49,
-        "max_rank": 53.35,
-        "stocks": [
-          {
-            "ts_code": "601857.SH",
-            "stock_name": "中国石油",
-            "segment": "上游油气开采龙头",
-            "rec_reason": "国内最大原油生产商，油价每涨1美元/桶，净利润弹性约百亿级别。霍尔木兹海峡开火事件为实质性军事对峙，历史类似事件（2019年沙特阿美遇袭）油价脉冲5-15%，中国石油作为A股油气权重股直接受益。",
-            "applied_pattern": "P05",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 5,
-            "expected_window": "T+1-3",
-            "heat_score": 62,
-            "acceptance_score": 49,
-            "rank_score": 59.28,
-            "pre_run_up_3d": 0.65,
-            "overheated": false
-          },
-          {
-            "ts_code": "600026.SH",
-            "stock_name": "中远海能",
-            "segment": "油运/航运",
-            "rec_reason": "全球最大油轮运营商之一，霍尔木兹海峡危机导致油轮绕行（绕行好望角增加约30%航程），叠加战争险保费飙升，运价短期脉冲效应极强。历史经验：地缘冲突下油运运价可在数日内翻倍，中远海能弹性最大。",
-            "applied_pattern": "P05",
-            "expected_return_pct": 12.0,
-            "expected_duration_days": 5,
-            "expected_window": "T+1-3",
-            "heat_score": 36,
-            "acceptance_score": 20,
-            "rank_score": 50.78,
-            "pre_run_up_3d": -9.28,
-            "overheated": false
-          },
-          {
-            "ts_code": "600028.SH",
-            "stock_name": "中国石化",
-            "segment": "上游油气开采/炼化一体化",
-            "rec_reason": "全球最大炼化企业之一，油价上涨直接增厚上游勘探开采利润。霍尔木兹海峡危机推升布伦特原油地缘溢价，中国石化上游板块弹性大，且作为央企在能源安全主题下具备防御+进攻双重属性。",
-            "applied_pattern": "P05",
-            "expected_return_pct": 8.0,
-            "expected_duration_days": 5,
-            "expected_window": "T+1-3",
-            "heat_score": 31,
-            "acceptance_score": 38,
-            "rank_score": 50.32,
-            "pre_run_up_3d": -2.24,
-            "overheated": false
-          }
-        ],
-        "any_overheated": false,
-        "raw_rank": 59.28,
+        "raw_rank": 63.49,
         "decay_factor": 0.9,
         "day_offset": 1,
         "similar_cases": []
@@ -634,9 +591,9 @@
         "news_pub_date": "2026-05-29",
         "strength_score": 72,
         "novelty_score": 60,
-        "max_heat": 62,
+        "max_heat": 79,
         "max_accept": 20,
-        "max_rank": 52.08,
+        "max_rank": 54.68,
         "stocks": [
           {
             "ts_code": "002371.SZ",
@@ -647,11 +604,18 @@
             "expected_return_pct": 12.0,
             "expected_duration_days": 10,
             "expected_window": "T+5-10",
-            "heat_score": 62,
+            "heat_score": 79,
             "acceptance_score": 20,
-            "rank_score": 52.08,
+            "rank_score": 54.68,
             "pre_run_up_3d": -5.61,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 55.0,
+            "leader_detail": {
+              "circ_mv_yi": 4773.0,
+              "main_net_3d_yi": -9.78,
+              "mv_score": 95,
+              "mf_score": 15
+            }
           },
           {
             "ts_code": "688012.SH",
@@ -662,15 +626,22 @@
             "expected_return_pct": 10.0,
             "expected_duration_days": 10,
             "expected_window": "T+5-10",
-            "heat_score": 62,
+            "heat_score": 79,
             "acceptance_score": 20,
-            "rank_score": 49.88,
+            "rank_score": 52.48,
             "pre_run_up_3d": -6.63,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 55.0,
+            "leader_detail": {
+              "circ_mv_yi": 2849.0,
+              "main_net_3d_yi": -6.2,
+              "mv_score": 95,
+              "mf_score": 15
+            }
           }
         ],
         "any_overheated": false,
-        "raw_rank": 52.08,
+        "raw_rank": 54.68,
         "decay_factor": 1.0,
         "day_offset": 0,
         "similar_cases": []
@@ -693,24 +664,31 @@
         "news_pub_date": "2026-05-29",
         "strength_score": 72,
         "novelty_score": 83,
-        "max_heat": 36,
+        "max_heat": 50,
         "max_accept": 69,
-        "max_rank": 51.62,
+        "max_rank": 53.76,
         "stocks": [
           {
-            "ts_code": "300228.SZ",
-            "stock_name": "富瑞特装",
-            "segment": "LNG低温装备-储运系统",
-            "rec_reason": "国内LNG低温储运装备龙头，产品覆盖LNG船用燃料罐、低温阀门及加注系统，已配套沪东中华LNG船项目。LNG船产业链国产化加速，公司作为低温装备核心供应商直接受益。",
-            "applied_pattern": "P02",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 7,
+            "ts_code": "600150.SH",
+            "stock_name": "中国船舶",
+            "segment": "造船总装-行业龙头",
+            "rec_reason": "中船集团旗下核心造船平台，与沪东中华同属中船体系，LNG船是当前最紧缺的高端船型（单船造价约2.5亿美元），国产化率提升增强接单能力和利润率，公司LNG船在手订单饱满。",
+            "applied_pattern": "P07",
+            "expected_return_pct": 8.0,
+            "expected_duration_days": 6,
             "expected_window": "T+5-10",
-            "heat_score": 36,
-            "acceptance_score": 56,
-            "rank_score": 51.62,
-            "pre_run_up_3d": 0.23,
-            "overheated": false
+            "heat_score": 50,
+            "acceptance_score": 69,
+            "rank_score": 53.33,
+            "pre_run_up_3d": 0.74,
+            "overheated": false,
+            "leader_score": 87.5,
+            "leader_detail": {
+              "circ_mv_yi": 2318.0,
+              "main_net_3d_yi": 2.47,
+              "mv_score": 95,
+              "mf_score": 80
+            }
           },
           {
             "ts_code": "603699.SH",
@@ -721,111 +699,336 @@
             "expected_return_pct": 12.0,
             "expected_duration_days": 8,
             "expected_window": "T+5-10",
-            "heat_score": 36,
+            "heat_score": 50,
             "acceptance_score": 36,
-            "rank_score": 51.43,
+            "rank_score": 53.57,
             "pre_run_up_3d": -3.71,
-            "overheated": false
+            "overheated": false,
+            "leader_score": 57.5,
+            "leader_detail": {
+              "circ_mv_yi": 442.0,
+              "main_net_3d_yi": 0.07,
+              "mv_score": 65,
+              "mf_score": 50
+            }
           },
           {
-            "ts_code": "600150.SH",
-            "stock_name": "中国船舶",
-            "segment": "造船总装-行业龙头",
-            "rec_reason": "中船集团旗下核心造船平台，与沪东中华同属中船体系，LNG船是当前最紧缺的高端船型（单船造价约2.5亿美元），国产化率提升增强接单能力和利润率，公司LNG船在手订单饱满。",
-            "applied_pattern": "P07",
-            "expected_return_pct": 8.0,
-            "expected_duration_days": 6,
+            "ts_code": "300228.SZ",
+            "stock_name": "富瑞特装",
+            "segment": "LNG低温装备-储运系统",
+            "rec_reason": "国内LNG低温储运装备龙头，产品覆盖LNG船用燃料罐、低温阀门及加注系统，已配套沪东中华LNG船项目。LNG船产业链国产化加速，公司作为低温装备核心供应商直接受益。",
+            "applied_pattern": "P02",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 7,
             "expected_window": "T+5-10",
-            "heat_score": 36,
-            "acceptance_score": 69,
-            "rank_score": 51.19,
-            "pre_run_up_3d": 0.74,
-            "overheated": false
+            "heat_score": 50,
+            "acceptance_score": 56,
+            "rank_score": 53.76,
+            "pre_run_up_3d": 0.23,
+            "overheated": false,
+            "leader_score": 35.0,
+            "leader_detail": {
+              "circ_mv_yi": 49.0,
+              "main_net_3d_yi": -0.31,
+              "mv_score": 20,
+              "mf_score": 50
+            }
           }
         ],
         "any_overheated": false,
-        "raw_rank": 51.62,
+        "raw_rank": 53.76,
         "decay_factor": 1.0,
         "day_offset": 0,
         "similar_cases": []
       },
       {
-        "source_news_hash": "5ea22959f0ce0dbce07a95c3a49d0035",
-        "news_channel": "港美股",
-        "event_headline": "高盛上调标普500目标至8000点，AI驱动",
-        "topic_class": "海外巨头动态",
-        "applied_pattern": "P01",
-        "transmission_chain": "【Step -1: event_type判断】新闻为高盛策略师正式上调标普500目标点位至8000点，属于权威机构发布的具体预测调整，是事件驱动(event_driven)。【Step 0: impact_scope判断】标普500是全球最重要股指，目标上调反映全球最大资本市场预期，影响全球资金流向和风险偏好，属于global级影响。【Step 1: topic_class】海外巨头动态（高盛为全球顶级投行）。【Step 2: 范式选择】最优范式为[P01]海外映射（n=59 win=69% comp=+0.17）。核心逻辑：高盛上调标普目标→AI驱动盈利增长预期强化→美股AI龙头（英伟达等）受益→映射A股AI算力/光模块/服务器产业链，资金按估值对标逻辑买入A股相关标的。【Step 3: 因果链】高盛策略师上调标普500目标至8000点（较7600点上调5.3%），核心驱动是\"AI热潮推动的盈利增长\"→这意味着美股AI龙头（英伟达、微软等）的盈利预期被进一步上调→A股中与这些美股AI龙头有直接供应链关系或技术对标的企业将受益于海外映射逻辑→资金会沿着\"AI算力→光模块→服务器→PCB\"产业链寻找A股对标标的。【Step 4: 特征条件】受益标的特征：①与英伟达等美股AI龙头有直接供应链关系（光模块/服务器代工/PCB供应商）；②海外营收占比高，受全球AI资本开支拉动；③在细分领域",
+        "source_news_hash": "26a66a93afffff91dc8c86d116237917",
+        "news_channel": "加红",
+        "event_headline": "伊朗向美油轮开火，霍尔木兹海峡危机",
+        "topic_class": "地缘政治",
+        "applied_pattern": "P05",
+        "transmission_chain": "【Step -1: event_type=event_driven】新闻为伊朗官方通讯社发布的地缘冲突事件，涉及霍尔木兹海峡军事对峙与开火，属于新事件驱动，非评论/传闻/复盘。\n\n【Step 0: impact_scope=global】霍尔木兹海峡是全球最重要的石油运输咽喉（全球约20-30%石油海运通过），伊朗革命卫队向美国油轮开火并迫使折返，属于实质性军事对峙升级，影响全球原油供应安全预期，级别远超局部地缘事件，应判为global。\n\n【Step 1: topic_class=地缘政治】\n\n【Step 2: 范式选择】查矩阵，地缘政治类最优范式为[P05]事件催化（win%高）。同时结合历史教训：教训1指出\"只有出现实质性交火、制裁升级或关键设施被攻击时，黄金/石油才有短期脉冲机会\"——本新闻恰好满足\"实质性开火+关键海峡封锁\"条件，信号强度不应打折。同时可叠加[P03]供需共振逻辑：霍尔木兹海峡受阻直接威胁全球石油供给，短期供给收缩预期+地缘溢价推升油价。\n\n【Step 3: 因果链】伊朗革命卫队向美国油轮开火并迫使其折返 → 霍尔木兹海峡通行安全受到实质性威胁 → 市场担忧海峡封锁或进一步军事升级 → 布伦特/WTI原油短期脉冲上涨（地缘溢价） → 同时全球航运保险费用飙升，油轮绕行增加运输成本 → 利好：①A股油气开采/油服板块（油价上涨直接受益）；②航运板块（运价上涨",
         "impact_scope": "global",
         "scope_emoji": "🌍",
         "scope_cn": "全球级",
         "scope_multiplier": 1.0,
         "event_type": "event_driven",
-        "raw_title": "高盛策略师将标普500指数目标点位上调至8000点 受AI和盈利所推动",
-        "raw_content": "【高盛策略师将标普500指数目标点位上调至8000点 受AI和盈利所推动】财联社5月27日电，高盛集团策略师预计今年标普500指数回报将达17%，加入摩根士丹利和德意志银行同行之列。由Ben Snider领导的高盛团队表示，人工智能(AI)热潮推动的盈利增长将进一步提振股市，因此他们将该美国基准指数的年底目标点位上调至8,000点，放弃了此前7,600点的预测。“持续的盈利增长应能推动股市持续上行，”策略师在报告中写道。“上调回报预测反映了在第一季度财报季表现异常强劲之后，对标普500指数盈利预期的上调。”",
-        "news_pub_time": "2026-05-27 17:02",
-        "news_pub_date": "2026-05-27",
-        "strength_score": 72,
-        "novelty_score": 35,
-        "max_heat": 62,
+        "raw_title": "伊朗媒体称一艘试图穿越霍尔木兹海峡的美国油轮被迫折返",
+        "raw_content": "【伊朗媒体称一艘试图穿越霍尔木兹海峡的美国油轮被迫折返】财联社5月28日电，伊朗塔斯尼姆通讯社28日援引一名军方消息人士的话称，几小时前，一艘美国油轮试图关闭雷达系统穿越霍尔木兹海峡，但由于伊朗伊斯兰革命卫队海军部队迅速果断行动，向其开火射击，油轮被迫停下并折返。 (新华社)",
+        "news_pub_time": "2026-05-28 09:08",
+        "news_pub_date": "2026-05-28",
+        "strength_score": 78,
+        "novelty_score": 58,
+        "max_heat": 63,
+        "max_accept": 49,
+        "max_rank": 53.51,
+        "stocks": [
+          {
+            "ts_code": "601857.SH",
+            "stock_name": "中国石油",
+            "segment": "上游油气开采龙头",
+            "rec_reason": "国内最大原油生产商，油价每涨1美元/桶，净利润弹性约百亿级别。霍尔木兹海峡开火事件为实质性军事对峙，历史类似事件（2019年沙特阿美遇袭）油价脉冲5-15%，中国石油作为A股油气权重股直接受益。",
+            "applied_pattern": "P05",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 5,
+            "expected_window": "T+1-3",
+            "heat_score": 63,
+            "acceptance_score": 49,
+            "rank_score": 59.46,
+            "pre_run_up_3d": 0.65,
+            "overheated": false,
+            "leader_score": 65.0,
+            "leader_detail": {
+              "circ_mv_yi": 17488.0,
+              "main_net_3d_yi": -1.99,
+              "mv_score": 95,
+              "mf_score": 35
+            }
+          },
+          {
+            "ts_code": "600028.SH",
+            "stock_name": "中国石化",
+            "segment": "上游油气开采/炼化一体化",
+            "rec_reason": "全球最大炼化企业之一，油价上涨直接增厚上游勘探开采利润。霍尔木兹海峡危机推升布伦特原油地缘溢价，中国石化上游板块弹性大，且作为央企在能源安全主题下具备防御+进攻双重属性。",
+            "applied_pattern": "P05",
+            "expected_return_pct": 8.0,
+            "expected_duration_days": 5,
+            "expected_window": "T+1-3",
+            "heat_score": 63,
+            "acceptance_score": 38,
+            "rank_score": 56.08,
+            "pre_run_up_3d": -2.24,
+            "overheated": false,
+            "leader_score": 65.0,
+            "leader_detail": {
+              "circ_mv_yi": 4558.0,
+              "main_net_3d_yi": -1.17,
+              "mv_score": 95,
+              "mf_score": 35
+            }
+          },
+          {
+            "ts_code": "600026.SH",
+            "stock_name": "中远海能",
+            "segment": "油运/航运",
+            "rec_reason": "全球最大油轮运营商之一，霍尔木兹海峡危机导致油轮绕行（绕行好望角增加约30%航程），叠加战争险保费飙升，运价短期脉冲效应极强。历史经验：地缘冲突下油运运价可在数日内翻倍，中远海能弹性最大。",
+            "applied_pattern": "P05",
+            "expected_return_pct": 12.0,
+            "expected_duration_days": 5,
+            "expected_window": "T+1-3",
+            "heat_score": 63,
+            "acceptance_score": 20,
+            "rank_score": 55.64,
+            "pre_run_up_3d": -9.28,
+            "overheated": false,
+            "leader_score": 47.5,
+            "leader_detail": {
+              "circ_mv_yi": 759.0,
+              "main_net_3d_yi": -2.48,
+              "mv_score": 80,
+              "mf_score": 15
+            }
+          }
+        ],
+        "any_overheated": false,
+        "raw_rank": 59.46,
+        "decay_factor": 0.9,
+        "day_offset": 1,
+        "similar_cases": []
+      },
+      {
+        "source_news_hash": "314ab85940f3cf08f3057d1d6e697950",
+        "news_channel": "加红",
+        "event_headline": "中美对等降税框架推进，出口链受益",
+        "topic_class": "地缘政治/贸易缓和",
+        "applied_pattern": "P13",
+        "transmission_chain": "【Step -1 事件类型判断】新闻为商务部正式回应中美关税谈判进展，包含具体降税框架（300亿美元对等降税），属于官方确认的实质性政策进展，判定为 event_driven。\n\n【Step 0 影响范围判断】中美关税谈判涉及全球最大两个经济体的贸易关系，影响A股出口导向型产业链（家电、机械、电子、纺织等）的估值和盈利预期，属于 global 级别。\n\n【Step 1-2 范式选择】根据矩阵，地缘缓和类新闻最优范式为 [P13] 出口利好（海外需求复苏/关税减免）。历史教训（教训1、教训2）明确指出：地缘谈判类新闻不要套用\"成本下降\"逻辑（P03/P08），应聚焦关税减免直接受益的出口型企业。\n\n【Step 3 因果链推演】新闻X：中美双方原则同意在贸易理事会项下讨论同等规模产品对等降税框架安排，规模各为300亿美元或更多 → 关税减免预期升温 → 此前受高关税压制的对美出口型企业将显著受益，利润率修复+订单预期改善 → 利好海外营收占比高、对美出口敞口大、此前受关税压制明显的细分行业龙头。\n\n【Step 4 特征条件】受益标的特征：1) 海外营收占比>40%；2) 对美出口占比较高；3) 此前受关税影响毛利率承压；4) 行业出口龙头、定价能力强。",
+        "impact_scope": "global",
+        "scope_emoji": "🌍",
+        "scope_cn": "全球级",
+        "scope_multiplier": 1.0,
+        "event_type": "event_driven",
+        "raw_title": "商务部回应中美关税谈判进展：双方经贸团队将商定具体安排并尽快推动实施",
+        "raw_content": "【商务部回应中美关税谈判进展：双方经贸团队将商定具体安排并尽快推动实施】财联社5月28日电，商务部新闻发言人何亚东28日在例行新闻发布会上回应关于中美关税谈判进展的提问时表示，关税一直是中美经贸关系中的关键问题之一。在两国元首战略引领下，中美经贸团队围绕关税问题深入沟通，就有关双边关税做出安排。我想重申，希望美方信守承诺，为双方拓展经贸合作创造积极条件。同时，双方原则同意在贸易理事会项下讨论同等规模产品对等降税框架安排，规模各为300亿美元或更多。双方经贸团队将保持密切沟通，商定具体安排并尽快推动实施。",
+        "news_pub_time": "2026-05-28 15:11",
+        "news_pub_date": "2026-05-28",
+        "strength_score": 65,
+        "novelty_score": 63,
+        "max_heat": 10,
+        "max_accept": 88,
+        "max_rank": 52.99,
+        "stocks": [
+          {
+            "ts_code": "002241.SZ",
+            "stock_name": "歌尔股份",
+            "segment": "消费电子/声学器件",
+            "rec_reason": "海外营收占比超70%，对美出口占比较高；此前受关税和地缘风险压制估值，关税缓和后估值修复空间大，Meta/苹果核心供应商",
+            "applied_pattern": "P13",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 10,
+            "expected_window": "T+5-10",
+            "heat_score": 10,
+            "acceptance_score": 88,
+            "rank_score": 58.88,
+            "pre_run_up_3d": 11.42,
+            "overheated": false,
+            "leader_score": 87.5,
+            "leader_detail": {
+              "circ_mv_yi": 893.0,
+              "main_net_3d_yi": 14.24,
+              "mv_score": 80,
+              "mf_score": 95
+            }
+          },
+          {
+            "ts_code": "000333.SZ",
+            "stock_name": "美的集团",
+            "segment": "家电出口",
+            "rec_reason": "全球家电龙头，海外营收占比超40%，对美出口规模大；关税减免直接增厚出口利润，且海外自有品牌布局完善，受益弹性大",
+            "applied_pattern": "P13",
+            "expected_return_pct": 7.0,
+            "expected_duration_days": 8,
+            "expected_window": "T+5-10",
+            "heat_score": 10,
+            "acceptance_score": 58,
+            "rank_score": 48.33,
+            "pre_run_up_3d": -1.08,
+            "overheated": false,
+            "leader_score": 87.5,
+            "leader_detail": {
+              "circ_mv_yi": 5416.0,
+              "main_net_3d_yi": 2.21,
+              "mv_score": 95,
+              "mf_score": 80
+            }
+          },
+          {
+            "ts_code": "000651.SZ",
+            "stock_name": "格力电器",
+            "segment": "家电出口",
+            "rec_reason": "对美出口敞口大，空调等大家电此前受25%关税压制严重；关税减免后利润率修复弹性显著，海外营收占比约15%且持续提升，白电龙头定价能力强",
+            "applied_pattern": "P13",
+            "expected_return_pct": 8.0,
+            "expected_duration_days": 8,
+            "expected_window": "T+5-10",
+            "heat_score": 10,
+            "acceptance_score": 44,
+            "rank_score": 46.75,
+            "pre_run_up_3d": -1.94,
+            "overheated": false,
+            "leader_score": 72.5,
+            "leader_detail": {
+              "circ_mv_yi": 2092.0,
+              "main_net_3d_yi": 0.36,
+              "mv_score": 95,
+              "mf_score": 50
+            }
+          }
+        ],
+        "any_overheated": false,
+        "raw_rank": 58.88,
+        "decay_factor": 0.9,
+        "day_offset": 1,
+        "similar_cases": []
+      },
+      {
+        "source_news_hash": "e2f86a7a67b468d6dcc16dc704b0911c",
+        "news_channel": "港美股",
+        "event_headline": "迈威尔科技指引数据中心业务增50%",
+        "topic_class": "海外巨头动态",
+        "applied_pattern": "P01",
+        "transmission_chain": "【Step -1 事件类型判断】该新闻为迈威尔科技CEO在电话会议中披露的业绩指引，属于具体、有数据支撑的增量信息，非传闻/评论/复盘，判定为 event_driven。\n\n【Step 0 影响范围】迈威尔科技（MRVL）是全球数据中心芯片（DPU/以太网交换/SerDes互连）龙头，其数据中心业务增长50%、互连业务增长超70%，直接映射A股数据中心互连（DCI）、高速光模块、交换芯片产业链。影响范围覆盖多家A股公司，判定为 multi_company。\n\n【Step 1-2 范式选择】新闻为\"海外巨头动态\"，查矩阵：最优范式为 [P01] 海外映射（n=59, win=69%, comp=+0.17），且无错配风险。\n\n【Step 3 因果链推演】迈威尔科技（MRVL）是全球数据中心以太网交换芯片、DSP、SerDes互连IP的绝对龙头。其CEO指引本财年数据中心业务增长约50%、互连业务增长超70%，意味着：①全球数据中心资本开支持续高景气，AI集群对高速互连（400G/800G/1.6T）需求爆发；②迈威尔作为上游芯片供应商的指引，是光模块/光器件/交换设备等中游环节的领先指标。A股光模块/光互连产业链直接受益于海外云厂商的资本开支扩张，且与迈威尔存在供应链关系（如采购DSP芯片、光引擎等）。\n\n【Step 4 受益特征条件】①光模块/光器件龙头，海外云厂商收入占比高；②与",
+        "impact_scope": "multi_company",
+        "scope_emoji": "🔗",
+        "scope_cn": "产业链",
+        "scope_multiplier": 0.7,
+        "event_type": "event_driven",
+        "raw_title": "迈威尔科技CEO：预计本财年数据中心业务同比增长约50% 互连业务增长超70%",
+        "raw_content": "【迈威尔科技CEO：预计本财年数据中心业务同比增长约50% 互连业务增长超70%】财联社5月28日电，迈威尔科技CEO在电话会议上表示，目前预计本财年数据中心业务增长约50%，互连业务同比增长超过70%。预计2027财年总营收同比增长约40%，达到近115亿美元。",
+        "news_pub_time": "2026-05-28 04:54",
+        "news_pub_date": "2026-05-28",
+        "strength_score": 78,
+        "novelty_score": 62,
+        "max_heat": 81,
         "max_accept": 87,
-        "max_rank": 50.92,
+        "max_rank": 50.45,
         "stocks": [
           {
             "ts_code": "300308.SZ",
             "stock_name": "中际旭创",
-            "segment": "算力-光模块",
-            "rec_reason": "全球800G光模块市占率约60%，英伟达AI算力扩张直接拉动高速光模块需求，海外营收占比超80%，对标美股AI盈利增长最直接受益",
+            "segment": "光模块龙头",
+            "rec_reason": "全球光模块龙头，800G/1.6T高速光模块核心供应商，深度受益于迈威尔指引的数据中心互连需求爆发，与迈威尔DSP芯片有直接采购关系，海外云客户收入占比超80%",
             "applied_pattern": "P01",
-            "expected_return_pct": 8.0,
+            "expected_return_pct": 12.0,
             "expected_duration_days": 10,
             "expected_window": "T+1-3",
-            "heat_score": 62,
+            "heat_score": 81,
             "acceptance_score": 87,
-            "rank_score": 63.65,
-            "pre_run_up_3d": 7.07,
-            "overheated": false
+            "rank_score": 56.06,
+            "pre_run_up_3d": 9.61,
+            "overheated": false,
+            "leader_score": 95.0,
+            "leader_detail": {
+              "circ_mv_yi": 13277.0,
+              "main_net_3d_yi": 20.29,
+              "mv_score": 95,
+              "mf_score": 95
+            }
           },
           {
-            "ts_code": "601138.SH",
-            "stock_name": "工业富联",
-            "segment": "算力-AI服务器",
-            "rec_reason": "英伟达AI服务器核心代工厂，全球AI服务器市占率领先，直接受益于美股AI盈利增长带动的算力资本开支扩张",
+            "ts_code": "300394.SZ",
+            "stock_name": "天孚通信",
+            "segment": "光器件/光引擎",
+            "rec_reason": "全球领先的光引擎/光器件平台型公司，为数据中心高速互连提供关键光无源+有源器件，受益于迈威尔互连业务70%+增长指引所映射的DCI/光互连高景气",
             "applied_pattern": "P01",
-            "expected_return_pct": 7.0,
-            "expected_duration_days": 10,
-            "expected_window": "T+1-3",
-            "heat_score": 62,
-            "acceptance_score": 51,
-            "rank_score": 55.87,
-            "pre_run_up_3d": 4.35,
-            "overheated": false
-          },
-          {
-            "ts_code": "002463.SZ",
-            "stock_name": "沪电股份",
-            "segment": "算力-PCB",
-            "rec_reason": "AI服务器高多层PCB核心供应商，英伟达AI服务器PCB主力供应商之一，海外营收占比高，AI资本开支扩张直接拉动高端PCB需求",
-            "applied_pattern": "P01",
-            "expected_return_pct": 6.0,
+            "expected_return_pct": 10.0,
             "expected_duration_days": 8,
             "expected_window": "T+1-3",
-            "heat_score": 62,
-            "acceptance_score": 39,
-            "rank_score": 50.86,
-            "pre_run_up_3d": 12.47,
-            "overheated": false
+            "heat_score": 81,
+            "acceptance_score": 74,
+            "rank_score": 27.77,
+            "pre_run_up_3d": 12.81,
+            "overheated": true,
+            "leader_score": 95.0,
+            "leader_detail": {
+              "circ_mv_yi": 3480.0,
+              "main_net_3d_yi": 26.31,
+              "mv_score": 95,
+              "mf_score": 95
+            }
+          },
+          {
+            "ts_code": "688498.SH",
+            "stock_name": "源杰科技",
+            "segment": "光芯片",
+            "rec_reason": "国产高速光芯片（EML/DFB）龙头，数据中心光模块上游核心器件供应商，迈威尔指引的数据中心高增长映射到光芯片需求持续放量，国产替代逻辑叠加海外映射",
+            "applied_pattern": "P01",
+            "expected_return_pct": 8.0,
+            "expected_duration_days": 7,
+            "expected_window": "T+5-10",
+            "heat_score": 81,
+            "acceptance_score": 67,
+            "rank_score": 47.25,
+            "pre_run_up_3d": 5.35,
+            "overheated": false,
+            "leader_score": 65.0,
+            "leader_detail": {
+              "circ_mv_yi": 1404.0,
+              "main_net_3d_yi": -0.43,
+              "mv_score": 80,
+              "mf_score": 50
+            }
           }
         ],
-        "any_overheated": false,
-        "raw_rank": 63.65,
-        "decay_factor": 0.8,
-        "day_offset": 2,
+        "any_overheated": true,
+        "raw_rank": 56.06,
+        "decay_factor": 0.9,
+        "day_offset": 1,
         "similar_cases": []
       }
     ],
     "n_pool": 176,
-    "max_rank": 68.32,
+    "max_rank": 73.0,
     "n_qualified": 10
   },
   "days": [
@@ -849,10 +1052,32 @@
           "news_pub_date": "2026-05-29",
           "strength_score": 82,
           "novelty_score": 72,
-          "max_heat": 53,
+          "max_heat": 62,
           "max_accept": 44,
-          "max_rank": 68.32,
+          "max_rank": 73.0,
           "stocks": [
+            {
+              "ts_code": "600028.SH",
+              "stock_name": "中国石化",
+              "segment": "上游油气开采",
+              "rec_reason": "国内最大原油生产商之一，油价每涨10美元/桶，年化利润增厚超百亿级别；资源储量丰富，直接受益于全球原油供应缺口驱动的油价上行周期",
+              "applied_pattern": "P03",
+              "expected_return_pct": 12.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+1-3",
+              "heat_score": 62,
+              "acceptance_score": 38,
+              "rank_score": 71.63,
+              "pre_run_up_3d": -2.24,
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 4558.0,
+                "main_net_3d_yi": -1.17,
+                "mv_score": 95,
+                "mf_score": 35
+              }
+            },
             {
               "ts_code": "600871.SH",
               "stock_name": "石化油服",
@@ -862,11 +1087,18 @@
               "expected_return_pct": 15.0,
               "expected_duration_days": 12,
               "expected_window": "T+1-3",
-              "heat_score": 36,
+              "heat_score": 62,
               "acceptance_score": 44,
-              "rank_score": 68.32,
+              "rank_score": 73.0,
               "pre_run_up_3d": -2.88,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 57.5,
+              "leader_detail": {
+                "circ_mv_yi": 320.0,
+                "main_net_3d_yi": -0.21,
+                "mv_score": 65,
+                "mf_score": 50
+              }
             },
             {
               "ts_code": "600938.SH",
@@ -877,26 +1109,18 @@
               "expected_return_pct": 10.0,
               "expected_duration_days": 10,
               "expected_window": "T+1-3",
-              "heat_score": 53,
+              "heat_score": 62,
               "acceptance_score": 38,
-              "rank_score": 67.06,
+              "rank_score": 68.68,
               "pre_run_up_3d": -0.46,
-              "overheated": false
-            },
-            {
-              "ts_code": "600028.SH",
-              "stock_name": "中国石化",
-              "segment": "上游油气开采",
-              "rec_reason": "国内最大原油生产商之一，油价每涨10美元/桶，年化利润增厚超百亿级别；资源储量丰富，直接受益于全球原油供应缺口驱动的油价上行周期",
-              "applied_pattern": "P03",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+1-3",
-              "heat_score": 31,
-              "acceptance_score": 38,
-              "rank_score": 66.05,
-              "pre_run_up_3d": -2.24,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 57.5,
+              "leader_detail": {
+                "circ_mv_yi": 1030.0,
+                "main_net_3d_yi": -0.93,
+                "mv_score": 80,
+                "mf_score": 35
+              }
             }
           ],
           "any_overheated": false,
@@ -920,7 +1144,7 @@
           "news_pub_date": "2026-05-29",
           "strength_score": 68,
           "novelty_score": 86,
-          "max_heat": 48,
+          "max_heat": 36,
           "max_accept": 44,
           "max_rank": 63.61,
           "stocks": [
@@ -937,7 +1161,14 @@
               "acceptance_score": 44,
               "rank_score": 63.61,
               "pre_run_up_3d": -2.17,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 730.0,
+                "main_net_3d_yi": -0.44,
+                "mv_score": 80,
+                "mf_score": 50
+              }
             },
             {
               "ts_code": "600346.SH",
@@ -948,11 +1179,18 @@
               "expected_return_pct": 10.0,
               "expected_duration_days": 10,
               "expected_window": "T+5-10",
-              "heat_score": 31,
+              "heat_score": 36,
               "acceptance_score": 29,
-              "rank_score": 57.56,
+              "rank_score": 58.46,
               "pre_run_up_3d": -6.66,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 57.5,
+              "leader_detail": {
+                "circ_mv_yi": 1214.0,
+                "main_net_3d_yi": -0.86,
+                "mv_score": 80,
+                "mf_score": 35
+              }
             },
             {
               "ts_code": "601872.SH",
@@ -963,82 +1201,18 @@
               "expected_return_pct": 10.0,
               "expected_duration_days": 8,
               "expected_window": "T+5-10",
-              "heat_score": 48,
+              "heat_score": 36,
               "acceptance_score": 20,
-              "rank_score": 56.55,
+              "rank_score": 54.39,
               "pre_run_up_3d": -9.45,
-              "overheated": false
-            }
-          ],
-          "any_overheated": false,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "e0553900b36ae763c1b344969d0a2463",
-          "news_channel": "公司",
-          "event_headline": "首艘全国产低温阀LNG船交付",
-          "topic_class": "技术突破",
-          "applied_pattern": "P02",
-          "transmission_chain": "【Step -1: event_type】新闻为具体交付事件，属于事件驱动(event_driven)。【Step 0: impact_scope】这是我国首艘货舱系统全国产低温阀LNG船交付，标志着LNG船完整产业链国产化闭环，影响整个LNG船/低温装备产业链，属于industry级别。【Step 1-2: topic_class+范式选择】新闻类型为\"技术突破\"，查矩阵最优范式为[P07]技术突破(win=64%, comp=+0.10)。同时该事件也具备[P02]国产替代逻辑——低温阀长期被国外垄断，此次全国产化突破卡脖子环节。【Step 3: 因果链】新闻：我国首艘货舱围护系统全谱系装配国产超低温阀的LNG船交付 → ①低温阀是LNG船核心配套件，此前依赖进口（法国Cryostar等），国产化后成本降30-40%、供货周期缩短；②标志着从材料（殷瓦钢/低温合金）→设计→配套设备的完整产业链自主可控；③中国LNG船全球订单占比已超30%（2025年数据），国产化率提升将带动配套企业订单放量 → 利好：1）低温阀门/泵/压缩机等核心配套商；2）LNG船用低温材料供应商；3）船用设备集成商。【Step 4: 特征条件】受益标的特征：①已进入沪东中华/LNG船供应链的低温阀门企业；②具备超低温(-163℃)材料/设备量产能力；③在LNG产业链有实际订单和交付记录。",
-          "impact_scope": "industry",
-          "scope_emoji": "🏭",
-          "scope_cn": "全行业",
-          "scope_multiplier": 0.85,
-          "event_type": "event_driven",
-          "raw_title": "",
-          "raw_content": "【我国首艘货舱系统全国产低温阀LNG运输船交付】今天（29日），由中船集团沪东中华建造的17.4万立方米大型LNG运输船正式交付，这艘船也是我国首艘实现货舱围护系统全谱系装配国产超低温阀的大型LNG运输船，标志着我国构建了一条从材料、设计到配套设备的大型LNG运输船完整产业链。",
-          "news_pub_time": "2026-05-29 09:25",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 72,
-          "novelty_score": 83,
-          "max_heat": 36,
-          "max_accept": 69,
-          "max_rank": 51.62,
-          "stocks": [
-            {
-              "ts_code": "300228.SZ",
-              "stock_name": "富瑞特装",
-              "segment": "LNG低温装备-储运系统",
-              "rec_reason": "国内LNG低温储运装备龙头，产品覆盖LNG船用燃料罐、低温阀门及加注系统，已配套沪东中华LNG船项目。LNG船产业链国产化加速，公司作为低温装备核心供应商直接受益。",
-              "applied_pattern": "P02",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 7,
-              "expected_window": "T+5-10",
-              "heat_score": 36,
-              "acceptance_score": 56,
-              "rank_score": 51.62,
-              "pre_run_up_3d": 0.23,
-              "overheated": false
-            },
-            {
-              "ts_code": "603699.SH",
-              "stock_name": "纽威股份",
-              "segment": "低温阀门-核心配套",
-              "rec_reason": "国内工业阀门龙头，已批量供应LNG船用超低温阀门（-196℃），进入沪东中华等主流船厂供应链，LNG船国产化率提升直接拉动阀门订单放量。2025年营收约85亿，阀门市占率国内前三。",
-              "applied_pattern": "P07",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+5-10",
-              "heat_score": 36,
-              "acceptance_score": 36,
-              "rank_score": 51.43,
-              "pre_run_up_3d": -3.71,
-              "overheated": false
-            },
-            {
-              "ts_code": "600150.SH",
-              "stock_name": "中国船舶",
-              "segment": "造船总装-行业龙头",
-              "rec_reason": "中船集团旗下核心造船平台，与沪东中华同属中船体系，LNG船是当前最紧缺的高端船型（单船造价约2.5亿美元），国产化率提升增强接单能力和利润率，公司LNG船在手订单饱满。",
-              "applied_pattern": "P07",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 6,
-              "expected_window": "T+5-10",
-              "heat_score": 36,
-              "acceptance_score": 69,
-              "rank_score": 51.19,
-              "pre_run_up_3d": 0.74,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 47.5,
+              "leader_detail": {
+                "circ_mv_yi": 1299.0,
+                "main_net_3d_yi": -2.32,
+                "mv_score": 80,
+                "mf_score": 15
+              }
             }
           ],
           "any_overheated": false,
@@ -1062,9 +1236,9 @@
           "news_pub_date": "2026-05-29",
           "strength_score": 72,
           "novelty_score": 60,
-          "max_heat": 62,
+          "max_heat": 79,
           "max_accept": 20,
-          "max_rank": 52.08,
+          "max_rank": 54.68,
           "stocks": [
             {
               "ts_code": "002371.SZ",
@@ -1075,11 +1249,18 @@
               "expected_return_pct": 12.0,
               "expected_duration_days": 10,
               "expected_window": "T+5-10",
-              "heat_score": 62,
+              "heat_score": 79,
               "acceptance_score": 20,
-              "rank_score": 52.08,
+              "rank_score": 54.68,
               "pre_run_up_3d": -5.61,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 4773.0,
+                "main_net_3d_yi": -9.78,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             },
             {
               "ts_code": "688012.SH",
@@ -1090,11 +1271,110 @@
               "expected_return_pct": 10.0,
               "expected_duration_days": 10,
               "expected_window": "T+5-10",
-              "heat_score": 62,
+              "heat_score": 79,
               "acceptance_score": 20,
-              "rank_score": 49.88,
+              "rank_score": 52.48,
               "pre_run_up_3d": -6.63,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 2849.0,
+                "main_net_3d_yi": -6.2,
+                "mv_score": 95,
+                "mf_score": 15
+              }
+            }
+          ],
+          "any_overheated": false,
+          "similar_cases": []
+        },
+        {
+          "source_news_hash": "e0553900b36ae763c1b344969d0a2463",
+          "news_channel": "公司",
+          "event_headline": "首艘全国产低温阀LNG船交付",
+          "topic_class": "技术突破",
+          "applied_pattern": "P02",
+          "transmission_chain": "【Step -1: event_type】新闻为具体交付事件，属于事件驱动(event_driven)。【Step 0: impact_scope】这是我国首艘货舱系统全国产低温阀LNG船交付，标志着LNG船完整产业链国产化闭环，影响整个LNG船/低温装备产业链，属于industry级别。【Step 1-2: topic_class+范式选择】新闻类型为\"技术突破\"，查矩阵最优范式为[P07]技术突破(win=64%, comp=+0.10)。同时该事件也具备[P02]国产替代逻辑——低温阀长期被国外垄断，此次全国产化突破卡脖子环节。【Step 3: 因果链】新闻：我国首艘货舱围护系统全谱系装配国产超低温阀的LNG船交付 → ①低温阀是LNG船核心配套件，此前依赖进口（法国Cryostar等），国产化后成本降30-40%、供货周期缩短；②标志着从材料（殷瓦钢/低温合金）→设计→配套设备的完整产业链自主可控；③中国LNG船全球订单占比已超30%（2025年数据），国产化率提升将带动配套企业订单放量 → 利好：1）低温阀门/泵/压缩机等核心配套商；2）LNG船用低温材料供应商；3）船用设备集成商。【Step 4: 特征条件】受益标的特征：①已进入沪东中华/LNG船供应链的低温阀门企业；②具备超低温(-163℃)材料/设备量产能力；③在LNG产业链有实际订单和交付记录。",
+          "impact_scope": "industry",
+          "scope_emoji": "🏭",
+          "scope_cn": "全行业",
+          "scope_multiplier": 0.85,
+          "event_type": "event_driven",
+          "raw_title": "",
+          "raw_content": "【我国首艘货舱系统全国产低温阀LNG运输船交付】今天（29日），由中船集团沪东中华建造的17.4万立方米大型LNG运输船正式交付，这艘船也是我国首艘实现货舱围护系统全谱系装配国产超低温阀的大型LNG运输船，标志着我国构建了一条从材料、设计到配套设备的大型LNG运输船完整产业链。",
+          "news_pub_time": "2026-05-29 09:25",
+          "news_pub_date": "2026-05-29",
+          "strength_score": 72,
+          "novelty_score": 83,
+          "max_heat": 50,
+          "max_accept": 69,
+          "max_rank": 53.76,
+          "stocks": [
+            {
+              "ts_code": "600150.SH",
+              "stock_name": "中国船舶",
+              "segment": "造船总装-行业龙头",
+              "rec_reason": "中船集团旗下核心造船平台，与沪东中华同属中船体系，LNG船是当前最紧缺的高端船型（单船造价约2.5亿美元），国产化率提升增强接单能力和利润率，公司LNG船在手订单饱满。",
+              "applied_pattern": "P07",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 6,
+              "expected_window": "T+5-10",
+              "heat_score": 50,
+              "acceptance_score": 69,
+              "rank_score": 53.33,
+              "pre_run_up_3d": 0.74,
+              "overheated": false,
+              "leader_score": 87.5,
+              "leader_detail": {
+                "circ_mv_yi": 2318.0,
+                "main_net_3d_yi": 2.47,
+                "mv_score": 95,
+                "mf_score": 80
+              }
+            },
+            {
+              "ts_code": "603699.SH",
+              "stock_name": "纽威股份",
+              "segment": "低温阀门-核心配套",
+              "rec_reason": "国内工业阀门龙头，已批量供应LNG船用超低温阀门（-196℃），进入沪东中华等主流船厂供应链，LNG船国产化率提升直接拉动阀门订单放量。2025年营收约85亿，阀门市占率国内前三。",
+              "applied_pattern": "P07",
+              "expected_return_pct": 12.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+5-10",
+              "heat_score": 50,
+              "acceptance_score": 36,
+              "rank_score": 53.57,
+              "pre_run_up_3d": -3.71,
+              "overheated": false,
+              "leader_score": 57.5,
+              "leader_detail": {
+                "circ_mv_yi": 442.0,
+                "main_net_3d_yi": 0.07,
+                "mv_score": 65,
+                "mf_score": 50
+              }
+            },
+            {
+              "ts_code": "300228.SZ",
+              "stock_name": "富瑞特装",
+              "segment": "LNG低温装备-储运系统",
+              "rec_reason": "国内LNG低温储运装备龙头，产品覆盖LNG船用燃料罐、低温阀门及加注系统，已配套沪东中华LNG船项目。LNG船产业链国产化加速，公司作为低温装备核心供应商直接受益。",
+              "applied_pattern": "P02",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 7,
+              "expected_window": "T+5-10",
+              "heat_score": 50,
+              "acceptance_score": 56,
+              "rank_score": 53.76,
+              "pre_run_up_3d": 0.23,
+              "overheated": false,
+              "leader_score": 35.0,
+              "leader_detail": {
+                "circ_mv_yi": 49.0,
+                "main_net_3d_yi": -0.31,
+                "mv_score": 20,
+                "mf_score": 50
+              }
             }
           ],
           "any_overheated": false,
@@ -1135,7 +1415,14 @@
               "acceptance_score": 87,
               "rank_score": 48.91,
               "pre_run_up_3d": 9.61,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 95.0,
+              "leader_detail": {
+                "circ_mv_yi": 13277.0,
+                "main_net_3d_yi": 20.29,
+                "mv_score": 95,
+                "mf_score": 95
+              }
             },
             {
               "ts_code": "002916.SZ",
@@ -1150,7 +1437,14 @@
               "acceptance_score": 60,
               "rank_score": 39.68,
               "pre_run_up_3d": -0.43,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 87.5,
+              "leader_detail": {
+                "circ_mv_yi": 2648.0,
+                "main_net_3d_yi": 4.41,
+                "mv_score": 95,
+                "mf_score": 80
+              }
             },
             {
               "ts_code": "300502.SZ",
@@ -1165,7 +1459,14 @@
               "acceptance_score": 87,
               "rank_score": 25.5,
               "pre_run_up_3d": 9.0,
-              "overheated": true
+              "overheated": true,
+              "leader_score": 95.0,
+              "leader_detail": {
+                "circ_mv_yi": 6374.0,
+                "main_net_3d_yi": 13.94,
+                "mv_score": 95,
+                "mf_score": 95
+              }
             }
           ],
           "any_overheated": true,
@@ -1206,7 +1507,14 @@
               "acceptance_score": 87,
               "rank_score": 48.28,
               "pre_run_up_3d": 9.61,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 95.0,
+              "leader_detail": {
+                "circ_mv_yi": 13277.0,
+                "main_net_3d_yi": 20.29,
+                "mv_score": 95,
+                "mf_score": 95
+              }
             },
             {
               "ts_code": "300502.SZ",
@@ -1221,7 +1529,14 @@
               "acceptance_score": 87,
               "rank_score": 25.05,
               "pre_run_up_3d": 9.0,
-              "overheated": true
+              "overheated": true,
+              "leader_score": 95.0,
+              "leader_detail": {
+                "circ_mv_yi": 6374.0,
+                "main_net_3d_yi": 13.94,
+                "mv_score": 95,
+                "mf_score": 95
+              }
             },
             {
               "ts_code": "300394.SZ",
@@ -1236,7 +1551,14 @@
               "acceptance_score": 74,
               "rank_score": 23.25,
               "pre_run_up_3d": 12.81,
-              "overheated": true
+              "overheated": true,
+              "leader_score": 95.0,
+              "leader_detail": {
+                "circ_mv_yi": 3480.0,
+                "main_net_3d_yi": 26.31,
+                "mv_score": 95,
+                "mf_score": 95
+              }
             }
           ],
           "any_overheated": true,
@@ -1265,21 +1587,6 @@
           "max_rank": 47.0,
           "stocks": [
             {
-              "ts_code": "600120.SH",
-              "stock_name": "国盾量子",
-              "segment": "量子计算硬件-超导量子计算机",
-              "rec_reason": "国内量子计算绝对龙头，已交付超导量子计算机并上线量子计算云平台。IBM百亿美元加码信号强化全球量子计算产业化预期，国盾量子作为A股最纯正量子计算标的，对标IBM产业链逻辑最直接，受益于估值映射和赛道关注度提升。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 36,
-              "rank_score": 47.0,
-              "pre_run_up_3d": -3.18,
-              "overheated": false
-            },
-            {
               "ts_code": "688027.SH",
               "stock_name": "国芯科技",
               "segment": "量子测控系统与芯片",
@@ -1292,7 +1599,36 @@
               "acceptance_score": 36,
               "rank_score": 45.9,
               "pre_run_up_3d": -9.45,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 57.5,
+              "leader_detail": {
+                "circ_mv_yi": 467.0,
+                "main_net_3d_yi": -0.49,
+                "mv_score": 65,
+                "mf_score": 50
+              }
+            },
+            {
+              "ts_code": "600120.SH",
+              "stock_name": "国盾量子",
+              "segment": "量子计算硬件-超导量子计算机",
+              "rec_reason": "国内量子计算绝对龙头，已交付超导量子计算机并上线量子计算云平台。IBM百亿美元加码信号强化全球量子计算产业化预期，国盾量子作为A股最纯正量子计算标的，对标IBM产业链逻辑最直接，受益于估值映射和赛道关注度提升。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 12.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 36,
+              "acceptance_score": 36,
+              "rank_score": 47.0,
+              "pre_run_up_3d": -3.18,
+              "overheated": false,
+              "leader_score": 50.0,
+              "leader_detail": {
+                "circ_mv_yi": 166.0,
+                "main_net_3d_yi": -0.03,
+                "mv_score": 50,
+                "mf_score": 50
+              }
             },
             {
               "ts_code": "300455.SZ",
@@ -1307,7 +1643,14 @@
               "acceptance_score": 36,
               "rank_score": 43.92,
               "pre_run_up_3d": -5.95,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 50.0,
+              "leader_detail": {
+                "circ_mv_yi": 165.0,
+                "main_net_3d_yi": -0.3,
+                "mv_score": 50,
+                "mf_score": 50
+              }
             }
           ],
           "any_overheated": false,
@@ -1348,7 +1691,14 @@
               "acceptance_score": 44,
               "rank_score": 45.08,
               "pre_run_up_3d": -0.77,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 72.5,
+              "leader_detail": {
+                "circ_mv_yi": 15951.0,
+                "main_net_3d_yi": -0.18,
+                "mv_score": 95,
+                "mf_score": 50
+              }
             },
             {
               "ts_code": "000858.SZ",
@@ -1363,7 +1713,14 @@
               "acceptance_score": 20,
               "rank_score": 41.41,
               "pre_run_up_3d": -3.15,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 3163.0,
+                "main_net_3d_yi": -3.32,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             }
           ],
           "any_overheated": false,
@@ -1404,7 +1761,14 @@
               "acceptance_score": 87,
               "rank_score": 44.64,
               "pre_run_up_3d": 9.61,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 95.0,
+              "leader_detail": {
+                "circ_mv_yi": 13277.0,
+                "main_net_3d_yi": 20.29,
+                "mv_score": 95,
+                "mf_score": 95
+              }
             },
             {
               "ts_code": "002920.SZ",
@@ -1419,7 +1783,14 @@
               "acceptance_score": 46,
               "rank_score": 37.45,
               "pre_run_up_3d": -0.11,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 646.0,
+                "main_net_3d_yi": -0.42,
+                "mv_score": 80,
+                "mf_score": 50
+              }
             },
             {
               "ts_code": "300496.SZ",
@@ -1434,7 +1805,14 @@
               "acceptance_score": 31,
               "rank_score": 35.17,
               "pre_run_up_3d": -2.71,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 40.0,
+              "leader_detail": {
+                "circ_mv_yi": 257.0,
+                "main_net_3d_yi": -2.09,
+                "mv_score": 65,
+                "mf_score": 15
+              }
             }
           ],
           "any_overheated": false,
@@ -1475,22 +1853,14 @@
               "acceptance_score": 87,
               "rank_score": 45.18,
               "pre_run_up_3d": 9.61,
-              "overheated": false
-            },
-            {
-              "ts_code": "300624.SZ",
-              "stock_name": "万兴科技",
-              "segment": "AI应用/出海软件",
-              "rec_reason": "A股AI应用出海龙头，旗下万兴喵影、亿图等产品已深度集成AI功能，与海外AI生态高度协同。Anthropic收入暴增证明全球AI应用付费意愿强劲，A股AI应用公司有望跟随海外映射逻辑获得估值修复和业绩预期上修。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 6.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 29,
-              "rank_score": 33.61,
-              "pre_run_up_3d": -5.13,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 95.0,
+              "leader_detail": {
+                "circ_mv_yi": 13277.0,
+                "main_net_3d_yi": 20.29,
+                "mv_score": 95,
+                "mf_score": 95
+              }
             },
             {
               "ts_code": "603019.SH",
@@ -1505,7 +1875,36 @@
               "acceptance_score": 20,
               "rank_score": 31.35,
               "pre_run_up_3d": -5.39,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 47.5,
+              "leader_detail": {
+                "circ_mv_yi": 1335.0,
+                "main_net_3d_yi": -4.77,
+                "mv_score": 80,
+                "mf_score": 15
+              }
+            },
+            {
+              "ts_code": "300624.SZ",
+              "stock_name": "万兴科技",
+              "segment": "AI应用/出海软件",
+              "rec_reason": "A股AI应用出海龙头，旗下万兴喵影、亿图等产品已深度集成AI功能，与海外AI生态高度协同。Anthropic收入暴增证明全球AI应用付费意愿强劲，A股AI应用公司有望跟随海外映射逻辑获得估值修复和业绩预期上修。",
+              "applied_pattern": "P01",
+              "expected_return_pct": 6.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 36,
+              "acceptance_score": 29,
+              "rank_score": 33.61,
+              "pre_run_up_3d": -5.13,
+              "overheated": false,
+              "leader_score": 42.5,
+              "leader_detail": {
+                "circ_mv_yi": 104.0,
+                "main_net_3d_yi": -1.12,
+                "mv_score": 50,
+                "mf_score": 35
+              }
             }
           ],
           "any_overheated": false,
@@ -1513,7 +1912,7 @@
         }
       ],
       "n_pool": 42,
-      "max_rank": 68.32,
+      "max_rank": 73.0,
       "date": "2026-05-29",
       "label": "今日",
       "weekday": "五",
@@ -1521,77 +1920,6 @@
     },
     {
       "top10": [
-        {
-          "source_news_hash": "314ab85940f3cf08f3057d1d6e697950",
-          "news_channel": "加红",
-          "event_headline": "中美对等降税框架推进，出口链受益",
-          "topic_class": "地缘政治/贸易缓和",
-          "applied_pattern": "P13",
-          "transmission_chain": "【Step -1 事件类型判断】新闻为商务部正式回应中美关税谈判进展，包含具体降税框架（300亿美元对等降税），属于官方确认的实质性政策进展，判定为 event_driven。\n\n【Step 0 影响范围判断】中美关税谈判涉及全球最大两个经济体的贸易关系，影响A股出口导向型产业链（家电、机械、电子、纺织等）的估值和盈利预期，属于 global 级别。\n\n【Step 1-2 范式选择】根据矩阵，地缘缓和类新闻最优范式为 [P13] 出口利好（海外需求复苏/关税减免）。历史教训（教训1、教训2）明确指出：地缘谈判类新闻不要套用\"成本下降\"逻辑（P03/P08），应聚焦关税减免直接受益的出口型企业。\n\n【Step 3 因果链推演】新闻X：中美双方原则同意在贸易理事会项下讨论同等规模产品对等降税框架安排，规模各为300亿美元或更多 → 关税减免预期升温 → 此前受高关税压制的对美出口型企业将显著受益，利润率修复+订单预期改善 → 利好海外营收占比高、对美出口敞口大、此前受关税压制明显的细分行业龙头。\n\n【Step 4 特征条件】受益标的特征：1) 海外营收占比>40%；2) 对美出口占比较高；3) 此前受关税影响毛利率承压；4) 行业出口龙头、定价能力强。",
-          "impact_scope": "global",
-          "scope_emoji": "🌍",
-          "scope_cn": "全球级",
-          "scope_multiplier": 1.0,
-          "event_type": "event_driven",
-          "raw_title": "商务部回应中美关税谈判进展：双方经贸团队将商定具体安排并尽快推动实施",
-          "raw_content": "【商务部回应中美关税谈判进展：双方经贸团队将商定具体安排并尽快推动实施】财联社5月28日电，商务部新闻发言人何亚东28日在例行新闻发布会上回应关于中美关税谈判进展的提问时表示，关税一直是中美经贸关系中的关键问题之一。在两国元首战略引领下，中美经贸团队围绕关税问题深入沟通，就有关双边关税做出安排。我想重申，希望美方信守承诺，为双方拓展经贸合作创造积极条件。同时，双方原则同意在贸易理事会项下讨论同等规模产品对等降税框架安排，规模各为300亿美元或更多。双方经贸团队将保持密切沟通，商定具体安排并尽快推动实施。",
-          "news_pub_time": "2026-05-28 15:11",
-          "news_pub_date": "2026-05-28",
-          "strength_score": 65,
-          "novelty_score": 63,
-          "max_heat": 61,
-          "max_accept": 88,
-          "max_rank": 68.06,
-          "stocks": [
-            {
-              "ts_code": "002241.SZ",
-              "stock_name": "歌尔股份",
-              "segment": "消费电子/声学器件",
-              "rec_reason": "海外营收占比超70%，对美出口占比较高；此前受关税和地缘风险压制估值，关税缓和后估值修复空间大，Meta/苹果核心供应商",
-              "applied_pattern": "P13",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 61,
-              "acceptance_score": 88,
-              "rank_score": 68.06,
-              "pre_run_up_3d": 11.42,
-              "overheated": false
-            },
-            {
-              "ts_code": "000651.SZ",
-              "stock_name": "格力电器",
-              "segment": "家电出口",
-              "rec_reason": "对美出口敞口大，空调等大家电此前受25%关税压制严重；关税减免后利润率修复弹性显著，海外营收占比约15%且持续提升，白电龙头定价能力强",
-              "applied_pattern": "P13",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+5-10",
-              "heat_score": 53,
-              "acceptance_score": 44,
-              "rank_score": 54.49,
-              "pre_run_up_3d": -1.94,
-              "overheated": false
-            },
-            {
-              "ts_code": "000333.SZ",
-              "stock_name": "美的集团",
-              "segment": "家电出口",
-              "rec_reason": "全球家电龙头，海外营收占比超40%，对美出口规模大；关税减免直接增厚出口利润，且海外自有品牌布局完善，受益弹性大",
-              "applied_pattern": "P13",
-              "expected_return_pct": 7.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+5-10",
-              "heat_score": 36,
-              "acceptance_score": 58,
-              "rank_score": 53.01,
-              "pre_run_up_3d": -1.08,
-              "overheated": false
-            }
-          ],
-          "any_overheated": false,
-          "similar_cases": []
-        },
         {
           "source_news_hash": "f511c7a0c40bb62f58c4034c2850fee1",
           "news_channel": "加红",
@@ -1610,25 +1938,10 @@
           "news_pub_date": "2026-05-28",
           "strength_score": 92,
           "novelty_score": 41,
-          "max_heat": 62,
+          "max_heat": 73,
           "max_accept": 32,
-          "max_rank": 66.26,
+          "max_rank": 69.86,
           "stocks": [
-            {
-              "ts_code": "002156.SZ",
-              "stock_name": "通富微电",
-              "segment": "先进封装",
-              "rec_reason": "华为海思核心封测供应商，深度参与麒麟芯片先进封装（2.5D/3D封装）。韬芯片架构复杂度提升、晶体管密度跳跃性增长，对先进封装能力要求更高，通富微电作为国内先进封装龙头直接受益于韬芯片量产带来的封测订单增量。",
-              "applied_pattern": "P07",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+1-3",
-              "heat_score": 53,
-              "acceptance_score": 31,
-              "rank_score": 66.26,
-              "pre_run_up_3d": -0.58,
-              "overheated": false
-            },
             {
               "ts_code": "002371.SZ",
               "stock_name": "北方华创",
@@ -1638,11 +1951,18 @@
               "expected_return_pct": 10.0,
               "expected_duration_days": 12,
               "expected_window": "T+5-10",
-              "heat_score": 62,
+              "heat_score": 73,
               "acceptance_score": 20,
-              "rank_score": 65.9,
+              "rank_score": 67.88,
               "pre_run_up_3d": -5.61,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 4773.0,
+                "main_net_3d_yi": -9.78,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             },
             {
               "ts_code": "688981.SH",
@@ -1653,82 +1973,40 @@
               "expected_return_pct": 8.0,
               "expected_duration_days": 10,
               "expected_window": "T+5-10",
-              "heat_score": 62,
+              "heat_score": 73,
               "acceptance_score": 32,
-              "rank_score": 63.31,
+              "rank_score": 65.29,
               "pre_run_up_3d": -1.47,
-              "overheated": false
-            }
-          ],
-          "any_overheated": false,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "f7d59c857bea19f8d0eb4ae38ee58f6c",
-          "news_channel": "加红",
-          "event_headline": "发改委部署迎峰度夏能源保供",
-          "topic_class": "政策出台",
-          "applied_pattern": "P04",
-          "transmission_chain": "【Step -1: event_type】国家发改委召开视频会议部署迎峰度夏能源保供工作，属于部委级正式政策/工作部署，是具体事件驱动，选 event_driven。\n【Step 0: impact_scope】影响整个能源/电力行业（煤炭、天然气、电力保供），涉及全国范围迎峰度夏，选 industry（×0.85）。\n【Step 1: topic_class】政策出台类。\n【Step 2: 范式选择】查矩阵：政策出台 → 最优 [P04]（win=61%, comp=+0.09）。同时，新闻核心逻辑是\"迎峰度夏→用电需求高峰→煤炭/天然气保供→煤电/气电顶峰出力\"，这本质是**季节性需求旺季+政策保供**，与 [P03] 供需共振逻辑高度吻合（供给端保供+需求端夏季用电高峰），[P03] win=68% 更高。但注意：反指案例中\"碳酸锂反弹→赣锋锂业\"是典型的涨价类用 P03 但跌了，原因是碳酸锂当时处于下行周期中的短暂反弹。而本次是**政策驱动的保供+季节性刚需**，不是单纯涨价题材，因此以 [P04] 为主范式，[P03] 为辅。\n【Step 3: 因果链】新闻：发改委部署迎峰度夏能源保供 → ① 夏季用电高峰确定性到来，火电（煤电/气电）作为顶峰主力必须满发 → ② 电煤需求大增，煤炭运输（铁路/港口）保障强化 → ③ 电力市场化交易下，顶峰时段电价上浮 → ④ 电力需求侧",
-          "impact_scope": "industry",
-          "scope_emoji": "🏭",
-          "scope_cn": "全行业",
-          "scope_multiplier": 0.85,
-          "event_type": "event_driven",
-          "raw_title": "国家发改委：做好煤炭、天然气等一次能源生产和供应，强化电煤运输保障，满足顶峰发电需求",
-          "raw_content": "【国家发改委：做好煤炭、天然气等一次能源生产和供应，强化电煤运输保障，满足顶峰发电需求】财联社5月28日电，国家发改委组织召开视频会议安排部署全国迎峰度夏能源保供工作。会议要求，全力保障迎峰度夏能源安全平稳运行。一是全力保障稳发稳供。做好煤炭、天然气等一次能源生产和供应，强化电煤运输保障，满足顶峰发电需求。持续推动电力、电煤、天然气中长期合同高效履约。加强电力设备运维管控，实现稳定可靠出力。优化电力调度，充分发挥各类电源顶峰能力。二是高效开展省间电力互济。坚持有效市场和有为政府相结合，充分利用全国统一电力市场建设成效提升互济水平，及时规范实施电力应急调度兜底保供。三是精细化开展电力需求侧管理。坚持“节约用电助力，市场化需求响应优先、有序用电预案保底”，充分挖掘需求侧资源协同保供，守牢电力安全有序运行底线。四是快速响应稳妥做好应急处置。针对迎峰度夏台风、暴雨、洪涝等极端气候灾害多发频发的情况，充分预置抢修资源，及时组织能源保供应急处置和抢修，做好民生及重要用户临时用能用电保障。五是切实抓好安全生产。严格落实“三管三必须”要求，切实将安全生产工作落到实处，守好安全底线红线。",
-          "news_pub_time": "2026-05-28 19:47",
-          "news_pub_date": "2026-05-28",
-          "strength_score": 72,
-          "novelty_score": 72,
-          "max_heat": 61,
-          "max_accept": 68,
-          "max_rank": 60.19,
-          "stocks": [
-            {
-              "ts_code": "601088.SH",
-              "stock_name": "中国神华",
-              "segment": "煤电一体化龙头",
-              "rec_reason": "国内最大煤炭生产企业+第二大火电运营商，煤电一体化模式下成本优势显著。发改委要求'做好煤炭生产和供应、强化电煤运输保障'，神华自有煤矿+自有铁路+自有电厂的闭环模式在保供期优势最大化，电煤长协履约率高，量价双稳。",
-              "applied_pattern": "P04",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 15,
-              "expected_window": "T+5-10",
-              "heat_score": 61,
-              "acceptance_score": 62,
-              "rank_score": 60.19,
-              "pre_run_up_3d": 3.06,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 3073.0,
+                "main_net_3d_yi": -10.59,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             },
             {
-              "ts_code": "600011.SH",
-              "stock_name": "华能国际",
-              "segment": "火电龙头",
-              "rec_reason": "全国最大火电上市公司，可控装机超1.3亿千瓦，火电占比约75%。迎峰度夏期间顶峰发电需求刚性，叠加容量电价+现货市场电价上浮，Q3业绩弹性大。发改委明确要求'充分发挥各类电源顶峰能力'，华能国际作为火电龙头直接受益于发电量提升和电价支撑。",
-              "applied_pattern": "P04",
+              "ts_code": "002156.SZ",
+              "stock_name": "通富微电",
+              "segment": "先进封装",
+              "rec_reason": "华为海思核心封测供应商，深度参与麒麟芯片先进封装（2.5D/3D封装）。韬芯片架构复杂度提升、晶体管密度跳跃性增长，对先进封装能力要求更高，通富微电作为国内先进封装龙头直接受益于韬芯片量产带来的封测订单增量。",
+              "applied_pattern": "P07",
               "expected_return_pct": 12.0,
-              "expected_duration_days": 15,
-              "expected_window": "T+5-10",
-              "heat_score": 36,
-              "acceptance_score": 68,
-              "rank_score": 59.36,
-              "pre_run_up_3d": 8.04,
-              "overheated": false
-            },
-            {
-              "ts_code": "600021.SH",
-              "stock_name": "上海电力",
-              "segment": "华东区域火电+虚拟电厂",
-              "rec_reason": "华东区域电力龙头，火电装机占比高，同时布局虚拟电厂和需求侧响应业务。发改委要求'精细化开展电力需求侧管理'、'市场化需求响应优先'，上海电力在长三角电力市场交易活跃，迎峰度夏期间顶峰发电+需求侧响应双重受益。",
-              "applied_pattern": "P04",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 12,
-              "expected_window": "T+5-10",
-              "heat_score": 36,
-              "acceptance_score": 68,
-              "rank_score": 57.28,
-              "pre_run_up_3d": 14.24,
-              "overheated": false
+              "expected_duration_days": 10,
+              "expected_window": "T+1-3",
+              "heat_score": 73,
+              "acceptance_score": 31,
+              "rank_score": 69.86,
+              "pre_run_up_3d": -0.58,
+              "overheated": false,
+              "leader_score": 47.5,
+              "leader_detail": {
+                "circ_mv_yi": 1052.0,
+                "main_net_3d_yi": -45.74,
+                "mv_score": 80,
+                "mf_score": 15
+              }
             }
           ],
           "any_overheated": false,
@@ -1752,25 +2030,10 @@
           "news_pub_date": "2026-05-28",
           "strength_score": 78,
           "novelty_score": 74,
-          "max_heat": 36,
+          "max_heat": 66,
           "max_accept": 58,
-          "max_rank": 60.79,
+          "max_rank": 66.19,
           "stocks": [
-            {
-              "ts_code": "600871.SH",
-              "stock_name": "石化油服",
-              "segment": "油服",
-              "rec_reason": "油价跳涨后油公司资本开支预期提升，油服订单弹性最大。公司在中东有大量业务布局，地缘冲突后中东油服需求有望加速。",
-              "applied_pattern": "P05",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 44,
-              "rank_score": 60.79,
-              "pre_run_up_3d": -2.88,
-              "overheated": false
-            },
             {
               "ts_code": "600028.SH",
               "stock_name": "中国石化",
@@ -1780,11 +2043,18 @@
               "expected_return_pct": 8.0,
               "expected_duration_days": 10,
               "expected_window": "T+1-3",
-              "heat_score": 31,
+              "heat_score": 66,
               "acceptance_score": 38,
-              "rank_score": 58.81,
+              "rank_score": 65.11,
               "pre_run_up_3d": -2.24,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 4558.0,
+                "main_net_3d_yi": -1.17,
+                "mv_score": 95,
+                "mf_score": 35
+              }
             },
             {
               "ts_code": "600188.SH",
@@ -1795,11 +2065,224 @@
               "expected_return_pct": 6.0,
               "expected_duration_days": 7,
               "expected_window": "T+1-3",
-              "heat_score": 36,
+              "heat_score": 66,
               "acceptance_score": 58,
-              "rank_score": 57.98,
+              "rank_score": 63.38,
               "pre_run_up_3d": 3.51,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 1282.0,
+                "main_net_3d_yi": 0.18,
+                "mv_score": 80,
+                "mf_score": 50
+              }
+            },
+            {
+              "ts_code": "600871.SH",
+              "stock_name": "石化油服",
+              "segment": "油服",
+              "rec_reason": "油价跳涨后油公司资本开支预期提升，油服订单弹性最大。公司在中东有大量业务布局，地缘冲突后中东油服需求有望加速。",
+              "applied_pattern": "P05",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+1-3",
+              "heat_score": 66,
+              "acceptance_score": 44,
+              "rank_score": 66.19,
+              "pre_run_up_3d": -2.88,
+              "overheated": false,
+              "leader_score": 57.5,
+              "leader_detail": {
+                "circ_mv_yi": 320.0,
+                "main_net_3d_yi": -0.21,
+                "mv_score": 65,
+                "mf_score": 50
+              }
+            }
+          ],
+          "any_overheated": false,
+          "similar_cases": []
+        },
+        {
+          "source_news_hash": "f7d59c857bea19f8d0eb4ae38ee58f6c",
+          "news_channel": "加红",
+          "event_headline": "发改委部署迎峰度夏能源保供",
+          "topic_class": "政策出台",
+          "applied_pattern": "P04",
+          "transmission_chain": "【Step -1: event_type】国家发改委召开视频会议部署迎峰度夏能源保供工作，属于部委级正式政策/工作部署，是具体事件驱动，选 event_driven。\n【Step 0: impact_scope】影响整个能源/电力行业（煤炭、天然气、电力保供），涉及全国范围迎峰度夏，选 industry（×0.85）。\n【Step 1: topic_class】政策出台类。\n【Step 2: 范式选择】查矩阵：政策出台 → 最优 [P04]（win=61%, comp=+0.09）。同时，新闻核心逻辑是\"迎峰度夏→用电需求高峰→煤炭/天然气保供→煤电/气电顶峰出力\"，这本质是**季节性需求旺季+政策保供**，与 [P03] 供需共振逻辑高度吻合（供给端保供+需求端夏季用电高峰），[P03] win=68% 更高。但注意：反指案例中\"碳酸锂反弹→赣锋锂业\"是典型的涨价类用 P03 但跌了，原因是碳酸锂当时处于下行周期中的短暂反弹。而本次是**政策驱动的保供+季节性刚需**，不是单纯涨价题材，因此以 [P04] 为主范式，[P03] 为辅。\n【Step 3: 因果链】新闻：发改委部署迎峰度夏能源保供 → ① 夏季用电高峰确定性到来，火电（煤电/气电）作为顶峰主力必须满发 → ② 电煤需求大增，煤炭运输（铁路/港口）保障强化 → ③ 电力市场化交易下，顶峰时段电价上浮 → ④ 电力需求侧",
+          "impact_scope": "industry",
+          "scope_emoji": "🏭",
+          "scope_cn": "全行业",
+          "scope_multiplier": 0.85,
+          "event_type": "event_driven",
+          "raw_title": "国家发改委：做好煤炭、天然气等一次能源生产和供应，强化电煤运输保障，满足顶峰发电需求",
+          "raw_content": "【国家发改委：做好煤炭、天然气等一次能源生产和供应，强化电煤运输保障，满足顶峰发电需求】财联社5月28日电，国家发改委组织召开视频会议安排部署全国迎峰度夏能源保供工作。会议要求，全力保障迎峰度夏能源安全平稳运行。一是全力保障稳发稳供。做好煤炭、天然气等一次能源生产和供应，强化电煤运输保障，满足顶峰发电需求。持续推动电力、电煤、天然气中长期合同高效履约。加强电力设备运维管控，实现稳定可靠出力。优化电力调度，充分发挥各类电源顶峰能力。二是高效开展省间电力互济。坚持有效市场和有为政府相结合，充分利用全国统一电力市场建设成效提升互济水平，及时规范实施电力应急调度兜底保供。三是精细化开展电力需求侧管理。坚持“节约用电助力，市场化需求响应优先、有序用电预案保底”，充分挖掘需求侧资源协同保供，守牢电力安全有序运行底线。四是快速响应稳妥做好应急处置。针对迎峰度夏台风、暴雨、洪涝等极端气候灾害多发频发的情况，充分预置抢修资源，及时组织能源保供应急处置和抢修，做好民生及重要用户临时用能用电保障。五是切实抓好安全生产。严格落实“三管三必须”要求，切实将安全生产工作落到实处，守好安全底线红线。",
+          "news_pub_time": "2026-05-28 19:47",
+          "news_pub_date": "2026-05-28",
+          "strength_score": 72,
+          "novelty_score": 72,
+          "max_heat": 63,
+          "max_accept": 68,
+          "max_rank": 63.49,
+          "stocks": [
+            {
+              "ts_code": "600021.SH",
+              "stock_name": "上海电力",
+              "segment": "华东区域火电+虚拟电厂",
+              "rec_reason": "华东区域电力龙头，火电装机占比高，同时布局虚拟电厂和需求侧响应业务。发改委要求'精细化开展电力需求侧管理'、'市场化需求响应优先'，上海电力在长三角电力市场交易活跃，迎峰度夏期间顶峰发电+需求侧响应双重受益。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 12,
+              "expected_window": "T+5-10",
+              "heat_score": 63,
+              "acceptance_score": 68,
+              "rank_score": 61.41,
+              "pre_run_up_3d": 14.24,
+              "overheated": false,
+              "leader_score": 80.0,
+              "leader_detail": {
+                "circ_mv_yi": 598.0,
+                "main_net_3d_yi": 3.36,
+                "mv_score": 80,
+                "mf_score": 80
+              }
+            },
+            {
+              "ts_code": "601088.SH",
+              "stock_name": "中国神华",
+              "segment": "煤电一体化龙头",
+              "rec_reason": "国内最大煤炭生产企业+第二大火电运营商，煤电一体化模式下成本优势显著。发改委要求'做好煤炭生产和供应、强化电煤运输保障'，神华自有煤矿+自有铁路+自有电厂的闭环模式在保供期优势最大化，电煤长协履约率高，量价双稳。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 15,
+              "expected_window": "T+5-10",
+              "heat_score": 63,
+              "acceptance_score": 62,
+              "rank_score": 60.5,
+              "pre_run_up_3d": 3.06,
+              "overheated": false,
+              "leader_score": 80.0,
+              "leader_detail": {
+                "circ_mv_yi": 7611.0,
+                "main_net_3d_yi": 1.32,
+                "mv_score": 95,
+                "mf_score": 65
+              }
+            },
+            {
+              "ts_code": "600011.SH",
+              "stock_name": "华能国际",
+              "segment": "火电龙头",
+              "rec_reason": "全国最大火电上市公司，可控装机超1.3亿千瓦，火电占比约75%。迎峰度夏期间顶峰发电需求刚性，叠加容量电价+现货市场电价上浮，Q3业绩弹性大。发改委明确要求'充分发挥各类电源顶峰能力'，华能国际作为火电龙头直接受益于发电量提升和电价支撑。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 12.0,
+              "expected_duration_days": 15,
+              "expected_window": "T+5-10",
+              "heat_score": 63,
+              "acceptance_score": 68,
+              "rank_score": 63.49,
+              "pre_run_up_3d": 8.04,
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 886.0,
+                "main_net_3d_yi": -0.33,
+                "mv_score": 80,
+                "mf_score": 50
+              }
+            }
+          ],
+          "any_overheated": false,
+          "similar_cases": []
+        },
+        {
+          "source_news_hash": "314ab85940f3cf08f3057d1d6e697950",
+          "news_channel": "加红",
+          "event_headline": "中美对等降税框架推进，出口链受益",
+          "topic_class": "地缘政治/贸易缓和",
+          "applied_pattern": "P13",
+          "transmission_chain": "【Step -1 事件类型判断】新闻为商务部正式回应中美关税谈判进展，包含具体降税框架（300亿美元对等降税），属于官方确认的实质性政策进展，判定为 event_driven。\n\n【Step 0 影响范围判断】中美关税谈判涉及全球最大两个经济体的贸易关系，影响A股出口导向型产业链（家电、机械、电子、纺织等）的估值和盈利预期，属于 global 级别。\n\n【Step 1-2 范式选择】根据矩阵，地缘缓和类新闻最优范式为 [P13] 出口利好（海外需求复苏/关税减免）。历史教训（教训1、教训2）明确指出：地缘谈判类新闻不要套用\"成本下降\"逻辑（P03/P08），应聚焦关税减免直接受益的出口型企业。\n\n【Step 3 因果链推演】新闻X：中美双方原则同意在贸易理事会项下讨论同等规模产品对等降税框架安排，规模各为300亿美元或更多 → 关税减免预期升温 → 此前受高关税压制的对美出口型企业将显著受益，利润率修复+订单预期改善 → 利好海外营收占比高、对美出口敞口大、此前受关税压制明显的细分行业龙头。\n\n【Step 4 特征条件】受益标的特征：1) 海外营收占比>40%；2) 对美出口占比较高；3) 此前受关税影响毛利率承压；4) 行业出口龙头、定价能力强。",
+          "impact_scope": "global",
+          "scope_emoji": "🌍",
+          "scope_cn": "全球级",
+          "scope_multiplier": 1.0,
+          "event_type": "event_driven",
+          "raw_title": "商务部回应中美关税谈判进展：双方经贸团队将商定具体安排并尽快推动实施",
+          "raw_content": "【商务部回应中美关税谈判进展：双方经贸团队将商定具体安排并尽快推动实施】财联社5月28日电，商务部新闻发言人何亚东28日在例行新闻发布会上回应关于中美关税谈判进展的提问时表示，关税一直是中美经贸关系中的关键问题之一。在两国元首战略引领下，中美经贸团队围绕关税问题深入沟通，就有关双边关税做出安排。我想重申，希望美方信守承诺，为双方拓展经贸合作创造积极条件。同时，双方原则同意在贸易理事会项下讨论同等规模产品对等降税框架安排，规模各为300亿美元或更多。双方经贸团队将保持密切沟通，商定具体安排并尽快推动实施。",
+          "news_pub_time": "2026-05-28 15:11",
+          "news_pub_date": "2026-05-28",
+          "strength_score": 65,
+          "novelty_score": 63,
+          "max_heat": 10,
+          "max_accept": 88,
+          "max_rank": 58.88,
+          "stocks": [
+            {
+              "ts_code": "002241.SZ",
+              "stock_name": "歌尔股份",
+              "segment": "消费电子/声学器件",
+              "rec_reason": "海外营收占比超70%，对美出口占比较高；此前受关税和地缘风险压制估值，关税缓和后估值修复空间大，Meta/苹果核心供应商",
+              "applied_pattern": "P13",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+5-10",
+              "heat_score": 10,
+              "acceptance_score": 88,
+              "rank_score": 58.88,
+              "pre_run_up_3d": 11.42,
+              "overheated": false,
+              "leader_score": 87.5,
+              "leader_detail": {
+                "circ_mv_yi": 893.0,
+                "main_net_3d_yi": 14.24,
+                "mv_score": 80,
+                "mf_score": 95
+              }
+            },
+            {
+              "ts_code": "000333.SZ",
+              "stock_name": "美的集团",
+              "segment": "家电出口",
+              "rec_reason": "全球家电龙头，海外营收占比超40%，对美出口规模大；关税减免直接增厚出口利润，且海外自有品牌布局完善，受益弹性大",
+              "applied_pattern": "P13",
+              "expected_return_pct": 7.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+5-10",
+              "heat_score": 10,
+              "acceptance_score": 58,
+              "rank_score": 48.33,
+              "pre_run_up_3d": -1.08,
+              "overheated": false,
+              "leader_score": 87.5,
+              "leader_detail": {
+                "circ_mv_yi": 5416.0,
+                "main_net_3d_yi": 2.21,
+                "mv_score": 95,
+                "mf_score": 80
+              }
+            },
+            {
+              "ts_code": "000651.SZ",
+              "stock_name": "格力电器",
+              "segment": "家电出口",
+              "rec_reason": "对美出口敞口大，空调等大家电此前受25%关税压制严重；关税减免后利润率修复弹性显著，海外营收占比约15%且持续提升，白电龙头定价能力强",
+              "applied_pattern": "P13",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+5-10",
+              "heat_score": 10,
+              "acceptance_score": 44,
+              "rank_score": 46.75,
+              "pre_run_up_3d": -1.94,
+              "overheated": false,
+              "leader_score": 72.5,
+              "leader_detail": {
+                "circ_mv_yi": 2092.0,
+                "main_net_3d_yi": 0.36,
+                "mv_score": 95,
+                "mf_score": 50
+              }
             }
           ],
           "any_overheated": false,
@@ -1823,9 +2306,9 @@
           "news_pub_date": "2026-05-28",
           "strength_score": 78,
           "novelty_score": 58,
-          "max_heat": 62,
+          "max_heat": 63,
           "max_accept": 49,
-          "max_rank": 59.28,
+          "max_rank": 59.46,
           "stocks": [
             {
               "ts_code": "601857.SH",
@@ -1836,26 +2319,18 @@
               "expected_return_pct": 10.0,
               "expected_duration_days": 5,
               "expected_window": "T+1-3",
-              "heat_score": 62,
+              "heat_score": 63,
               "acceptance_score": 49,
-              "rank_score": 59.28,
+              "rank_score": 59.46,
               "pre_run_up_3d": 0.65,
-              "overheated": false
-            },
-            {
-              "ts_code": "600026.SH",
-              "stock_name": "中远海能",
-              "segment": "油运/航运",
-              "rec_reason": "全球最大油轮运营商之一，霍尔木兹海峡危机导致油轮绕行（绕行好望角增加约30%航程），叠加战争险保费飙升，运价短期脉冲效应极强。历史经验：地缘冲突下油运运价可在数日内翻倍，中远海能弹性最大。",
-              "applied_pattern": "P05",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 20,
-              "rank_score": 50.78,
-              "pre_run_up_3d": -9.28,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 17488.0,
+                "main_net_3d_yi": -1.99,
+                "mv_score": 95,
+                "mf_score": 35
+              }
             },
             {
               "ts_code": "600028.SH",
@@ -1866,11 +2341,40 @@
               "expected_return_pct": 8.0,
               "expected_duration_days": 5,
               "expected_window": "T+1-3",
-              "heat_score": 31,
+              "heat_score": 63,
               "acceptance_score": 38,
-              "rank_score": 50.32,
+              "rank_score": 56.08,
               "pre_run_up_3d": -2.24,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 4558.0,
+                "main_net_3d_yi": -1.17,
+                "mv_score": 95,
+                "mf_score": 35
+              }
+            },
+            {
+              "ts_code": "600026.SH",
+              "stock_name": "中远海能",
+              "segment": "油运/航运",
+              "rec_reason": "全球最大油轮运营商之一，霍尔木兹海峡危机导致油轮绕行（绕行好望角增加约30%航程），叠加战争险保费飙升，运价短期脉冲效应极强。历史经验：地缘冲突下油运运价可在数日内翻倍，中远海能弹性最大。",
+              "applied_pattern": "P05",
+              "expected_return_pct": 12.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 63,
+              "acceptance_score": 20,
+              "rank_score": 55.64,
+              "pre_run_up_3d": -9.28,
+              "overheated": false,
+              "leader_score": 47.5,
+              "leader_detail": {
+                "circ_mv_yi": 759.0,
+                "main_net_3d_yi": -2.48,
+                "mv_score": 80,
+                "mf_score": 15
+              }
             }
           ],
           "any_overheated": false,
@@ -1894,25 +2398,10 @@
           "news_pub_date": "2026-05-28",
           "strength_score": 68,
           "novelty_score": 72,
-          "max_heat": 36,
+          "max_heat": 50,
           "max_accept": 59,
-          "max_rank": 52.75,
+          "max_rank": 55.66,
           "stocks": [
-            {
-              "ts_code": "688228.SH",
-              "stock_name": "开普云",
-              "segment": "AI安全评测/可信AI",
-              "rec_reason": "公司深耕AI内容安全与算法评测，拥有AI系统安全检测评估能力，已参与多项国家级AI治理标准制定。政策聚焦AI算法'黑箱'和决策可解释性难题，部署AI系统内部状态监测与表征等关键技术攻关，开普云在AI安全可信评估领域的技术积累与政策方向高度契合，有望获得计量评测订单。",
-              "applied_pattern": "P04",
-              "expected_return_pct": 15.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 31,
-              "acceptance_score": 36,
-              "rank_score": 52.75,
-              "pre_run_up_3d": -11.12,
-              "overheated": false
-            },
             {
               "ts_code": "300012.SZ",
               "stock_name": "华测检测",
@@ -1922,11 +2411,40 @@
               "expected_return_pct": 12.0,
               "expected_duration_days": 10,
               "expected_window": "T+5-10",
-              "heat_score": 36,
+              "heat_score": 50,
               "acceptance_score": 38,
-              "rank_score": 51.01,
+              "rank_score": 53.15,
               "pre_run_up_3d": -1.69,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 50.0,
+              "leader_detail": {
+                "circ_mv_yi": 209.0,
+                "main_net_3d_yi": -0.98,
+                "mv_score": 65,
+                "mf_score": 35
+              }
+            },
+            {
+              "ts_code": "688228.SH",
+              "stock_name": "开普云",
+              "segment": "AI安全评测/可信AI",
+              "rec_reason": "公司深耕AI内容安全与算法评测，拥有AI系统安全检测评估能力，已参与多项国家级AI治理标准制定。政策聚焦AI算法'黑箱'和决策可解释性难题，部署AI系统内部状态监测与表征等关键技术攻关，开普云在AI安全可信评估领域的技术积累与政策方向高度契合，有望获得计量评测订单。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 15.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+5-10",
+              "heat_score": 50,
+              "acceptance_score": 36,
+              "rank_score": 55.66,
+              "pre_run_up_3d": -11.12,
+              "overheated": false,
+              "leader_score": 42.5,
+              "leader_detail": {
+                "circ_mv_yi": 64.0,
+                "main_net_3d_yi": 0.26,
+                "mv_score": 35,
+                "mf_score": 50
+              }
             },
             {
               "ts_code": "300887.SZ",
@@ -1937,11 +2455,18 @@
               "expected_return_pct": 10.0,
               "expected_duration_days": 8,
               "expected_window": "T+5-10",
-              "heat_score": 36,
+              "heat_score": 50,
               "acceptance_score": 59,
-              "rank_score": 50.06,
+              "rank_score": 52.2,
               "pre_run_up_3d": 3.02,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 35.0,
+              "leader_detail": {
+                "circ_mv_yi": 33.0,
+                "main_net_3d_yi": 0.01,
+                "mv_score": 20,
+                "mf_score": 50
+              }
             }
           ],
           "any_overheated": false,
@@ -1965,9 +2490,9 @@
           "news_pub_date": "2026-05-28",
           "strength_score": 78,
           "novelty_score": 62,
-          "max_heat": 62,
+          "max_heat": 81,
           "max_accept": 87,
-          "max_rank": 53.67,
+          "max_rank": 56.06,
           "stocks": [
             {
               "ts_code": "300308.SZ",
@@ -1978,26 +2503,18 @@
               "expected_return_pct": 12.0,
               "expected_duration_days": 10,
               "expected_window": "T+1-3",
-              "heat_score": 62,
+              "heat_score": 81,
               "acceptance_score": 87,
-              "rank_score": 53.67,
+              "rank_score": 56.06,
               "pre_run_up_3d": 9.61,
-              "overheated": false
-            },
-            {
-              "ts_code": "688498.SH",
-              "stock_name": "源杰科技",
-              "segment": "光芯片",
-              "rec_reason": "国产高速光芯片（EML/DFB）龙头，数据中心光模块上游核心器件供应商，迈威尔指引的数据中心高增长映射到光芯片需求持续放量，国产替代逻辑叠加海外映射",
-              "applied_pattern": "P01",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 7,
-              "expected_window": "T+5-10",
-              "heat_score": 56,
-              "acceptance_score": 67,
-              "rank_score": 44.1,
-              "pre_run_up_3d": 5.35,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 95.0,
+              "leader_detail": {
+                "circ_mv_yi": 13277.0,
+                "main_net_3d_yi": 20.29,
+                "mv_score": 95,
+                "mf_score": 95
+              }
             },
             {
               "ts_code": "300394.SZ",
@@ -2008,11 +2525,40 @@
               "expected_return_pct": 10.0,
               "expected_duration_days": 8,
               "expected_window": "T+1-3",
-              "heat_score": 58,
+              "heat_score": 81,
               "acceptance_score": 74,
-              "rank_score": 26.17,
+              "rank_score": 27.77,
               "pre_run_up_3d": 12.81,
-              "overheated": true
+              "overheated": true,
+              "leader_score": 95.0,
+              "leader_detail": {
+                "circ_mv_yi": 3480.0,
+                "main_net_3d_yi": 26.31,
+                "mv_score": 95,
+                "mf_score": 95
+              }
+            },
+            {
+              "ts_code": "688498.SH",
+              "stock_name": "源杰科技",
+              "segment": "光芯片",
+              "rec_reason": "国产高速光芯片（EML/DFB）龙头，数据中心光模块上游核心器件供应商，迈威尔指引的数据中心高增长映射到光芯片需求持续放量，国产替代逻辑叠加海外映射",
+              "applied_pattern": "P01",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 7,
+              "expected_window": "T+5-10",
+              "heat_score": 81,
+              "acceptance_score": 67,
+              "rank_score": 47.25,
+              "pre_run_up_3d": 5.35,
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 1404.0,
+                "main_net_3d_yi": -0.43,
+                "mv_score": 80,
+                "mf_score": 50
+              }
             }
           ],
           "any_overheated": true,
@@ -2036,9 +2582,9 @@
           "news_pub_date": "2026-05-28",
           "strength_score": 72,
           "novelty_score": 86,
-          "max_heat": 48,
+          "max_heat": 50,
           "max_accept": 60,
-          "max_rank": 52.03,
+          "max_rank": 54.17,
           "stocks": [
             {
               "ts_code": "002916.SZ",
@@ -2049,11 +2595,18 @@
               "expected_return_pct": 8.0,
               "expected_duration_days": 8,
               "expected_window": "T+5-10",
-              "heat_score": 36,
+              "heat_score": 50,
               "acceptance_score": 60,
-              "rank_score": 52.03,
+              "rank_score": 54.17,
               "pre_run_up_3d": -0.43,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 87.5,
+              "leader_detail": {
+                "circ_mv_yi": 2648.0,
+                "main_net_3d_yi": 4.41,
+                "mv_score": 95,
+                "mf_score": 80
+              }
             },
             {
               "ts_code": "000987.SZ",
@@ -2064,11 +2617,18 @@
               "expected_return_pct": 7.0,
               "expected_duration_days": 8,
               "expected_window": "T+5-10",
-              "heat_score": 36,
+              "heat_score": 50,
               "acceptance_score": 44,
-              "rank_score": 48.7,
+              "rank_score": 50.84,
               "pre_run_up_3d": -2.33,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 57.5,
+              "leader_detail": {
+                "circ_mv_yi": 399.0,
+                "main_net_3d_yi": -0.46,
+                "mv_score": 65,
+                "mf_score": 50
+              }
             },
             {
               "ts_code": "002938.SZ",
@@ -2079,11 +2639,18 @@
               "expected_return_pct": 6.0,
               "expected_duration_days": 7,
               "expected_window": "T+5-10",
-              "heat_score": 48,
+              "heat_score": 50,
               "acceptance_score": 23,
-              "rank_score": 45.78,
+              "rank_score": 46.09,
               "pre_run_up_3d": -7.28,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 2448.0,
+                "main_net_3d_yi": -20.87,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             }
           ],
           "any_overheated": false,
@@ -2107,25 +2674,10 @@
           "news_pub_date": "2026-05-28",
           "strength_score": 68,
           "novelty_score": 86,
-          "max_heat": 36,
+          "max_heat": 50,
           "max_accept": 46,
-          "max_rank": 51.77,
+          "max_rank": 53.91,
           "stocks": [
-            {
-              "ts_code": "002271.SZ",
-              "stock_name": "东方雨虹",
-              "segment": "市政建材-防水/管材",
-              "rec_reason": "建筑防水材料市占率第一（约20%），同时布局管道业务（雨虹管业），受益于城镇基础设施向乡村延伸带来的管网和防水需求增量，县域渠道布局完善，政策驱动下业绩弹性大。",
-              "applied_pattern": "P04",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 36,
-              "acceptance_score": 29,
-              "rank_score": 51.77,
-              "pre_run_up_3d": -4.82,
-              "overheated": false
-            },
             {
               "ts_code": "600323.SH",
               "stock_name": "瀚蓝环境",
@@ -2135,11 +2687,18 @@
               "expected_return_pct": 10.0,
               "expected_duration_days": 8,
               "expected_window": "T+5-10",
-              "heat_score": 31,
+              "heat_score": 50,
               "acceptance_score": 46,
-              "rank_score": 49.45,
+              "rank_score": 52.35,
               "pre_run_up_3d": -0.97,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 57.5,
+              "leader_detail": {
+                "circ_mv_yi": 242.0,
+                "main_net_3d_yi": -0.04,
+                "mv_score": 65,
+                "mf_score": 50
+              }
             },
             {
               "ts_code": "000877.SZ",
@@ -2150,11 +2709,40 @@
               "expected_return_pct": 8.0,
               "expected_duration_days": 7,
               "expected_window": "T+5-10",
-              "heat_score": 36,
+              "heat_score": 50,
               "acceptance_score": 34,
-              "rank_score": 45.88,
+              "rank_score": 48.02,
               "pre_run_up_3d": -5.66,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 57.5,
+              "leader_detail": {
+                "circ_mv_yi": 308.0,
+                "main_net_3d_yi": -0.15,
+                "mv_score": 65,
+                "mf_score": 50
+              }
+            },
+            {
+              "ts_code": "002271.SZ",
+              "stock_name": "东方雨虹",
+              "segment": "市政建材-防水/管材",
+              "rec_reason": "建筑防水材料市占率第一（约20%），同时布局管道业务（雨虹管业），受益于城镇基础设施向乡村延伸带来的管网和防水需求增量，县域渠道布局完善，政策驱动下业绩弹性大。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 12.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+5-10",
+              "heat_score": 50,
+              "acceptance_score": 29,
+              "rank_score": 53.91,
+              "pre_run_up_3d": -4.82,
+              "overheated": false,
+              "leader_score": 50.0,
+              "leader_detail": {
+                "circ_mv_yi": 257.0,
+                "main_net_3d_yi": -0.92,
+                "mv_score": 65,
+                "mf_score": 35
+              }
             }
           ],
           "any_overheated": false,
@@ -2178,9 +2766,9 @@
           "news_pub_date": "2026-05-28",
           "strength_score": 75,
           "novelty_score": 75,
-          "max_heat": 36,
+          "max_heat": 43,
           "max_accept": 38,
-          "max_rank": 51.2,
+          "max_rank": 52.46,
           "stocks": [
             {
               "ts_code": "300760.SZ",
@@ -2191,11 +2779,18 @@
               "expected_return_pct": 5.0,
               "expected_duration_days": 5,
               "expected_window": "T+1-3",
-              "heat_score": 36,
+              "heat_score": 43,
               "acceptance_score": 38,
-              "rank_score": 51.2,
+              "rank_score": 52.46,
               "pre_run_up_3d": -0.85,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 57.5,
+              "leader_detail": {
+                "circ_mv_yi": 1827.0,
+                "main_net_3d_yi": -1.64,
+                "mv_score": 80,
+                "mf_score": 35
+              }
             },
             {
               "ts_code": "300347.SZ",
@@ -2206,11 +2801,18 @@
               "expected_return_pct": 6.0,
               "expected_duration_days": 5,
               "expected_window": "T+1-3",
-              "heat_score": 36,
+              "heat_score": 43,
               "acceptance_score": 29,
-              "rank_score": 50.25,
+              "rank_score": 51.51,
               "pre_run_up_3d": -7.23,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 50.0,
+              "leader_detail": {
+                "circ_mv_yi": 222.0,
+                "main_net_3d_yi": -0.98,
+                "mv_score": 65,
+                "mf_score": 35
+              }
             }
           ],
           "any_overheated": false,
@@ -2218,7 +2820,7 @@
         }
       ],
       "n_pool": 69,
-      "max_rank": 68.06,
+      "max_rank": 69.86,
       "date": "2026-05-28",
       "label": "昨日",
       "weekday": "四",
@@ -2227,71 +2829,92 @@
     {
       "top10": [
         {
-          "source_news_hash": "5ea22959f0ce0dbce07a95c3a49d0035",
-          "news_channel": "港美股",
-          "event_headline": "高盛上调标普500目标至8000点，AI驱动",
-          "topic_class": "海外巨头动态",
-          "applied_pattern": "P01",
-          "transmission_chain": "【Step -1: event_type判断】新闻为高盛策略师正式上调标普500目标点位至8000点，属于权威机构发布的具体预测调整，是事件驱动(event_driven)。【Step 0: impact_scope判断】标普500是全球最重要股指，目标上调反映全球最大资本市场预期，影响全球资金流向和风险偏好，属于global级影响。【Step 1: topic_class】海外巨头动态（高盛为全球顶级投行）。【Step 2: 范式选择】最优范式为[P01]海外映射（n=59 win=69% comp=+0.17）。核心逻辑：高盛上调标普目标→AI驱动盈利增长预期强化→美股AI龙头（英伟达等）受益→映射A股AI算力/光模块/服务器产业链，资金按估值对标逻辑买入A股相关标的。【Step 3: 因果链】高盛策略师上调标普500目标至8000点（较7600点上调5.3%），核心驱动是\"AI热潮推动的盈利增长\"→这意味着美股AI龙头（英伟达、微软等）的盈利预期被进一步上调→A股中与这些美股AI龙头有直接供应链关系或技术对标的企业将受益于海外映射逻辑→资金会沿着\"AI算力→光模块→服务器→PCB\"产业链寻找A股对标标的。【Step 4: 特征条件】受益标的特征：①与英伟达等美股AI龙头有直接供应链关系（光模块/服务器代工/PCB供应商）；②海外营收占比高，受全球AI资本开支拉动；③在细分领域",
-          "impact_scope": "global",
-          "scope_emoji": "🌍",
-          "scope_cn": "全球级",
-          "scope_multiplier": 1.0,
+          "source_news_hash": "4252ab20bf86b02602d61a850d617be8",
+          "news_channel": "加红",
+          "event_headline": "李强调研舟山宁波：加快建设大宗商品枢纽",
+          "topic_class": "政策出台",
+          "applied_pattern": "P04",
+          "transmission_chain": "【Step -1 事件类型判断】新闻为国务院总理李强实地调研并发表讲话，明确要求\"加快建设大宗商品资源配置枢纽\"，属于国家级政策信号，为 event_driven 事件驱动。\n\n【Step 0 影响范围判断】该政策涉及大宗商品储备（石油、粮食）、港口物流、交易平台建设等多个环节，影响整个大宗商品供应链和港口物流行业，非单公司事件，判断为 industry 级别。\n\n【Step 1 主题分类】政策出台。\n\n【Step 2 范式选择】根据矩阵，政策出台类最优范式为 [P04] 政策驱动（win=61%, comp=+0.09）。同时，新闻中总理明确提到\"宁波舟山港\"建设世界一流强港、大宗商品交易中心等，涉及港口物流基础设施升级，可结合 [P08] 产业链传导（港口建设→设备需求→信息化升级）。\n\n【Step 3 因果链推演】新闻X：李强总理调研舟山宁波，强调加快建设大宗商品资源配置枢纽（石油储备、粮食储备、港口建设、交易中心）→ 政策力度大（总理亲自调研+新华社通稿），明确要求\"扩大储备容量\"\"补齐短板\"\"四港联动\"\"世界一流强港\"→ 直接利好：1）港口运营企业（吞吐量提升、费率改善）；2）大宗商品储运/贸易服务企业（交易量提升、仓储需求增加）；3）港口信息化/智能化改造供应商。受益标的特征：浙江/宁波舟山港相关、大宗商品仓储贸易、港口数智化服务商。",
+          "impact_scope": "industry",
+          "scope_emoji": "🏭",
+          "scope_cn": "全行业",
+          "scope_multiplier": 0.85,
           "event_type": "event_driven",
-          "raw_title": "高盛策略师将标普500指数目标点位上调至8000点 受AI和盈利所推动",
-          "raw_content": "【高盛策略师将标普500指数目标点位上调至8000点 受AI和盈利所推动】财联社5月27日电，高盛集团策略师预计今年标普500指数回报将达17%，加入摩根士丹利和德意志银行同行之列。由Ben Snider领导的高盛团队表示，人工智能(AI)热潮推动的盈利增长将进一步提振股市，因此他们将该美国基准指数的年底目标点位上调至8,000点，放弃了此前7,600点的预测。“持续的盈利增长应能推动股市持续上行，”策略师在报告中写道。“上调回报预测反映了在第一季度财报季表现异常强劲之后，对标普500指数盈利预期的上调。”",
-          "news_pub_time": "2026-05-27 17:02",
+          "raw_title": "李强在浙江舟山宁波调研时强调 加快建设大宗商品资源配置枢纽 为统筹发展和安全提供可靠保障",
+          "raw_content": "【李强在浙江舟山宁波调研时强调 加快建设大宗商品资源配置枢纽 为统筹发展和安全提供可靠保障】中共中央政治局常委、国务院总理李强5月25日至27日在浙江省舟山市、宁波市调研。他强调，要深入贯彻落实习近平总书记关于构建大国储备体系的重要论述和指示精神，坚持政府主导、社会共建、多元互补，做好大宗商品和重要物资储备调节，强化战略保障、宏观调控和应对急需功能，持续提升产业链供应链韧性，加快建设大宗商品资源配置枢纽，为统筹发展和安全提供可靠保障。\n\n李强来到舟山国家石油储备基地、大宗农产品储运基地和宁波大榭商业石油储备项目，听取石油、粮食等储备工作汇报，察看储备洞库等设施，了解项目建设运营情况。李强指出，面对外部环境变化带来的挑战，“手中有粮，心中不慌”。做好大宗商品和重要物资储备，对于经济社会稳定运行意义重大。要科学规划布局，优化储备结构，充分发挥多种主体作用，大力推进多种类型储备设施建设，加快补齐短板，进一步扩大储备容量。要加大科研攻关力度，推动储备和管理技术革新，提高信息化智能化水平。要深化体制机制改革，促进战略储备、商业储备等协同运作，完善轮换动用和市场调节机制，全面提升收储、管理、调配效",
+          "news_pub_time": "2026-05-27 19:36",
           "news_pub_date": "2026-05-27",
           "strength_score": 72,
-          "novelty_score": 35,
-          "max_heat": 62,
-          "max_accept": 87,
-          "max_rank": 63.65,
+          "novelty_score": 78,
+          "max_heat": 80,
+          "max_accept": 44,
+          "max_rank": 61.26,
           "stocks": [
             {
-              "ts_code": "300308.SZ",
-              "stock_name": "中际旭创",
-              "segment": "算力-光模块",
-              "rec_reason": "全球800G光模块市占率约60%，英伟达AI算力扩张直接拉动高速光模块需求，海外营收占比超80%，对标美股AI盈利增长最直接受益",
-              "applied_pattern": "P01",
-              "expected_return_pct": 8.0,
+              "ts_code": "601018.SH",
+              "stock_name": "宁波港",
+              "segment": "港口运营",
+              "rec_reason": "宁波舟山港是政策直接指向的核心载体，总理明确要求'建设世界一流强港'，宁波港作为运营主体直接受益于吞吐量提升、费率改善和四港联动政策红利。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 12.0,
               "expected_duration_days": 10,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 87,
-              "rank_score": 63.65,
-              "pre_run_up_3d": 7.07,
-              "overheated": false
+              "expected_window": "T+5-10",
+              "heat_score": 80,
+              "acceptance_score": 44,
+              "rank_score": 61.26,
+              "pre_run_up_3d": -2.27,
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 667.0,
+                "main_net_3d_yi": 0.46,
+                "mv_score": 80,
+                "mf_score": 50
+              }
             },
             {
-              "ts_code": "601138.SH",
-              "stock_name": "工业富联",
-              "segment": "算力-AI服务器",
-              "rec_reason": "英伟达AI服务器核心代工厂，全球AI服务器市占率领先，直接受益于美股AI盈利增长带动的算力资本开支扩张",
-              "applied_pattern": "P01",
-              "expected_return_pct": 7.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 51,
-              "rank_score": 55.87,
-              "pre_run_up_3d": 4.35,
-              "overheated": false
-            },
-            {
-              "ts_code": "002463.SZ",
-              "stock_name": "沪电股份",
-              "segment": "算力-PCB",
-              "rec_reason": "AI服务器高多层PCB核心供应商，英伟达AI服务器PCB主力供应商之一，海外营收占比高，AI资本开支扩张直接拉动高端PCB需求",
-              "applied_pattern": "P01",
-              "expected_return_pct": 6.0,
+              "ts_code": "002930.SZ",
+              "stock_name": "宏川智慧",
+              "segment": "石化仓储",
+              "rec_reason": "总理调研中专门察看石油储备洞库和商业石油储备项目，强调'扩大储备容量''补齐短板'。宏川智慧是国内领先的石化仓储龙头，在长三角布局多个储罐基地，直接受益于国家战略储备扩容需求。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 10.0,
               "expected_duration_days": 8,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 39,
-              "rank_score": 50.86,
-              "pre_run_up_3d": 12.47,
-              "overheated": false
+              "expected_window": "T+5-10",
+              "heat_score": 80,
+              "acceptance_score": 36,
+              "rank_score": 55.63,
+              "pre_run_up_3d": -11.87,
+              "overheated": false,
+              "leader_score": 42.5,
+              "leader_detail": {
+                "circ_mv_yi": 54.0,
+                "main_net_3d_yi": -0.24,
+                "mv_score": 35,
+                "mf_score": 50
+              }
+            },
+            {
+              "ts_code": "600798.SH",
+              "stock_name": "宁波海运",
+              "segment": "大宗商品航运",
+              "rec_reason": "宁波舟山港大宗商品资源配置枢纽建设将大幅提升大宗商品海运需求，宁波海运主营沿海及国际大宗散货运输，与宁波舟山港深度绑定，直接受益于枢纽建设带来的运量增长。",
+              "applied_pattern": "P04",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+5-10",
+              "heat_score": 80,
+              "acceptance_score": 38,
+              "rank_score": 55.94,
+              "pre_run_up_3d": -6.78,
+              "overheated": false,
+              "leader_score": 35.0,
+              "leader_detail": {
+                "circ_mv_yi": 43.0,
+                "main_net_3d_yi": 0.03,
+                "mv_score": 20,
+                "mf_score": 50
+              }
             }
           ],
           "any_overheated": false,
@@ -2315,10 +2938,32 @@
           "news_pub_date": "2026-05-27",
           "strength_score": 82,
           "novelty_score": 75,
-          "max_heat": 62,
+          "max_heat": 79,
           "max_accept": 51,
-          "max_rank": 58.59,
+          "max_rank": 61.19,
           "stocks": [
+            {
+              "ts_code": "688126.SH",
+              "stock_name": "沪硅产业",
+              "segment": "半导体硅片",
+              "rec_reason": "长鑫DRAM制造核心原材料——300mm大硅片的国产主力供应商，沪硅产业已通过长鑫认证并批量供货，长鑫营收暴增6倍意味着硅片消耗量同步激增，硅片需求弹性大",
+              "applied_pattern": "P08",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+1-3",
+              "heat_score": 79,
+              "acceptance_score": 51,
+              "rank_score": 60.92,
+              "pre_run_up_3d": 0.93,
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 836.0,
+                "main_net_3d_yi": 0.11,
+                "mv_score": 80,
+                "mf_score": 50
+              }
+            },
             {
               "ts_code": "688012.SH",
               "stock_name": "中微公司",
@@ -2328,11 +2973,18 @@
               "expected_return_pct": 12.0,
               "expected_duration_days": 10,
               "expected_window": "T+1-3",
-              "heat_score": 62,
+              "heat_score": 79,
               "acceptance_score": 20,
-              "rank_score": 58.59,
+              "rank_score": 61.19,
               "pre_run_up_3d": -3.1,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 2849.0,
+                "main_net_3d_yi": -6.2,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             },
             {
               "ts_code": "002371.SZ",
@@ -2343,97 +2995,110 @@
               "expected_return_pct": 10.0,
               "expected_duration_days": 10,
               "expected_window": "T+1-3",
-              "heat_score": 62,
+              "heat_score": 79,
               "acceptance_score": 29,
-              "rank_score": 57.46,
+              "rank_score": 60.06,
               "pre_run_up_3d": -2.13,
-              "overheated": false
-            },
-            {
-              "ts_code": "688126.SH",
-              "stock_name": "沪硅产业",
-              "segment": "半导体硅片",
-              "rec_reason": "长鑫DRAM制造核心原材料——300mm大硅片的国产主力供应商，沪硅产业已通过长鑫认证并批量供货，长鑫营收暴增6倍意味着硅片消耗量同步激增，硅片需求弹性大",
-              "applied_pattern": "P08",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+1-3",
-              "heat_score": 48,
-              "acceptance_score": 51,
-              "rank_score": 56.17,
-              "pre_run_up_3d": 0.93,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 4773.0,
+                "main_net_3d_yi": -9.78,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             }
           ],
           "any_overheated": false,
           "similar_cases": []
         },
         {
-          "source_news_hash": "4252ab20bf86b02602d61a850d617be8",
-          "news_channel": "加红",
-          "event_headline": "李强调研舟山宁波：加快建设大宗商品枢纽",
-          "topic_class": "政策出台",
-          "applied_pattern": "P04",
-          "transmission_chain": "【Step -1 事件类型判断】新闻为国务院总理李强实地调研并发表讲话，明确要求\"加快建设大宗商品资源配置枢纽\"，属于国家级政策信号，为 event_driven 事件驱动。\n\n【Step 0 影响范围判断】该政策涉及大宗商品储备（石油、粮食）、港口物流、交易平台建设等多个环节，影响整个大宗商品供应链和港口物流行业，非单公司事件，判断为 industry 级别。\n\n【Step 1 主题分类】政策出台。\n\n【Step 2 范式选择】根据矩阵，政策出台类最优范式为 [P04] 政策驱动（win=61%, comp=+0.09）。同时，新闻中总理明确提到\"宁波舟山港\"建设世界一流强港、大宗商品交易中心等，涉及港口物流基础设施升级，可结合 [P08] 产业链传导（港口建设→设备需求→信息化升级）。\n\n【Step 3 因果链推演】新闻X：李强总理调研舟山宁波，强调加快建设大宗商品资源配置枢纽（石油储备、粮食储备、港口建设、交易中心）→ 政策力度大（总理亲自调研+新华社通稿），明确要求\"扩大储备容量\"\"补齐短板\"\"四港联动\"\"世界一流强港\"→ 直接利好：1）港口运营企业（吞吐量提升、费率改善）；2）大宗商品储运/贸易服务企业（交易量提升、仓储需求增加）；3）港口信息化/智能化改造供应商。受益标的特征：浙江/宁波舟山港相关、大宗商品仓储贸易、港口数智化服务商。",
-          "impact_scope": "industry",
-          "scope_emoji": "🏭",
-          "scope_cn": "全行业",
-          "scope_multiplier": 0.85,
+          "source_news_hash": "5ea22959f0ce0dbce07a95c3a49d0035",
+          "news_channel": "港美股",
+          "event_headline": "高盛上调标普500目标至8000点，AI驱动",
+          "topic_class": "海外巨头动态",
+          "applied_pattern": "P01",
+          "transmission_chain": "【Step -1: event_type判断】新闻为高盛策略师正式上调标普500目标点位至8000点，属于权威机构发布的具体预测调整，是事件驱动(event_driven)。【Step 0: impact_scope判断】标普500是全球最重要股指，目标上调反映全球最大资本市场预期，影响全球资金流向和风险偏好，属于global级影响。【Step 1: topic_class】海外巨头动态（高盛为全球顶级投行）。【Step 2: 范式选择】最优范式为[P01]海外映射（n=59 win=69% comp=+0.17）。核心逻辑：高盛上调标普目标→AI驱动盈利增长预期强化→美股AI龙头（英伟达等）受益→映射A股AI算力/光模块/服务器产业链，资金按估值对标逻辑买入A股相关标的。【Step 3: 因果链】高盛策略师上调标普500目标至8000点（较7600点上调5.3%），核心驱动是\"AI热潮推动的盈利增长\"→这意味着美股AI龙头（英伟达、微软等）的盈利预期被进一步上调→A股中与这些美股AI龙头有直接供应链关系或技术对标的企业将受益于海外映射逻辑→资金会沿着\"AI算力→光模块→服务器→PCB\"产业链寻找A股对标标的。【Step 4: 特征条件】受益标的特征：①与英伟达等美股AI龙头有直接供应链关系（光模块/服务器代工/PCB供应商）；②海外营收占比高，受全球AI资本开支拉动；③在细分领域",
+          "impact_scope": "global",
+          "scope_emoji": "🌍",
+          "scope_cn": "全球级",
+          "scope_multiplier": 1.0,
           "event_type": "event_driven",
-          "raw_title": "李强在浙江舟山宁波调研时强调 加快建设大宗商品资源配置枢纽 为统筹发展和安全提供可靠保障",
-          "raw_content": "【李强在浙江舟山宁波调研时强调 加快建设大宗商品资源配置枢纽 为统筹发展和安全提供可靠保障】中共中央政治局常委、国务院总理李强5月25日至27日在浙江省舟山市、宁波市调研。他强调，要深入贯彻落实习近平总书记关于构建大国储备体系的重要论述和指示精神，坚持政府主导、社会共建、多元互补，做好大宗商品和重要物资储备调节，强化战略保障、宏观调控和应对急需功能，持续提升产业链供应链韧性，加快建设大宗商品资源配置枢纽，为统筹发展和安全提供可靠保障。\n\n李强来到舟山国家石油储备基地、大宗农产品储运基地和宁波大榭商业石油储备项目，听取石油、粮食等储备工作汇报，察看储备洞库等设施，了解项目建设运营情况。李强指出，面对外部环境变化带来的挑战，“手中有粮，心中不慌”。做好大宗商品和重要物资储备，对于经济社会稳定运行意义重大。要科学规划布局，优化储备结构，充分发挥多种主体作用，大力推进多种类型储备设施建设，加快补齐短板，进一步扩大储备容量。要加大科研攻关力度，推动储备和管理技术革新，提高信息化智能化水平。要深化体制机制改革，促进战略储备、商业储备等协同运作，完善轮换动用和市场调节机制，全面提升收储、管理、调配效",
-          "news_pub_time": "2026-05-27 19:36",
+          "raw_title": "高盛策略师将标普500指数目标点位上调至8000点 受AI和盈利所推动",
+          "raw_content": "【高盛策略师将标普500指数目标点位上调至8000点 受AI和盈利所推动】财联社5月27日电，高盛集团策略师预计今年标普500指数回报将达17%，加入摩根士丹利和德意志银行同行之列。由Ben Snider领导的高盛团队表示，人工智能(AI)热潮推动的盈利增长将进一步提振股市，因此他们将该美国基准指数的年底目标点位上调至8,000点，放弃了此前7,600点的预测。“持续的盈利增长应能推动股市持续上行，”策略师在报告中写道。“上调回报预测反映了在第一季度财报季表现异常强劲之后，对标普500指数盈利预期的上调。”",
+          "news_pub_time": "2026-05-27 17:02",
           "news_pub_date": "2026-05-27",
           "strength_score": 72,
-          "novelty_score": 78,
-          "max_heat": 36,
-          "max_accept": 44,
-          "max_rank": 54.53,
+          "novelty_score": 35,
+          "max_heat": 45,
+          "max_accept": 87,
+          "max_rank": 60.59,
           "stocks": [
             {
-              "ts_code": "601018.SH",
-              "stock_name": "宁波港",
-              "segment": "港口运营",
-              "rec_reason": "宁波舟山港是政策直接指向的核心载体，总理明确要求'建设世界一流强港'，宁波港作为运营主体直接受益于吞吐量提升、费率改善和四港联动政策红利。",
-              "applied_pattern": "P04",
-              "expected_return_pct": 12.0,
+              "ts_code": "300308.SZ",
+              "stock_name": "中际旭创",
+              "segment": "算力-光模块",
+              "rec_reason": "全球800G光模块市占率约60%，英伟达AI算力扩张直接拉动高速光模块需求，海外营收占比超80%，对标美股AI盈利增长最直接受益",
+              "applied_pattern": "P01",
+              "expected_return_pct": 8.0,
               "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 36,
-              "acceptance_score": 44,
-              "rank_score": 54.53,
-              "pre_run_up_3d": -2.27,
-              "overheated": false
+              "expected_window": "T+1-3",
+              "heat_score": 45,
+              "acceptance_score": 87,
+              "rank_score": 60.59,
+              "pre_run_up_3d": 7.07,
+              "overheated": false,
+              "leader_score": 95.0,
+              "leader_detail": {
+                "circ_mv_yi": 13277.0,
+                "main_net_3d_yi": 20.29,
+                "mv_score": 95,
+                "mf_score": 95
+              }
             },
             {
-              "ts_code": "600798.SH",
-              "stock_name": "宁波海运",
-              "segment": "大宗商品航运",
-              "rec_reason": "宁波舟山港大宗商品资源配置枢纽建设将大幅提升大宗商品海运需求，宁波海运主营沿海及国际大宗散货运输，与宁波舟山港深度绑定，直接受益于枢纽建设带来的运量增长。",
-              "applied_pattern": "P04",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+5-10",
-              "heat_score": 36,
-              "acceptance_score": 38,
-              "rank_score": 49.2,
-              "pre_run_up_3d": -6.78,
-              "overheated": false
+              "ts_code": "601138.SH",
+              "stock_name": "工业富联",
+              "segment": "算力-AI服务器",
+              "rec_reason": "英伟达AI服务器核心代工厂，全球AI服务器市占率领先，直接受益于美股AI盈利增长带动的算力资本开支扩张",
+              "applied_pattern": "P01",
+              "expected_return_pct": 7.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+1-3",
+              "heat_score": 45,
+              "acceptance_score": 51,
+              "rank_score": 52.81,
+              "pre_run_up_3d": 4.35,
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 14883.0,
+                "main_net_3d_yi": -2.87,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             },
             {
-              "ts_code": "002930.SZ",
-              "stock_name": "宏川智慧",
-              "segment": "石化仓储",
-              "rec_reason": "总理调研中专门察看石油储备洞库和商业石油储备项目，强调'扩大储备容量''补齐短板'。宏川智慧是国内领先的石化仓储龙头，在长三角布局多个储罐基地，直接受益于国家战略储备扩容需求。",
-              "applied_pattern": "P04",
-              "expected_return_pct": 10.0,
+              "ts_code": "002463.SZ",
+              "stock_name": "沪电股份",
+              "segment": "算力-PCB",
+              "rec_reason": "AI服务器高多层PCB核心供应商，英伟达AI服务器PCB主力供应商之一，海外营收占比高，AI资本开支扩张直接拉动高端PCB需求",
+              "applied_pattern": "P01",
+              "expected_return_pct": 6.0,
               "expected_duration_days": 8,
-              "expected_window": "T+5-10",
-              "heat_score": 36,
-              "acceptance_score": 36,
-              "rank_score": 48.9,
-              "pre_run_up_3d": -11.87,
-              "overheated": false
+              "expected_window": "T+1-3",
+              "heat_score": 45,
+              "acceptance_score": 39,
+              "rank_score": 47.8,
+              "pre_run_up_3d": 12.47,
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 2558.0,
+                "main_net_3d_yi": -5.16,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             }
           ],
           "any_overheated": false,
@@ -2457,9 +3122,9 @@
           "news_pub_date": "2026-05-27",
           "strength_score": 72,
           "novelty_score": 60,
-          "max_heat": 36,
+          "max_heat": 63,
           "max_accept": 56,
-          "max_rank": 50.76,
+          "max_rank": 55.62,
           "stocks": [
             {
               "ts_code": "600029.SH",
@@ -2470,11 +3135,18 @@
               "expected_return_pct": 5.0,
               "expected_duration_days": 5,
               "expected_window": "T+1-3",
-              "heat_score": 36,
+              "heat_score": 63,
               "acceptance_score": 56,
-              "rank_score": 50.76,
+              "rank_score": 55.62,
               "pre_run_up_3d": 3.4,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 730.0,
+                "main_net_3d_yi": -0.44,
+                "mv_score": 80,
+                "mf_score": 50
+              }
             },
             {
               "ts_code": "601111.SH",
@@ -2485,11 +3157,18 @@
               "expected_return_pct": 4.0,
               "expected_duration_days": 5,
               "expected_window": "T+1-3",
-              "heat_score": 31,
+              "heat_score": 63,
               "acceptance_score": 49,
-              "rank_score": 47.95,
+              "rank_score": 53.71,
               "pre_run_up_3d": 2.69,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 788.0,
+                "main_net_3d_yi": 0.12,
+                "mv_score": 80,
+                "mf_score": 50
+              }
             },
             {
               "ts_code": "600346.SH",
@@ -2500,11 +3179,18 @@
               "expected_return_pct": 4.0,
               "expected_duration_days": 5,
               "expected_window": "T+1-3",
-              "heat_score": 31,
+              "heat_score": 63,
               "acceptance_score": 38,
-              "rank_score": 45.97,
+              "rank_score": 51.73,
               "pre_run_up_3d": -4.75,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 57.5,
+              "leader_detail": {
+                "circ_mv_yi": 1214.0,
+                "main_net_3d_yi": -0.86,
+                "mv_score": 80,
+                "mf_score": 35
+              }
             }
           ],
           "any_overheated": false,
@@ -2545,7 +3231,14 @@
               "acceptance_score": 49,
               "rank_score": 50.22,
               "pre_run_up_3d": 2.69,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 788.0,
+                "main_net_3d_yi": 0.12,
+                "mv_score": 80,
+                "mf_score": 50
+              }
             },
             {
               "ts_code": "601975.SH",
@@ -2560,7 +3253,14 @@
               "acceptance_score": 36,
               "rank_score": 50.08,
               "pre_run_up_3d": -13.3,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 57.5,
+              "leader_detail": {
+                "circ_mv_yi": 228.0,
+                "main_net_3d_yi": 0.42,
+                "mv_score": 65,
+                "mf_score": 50
+              }
             }
           ],
           "any_overheated": false,
@@ -2601,7 +3301,14 @@
               "acceptance_score": 60,
               "rank_score": 50.13,
               "pre_run_up_3d": 11.34,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 3073.0,
+                "main_net_3d_yi": -10.59,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             },
             {
               "ts_code": "300413.SZ",
@@ -2616,7 +3323,14 @@
               "acceptance_score": 38,
               "rank_score": 43.17,
               "pre_run_up_3d": -2.47,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 42.5,
+              "leader_detail": {
+                "circ_mv_yi": 178.0,
+                "main_net_3d_yi": -0.6,
+                "mv_score": 50,
+                "mf_score": 35
+              }
             }
           ],
           "any_overheated": false,
@@ -2645,21 +3359,6 @@
           "max_rank": 47.29,
           "stocks": [
             {
-              "ts_code": "688012.SH",
-              "stock_name": "中微公司",
-              "segment": "半导体设备-刻蚀",
-              "rec_reason": "长鑫科技核心刻蚀设备供应商，长鑫扩产直接拉动CCP刻蚀设备需求，中微在DRAM刻蚀领域市占率持续提升，长鑫IPO后资本开支有望加速，设备订单弹性最大",
-              "applied_pattern": "P08",
-              "expected_return_pct": 15.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 62,
-              "acceptance_score": 20,
-              "rank_score": 47.29,
-              "pre_run_up_3d": -3.1,
-              "overheated": false
-            },
-            {
               "ts_code": "688126.SH",
               "stock_name": "沪硅产业",
               "segment": "半导体材料-硅片",
@@ -2672,7 +3371,36 @@
               "acceptance_score": 51,
               "rank_score": 46.27,
               "pre_run_up_3d": 0.93,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 836.0,
+                "main_net_3d_yi": 0.11,
+                "mv_score": 80,
+                "mf_score": 50
+              }
+            },
+            {
+              "ts_code": "688012.SH",
+              "stock_name": "中微公司",
+              "segment": "半导体设备-刻蚀",
+              "rec_reason": "长鑫科技核心刻蚀设备供应商，长鑫扩产直接拉动CCP刻蚀设备需求，中微在DRAM刻蚀领域市占率持续提升，长鑫IPO后资本开支有望加速，设备订单弹性最大",
+              "applied_pattern": "P08",
+              "expected_return_pct": 15.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+5-10",
+              "heat_score": 62,
+              "acceptance_score": 20,
+              "rank_score": 47.29,
+              "pre_run_up_3d": -3.1,
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 2849.0,
+                "main_net_3d_yi": -6.2,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             },
             {
               "ts_code": "002371.SZ",
@@ -2687,7 +3415,14 @@
               "acceptance_score": 29,
               "rank_score": 43.69,
               "pre_run_up_3d": -2.13,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 4773.0,
+                "main_net_3d_yi": -9.78,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             }
           ],
           "any_overheated": false,
@@ -2728,7 +3463,14 @@
               "acceptance_score": 87,
               "rank_score": 46.85,
               "pre_run_up_3d": 7.07,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 95.0,
+              "leader_detail": {
+                "circ_mv_yi": 13277.0,
+                "main_net_3d_yi": 20.29,
+                "mv_score": 95,
+                "mf_score": 95
+              }
             },
             {
               "ts_code": "002371.SZ",
@@ -2743,7 +3485,14 @@
               "acceptance_score": 29,
               "rank_score": 38.63,
               "pre_run_up_3d": -2.13,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 4773.0,
+                "main_net_3d_yi": -9.78,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             },
             {
               "ts_code": "688012.SH",
@@ -2758,7 +3507,14 @@
               "acceptance_score": 20,
               "rank_score": 37.95,
               "pre_run_up_3d": -3.1,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 55.0,
+              "leader_detail": {
+                "circ_mv_yi": 2849.0,
+                "main_net_3d_yi": -6.2,
+                "mv_score": 95,
+                "mf_score": 15
+              }
             }
           ],
           "any_overheated": false,
@@ -2799,7 +3555,14 @@
               "acceptance_score": 46,
               "rank_score": 44.02,
               "pre_run_up_3d": -2.44,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 50.0,
+              "leader_detail": {
+                "circ_mv_yi": 133.0,
+                "main_net_3d_yi": 0.06,
+                "mv_score": 50,
+                "mf_score": 50
+              }
             },
             {
               "ts_code": "002867.SZ",
@@ -2814,7 +3577,14 @@
               "acceptance_score": 43,
               "rank_score": 43.98,
               "pre_run_up_3d": -0.4,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 50.0,
+              "leader_detail": {
+                "circ_mv_yi": 134.0,
+                "main_net_3d_yi": 0.12,
+                "mv_score": 50,
+                "mf_score": 50
+              }
             }
           ],
           "any_overheated": false,
@@ -2855,7 +3625,14 @@
               "acceptance_score": 54,
               "rank_score": 44.02,
               "pre_run_up_3d": 0.68,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 72.5,
+              "leader_detail": {
+                "circ_mv_yi": 630.0,
+                "main_net_3d_yi": 0.52,
+                "mv_score": 80,
+                "mf_score": 65
+              }
             },
             {
               "ts_code": "000301.SZ",
@@ -2870,7 +3647,14 @@
               "acceptance_score": 38,
               "rank_score": 39.25,
               "pre_run_up_3d": -1.21,
-              "overheated": false
+              "overheated": false,
+              "leader_score": 65.0,
+              "leader_detail": {
+                "circ_mv_yi": 806.0,
+                "main_net_3d_yi": -0.48,
+                "mv_score": 80,
+                "mf_score": 50
+              }
             }
           ],
           "any_overheated": false,
@@ -2878,7 +3662,7 @@
         }
       ],
       "n_pool": 47,
-      "max_rank": 63.65,
+      "max_rank": 61.26,
       "date": "2026-05-27",
       "label": "前日",
       "weekday": "三",
