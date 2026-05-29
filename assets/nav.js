@@ -26,9 +26,10 @@ async function renderNav(isSubdir) {
             <div class="nav-desktop items-center space-x-2">
                 <a href="${prefix}index.html" class="nav-strat-btn"><span class="label-2x2">总览首页</span></a>
                 <a href="${prefix}signals.html" class="nav-strat-btn text-indigo-600 font-bold hover:bg-indigo-50"><span class="label-2x2">今日信号</span></a>
-                <a href="${prefix}strategies/small_cap.html"     class="nav-strat-btn"><span class="label-2x2">小盘动量</span></a>
-                <a href="${prefix}strategies/large_cap.html"     class="nav-strat-btn"><span class="label-2x2">大盘突破</span></a>
-                <a href="${prefix}strategies/consolidation.html" class="nav-strat-btn"><span class="label-2x2">上涨横盘</span></a>
+                <a href="${prefix}signals.html#events" class="nav-strat-btn bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:from-purple-700 hover:to-pink-600"><span class="label-2x2">事件驱动</span></a>
+                <a href="${prefix}strategies/small_cap.html"     class="nav-strat-btn"><span class="label-2x2">小盘低位</span></a>
+                <a href="${prefix}strategies/large_cap.html"     class="nav-strat-btn"><span class="label-2x2">大盘高位</span></a>
+                <a href="${prefix}strategies/consolidation.html" class="nav-strat-btn"><span class="label-2x2">低位横盘</span></a>
                 ${etfLink}
                 ${adminLink}
                 ${userBadge}
@@ -49,9 +50,10 @@ async function renderNav(isSubdir) {
     <nav class="p-3 space-y-1">
         <a href="${prefix}index.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">📊 总览</a>
         <a href="${prefix}signals.html" class="block px-4 py-3 rounded text-indigo-700 font-bold bg-indigo-50">⭐ 今日信号</a>
-        <a href="${prefix}strategies/small_cap.html"     class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">🎯 小盘动量</a>
-        <a href="${prefix}strategies/large_cap.html"     class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">🏛️ 大盘突破</a>
-        <a href="${prefix}strategies/consolidation.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">📈 上涨横盘</a>
+        <a href="${prefix}signals.html#events" class="block px-4 py-3 rounded text-purple-700 font-bold bg-purple-50">📡 事件驱动</a>
+        <a href="${prefix}strategies/small_cap.html"     class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">🎯 小盘低位</a>
+        <a href="${prefix}strategies/large_cap.html"     class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">🏛️ 大盘高位</a>
+        <a href="${prefix}strategies/consolidation.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">📈 低位横盘</a>
         ${showEtf ? `<a href="${prefix}strategies/etf.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">🏦 板块轮动</a>` : ''}
         ${showAdmin ? `<a href="${prefix}admin.html" class="block px-4 py-3 rounded text-orange-600 font-bold hover:bg-orange-50">⚙️ 管理后台</a>` : ''}
         <div class="border-t mt-3 pt-3">

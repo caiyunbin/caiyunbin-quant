@@ -149,8 +149,8 @@
 
 <script>
 const NAME_CN = {
-    "V16.F": "🎯 小盘动量", "S2.G13": "🏛️ 大盘突破",
-    "S4.V4": "📈 上涨横盘", "ETF.honest": "🏦 板块轮动",
+    "V16.F": "🎯 小盘低位", "S2.G13": "🏛️ 大盘高位",
+    "S4.V4": "📈 低位横盘", "ETF.honest": "🏦 板块轮动",
 };
 const FMT_PCT = (x) => (x>=0?"+":"") + (x*100).toFixed(1) + "%";
 const FMT_DEC = (x,n=3) => (x>=0?"+":"") + (x).toFixed(n);
@@ -170,7 +170,7 @@ async function loadJSON(path) {
     // Header
     document.getElementById('meta-version').textContent = latest.meta.version + ' · 每日 19:00 自动更新';
     document.getElementById('meta-weights').textContent =
-        `总组合配比: 小盘动量 ${(latest.weights['V16.F']*100).toFixed(0)}% · 大盘突破 ${(latest.weights['S2.G13']*100).toFixed(0)}% · 上涨横盘 ${(latest.weights['S4.V4']*100).toFixed(0)}% (板块轮动独立运行不并入)`;
+        `总组合配比: 小盘低位 ${(latest.weights['V16.F']*100).toFixed(0)}% · 大盘高位 ${(latest.weights['S2.G13']*100).toFixed(0)}% · 低位横盘 ${(latest.weights['S4.V4']*100).toFixed(0)}% (板块轮动独立运行不并入)`;
     document.getElementById('meta-generated').textContent =
         `数据日期 ${latest.meta.data_date} · 站点生成 ${latest.meta.generated_at}`;
 

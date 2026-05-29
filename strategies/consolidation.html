@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📈 上涨横盘 · 多子策略决策引擎</title>
+    <title>📈 低位横盘 · 多子策略决策引擎</title>
     <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/style.css">
     <script src="https://cdn.staticfile.net/echarts/5.4.3/echarts.min.js"></script>
@@ -21,7 +21,7 @@
 
     <!-- 标题 -->
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-1" id="strat-title">📈 上涨横盘</h1>
+        <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-1" id="strat-title">📈 低位横盘</h1>
         <p class="text-gray-500 text-sm mb-1" id="strat-subtitle"></p>
         <p class="text-xs text-indigo-600 mt-1" id="strat-weight"></p>
         <p class="text-xs text-gray-400 mt-1" id="strat-generated"></p>
@@ -77,31 +77,31 @@ const FMT_DEC = (x,n=3) => (x>=0?"+":"") + (x).toFixed(n);
 
 const META_MAP = {
     "V16.F": {
-        title: "🎯 小盘动量策略",
+        title: "🎯 小盘低位策略",
         sub:   "涨幅 + 主力 + 量比 三维 rank-delta 跃升 + 低位过滤 + 7 因子综合加权",
         alpha: "捕捉小盘股的「今天突然冒头」 — 主力资金排名跃升 ≥ 21.5% + 涨幅排名跃升 ∈ [7.5, 24]",
         alpha_user: "捕捉小盘股的「今日异动 + 资金跃升」类信号 (具体阈值不公开)",
         sub_user: "适配中小盘活跃、流动性宽松的市场环境. 当市场风格偏向题材、成长、超跌反弹时, 该策略的 Alpha 爆发最强.",
         pool:  "A 股小盘股池 (无市值上限, 持仓中位流通市值 30-80 亿)",
-        weight: 0.05, sigKey: "小盘动量",
+        weight: 0.05, sigKey: "小盘低位",
     },
     "S2.G13": {
-        title: "🏛️ 大盘突破策略",
+        title: "🏛️ 大盘高位策略",
         sub:   "流通市值 ≥ 200 亿 + 连续 3 日主力净流入 + 突破 20 日新高",
         alpha: "捕捉大盘股的趋势性建仓 — 主力建仓 + 突破 + 加固风控 (止损 -3% / MA40 macro)",
         alpha_user: "捕捉大盘股的「主力建仓 + 突破」类趋势信号 (具体阈值不公开)",
         sub_user: "适配大盘股趋势行情. 当主力资金持续入场、市场风格切到价值蓝筹、突破前期高点时, 该策略的 Alpha 爆发最强.",
         pool:  "A 股大盘股 (流通市值 ≥ 200 亿元)",
-        weight: 0.25, sigKey: "大盘突破",
+        weight: 0.25, sigKey: "大盘高位",
     },
     "S4.V4": {
-        title: "📈 上涨横盘策略",
+        title: "📈 低位横盘策略",
         sub:   "MA5>MA20>MA60 多头 5-29 天 + 横盘 (MA5 斜率<0.5%) + 紧贴 MA5 (偏离度<2.5%)",
         alpha: "捕捉趋势中段的低波动洗盘窗口, EarlyStop 锁利 +8.4% (rqalpha-grade 17 项坑全修)",
-        alpha_user: "捕捉「上涨横盘形态」中的低波动洗盘窗口, 含锁利机制 (具体阈值不公开)",
+        alpha_user: "捕捉「低位横盘形态」中的低波动洗盘窗口, 含锁利机制 (具体阈值不公开)",
         sub_user: "适配震荡上行行情中的低波动洗盘期. 当大盘已在上升通道、个股出现紧贴均线的窄幅盘整时, 该策略的 Alpha 爆发最强.",
         pool:  "A 股 amount_20d ≥ 5000万, IPO 后 ≥ 90 天, close ≥ 5",
-        weight: 0.70, sigKey: "上涨横盘",
+        weight: 0.70, sigKey: "低位横盘",
     },
     "ETF.honest": {
         title: "🏦 板块轮动策略 (独立运行)",
