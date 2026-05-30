@@ -1,8 +1,8 @@
 {
   "meta": {
-    "generated_at": "2026-05-31 02:00:13",
-    "next_update": "03:00",
-    "last_snapshot": "2026-05-31 02:00",
+    "generated_at": "2026-05-31 03:00:35",
+    "next_update": "04:00",
+    "last_snapshot": "2026-05-31 03:00",
     "threshold": 34.0,
     "threshold_config": {
       "version": "v5",
@@ -98,6 +98,119 @@
   },
   "weekly": {
     "top10": [
+      {
+        "source_news_hash": "1e0b184cee36ce8ee03d96dba2c27979",
+        "news_channel": "加红",
+        "event_headline": "我国成功发射卫星互联网技术试验卫星",
+        "topic_class": "技术突破",
+        "applied_pattern": "P08",
+        "transmission_chain": "【Step -1: event_type】新闻为央视报道的卫星成功发射事件，属于具体事件驱动，选 event_driven。\n【Step 0: impact_scope】该卫星专门用于\"手机宽带直连卫星、天地网络融合\"技术试验验证，这是卫星互联网产业的关键技术验证节点，影响整个卫星互联网产业链（地面终端、芯片、相控阵天线、运营等），非单公司事件，选 industry。\n【Step 1: topic_class】技术突破类 — 卫星互联网试验星成功入轨，验证手机直连卫星等关键技术。\n【Step 2: 范式选择】查矩阵：技术突破类最优范式为 [P07]（n=41 win=53% comp=+0.10）。同时，卫星互联网试验星发射成功→产业链进入商业化加速期→上游核心器件/地面终端需求放量，符合 [P08] 产业链传导逻辑。\n【Step 3: 因果链】新闻：我国成功发射卫星互联网技术试验卫星，用于手机宽带直连卫星、天地网络融合试验 → 这是中国版\"星链\"（千帆星座/国网星座）技术验证的关键一步，标志着卫星互联网从组网阶段进入终端应用验证阶段 → 手机直连卫星需要地面终端侧增加相控阵天线/专用基带芯片，卫星侧需要星载TR组件/激光通信终端 → 产业链上游核心器件供应商最先受益于星座规模化建设。\n【Step 4: 特征条件】受益标的特征：1）卫星互联网相控阵天线/TR组件核心供应商；2）卫星",
+        "impact_scope": "industry",
+        "scope_emoji": "🏭",
+        "scope_cn": "全行业",
+        "scope_multiplier": 0.85,
+        "event_type": "event_driven",
+        "raw_title": "我国成功发射卫星互联网技术试验卫星",
+        "raw_content": "【我国成功发射卫星互联网技术试验卫星】财联社5月31日电，据央视新闻，北京时间2026年5月31日02时07分，我国在西昌卫星发射中心使用长征二号丁运载火箭，成功将卫星互联网技术试验卫星发射升空，卫星顺利进入预定轨道，发射任务取得圆满成功。该卫星主要用于开展手机宽带直连卫星、天地网络融合等技术试验验证。\n\n此次任务是长征系列运载火箭的第646次飞行。",
+        "news_pub_time": "2026-05-31 02:46",
+        "news_pub_date": "2026-05-31",
+        "strength_score": 68,
+        "novelty_score": 86,
+        "max_heat": 36,
+        "max_accept": 36,
+        "max_rank": 47.55,
+        "stocks": [
+          {
+            "ts_code": "300342.SZ",
+            "stock_name": "天银机电",
+            "segment": "卫星互联网-星载TR组件",
+            "rec_reason": "子公司华清瑞达是国内星载相控阵天线TR组件的核心供应商，卫星互联网星座规模化建设直接受益于星载TR组件批量采购，试验星成功发射验证技术路线后组网加速。",
+            "applied_pattern": "P08",
+            "expected_return_pct": 10.0,
+            "expected_duration_days": 10,
+            "expected_window": "T+1-3",
+            "heat_score": 31,
+            "acceptance_score": 20,
+            "rank_score": 47.55,
+            "pre_run_up_3d": -6.84,
+            "overheated": false,
+            "leader_score": 36.0,
+            "leader_detail": {
+              "circ_mv_yi": 206.0,
+              "ret_3d_pct": -6.84,
+              "ret_z": -0.91,
+              "main_net_3d_yi": -3.87,
+              "mf_z": 0.3,
+              "ret_anomaly_score": 22,
+              "mf_anomaly_score": 50
+            }
+          },
+          {
+            "ts_code": "688311.SH",
+            "stock_name": "盟升电子",
+            "segment": "卫星互联网-地面终端天线",
+            "rec_reason": "公司是国内卫星通信天线及动中通终端龙头，手机直连卫星需要地面配套终端天线升级，公司已布局低轨卫星互联网地面终端产品线，试验星验证后商用化进程加速。",
+            "applied_pattern": "P08",
+            "expected_return_pct": 7.0,
+            "expected_duration_days": 7,
+            "expected_window": "T+1-3",
+            "heat_score": 36,
+            "acceptance_score": 36,
+            "rank_score": 45.46,
+            "pre_run_up_3d": -8.69,
+            "overheated": false,
+            "leader_score": 36.0,
+            "leader_detail": {
+              "circ_mv_yi": 49.0,
+              "ret_3d_pct": -8.69,
+              "ret_z": -1.36,
+              "main_net_3d_yi": 0.03,
+              "mf_z": 0.33,
+              "ret_anomaly_score": 22,
+              "mf_anomaly_score": 50
+            }
+          },
+          {
+            "ts_code": "002151.SZ",
+            "stock_name": "北斗星通",
+            "segment": "卫星互联网-芯片与终端",
+            "rec_reason": "公司是卫星导航/通信芯片龙头，旗下和芯星通具备卫星通信基带芯片能力，是卫星互联网地面终端核心供应商，手机直连卫星试验验证将直接拉动终端芯片需求。",
+            "applied_pattern": "P07",
+            "expected_return_pct": 8.0,
+            "expected_duration_days": 7,
+            "expected_window": "T+1-3",
+            "heat_score": 36,
+            "acceptance_score": 20,
+            "rank_score": 43.74,
+            "pre_run_up_3d": -9.37,
+            "overheated": false,
+            "leader_score": 17.0,
+            "leader_detail": {
+              "circ_mv_yi": 151.0,
+              "ret_3d_pct": -9.37,
+              "ret_z": -1.91,
+              "main_net_3d_yi": -2.63,
+              "mf_z": -0.73,
+              "ret_anomaly_score": 12,
+              "mf_anomaly_score": 22
+            }
+          }
+        ],
+        "any_overheated": false,
+        "staleness_factor": 1.0,
+        "staleness_detail": {
+          "prior_theme_count": 0,
+          "keywords": [
+            "我国",
+            "成功",
+            "发射卫星"
+          ]
+        },
+        "raw_rank": 47.55,
+        "decay_factor": 1.0,
+        "day_offset": 0,
+        "similar_cases": []
+      },
       {
         "source_news_hash": "f511c7a0c40bb62f58c4034c2850fee1",
         "news_channel": "加红",
@@ -1326,135 +1439,243 @@
         "decay_factor": 0.7,
         "day_offset": 3,
         "similar_cases": []
-      },
-      {
-        "source_news_hash": "4642a76db2fcd2c9f68a32e6c6acd523",
-        "news_channel": "加红",
-        "event_headline": "证监会：外资持有A股市值超4万亿",
-        "topic_class": "政策出台",
-        "applied_pattern": "P04",
-        "transmission_chain": "[Step -1 event_type=event_driven] 证监会副主席在官方场合（全球投资者大会）发布具体数据（外资持有A股流通市值超4万亿），属于官方表态+数据披露，是事件驱动。[Step 0 impact_scope=global] 外资持有A股市值超4万亿是A股国际化里程碑级数据，影响全市场资金面预期和估值体系，非单一行业/公司，故判为global。[Step 1 topic_class=政策出台] 属于监管层表态+制度开放信号。[Step 2 最优范式] 按矩阵，政策出台类最优为[P04]政策驱动（win=61%）。同时可辅以[P14]利率敏感（外资流入受全球流动性环境影响）。[Step 3 推理链] 新闻X：证监会副主席刘浩凌在2026全球投资者大会上披露，各类境外投资者持有A股流通市值超4万亿元，并强调外资持续流入。→ 这是官方背书外资对A股的配置信心，释放资本市场持续开放、制度环境稳定的积极信号。→ 外资偏好的板块（高ROE、大市值、流动性好、消费/金融龙头）将受益于增量资金预期。→ 同时，外资流入往往伴随人民币资产重估，利好核心资产估值修复。[Step 4 特征条件] 受益标的特征：①外资重仓/陆股通持仓市值排名前列的A股核心资产；②高ROE、高股息、大市值流动性好的行业龙头；③外资持股比例较高、有进一步增配空间的标的。",
-        "impact_scope": "global",
-        "scope_emoji": "🌍",
-        "scope_cn": "全球级",
-        "scope_multiplier": 1.0,
-        "event_type": "event_driven",
-        "raw_title": "证监会副主席刘浩凌：各类境外投资者持有A股流通市值超过4万亿元",
-        "raw_content": "【证监会副主席刘浩凌：各类境外投资者持有A股流通市值超过4万亿元】财联社5月28日电，由深交所主办的2026全球投资者大会在深圳举行。证监会副主席刘浩凌发表致辞时表示，中国是世界经济增长的主要贡献者和稳定锚，是外资企业投资兴业的沃土。今年以来，外资通过各种渠道稳步流入中国股市。截至目前，各类境外投资者持有A股流通市值超过4万亿元，已成为中国资本市场的重要参与者。",
-        "news_pub_time": "2026-05-28 10:55",
-        "news_pub_date": "2026-05-28",
-        "strength_score": 55,
-        "novelty_score": 74,
-        "max_heat": 45,
-        "max_accept": 58,
-        "max_rank": 29.77,
-        "stocks": [
-          {
-            "ts_code": "000333.SZ",
-            "stock_name": "美的集团",
-            "segment": "家电龙头/核心资产",
-            "rec_reason": "外资重仓股，陆股通持仓市值常年居前，高股息+高ROE+全球化布局，外资偏好标的，受益于外资增量资金流入带来的估值修复。",
-            "applied_pattern": "P04",
-            "expected_return_pct": 4.0,
-            "expected_duration_days": 7,
-            "expected_window": "T+5-10",
-            "heat_score": 45,
-            "acceptance_score": 58,
-            "rank_score": 50.03,
-            "pre_run_up_3d": -1.08,
-            "overheated": false,
-            "leader_score": 73.5,
-            "leader_detail": {
-              "circ_mv_yi": 5547.0,
-              "ret_3d_pct": 1.63,
-              "ret_z": 1.01,
-              "main_net_3d_yi": 7.42,
-              "mf_z": 1.77,
-              "ret_anomaly_score": 65,
-              "mf_anomaly_score": 82
-            }
-          },
-          {
-            "ts_code": "600519.SH",
-            "stock_name": "贵州茅台",
-            "segment": "消费核心资产",
-            "rec_reason": "外资持有A股市值最大的个股之一，陆股通持仓市值超千亿，高ROE+高确定性+大市值流动性极佳，是外资增配A股的首选核心资产，直接受益于外资持续流入预期。",
-            "applied_pattern": "P04",
-            "expected_return_pct": 5.0,
-            "expected_duration_days": 8,
-            "expected_window": "T+5-10",
-            "heat_score": 45,
-            "acceptance_score": 44,
-            "rank_score": 48.7,
-            "pre_run_up_3d": -0.77,
-            "overheated": false,
-            "leader_score": 66.0,
-            "leader_detail": {
-              "circ_mv_yi": 16576.0,
-              "ret_3d_pct": 4.13,
-              "ret_z": 2.12,
-              "main_net_3d_yi": -0.26,
-              "mf_z": 0.45,
-              "ret_anomaly_score": 82,
-              "mf_anomaly_score": 50
-            }
-          },
-          {
-            "ts_code": "601318.SH",
-            "stock_name": "中国平安",
-            "segment": "金融核心资产",
-            "rec_reason": "外资长期重仓的金融龙头，估值处于历史低位，高股息+高流动性，外资回流A股时金融板块是重要配置方向，受益于外资流入+估值修复双逻辑。",
-            "applied_pattern": "P04",
-            "expected_return_pct": 4.0,
-            "expected_duration_days": 7,
-            "expected_window": "T+5-10",
-            "heat_score": 45,
-            "acceptance_score": 36,
-            "rank_score": 46.07,
-            "pre_run_up_3d": -3.23,
-            "overheated": false,
-            "leader_score": 28.5,
-            "leader_detail": {
-              "circ_mv_yi": 5703.0,
-              "ret_3d_pct": -1.42,
-              "ret_z": -0.67,
-              "main_net_3d_yi": -1.31,
-              "mf_z": -0.44,
-              "ret_anomaly_score": 22,
-              "mf_anomaly_score": 35
-            }
-          }
-        ],
-        "any_overheated": false,
-        "staleness_factor": 0.85,
-        "staleness_detail": {
-          "prior_theme_count": 2,
-          "keywords": [
-            "证监会",
-            "外资",
-            "持有"
-          ]
-        },
-        "max_rank_pre_stale": 50.03,
-        "raw_rank": 42.53,
-        "decay_factor": 0.7,
-        "day_offset": 3,
-        "similar_cases": []
       }
     ],
-    "n_pool": 180,
-    "max_rank": 41.24,
-    "n_qualified": 4
+    "n_pool": 182,
+    "max_rank": 47.55,
+    "n_qualified": 5
   },
   "days": [
     {
-      "top10": [],
-      "n_pool": 0,
-      "max_rank": 0,
+      "top10": [
+        {
+          "source_news_hash": "1e0b184cee36ce8ee03d96dba2c27979",
+          "news_channel": "加红",
+          "event_headline": "我国成功发射卫星互联网技术试验卫星",
+          "topic_class": "技术突破",
+          "applied_pattern": "P08",
+          "transmission_chain": "【Step -1: event_type】新闻为央视报道的卫星成功发射事件，属于具体事件驱动，选 event_driven。\n【Step 0: impact_scope】该卫星专门用于\"手机宽带直连卫星、天地网络融合\"技术试验验证，这是卫星互联网产业的关键技术验证节点，影响整个卫星互联网产业链（地面终端、芯片、相控阵天线、运营等），非单公司事件，选 industry。\n【Step 1: topic_class】技术突破类 — 卫星互联网试验星成功入轨，验证手机直连卫星等关键技术。\n【Step 2: 范式选择】查矩阵：技术突破类最优范式为 [P07]（n=41 win=53% comp=+0.10）。同时，卫星互联网试验星发射成功→产业链进入商业化加速期→上游核心器件/地面终端需求放量，符合 [P08] 产业链传导逻辑。\n【Step 3: 因果链】新闻：我国成功发射卫星互联网技术试验卫星，用于手机宽带直连卫星、天地网络融合试验 → 这是中国版\"星链\"（千帆星座/国网星座）技术验证的关键一步，标志着卫星互联网从组网阶段进入终端应用验证阶段 → 手机直连卫星需要地面终端侧增加相控阵天线/专用基带芯片，卫星侧需要星载TR组件/激光通信终端 → 产业链上游核心器件供应商最先受益于星座规模化建设。\n【Step 4: 特征条件】受益标的特征：1）卫星互联网相控阵天线/TR组件核心供应商；2）卫星",
+          "impact_scope": "industry",
+          "scope_emoji": "🏭",
+          "scope_cn": "全行业",
+          "scope_multiplier": 0.85,
+          "event_type": "event_driven",
+          "raw_title": "我国成功发射卫星互联网技术试验卫星",
+          "raw_content": "【我国成功发射卫星互联网技术试验卫星】财联社5月31日电，据央视新闻，北京时间2026年5月31日02时07分，我国在西昌卫星发射中心使用长征二号丁运载火箭，成功将卫星互联网技术试验卫星发射升空，卫星顺利进入预定轨道，发射任务取得圆满成功。该卫星主要用于开展手机宽带直连卫星、天地网络融合等技术试验验证。\n\n此次任务是长征系列运载火箭的第646次飞行。",
+          "news_pub_time": "2026-05-31 02:46",
+          "news_pub_date": "2026-05-31",
+          "strength_score": 68,
+          "novelty_score": 86,
+          "max_heat": 36,
+          "max_accept": 36,
+          "max_rank": 47.55,
+          "stocks": [
+            {
+              "ts_code": "300342.SZ",
+              "stock_name": "天银机电",
+              "segment": "卫星互联网-星载TR组件",
+              "rec_reason": "子公司华清瑞达是国内星载相控阵天线TR组件的核心供应商，卫星互联网星座规模化建设直接受益于星载TR组件批量采购，试验星成功发射验证技术路线后组网加速。",
+              "applied_pattern": "P08",
+              "expected_return_pct": 10.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+1-3",
+              "heat_score": 31,
+              "acceptance_score": 20,
+              "rank_score": 47.55,
+              "pre_run_up_3d": -6.84,
+              "overheated": false,
+              "leader_score": 36.0,
+              "leader_detail": {
+                "circ_mv_yi": 206.0,
+                "ret_3d_pct": -6.84,
+                "ret_z": -0.91,
+                "main_net_3d_yi": -3.87,
+                "mf_z": 0.3,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "688311.SH",
+              "stock_name": "盟升电子",
+              "segment": "卫星互联网-地面终端天线",
+              "rec_reason": "公司是国内卫星通信天线及动中通终端龙头，手机直连卫星需要地面配套终端天线升级，公司已布局低轨卫星互联网地面终端产品线，试验星验证后商用化进程加速。",
+              "applied_pattern": "P08",
+              "expected_return_pct": 7.0,
+              "expected_duration_days": 7,
+              "expected_window": "T+1-3",
+              "heat_score": 36,
+              "acceptance_score": 36,
+              "rank_score": 45.46,
+              "pre_run_up_3d": -8.69,
+              "overheated": false,
+              "leader_score": 36.0,
+              "leader_detail": {
+                "circ_mv_yi": 49.0,
+                "ret_3d_pct": -8.69,
+                "ret_z": -1.36,
+                "main_net_3d_yi": 0.03,
+                "mf_z": 0.33,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "002151.SZ",
+              "stock_name": "北斗星通",
+              "segment": "卫星互联网-芯片与终端",
+              "rec_reason": "公司是卫星导航/通信芯片龙头，旗下和芯星通具备卫星通信基带芯片能力，是卫星互联网地面终端核心供应商，手机直连卫星试验验证将直接拉动终端芯片需求。",
+              "applied_pattern": "P07",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 7,
+              "expected_window": "T+1-3",
+              "heat_score": 36,
+              "acceptance_score": 20,
+              "rank_score": 43.74,
+              "pre_run_up_3d": -9.37,
+              "overheated": false,
+              "leader_score": 17.0,
+              "leader_detail": {
+                "circ_mv_yi": 151.0,
+                "ret_3d_pct": -9.37,
+                "ret_z": -1.91,
+                "main_net_3d_yi": -2.63,
+                "mf_z": -0.73,
+                "ret_anomaly_score": 12,
+                "mf_anomaly_score": 22
+              }
+            }
+          ],
+          "any_overheated": false,
+          "staleness_factor": 1.0,
+          "staleness_detail": {
+            "prior_theme_count": 0,
+            "keywords": [
+              "我国",
+              "成功",
+              "发射卫星"
+            ]
+          },
+          "similar_cases": []
+        },
+        {
+          "source_news_hash": "266eb95557bc4b16dfc45ee1a7f171e5",
+          "news_channel": "加红",
+          "event_headline": "伊朗全面管控霍尔木兹海峡航运",
+          "topic_class": "地缘冲突",
+          "applied_pattern": "P05",
+          "transmission_chain": "【Step -1 事件类型】event_driven — 伊朗对霍尔木兹海峡实施全面航运管理，是具体的地缘政治事件，非传闻/评论/复盘。\n\n【Step 0 影响范围】global — 霍尔木兹海峡是全球最重要的石油运输咽喉（全球约20-30%石油海运量经此），伊朗宣布全面管理+军舰警告，直接影响全球原油供应安全，属于全球级地缘事件。\n\n【Step 1 主题分类】地缘冲突\n\n【Step 2 范式选择】最优范式：[P05] 事件催化（地缘冲突→能源安全→避险资产/替代路线）；次优范式：[P03] 供需共振（供给端收缩预期→油价上行→能源股受益）。参考历史教训：本次非\"外交磋商/谈判\"，而是实质性的军事管控+主权法律推进，信号强度高，适用P05。\n\n【Step 3 因果链推演】\n新闻：伊朗宣布对霍尔木兹海峡航运实施全面管理，所有商船/油轮须获革命卫队许可，并警告外国军舰不得干预。\n→ 霍尔木兹海峡通行效率下降、保险成本飙升、部分船东可能绕行（增加航程/成本）\n→ 全球原油供应出现\"有效收缩\"预期（类似供给端冲击），布伦特/WTI短期脉冲上行\n→ 利好方向：① 石油/天然气上游资源（油价弹性最大）；② 油运（绕行好望角增加吨海里需求）；③ 替代能源/军工（避险情绪）\n→ 受益标的特征：油价弹性大的上游油气开采龙头、油运运力规模领先的航运公司\n\n【Step 4 特征条件】\n① 上游油气：储量",
+          "impact_scope": "global",
+          "scope_emoji": "🌍",
+          "scope_cn": "全球级",
+          "scope_multiplier": 1.0,
+          "event_type": "event_driven",
+          "raw_title": "伊朗称对霍尔木兹海峡航运实施全面管理",
+          "raw_content": "【伊朗称对霍尔木兹海峡航运实施全面管理】财联社5月31日电，据伊朗迈赫尔通讯社30日报道，伊朗武装部队哈塔姆安比亚中央总部说，伊朗对霍尔木兹海峡航运实施全面管理，所有商业船舶、油轮及其他民用船只须按照指定航线航行，并提前获得伊朗伊斯兰革命卫队海军许可。\n\n伊朗武装部队哈塔姆安比亚中央总部说，鉴于霍尔木兹海峡航道管理具有统一性，所有船舶必须遵守伊方制定的通行规定，任何违反相关规定的行为都可能对其航行安全造成严重影响。\n\n该总部同时警告称，任何外国军舰如试图干预霍尔木兹海峡管理事务或阻碍海上交通秩序，伊朗武装力量将采取相应行动。\n\n当天早些时候，据伊朗学生通讯社报道，伊朗伊斯兰议会主席团成员萨利米表示，议会关于对霍尔木兹海峡“实施主权管辖”的方案即将获得通过，并有望成为一项长期法律。（新华社）",
+          "news_pub_time": "2026-05-31 02:29",
+          "news_pub_date": "2026-05-31",
+          "strength_score": 78,
+          "novelty_score": 74,
+          "max_heat": 36,
+          "max_accept": 44,
+          "max_rank": 24.32,
+          "stocks": [
+            {
+              "ts_code": "600583.SH",
+              "stock_name": "海油工程",
+              "segment": "海洋油气工程",
+              "rec_reason": "国内唯一大型海洋油气工程总包商，受益于油价上行带动中海油资本开支扩张。地缘事件催化下，能源安全逻辑强化，国内加大海洋油气开发力度预期升温。",
+              "applied_pattern": "P05",
+              "expected_return_pct": 8.0,
+              "expected_duration_days": 10,
+              "expected_window": "T+5-10",
+              "heat_score": 36,
+              "acceptance_score": 44,
+              "rank_score": 60.79,
+              "pre_run_up_3d": -2.94,
+              "overheated": false,
+              "leader_score": 36.0,
+              "leader_detail": {
+                "circ_mv_yi": 248.0,
+                "ret_3d_pct": -2.94,
+                "ret_z": -1.03,
+                "main_net_3d_yi": 0.14,
+                "mf_z": 0.37,
+                "ret_anomaly_score": 22,
+                "mf_anomaly_score": 50
+              }
+            },
+            {
+              "ts_code": "600028.SH",
+              "stock_name": "中国石化",
+              "segment": "上游油气开采",
+              "rec_reason": "国内最大炼化一体化企业，上游油气储量丰富，油价每涨10美元/桶，利润弹性约100-150亿元。霍尔木兹海峡管控直接推升布伦特油价预期，中国石化作为国内油气龙头充分受益油价上行。",
+              "applied_pattern": "P03",
+              "expected_return_pct": 6.0,
+              "expected_duration_days": 8,
+              "expected_window": "T+1-3",
+              "heat_score": 31,
+              "acceptance_score": 40,
+              "rank_score": 54.68,
+              "pre_run_up_3d": -0.41,
+              "overheated": false,
+              "leader_score": 28.5,
+              "leader_detail": {
+                "circ_mv_yi": 4595.0,
+                "ret_3d_pct": -0.41,
+                "ret_z": -0.35,
+                "main_net_3d_yi": -1.4,
+                "mf_z": -0.81,
+                "ret_anomaly_score": 35,
+                "mf_anomaly_score": 22
+              }
+            },
+            {
+              "ts_code": "600026.SH",
+              "stock_name": "中远海能",
+              "segment": "油运",
+              "rec_reason": "全球最大油轮运营商之一，VLCC运力规模领先，中东-亚洲航线核心承运商。霍尔木兹海峡管控导致部分船东绕行好望角，吨海里需求大幅增加，运价弹性极大。历史地缘事件中油运股脉冲弹性强于上游油气。",
+              "applied_pattern": "P05",
+              "expected_return_pct": 12.0,
+              "expected_duration_days": 5,
+              "expected_window": "T+1-3",
+              "heat_score": 36,
+              "acceptance_score": 20,
+              "rank_score": 53.66,
+              "pre_run_up_3d": -8.24,
+              "overheated": false,
+              "leader_score": 17.0,
+              "leader_detail": {
+                "circ_mv_yi": 745.0,
+                "ret_3d_pct": -8.24,
+                "ret_z": -1.84,
+                "main_net_3d_yi": -2.13,
+                "mf_z": -1.39,
+                "ret_anomaly_score": 12,
+                "mf_anomaly_score": 22
+              }
+            }
+          ],
+          "any_overheated": false,
+          "staleness_factor": 0.4,
+          "staleness_detail": {
+            "prior_theme_count": 11,
+            "keywords": [
+              "伊朗",
+              "全面",
+              "管控"
+            ]
+          },
+          "max_rank_pre_stale": 60.79,
+          "similar_cases": []
+        }
+      ],
+      "n_pool": 2,
+      "max_rank": 47.55,
       "date": "2026-05-31",
       "label": "今日",
       "weekday": "日",
-      "n_qualified": 0
+      "n_qualified": 1
     },
     {
       "top10": [
