@@ -1,8 +1,8 @@
 {
   "meta": {
-    "generated_at": "2026-05-31 23:00:13",
-    "next_update": "00:00",
-    "last_snapshot": "2026-05-31 23:00",
+    "generated_at": "2026-06-01 00:00:12",
+    "next_update": "01:00",
+    "last_snapshot": "2026-06-01 00:00",
     "threshold": 34.0,
     "threshold_config": {
       "version": "v5",
@@ -87,7 +87,7 @@
         }
       ]
     },
-    "today": "2026-05-31",
+    "today": "2026-06-01",
     "version": "v7",
     "channels": [
       "加红",
@@ -118,7 +118,7 @@
         "novelty_score": 86,
         "max_heat": 36,
         "max_accept": 36,
-        "max_rank": 47.55,
+        "max_rank": 36.38,
         "stocks": [
           {
             "ts_code": "300342.SZ",
@@ -197,18 +197,19 @@
           }
         ],
         "any_overheated": false,
-        "staleness_factor": 1.0,
+        "staleness_factor": 0.85,
         "staleness_detail": {
-          "prior_theme_count": 0,
+          "prior_theme_count": 1,
           "keywords": [
             "我国",
             "成功",
             "发射卫星"
           ]
         },
-        "raw_rank": 47.55,
-        "decay_factor": 1.0,
-        "day_offset": 0,
+        "max_rank_pre_stale": 47.55,
+        "raw_rank": 40.42,
+        "decay_factor": 0.9,
+        "day_offset": 1,
         "similar_cases": []
       },
       {
@@ -231,7 +232,7 @@
         "novelty_score": 41,
         "max_heat": 70,
         "max_accept": 32,
-        "max_rank": 41.24,
+        "max_rank": 35.35,
         "stocks": [
           {
             "ts_code": "002371.SZ",
@@ -321,8 +322,8 @@
         },
         "max_rank_pre_stale": 69.32,
         "raw_rank": 58.92,
-        "decay_factor": 0.7,
-        "day_offset": 3,
+        "decay_factor": 0.6,
+        "day_offset": 4,
         "similar_cases": []
       },
       {
@@ -345,7 +346,7 @@
         "novelty_score": 63,
         "max_heat": 37,
         "max_accept": 88,
-        "max_rank": 37.93,
+        "max_rank": 32.51,
         "stocks": [
           {
             "ts_code": "000333.SZ",
@@ -435,8 +436,8 @@
         },
         "max_rank_pre_stale": 63.74,
         "raw_rank": 54.18,
-        "decay_factor": 0.7,
-        "day_offset": 3,
+        "decay_factor": 0.6,
+        "day_offset": 4,
         "similar_cases": []
       },
       {
@@ -459,7 +460,7 @@
         "novelty_score": 83,
         "max_heat": 50,
         "max_accept": 69,
-        "max_rank": 36.56,
+        "max_rank": 31.99,
         "stocks": [
           {
             "ts_code": "603699.SH",
@@ -549,8 +550,8 @@
         },
         "max_rank_pre_stale": 53.76,
         "raw_rank": 45.7,
-        "decay_factor": 0.8,
-        "day_offset": 2,
+        "decay_factor": 0.7,
+        "day_offset": 3,
         "similar_cases": []
       },
       {
@@ -573,7 +574,7 @@
         "novelty_score": 72,
         "max_heat": 29,
         "max_accept": 68,
-        "max_rank": 34.68,
+        "max_rank": 29.73,
         "stocks": [
           {
             "ts_code": "600011.SH",
@@ -663,8 +664,8 @@
         },
         "max_rank_pre_stale": 58.29,
         "raw_rank": 49.55,
-        "decay_factor": 0.7,
-        "day_offset": 3,
+        "decay_factor": 0.6,
+        "day_offset": 4,
         "similar_cases": []
       },
       {
@@ -687,7 +688,7 @@
         "novelty_score": 74,
         "max_heat": 62,
         "max_accept": 87,
-        "max_rank": 32.83,
+        "max_rank": 28.73,
         "stocks": [
           {
             "ts_code": "300308.SZ",
@@ -777,8 +778,8 @@
         },
         "max_rank_pre_stale": 48.28,
         "raw_rank": 41.04,
-        "decay_factor": 0.8,
-        "day_offset": 2,
+        "decay_factor": 0.7,
+        "day_offset": 3,
         "similar_cases": []
       },
       {
@@ -801,7 +802,7 @@
         "novelty_score": 92,
         "max_heat": 58,
         "max_accept": 80,
-        "max_rank": 32.18,
+        "max_rank": 28.61,
         "stocks": [
           {
             "ts_code": "000630.SZ",
@@ -891,8 +892,97 @@
         },
         "max_rank_pre_stale": 55.01,
         "raw_rank": 35.76,
-        "decay_factor": 0.9,
-        "day_offset": 1,
+        "decay_factor": 0.8,
+        "day_offset": 2,
+        "similar_cases": []
+      },
+      {
+        "source_news_hash": "5377e5ee4954fdf3bfc749a8bddb274f",
+        "news_channel": "公司",
+        "event_headline": "全球最大铜企Codelco利润大增",
+        "topic_class": "涨价/降价",
+        "applied_pattern": "P03",
+        "transmission_chain": "[Step -1] 新闻类型判断：该新闻为智利国家铜业公司（Codelco）一季度财报数据发布，属于具体事件驱动（event_driven），非评论/传闻/盘面综述。[Step 0] 影响范围判断：Codelco是全球最大铜生产商（年产量约140万吨，占全球约7%），其一季度利润数据反映了铜行业景气度，影响全球铜供应格局和铜价预期，属于industry级别。[Step 1] 主题分类：涨价/降价类。[Step 2] 范式选择：最优范式为[P03]供需共振。Codelco一季度税前利润达8.25亿美元，同比大幅增长，核心驱动是铜价上涨（2026年Q1铜价维持高位）和产量恢复。但需注意：Codelco近年产量持续下滑（2024年产量约132万吨，创25年新低），利润增长更多来自价格端而非产量端。铜供给端持续偏紧（全球铜矿产能增速放缓、品位下降），需求端受全球能源转型（电动车、光伏、电网）拉动，供需格局偏紧支撑铜价。[Step 3] 因果链：Codelco利润大增 → 验证铜行业高景气度 → 全球铜供给偏紧格局延续 → 铜价有望维持高位 → A股铜矿企业利润弹性释放。[Step 4] 特征条件：铜资源自给率高、产量弹性大、成本控制优秀的国内铜矿龙头。",
+        "impact_scope": "industry",
+        "scope_emoji": "🏭",
+        "scope_cn": "全行业",
+        "scope_multiplier": 0.85,
+        "event_type": "event_driven",
+        "raw_title": "",
+        "raw_content": "用英文翻译“智利国家铜业公司（Codelco）：一季度税前利润达8.25亿美元。”",
+        "news_pub_time": "2026-05-30 00:36",
+        "news_pub_date": "2026-05-30",
+        "strength_score": 62,
+        "novelty_score": 82,
+        "max_heat": 58,
+        "max_accept": 80,
+        "max_rank": 28.34,
+        "stocks": [
+          {
+            "ts_code": "000630.SZ",
+            "stock_name": "铜陵有色",
+            "segment": "铜矿采选冶炼",
+            "rec_reason": "国内铜矿龙头，年铜精矿产量约17万吨，铜冶炼产能超160万吨/年。Codelco利润大增验证铜行业高景气，铜陵有色受益于铜价高位+冶炼加工费改善，业绩弹性大。",
+            "applied_pattern": "P03",
+            "expected_return_pct": 8.0,
+            "expected_duration_days": 8,
+            "expected_window": "T+5-10",
+            "heat_score": 58,
+            "acceptance_score": 80,
+            "rank_score": 54.49,
+            "pre_run_up_3d": 1.02,
+            "overheated": false,
+            "leader_score": 42.5,
+            "leader_detail": {
+              "circ_mv_yi": 769.0,
+              "ret_3d_pct": 1.02,
+              "ret_z": 0.16,
+              "main_net_3d_yi": 5.48,
+              "mf_z": 0.57,
+              "ret_anomaly_score": 35,
+              "mf_anomaly_score": 50
+            }
+          },
+          {
+            "ts_code": "600362.SH",
+            "stock_name": "江西铜业",
+            "segment": "铜矿采选冶炼",
+            "rec_reason": "国内最大铜生产商之一，年产铜精矿约20万吨，阴极铜产能超200万吨。铜价高位下公司资源端利润弹性显著，且海外铜矿资产布局丰富。",
+            "applied_pattern": "P03",
+            "expected_return_pct": 7.0,
+            "expected_duration_days": 8,
+            "expected_window": "T+5-10",
+            "heat_score": 31,
+            "acceptance_score": 42,
+            "rank_score": 43.78,
+            "pre_run_up_3d": -6.53,
+            "overheated": false,
+            "leader_score": 36.0,
+            "leader_detail": {
+              "circ_mv_yi": 903.0,
+              "ret_3d_pct": -6.53,
+              "ret_z": -1.44,
+              "main_net_3d_yi": 1.02,
+              "mf_z": 0.51,
+              "ret_anomaly_score": 22,
+              "mf_anomaly_score": 50
+            }
+          }
+        ],
+        "any_overheated": false,
+        "staleness_factor": 0.65,
+        "staleness_detail": {
+          "prior_theme_count": 3,
+          "keywords": [
+            "全球",
+            "最大",
+            "铜企"
+          ]
+        },
+        "max_rank_pre_stale": 54.49,
+        "raw_rank": 35.42,
+        "decay_factor": 0.8,
+        "day_offset": 2,
         "similar_cases": []
       },
       {
@@ -915,7 +1005,7 @@
         "novelty_score": 80,
         "max_heat": 36,
         "max_accept": 36,
-        "max_rank": 31.96,
+        "max_rank": 27.96,
         "stocks": [
           {
             "ts_code": "600120.SH",
@@ -1005,211 +1095,8 @@
         },
         "max_rank_pre_stale": 47.0,
         "raw_rank": 39.95,
-        "decay_factor": 0.8,
-        "day_offset": 2,
-        "similar_cases": []
-      },
-      {
-        "source_news_hash": "5377e5ee4954fdf3bfc749a8bddb274f",
-        "news_channel": "公司",
-        "event_headline": "全球最大铜企Codelco利润大增",
-        "topic_class": "涨价/降价",
-        "applied_pattern": "P03",
-        "transmission_chain": "[Step -1] 新闻类型判断：该新闻为智利国家铜业公司（Codelco）一季度财报数据发布，属于具体事件驱动（event_driven），非评论/传闻/盘面综述。[Step 0] 影响范围判断：Codelco是全球最大铜生产商（年产量约140万吨，占全球约7%），其一季度利润数据反映了铜行业景气度，影响全球铜供应格局和铜价预期，属于industry级别。[Step 1] 主题分类：涨价/降价类。[Step 2] 范式选择：最优范式为[P03]供需共振。Codelco一季度税前利润达8.25亿美元，同比大幅增长，核心驱动是铜价上涨（2026年Q1铜价维持高位）和产量恢复。但需注意：Codelco近年产量持续下滑（2024年产量约132万吨，创25年新低），利润增长更多来自价格端而非产量端。铜供给端持续偏紧（全球铜矿产能增速放缓、品位下降），需求端受全球能源转型（电动车、光伏、电网）拉动，供需格局偏紧支撑铜价。[Step 3] 因果链：Codelco利润大增 → 验证铜行业高景气度 → 全球铜供给偏紧格局延续 → 铜价有望维持高位 → A股铜矿企业利润弹性释放。[Step 4] 特征条件：铜资源自给率高、产量弹性大、成本控制优秀的国内铜矿龙头。",
-        "impact_scope": "industry",
-        "scope_emoji": "🏭",
-        "scope_cn": "全行业",
-        "scope_multiplier": 0.85,
-        "event_type": "event_driven",
-        "raw_title": "",
-        "raw_content": "用英文翻译“智利国家铜业公司（Codelco）：一季度税前利润达8.25亿美元。”",
-        "news_pub_time": "2026-05-30 00:36",
-        "news_pub_date": "2026-05-30",
-        "strength_score": 62,
-        "novelty_score": 82,
-        "max_heat": 58,
-        "max_accept": 80,
-        "max_rank": 31.88,
-        "stocks": [
-          {
-            "ts_code": "000630.SZ",
-            "stock_name": "铜陵有色",
-            "segment": "铜矿采选冶炼",
-            "rec_reason": "国内铜矿龙头，年铜精矿产量约17万吨，铜冶炼产能超160万吨/年。Codelco利润大增验证铜行业高景气，铜陵有色受益于铜价高位+冶炼加工费改善，业绩弹性大。",
-            "applied_pattern": "P03",
-            "expected_return_pct": 8.0,
-            "expected_duration_days": 8,
-            "expected_window": "T+5-10",
-            "heat_score": 58,
-            "acceptance_score": 80,
-            "rank_score": 54.49,
-            "pre_run_up_3d": 1.02,
-            "overheated": false,
-            "leader_score": 42.5,
-            "leader_detail": {
-              "circ_mv_yi": 769.0,
-              "ret_3d_pct": 1.02,
-              "ret_z": 0.16,
-              "main_net_3d_yi": 5.48,
-              "mf_z": 0.57,
-              "ret_anomaly_score": 35,
-              "mf_anomaly_score": 50
-            }
-          },
-          {
-            "ts_code": "600362.SH",
-            "stock_name": "江西铜业",
-            "segment": "铜矿采选冶炼",
-            "rec_reason": "国内最大铜生产商之一，年产铜精矿约20万吨，阴极铜产能超200万吨。铜价高位下公司资源端利润弹性显著，且海外铜矿资产布局丰富。",
-            "applied_pattern": "P03",
-            "expected_return_pct": 7.0,
-            "expected_duration_days": 8,
-            "expected_window": "T+5-10",
-            "heat_score": 31,
-            "acceptance_score": 42,
-            "rank_score": 43.78,
-            "pre_run_up_3d": -6.53,
-            "overheated": false,
-            "leader_score": 36.0,
-            "leader_detail": {
-              "circ_mv_yi": 903.0,
-              "ret_3d_pct": -6.53,
-              "ret_z": -1.44,
-              "main_net_3d_yi": 1.02,
-              "mf_z": 0.51,
-              "ret_anomaly_score": 22,
-              "mf_anomaly_score": 50
-            }
-          }
-        ],
-        "any_overheated": false,
-        "staleness_factor": 0.65,
-        "staleness_detail": {
-          "prior_theme_count": 3,
-          "keywords": [
-            "全球",
-            "最大",
-            "铜企"
-          ]
-        },
-        "max_rank_pre_stale": 54.49,
-        "raw_rank": 35.42,
-        "decay_factor": 0.9,
-        "day_offset": 1,
-        "similar_cases": []
-      },
-      {
-        "source_news_hash": "4252ab20bf86b02602d61a850d617be8",
-        "news_channel": "加红",
-        "event_headline": "李强调研舟山宁波：加快建设大宗商品枢纽",
-        "topic_class": "政策出台",
-        "applied_pattern": "P04",
-        "transmission_chain": "【Step -1 事件类型判断】新闻为国务院总理李强实地调研并发表讲话，明确要求\"加快建设大宗商品资源配置枢纽\"，属于国家级政策信号，为 event_driven 事件驱动。\n\n【Step 0 影响范围判断】该政策涉及大宗商品储备（石油、粮食）、港口物流、交易平台建设等多个环节，影响整个大宗商品供应链和港口物流行业，非单公司事件，判断为 industry 级别。\n\n【Step 1 主题分类】政策出台。\n\n【Step 2 范式选择】根据矩阵，政策出台类最优范式为 [P04] 政策驱动（win=61%, comp=+0.09）。同时，新闻中总理明确提到\"宁波舟山港\"建设世界一流强港、大宗商品交易中心等，涉及港口物流基础设施升级，可结合 [P08] 产业链传导（港口建设→设备需求→信息化升级）。\n\n【Step 3 因果链推演】新闻X：李强总理调研舟山宁波，强调加快建设大宗商品资源配置枢纽（石油储备、粮食储备、港口建设、交易中心）→ 政策力度大（总理亲自调研+新华社通稿），明确要求\"扩大储备容量\"\"补齐短板\"\"四港联动\"\"世界一流强港\"→ 直接利好：1）港口运营企业（吞吐量提升、费率改善）；2）大宗商品储运/贸易服务企业（交易量提升、仓储需求增加）；3）港口信息化/智能化改造供应商。受益标的特征：浙江/宁波舟山港相关、大宗商品仓储贸易、港口数智化服务商。",
-        "impact_scope": "industry",
-        "scope_emoji": "🏭",
-        "scope_cn": "全行业",
-        "scope_multiplier": 0.85,
-        "event_type": "event_driven",
-        "raw_title": "李强在浙江舟山宁波调研时强调 加快建设大宗商品资源配置枢纽 为统筹发展和安全提供可靠保障",
-        "raw_content": "【李强在浙江舟山宁波调研时强调 加快建设大宗商品资源配置枢纽 为统筹发展和安全提供可靠保障】中共中央政治局常委、国务院总理李强5月25日至27日在浙江省舟山市、宁波市调研。他强调，要深入贯彻落实习近平总书记关于构建大国储备体系的重要论述和指示精神，坚持政府主导、社会共建、多元互补，做好大宗商品和重要物资储备调节，强化战略保障、宏观调控和应对急需功能，持续提升产业链供应链韧性，加快建设大宗商品资源配置枢纽，为统筹发展和安全提供可靠保障。\n\n李强来到舟山国家石油储备基地、大宗农产品储运基地和宁波大榭商业石油储备项目，听取石油、粮食等储备工作汇报，察看储备洞库等设施，了解项目建设运营情况。李强指出，面对外部环境变化带来的挑战，“手中有粮，心中不慌”。做好大宗商品和重要物资储备，对于经济社会稳定运行意义重大。要科学规划布局，优化储备结构，充分发挥多种主体作用，大力推进多种类型储备设施建设，加快补齐短板，进一步扩大储备容量。要加大科研攻关力度，推动储备和管理技术革新，提高信息化智能化水平。要深化体制机制改革，促进战略储备、商业储备等协同运作，完善轮换动用和市场调节机制，全面提升收储、管理、调配效",
-        "news_pub_time": "2026-05-27 19:36",
-        "news_pub_date": "2026-05-27",
-        "strength_score": 72,
-        "novelty_score": 78,
-        "max_heat": 71,
-        "max_accept": 44,
-        "max_rank": 30.54,
-        "stocks": [
-          {
-            "ts_code": "601018.SH",
-            "stock_name": "宁波港",
-            "segment": "港口运营",
-            "rec_reason": "宁波舟山港是政策直接指向的核心载体，总理明确要求'建设世界一流强港'，宁波港作为运营主体直接受益于吞吐量提升、费率改善和四港联动政策红利。",
-            "applied_pattern": "P04",
-            "expected_return_pct": 12.0,
-            "expected_duration_days": 10,
-            "expected_window": "T+5-10",
-            "heat_score": 71,
-            "acceptance_score": 44,
-            "rank_score": 59.88,
-            "pre_run_up_3d": -2.27,
-            "overheated": false,
-            "leader_score": 35.0,
-            "leader_detail": {
-              "circ_mv_yi": 677.0,
-              "ret_3d_pct": -0.57,
-              "ret_z": -0.27,
-              "main_net_3d_yi": 0.19,
-              "mf_z": 0.0,
-              "ret_anomaly_score": 35,
-              "mf_anomaly_score": 35
-            }
-          },
-          {
-            "ts_code": "600798.SH",
-            "stock_name": "宁波海运",
-            "segment": "大宗商品航运",
-            "rec_reason": "宁波舟山港大宗商品资源配置枢纽建设将大幅提升大宗商品海运需求，宁波海运主营沿海及国际大宗散货运输，与宁波舟山港深度绑定，直接受益于枢纽建设带来的运量增长。",
-            "applied_pattern": "P04",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 8,
-            "expected_window": "T+5-10",
-            "heat_score": 71,
-            "acceptance_score": 38,
-            "rank_score": 54.56,
-            "pre_run_up_3d": -6.78,
-            "overheated": false,
-            "leader_score": 36.0,
-            "leader_detail": {
-              "circ_mv_yi": 42.0,
-              "ret_3d_pct": -4.16,
-              "ret_z": -1.49,
-              "main_net_3d_yi": 0.06,
-              "mf_z": 0.38,
-              "ret_anomaly_score": 22,
-              "mf_anomaly_score": 50
-            }
-          },
-          {
-            "ts_code": "002930.SZ",
-            "stock_name": "宏川智慧",
-            "segment": "石化仓储",
-            "rec_reason": "总理调研中专门察看石油储备洞库和商业石油储备项目，强调'扩大储备容量''补齐短板'。宏川智慧是国内领先的石化仓储龙头，在长三角布局多个储罐基地，直接受益于国家战略储备扩容需求。",
-            "applied_pattern": "P04",
-            "expected_return_pct": 10.0,
-            "expected_duration_days": 8,
-            "expected_window": "T+5-10",
-            "heat_score": 71,
-            "acceptance_score": 36,
-            "rank_score": 54.25,
-            "pre_run_up_3d": -11.87,
-            "overheated": false,
-            "leader_score": 28.5,
-            "leader_detail": {
-              "circ_mv_yi": 51.0,
-              "ret_3d_pct": -11.12,
-              "ret_z": -1.37,
-              "main_net_3d_yi": -0.31,
-              "mf_z": -0.11,
-              "ret_anomaly_score": 22,
-              "mf_anomaly_score": 35
-            }
-          }
-        ],
-        "any_overheated": false,
-        "staleness_factor": 0.85,
-        "staleness_detail": {
-          "prior_theme_count": 1,
-          "keywords": [
-            "李强",
-            "调研",
-            "舟山"
-          ]
-        },
-        "max_rank_pre_stale": 59.88,
-        "raw_rank": 50.9,
-        "decay_factor": 0.6,
-        "day_offset": 4,
+        "decay_factor": 0.7,
+        "day_offset": 3,
         "similar_cases": []
       },
       {
@@ -1232,7 +1119,7 @@
         "novelty_score": 94,
         "max_heat": 62,
         "max_accept": 87,
-        "max_rank": 30.35,
+        "max_rank": 26.56,
         "stocks": [
           {
             "ts_code": "300308.SZ",
@@ -1322,8 +1209,8 @@
         },
         "max_rank_pre_stale": 44.64,
         "raw_rank": 37.94,
-        "decay_factor": 0.8,
-        "day_offset": 2,
+        "decay_factor": 0.7,
+        "day_offset": 3,
         "similar_cases": []
       },
       {
@@ -1346,7 +1233,7 @@
         "novelty_score": 74,
         "max_heat": 36,
         "max_accept": 64,
-        "max_rank": 29.78,
+        "max_rank": 25.52,
         "stocks": [
           {
             "ts_code": "688777.SH",
@@ -1436,16 +1323,139 @@
         },
         "max_rank_pre_stale": 50.05,
         "raw_rank": 42.54,
-        "decay_factor": 0.7,
-        "day_offset": 3,
+        "decay_factor": 0.6,
+        "day_offset": 4,
+        "similar_cases": []
+      },
+      {
+        "source_news_hash": "4642a76db2fcd2c9f68a32e6c6acd523",
+        "news_channel": "加红",
+        "event_headline": "证监会：外资持有A股市值超4万亿",
+        "topic_class": "政策出台",
+        "applied_pattern": "P04",
+        "transmission_chain": "[Step -1 event_type=event_driven] 证监会副主席在官方场合（全球投资者大会）发布具体数据（外资持有A股流通市值超4万亿），属于官方表态+数据披露，是事件驱动。[Step 0 impact_scope=global] 外资持有A股市值超4万亿是A股国际化里程碑级数据，影响全市场资金面预期和估值体系，非单一行业/公司，故判为global。[Step 1 topic_class=政策出台] 属于监管层表态+制度开放信号。[Step 2 最优范式] 按矩阵，政策出台类最优为[P04]政策驱动（win=61%）。同时可辅以[P14]利率敏感（外资流入受全球流动性环境影响）。[Step 3 推理链] 新闻X：证监会副主席刘浩凌在2026全球投资者大会上披露，各类境外投资者持有A股流通市值超4万亿元，并强调外资持续流入。→ 这是官方背书外资对A股的配置信心，释放资本市场持续开放、制度环境稳定的积极信号。→ 外资偏好的板块（高ROE、大市值、流动性好、消费/金融龙头）将受益于增量资金预期。→ 同时，外资流入往往伴随人民币资产重估，利好核心资产估值修复。[Step 4 特征条件] 受益标的特征：①外资重仓/陆股通持仓市值排名前列的A股核心资产；②高ROE、高股息、大市值流动性好的行业龙头；③外资持股比例较高、有进一步增配空间的标的。",
+        "impact_scope": "global",
+        "scope_emoji": "🌍",
+        "scope_cn": "全球级",
+        "scope_multiplier": 1.0,
+        "event_type": "event_driven",
+        "raw_title": "证监会副主席刘浩凌：各类境外投资者持有A股流通市值超过4万亿元",
+        "raw_content": "【证监会副主席刘浩凌：各类境外投资者持有A股流通市值超过4万亿元】财联社5月28日电，由深交所主办的2026全球投资者大会在深圳举行。证监会副主席刘浩凌发表致辞时表示，中国是世界经济增长的主要贡献者和稳定锚，是外资企业投资兴业的沃土。今年以来，外资通过各种渠道稳步流入中国股市。截至目前，各类境外投资者持有A股流通市值超过4万亿元，已成为中国资本市场的重要参与者。",
+        "news_pub_time": "2026-05-28 10:55",
+        "news_pub_date": "2026-05-28",
+        "strength_score": 55,
+        "novelty_score": 74,
+        "max_heat": 45,
+        "max_accept": 58,
+        "max_rank": 25.52,
+        "stocks": [
+          {
+            "ts_code": "000333.SZ",
+            "stock_name": "美的集团",
+            "segment": "家电龙头/核心资产",
+            "rec_reason": "外资重仓股，陆股通持仓市值常年居前，高股息+高ROE+全球化布局，外资偏好标的，受益于外资增量资金流入带来的估值修复。",
+            "applied_pattern": "P04",
+            "expected_return_pct": 4.0,
+            "expected_duration_days": 7,
+            "expected_window": "T+5-10",
+            "heat_score": 45,
+            "acceptance_score": 58,
+            "rank_score": 50.03,
+            "pre_run_up_3d": -1.08,
+            "overheated": false,
+            "leader_score": 73.5,
+            "leader_detail": {
+              "circ_mv_yi": 5547.0,
+              "ret_3d_pct": 1.63,
+              "ret_z": 1.01,
+              "main_net_3d_yi": 7.42,
+              "mf_z": 1.77,
+              "ret_anomaly_score": 65,
+              "mf_anomaly_score": 82
+            }
+          },
+          {
+            "ts_code": "600519.SH",
+            "stock_name": "贵州茅台",
+            "segment": "消费核心资产",
+            "rec_reason": "外资持有A股市值最大的个股之一，陆股通持仓市值超千亿，高ROE+高确定性+大市值流动性极佳，是外资增配A股的首选核心资产，直接受益于外资持续流入预期。",
+            "applied_pattern": "P04",
+            "expected_return_pct": 5.0,
+            "expected_duration_days": 8,
+            "expected_window": "T+5-10",
+            "heat_score": 45,
+            "acceptance_score": 44,
+            "rank_score": 48.7,
+            "pre_run_up_3d": -0.77,
+            "overheated": false,
+            "leader_score": 66.0,
+            "leader_detail": {
+              "circ_mv_yi": 16576.0,
+              "ret_3d_pct": 4.13,
+              "ret_z": 2.12,
+              "main_net_3d_yi": -0.26,
+              "mf_z": 0.45,
+              "ret_anomaly_score": 82,
+              "mf_anomaly_score": 50
+            }
+          },
+          {
+            "ts_code": "601318.SH",
+            "stock_name": "中国平安",
+            "segment": "金融核心资产",
+            "rec_reason": "外资长期重仓的金融龙头，估值处于历史低位，高股息+高流动性，外资回流A股时金融板块是重要配置方向，受益于外资流入+估值修复双逻辑。",
+            "applied_pattern": "P04",
+            "expected_return_pct": 4.0,
+            "expected_duration_days": 7,
+            "expected_window": "T+5-10",
+            "heat_score": 45,
+            "acceptance_score": 36,
+            "rank_score": 46.07,
+            "pre_run_up_3d": -3.23,
+            "overheated": false,
+            "leader_score": 28.5,
+            "leader_detail": {
+              "circ_mv_yi": 5703.0,
+              "ret_3d_pct": -1.42,
+              "ret_z": -0.67,
+              "main_net_3d_yi": -1.31,
+              "mf_z": -0.44,
+              "ret_anomaly_score": 22,
+              "mf_anomaly_score": 35
+            }
+          }
+        ],
+        "any_overheated": false,
+        "staleness_factor": 0.85,
+        "staleness_detail": {
+          "prior_theme_count": 2,
+          "keywords": [
+            "证监会",
+            "外资",
+            "持有"
+          ]
+        },
+        "max_rank_pre_stale": 50.03,
+        "raw_rank": 42.53,
+        "decay_factor": 0.6,
+        "day_offset": 4,
         "similar_cases": []
       }
     ],
     "n_pool": 182,
-    "max_rank": 47.55,
-    "n_qualified": 5
+    "max_rank": 36.38,
+    "n_qualified": 2
   },
   "days": [
+    {
+      "top10": [],
+      "n_pool": 0,
+      "max_rank": 0,
+      "date": "2026-06-01",
+      "label": "今日",
+      "weekday": "一",
+      "n_qualified": 0
+    },
     {
       "top10": [
         {
@@ -1468,7 +1478,7 @@
           "novelty_score": 86,
           "max_heat": 36,
           "max_accept": 36,
-          "max_rank": 47.55,
+          "max_rank": 40.42,
           "stocks": [
             {
               "ts_code": "300342.SZ",
@@ -1547,15 +1557,16 @@
             }
           ],
           "any_overheated": false,
-          "staleness_factor": 1.0,
+          "staleness_factor": 0.85,
           "staleness_detail": {
-            "prior_theme_count": 0,
+            "prior_theme_count": 1,
             "keywords": [
               "我国",
               "成功",
               "发射卫星"
             ]
           },
+          "max_rank_pre_stale": 47.55,
           "similar_cases": []
         },
         {
@@ -1659,7 +1670,7 @@
           "any_overheated": false,
           "staleness_factor": 0.4,
           "staleness_detail": {
-            "prior_theme_count": 11,
+            "prior_theme_count": 12,
             "keywords": [
               "伊朗",
               "全面",
@@ -1671,9 +1682,9 @@
         }
       ],
       "n_pool": 2,
-      "max_rank": 47.55,
+      "max_rank": 40.42,
       "date": "2026-05-31",
-      "label": "今日",
+      "label": "昨日",
       "weekday": "日",
       "n_qualified": 1
     },
@@ -2077,1226 +2088,9 @@
       "n_pool": 4,
       "max_rank": 35.76,
       "date": "2026-05-30",
-      "label": "昨日",
+      "label": "前日",
       "weekday": "六",
       "n_qualified": 2
-    },
-    {
-      "top10": [
-        {
-          "source_news_hash": "e0553900b36ae763c1b344969d0a2463",
-          "news_channel": "公司",
-          "event_headline": "首艘全国产低温阀LNG船交付",
-          "topic_class": "技术突破",
-          "applied_pattern": "P02",
-          "transmission_chain": "【Step -1: event_type】新闻为具体交付事件，属于事件驱动(event_driven)。【Step 0: impact_scope】这是我国首艘货舱系统全国产低温阀LNG船交付，标志着LNG船完整产业链国产化闭环，影响整个LNG船/低温装备产业链，属于industry级别。【Step 1-2: topic_class+范式选择】新闻类型为\"技术突破\"，查矩阵最优范式为[P07]技术突破(win=64%, comp=+0.10)。同时该事件也具备[P02]国产替代逻辑——低温阀长期被国外垄断，此次全国产化突破卡脖子环节。【Step 3: 因果链】新闻：我国首艘货舱围护系统全谱系装配国产超低温阀的LNG船交付 → ①低温阀是LNG船核心配套件，此前依赖进口（法国Cryostar等），国产化后成本降30-40%、供货周期缩短；②标志着从材料（殷瓦钢/低温合金）→设计→配套设备的完整产业链自主可控；③中国LNG船全球订单占比已超30%（2025年数据），国产化率提升将带动配套企业订单放量 → 利好：1）低温阀门/泵/压缩机等核心配套商；2）LNG船用低温材料供应商；3）船用设备集成商。【Step 4: 特征条件】受益标的特征：①已进入沪东中华/LNG船供应链的低温阀门企业；②具备超低温(-163℃)材料/设备量产能力；③在LNG产业链有实际订单和交付记录。",
-          "impact_scope": "industry",
-          "scope_emoji": "🏭",
-          "scope_cn": "全行业",
-          "scope_multiplier": 0.85,
-          "event_type": "event_driven",
-          "raw_title": "",
-          "raw_content": "【我国首艘货舱系统全国产低温阀LNG运输船交付】今天（29日），由中船集团沪东中华建造的17.4万立方米大型LNG运输船正式交付，这艘船也是我国首艘实现货舱围护系统全谱系装配国产超低温阀的大型LNG运输船，标志着我国构建了一条从材料、设计到配套设备的大型LNG运输船完整产业链。",
-          "news_pub_time": "2026-05-29 09:25",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 72,
-          "novelty_score": 83,
-          "max_heat": 50,
-          "max_accept": 69,
-          "max_rank": 45.7,
-          "stocks": [
-            {
-              "ts_code": "603699.SH",
-              "stock_name": "纽威股份",
-              "segment": "低温阀门-核心配套",
-              "rec_reason": "国内工业阀门龙头，已批量供应LNG船用超低温阀门（-196℃），进入沪东中华等主流船厂供应链，LNG船国产化率提升直接拉动阀门订单放量。2025年营收约85亿，阀门市占率国内前三。",
-              "applied_pattern": "P07",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+5-10",
-              "heat_score": 50,
-              "acceptance_score": 36,
-              "rank_score": 53.57,
-              "pre_run_up_3d": -3.71,
-              "overheated": false,
-              "leader_score": 36.0,
-              "leader_detail": {
-                "circ_mv_yi": 436.0,
-                "ret_3d_pct": -4.25,
-                "ret_z": -0.83,
-                "main_net_3d_yi": 0.04,
-                "mf_z": 0.34,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
-              "ts_code": "600150.SH",
-              "stock_name": "中国船舶",
-              "segment": "造船总装-行业龙头",
-              "rec_reason": "中船集团旗下核心造船平台，与沪东中华同属中船体系，LNG船是当前最紧缺的高端船型（单船造价约2.5亿美元），国产化率提升增强接单能力和利润率，公司LNG船在手订单饱满。",
-              "applied_pattern": "P07",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 6,
-              "expected_window": "T+5-10",
-              "heat_score": 50,
-              "acceptance_score": 69,
-              "rank_score": 53.33,
-              "pre_run_up_3d": 0.74,
-              "overheated": false,
-              "leader_score": 36.0,
-              "leader_detail": {
-                "circ_mv_yi": 2270.0,
-                "ret_3d_pct": -3.39,
-                "ret_z": -0.72,
-                "main_net_3d_yi": 3.25,
-                "mf_z": 0.65,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
-              "ts_code": "300228.SZ",
-              "stock_name": "富瑞特装",
-              "segment": "LNG低温装备-储运系统",
-              "rec_reason": "国内LNG低温储运装备龙头，产品覆盖LNG船用燃料罐、低温阀门及加注系统，已配套沪东中华LNG船项目。LNG船产业链国产化加速，公司作为低温装备核心供应商直接受益。",
-              "applied_pattern": "P02",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 7,
-              "expected_window": "T+5-10",
-              "heat_score": 50,
-              "acceptance_score": 56,
-              "rank_score": 53.76,
-              "pre_run_up_3d": 0.23,
-              "overheated": false,
-              "leader_score": 35.0,
-              "leader_detail": {
-                "circ_mv_yi": 46.0,
-                "ret_3d_pct": -0.48,
-                "ret_z": -0.09,
-                "main_net_3d_yi": -0.45,
-                "mf_z": -0.03,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 35
-              }
-            }
-          ],
-          "any_overheated": false,
-          "staleness_factor": 0.85,
-          "staleness_detail": {
-            "prior_theme_count": 1,
-            "keywords": [
-              "首艘",
-              "全国",
-              "低温"
-            ]
-          },
-          "max_rank_pre_stale": 53.76,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "d4010fce9bcef5ca4951a361fbbf881a",
-          "news_channel": "港美股",
-          "event_headline": "Claude Opus 4.8在AWS上线",
-          "topic_class": "海外巨头动态",
-          "applied_pattern": "P01",
-          "transmission_chain": "【Step -1 event_type】事件驱动。亚马逊宣布Claude Opus 4.8在AWS上线，是具体的新产品/服务发布事件，非评论或复盘。\n\n【Step 0 impact_scope】multi_company。Claude Opus 4.8是Anthropic的最强模型，由亚马逊AWS托管上线，利好AWS算力产业链（服务器、光模块、数据中心）多家公司，非单一公司事件。\n\n【Step 1 topic_class】海外巨头动态。\n\n【Step 2 范式选择】查矩阵：海外巨头动态 → 最优范式 [P01] 海外映射 (n=59 win=69% comp=+0.17)。同时叠加 [P07] 技术突破（新产品发布，n=25 win=64% comp=+0.12）作为辅助范式。\n\n【Step 3 因果链】新闻：亚马逊宣布Claude Opus 4.8在AWS可用 → [P01] 海外巨头Anthropic/亚马逊发布新一代大模型，推理能力大幅提升 → 大模型迭代驱动算力需求爆发式增长（训练+推理端）→ [P07] 技术突破带来AI应用场景扩展 → 利好AWS算力产业链上游供应商，尤其是光模块、服务器等环节。\n\n【Step 4 特征条件】受益标的特征：1）与AWS/Anthropic有直接供应链关系；2）高速光模块（800G/1.6T）核心供应商；3）北美云厂商收入占比高。",
-          "impact_scope": "multi_company",
-          "scope_emoji": "🔗",
-          "scope_cn": "产业链",
-          "scope_multiplier": 0.7,
-          "event_type": "event_driven",
-          "raw_title": "",
-          "raw_content": "财联社5月29日电，亚马逊表示，Claude Opus 4.8版本现已在AWS上可用。",
-          "news_pub_time": "2026-05-29 01:54",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 68,
-          "novelty_score": 74,
-          "max_heat": 62,
-          "max_accept": 87,
-          "max_rank": 41.04,
-          "stocks": [
-            {
-              "ts_code": "300308.SZ",
-              "stock_name": "中际旭创",
-              "segment": "算力基建-光模块",
-              "rec_reason": "AWS/Anthropic核心光模块供应商，800G/1.6T高速光模块直接受益于Claude新模型上线带来的算力需求激增。参考历史成功案例：Gemini 3.0发布→中际旭创T+16峰值+30.4%，逻辑高度一致。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 87,
-              "rank_score": 48.28,
-              "pre_run_up_3d": 9.61,
-              "overheated": false,
-              "leader_score": 57.5,
-              "leader_detail": {
-                "circ_mv_yi": 12869.0,
-                "ret_3d_pct": 5.27,
-                "ret_z": 0.92,
-                "main_net_3d_yi": 8.58,
-                "mf_z": 0.38,
-                "ret_anomaly_score": 65,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
-              "ts_code": "300394.SZ",
-              "stock_name": "天孚通信",
-              "segment": "算力基建-光器件",
-              "rec_reason": "全球领先的光器件龙头，为AWS/AI数据中心提供高速光引擎和光模块上游器件，Claude 4.8上线催化算力链需求，公司北美收入占比高、技术壁垒强。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 5.0,
-              "expected_duration_days": 7,
-              "expected_window": "T+1-3",
-              "heat_score": 58,
-              "acceptance_score": 74,
-              "rank_score": 23.25,
-              "pre_run_up_3d": 12.81,
-              "overheated": true,
-              "leader_score": 57.5,
-              "leader_detail": {
-                "circ_mv_yi": 3540.0,
-                "ret_3d_pct": 11.91,
-                "ret_z": 1.43,
-                "main_net_3d_yi": 11.45,
-                "mf_z": 0.3,
-                "ret_anomaly_score": 65,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
-              "ts_code": "300502.SZ",
-              "stock_name": "新易盛",
-              "segment": "算力基建-光模块",
-              "rec_reason": "北美云厂商高速光模块核心供应商，400G/800G产品批量出货，Claude新模型上线推动AWS算力扩容，光模块需求弹性大。历史案例：英伟达H200出口利好→新易盛T+9峰值+10.8%。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 6.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 87,
-              "rank_score": 25.05,
-              "pre_run_up_3d": 9.0,
-              "overheated": true,
-              "leader_score": 35.0,
-              "leader_detail": {
-                "circ_mv_yi": 6268.0,
-                "ret_3d_pct": 0.92,
-                "ret_z": 0.11,
-                "main_net_3d_yi": -2.14,
-                "mf_z": 0.14,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 35
-              }
-            }
-          ],
-          "any_overheated": true,
-          "staleness_factor": 0.85,
-          "staleness_detail": {
-            "prior_theme_count": 1,
-            "keywords": [
-              "Claude",
-              "Opus",
-              "AWS"
-            ]
-          },
-          "max_rank_pre_stale": 48.28,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "914cfda49b50164c2990a85d5ffd4f28",
-          "news_channel": "港美股",
-          "event_headline": "IBM百亿美元加码量子计算",
-          "topic_class": "海外巨头动态",
-          "applied_pattern": "P01",
-          "transmission_chain": "【Step -1: event_type判断】新闻为IBM官方宣布的100亿美元量子计算投资计划，属于具体的新事件，选event_driven。\n\n【Step 0: impact_scope判断】IBM是海外科技巨头，其百亿美元级投资信号对全球量子计算赛道有重大催化作用，但尚未达到\"改变人类范式\"级别（量子计算机尚未建成，是投资计划而非技术首发），影响范围覆盖A股量子计算产业链多家公司，选industry（×0.85）。\n\n【Step 1-2: topic_class + 范式选择】新闻类型为\"海外巨头动态\"，查矩阵最优范式为[P01]海外映射（win=69%, comp=+0.17）。IBM作为量子计算全球龙头，百亿美元加码信号明确，A股量子计算概念股将按估值对标逻辑跟涨。\n\n【Step 3: 因果链】新闻：IBM计划投资100亿美元+目标2029年前建成大型量子计算机+已部署超90套系统（数量超其他总和）→ 全球量子计算产业化进程加速信号明确 → 资金按海外映射逻辑，对标IBM产业链及量子计算核心环节 → 利好A股量子计算硬件（超导/离子阱）、测控系统、量子通信及量子计算云平台相关标的。\n\n【Step 4: 特征条件】受益标的特征：1）与IBM量子计算有直接合作/供应链关系；2）国内量子计算硬件（超导/离子阱）龙头，有实际量子计算机交付记录；3）量子测控系统/低温设备等核心配套",
-          "impact_scope": "industry",
-          "scope_emoji": "🏭",
-          "scope_cn": "全行业",
-          "scope_multiplier": 0.85,
-          "event_type": "event_driven",
-          "raw_title": "IBM加码量子赛道：计划投资100亿美元 力争2029年前建成大型量子计算机",
-          "raw_content": "【IBM加码量子赛道：计划投资100亿美元 力争2029年前建成大型量子计算机】财联社5月29日电，IBM当地时间周四表示，计划未来五年向量子计算领域投资超过100亿美元，进一步加码这一前沿技术赛道，目标是在2029年前建成全球首台能够稳定且无误执行复杂计算任务的大型量子计算机。IBM还表示，截至目前，公司已部署超过90套量子计算系统，数量超过其他所有行业参与者的总和。",
-          "news_pub_time": "2026-05-29 00:28",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 72,
-          "novelty_score": 80,
-          "max_heat": 36,
-          "max_accept": 36,
-          "max_rank": 39.95,
-          "stocks": [
-            {
-              "ts_code": "600120.SH",
-              "stock_name": "国盾量子",
-              "segment": "量子计算硬件-超导量子计算机",
-              "rec_reason": "国内量子计算绝对龙头，已交付超导量子计算机并上线量子计算云平台。IBM百亿美元加码信号强化全球量子计算产业化预期，国盾量子作为A股最纯正量子计算标的，对标IBM产业链逻辑最直接，受益于估值映射和赛道关注度提升。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 36,
-              "rank_score": 47.0,
-              "pre_run_up_3d": -3.18,
-              "overheated": false,
-              "leader_score": 28.5,
-              "leader_detail": {
-                "circ_mv_yi": 165.0,
-                "ret_3d_pct": -5.3,
-                "ret_z": -1.45,
-                "main_net_3d_yi": -0.12,
-                "mf_z": -0.37,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
-              }
-            },
-            {
-              "ts_code": "300455.SZ",
-              "stock_name": "航天智装",
-              "segment": "量子通信与信息安全",
-              "rec_reason": "子公司航天科工量子通信技术国内领先，量子计算+量子通信协同效应强。IBM百亿美元投资强化量子赛道整体景气度，量子通信作为量子技术另一重要分支将同步受益于资金关注度外溢。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 4,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 36,
-              "rank_score": 43.92,
-              "pre_run_up_3d": -5.95,
-              "overheated": false,
-              "leader_score": 31.0,
-              "leader_detail": {
-                "circ_mv_yi": 154.0,
-                "ret_3d_pct": -8.9,
-                "ret_z": -1.89,
-                "main_net_3d_yi": -0.38,
-                "mf_z": 0.28,
-                "ret_anomaly_score": 12,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
-              "ts_code": "688027.SH",
-              "stock_name": "国芯科技",
-              "segment": "量子测控系统与芯片",
-              "rec_reason": "公司量子芯片测控系统已实现商业化，是国内少数能提供量子计算测控解决方案的供应商。IBM加码量子计算将带动全产业链测控系统需求预期，国芯科技作为量子测控稀缺标的直接受益。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 36,
-              "rank_score": 45.9,
-              "pre_run_up_3d": -9.45,
-              "overheated": false,
-              "leader_score": 28.5,
-              "leader_detail": {
-                "circ_mv_yi": 450.0,
-                "ret_3d_pct": -9.28,
-                "ret_z": -1.35,
-                "main_net_3d_yi": -0.01,
-                "mf_z": 0.1,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
-              }
-            }
-          ],
-          "any_overheated": false,
-          "staleness_factor": 0.85,
-          "staleness_detail": {
-            "prior_theme_count": 1,
-            "keywords": [
-              "IBM",
-              "百亿美元",
-              "加码"
-            ]
-          },
-          "max_rank_pre_stale": 47.0,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "7f02cdbdcba6096b43a9075ac0a442da",
-          "news_channel": "港美股",
-          "event_headline": "博泰车联与英伟达战略签约",
-          "topic_class": "海外巨头动态",
-          "applied_pattern": "P01",
-          "transmission_chain": "【Step -1 事件类型判断】新闻为博泰车联与英伟达正式签约战略合作，属于具体事件驱动(event_driven)，非传闻或评论。\n\n【Step 0 影响范围判断】虽然签约主体是博泰车联(港股)，但英伟达作为全球AI/自动驾驶芯片龙头，其战略合作往往带动A股智能驾驶/车载AI产业链映射。影响范围定为multi_company（影响产业链多家公司），而非single_company，因为新闻强调\"车载AI、自动驾驶、下一代计算平台\"等全产业链方向。\n\n【Step 1-2 范式选择】根据矩阵，海外巨头动态最优范式为[P01]海外映射(win=69%, comp=+0.17)。英伟达是典型的海外龙头，其战略合作签约映射到A股智能驾驶/车载AI/光通信产业链。\n\n【Step 3 因果链推演】新闻X：博泰车联(港股)与英伟达正式签约战略合作，聚焦车载AI、自动驾驶、下一代计算平台及光通信 → 英伟达在智能驾驶领域持续加码，其Orin/Thor芯片生态扩张 → 与英伟达有深度合作关系的A股智能驾驶零部件/域控制器/光通信公司，将受益于英伟达生态在中国市场的渗透加速 → 资金按海外映射逻辑买入A股相关标的。\n\n【Step 4 特征条件】受益标的特征：1)与英伟达有公开的智能驾驶/车载AI合作关系；2)在英伟达Drive生态中承担域控制器/传感器/软件集成角色；3)光通信领域与英伟达有供应链关联",
-          "impact_scope": "multi_company",
-          "scope_emoji": "🔗",
-          "scope_cn": "产业链",
-          "scope_multiplier": 0.7,
-          "event_type": "event_driven",
-          "raw_title": "博泰车联：与英伟达举行战略合作签约仪式",
-          "raw_content": "【博泰车联：与英伟达举行战略合作签约仪式】财联社5月29日电，博泰车联在港交所公告，公司于2026年5月29日与NVIDIA在美国举行了战略合作签约仪式及相关交流活动。双方围绕车载AI、自动驾驶、下一代计算平台及光通信等前沿领域进行了富有建设性的探讨，并期待未来能够发挥各自优势，探索并加深潜在的合作机会。",
-          "news_pub_time": "2026-05-29 08:27",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 62,
-          "novelty_score": 94,
-          "max_heat": 62,
-          "max_accept": 87,
-          "max_rank": 37.94,
-          "stocks": [
-            {
-              "ts_code": "300308.SZ",
-              "stock_name": "中际旭创",
-              "segment": "光通信-光模块",
-              "rec_reason": "英伟达光模块核心供应商，新闻提及双方探讨光通信领域合作，英伟达AI算力集群对高速光模块需求持续增长，中际旭创作为英伟达800G/1.6T光模块主力供应商直接受益",
-              "applied_pattern": "P01",
-              "expected_return_pct": 6.0,
-              "expected_duration_days": 4,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 87,
-              "rank_score": 44.64,
-              "pre_run_up_3d": 9.61,
-              "overheated": false,
-              "leader_score": 57.5,
-              "leader_detail": {
-                "circ_mv_yi": 12869.0,
-                "ret_3d_pct": 5.27,
-                "ret_z": 0.92,
-                "main_net_3d_yi": 8.58,
-                "mf_z": 0.38,
-                "ret_anomaly_score": 65,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
-              "ts_code": "002920.SZ",
-              "stock_name": "德赛西威",
-              "segment": "智能驾驶-域控制器",
-              "rec_reason": "英伟达Drive生态核心合作伙伴，基于Orin/Thor芯片的域控制器已量产供货，博泰签约强化英伟达车载生态，德赛西威作为国内智能驾驶域控龙头直接受益于生态扩张",
-              "applied_pattern": "P01",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 46,
-              "rank_score": 37.45,
-              "pre_run_up_3d": -0.11,
-              "overheated": false,
-              "leader_score": 22.0,
-              "leader_detail": {
-                "circ_mv_yi": 607.0,
-                "ret_3d_pct": -7.23,
-                "ret_z": -1.21,
-                "main_net_3d_yi": -3.9,
-                "mf_z": -0.52,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
-              }
-            },
-            {
-              "ts_code": "300496.SZ",
-              "stock_name": "中科创达",
-              "segment": "智能驾驶-软件/操作系统",
-              "rec_reason": "英伟达生态合作伙伴，提供基于Drive平台的智能驾驶软件解决方案和操作系统集成，博泰与英伟达深化合作将带动整个生态链软件需求",
-              "applied_pattern": "P01",
-              "expected_return_pct": 7.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 31,
-              "rank_score": 35.17,
-              "pre_run_up_3d": -2.71,
-              "overheated": false,
-              "leader_score": 12.0,
-              "leader_detail": {
-                "circ_mv_yi": 232.0,
-                "ret_3d_pct": -14.97,
-                "ret_z": -4.16,
-                "main_net_3d_yi": -6.9,
-                "mf_z": -3.31,
-                "ret_anomaly_score": 12,
-                "mf_anomaly_score": 12
-              }
-            }
-          ],
-          "any_overheated": false,
-          "staleness_factor": 0.85,
-          "staleness_detail": {
-            "prior_theme_count": 1,
-            "keywords": [
-              "博泰车",
-              "联与英",
-              "伟达"
-            ]
-          },
-          "max_rank_pre_stale": 44.64,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "c07cbe9c6fe3b130345a7aec32b2dbe3",
-          "news_channel": "港美股",
-          "event_headline": "CBOE将推期权延长交易时段",
-          "topic_class": "海外巨头动态",
-          "applied_pattern": "P01",
-          "transmission_chain": "【Step -1 事件类型判断】这是一条具体的事件驱动新闻——CBOE宣布将于7月13日推出部分单只股票期权的盘前和盘后交易，属于明确的交易所规则变更，非评论/复盘/传闻，选event_driven。\n\n【Step 0 影响范围判断】CBOE是全球最大期权交易所之一，其延长交易时段将直接提升美股期权市场的流动性和交易时间覆盖，属于影响整个衍生品交易生态的变革，但并非改变人类范式的技术突破，也非仅影响单一公司。选industry（行业级影响）。\n\n【Step 1 话题分类】海外巨头动态——CBOE作为全球顶级期权交易所，其规则变更属于海外市场基础设施重大变化。\n\n【Step 2 范式选择】最优范式：[P01] 海外映射（n=59 win=69% comp=+0.17）。逻辑：CBOE延长期权交易时段→美股期权交易量有望提升→A股中为美股/海外期权提供IT系统、数据服务或做市技术的公司，以及国内期权交易系统供应商，将受益于\"海外规则变化→国内对标预期\"的映射逻辑。\n\n【Step 3 因果链推演】CBOE延长交易时段（盘前+盘后）→ 期权交易时间从常规6.5小时扩展至约13小时 → 对交易系统稳定性、风控能力、数据服务提出更高要求 → 利好两类A股标的：①为海外交易所/券商提供交易系统IT服务的金融科技公司；②国内期权交易系统供应商，因国内交易所可能跟进延长交易时段（对标逻辑）。",
-          "impact_scope": "industry",
-          "scope_emoji": "🏭",
-          "scope_cn": "全行业",
-          "scope_multiplier": 0.85,
-          "event_type": "event_driven",
-          "raw_title": "CBOE将启动部分单只股票期权的延长交易时段",
-          "raw_content": "【CBOE将启动部分单只股票期权的延长交易时段】财联社5月29日电，芝加哥期权交易所（CBOE）将于7月13日推出部分期权的盘前和盘后交易。初步推出预计将包括约20只高流动性股票，其中包括所有“七巨头”科技股。",
-          "news_pub_time": "2026-05-29 02:29",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 62,
-          "novelty_score": 66,
-          "max_heat": 36,
-          "max_accept": 62,
-          "max_rank": 35.49,
-          "stocks": [
-            {
-              "ts_code": "300033.SZ",
-              "stock_name": "同花顺",
-              "segment": "金融数据-期权行情",
-              "rec_reason": "国内最大金融数据终端之一，提供美股期权实时行情与数据服务。CBOE延长交易时段意味着美股期权数据覆盖时间拉长，提升数据服务价值量和用户粘性。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 4.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 62,
-              "rank_score": 41.75,
-              "pre_run_up_3d": 0.78,
-              "overheated": false,
-              "leader_score": 28.5,
-              "leader_detail": {
-                "circ_mv_yi": 999.0,
-                "ret_3d_pct": -5.85,
-                "ret_z": -1.24,
-                "main_net_3d_yi": -2.31,
-                "mf_z": 0.04,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
-              }
-            },
-            {
-              "ts_code": "600570.SH",
-              "stock_name": "恒生电子",
-              "segment": "金融IT-交易系统",
-              "rec_reason": "国内金融交易系统龙头，为券商/基金提供期权交易系统（含做市商系统），市占率超70%。CBOE延长交易时段映射国内交易所可能跟进，恒生作为核心供应商直接受益于系统升级需求。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 5.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 31,
-              "rank_score": 37.48,
-              "pre_run_up_3d": -5.09,
-              "overheated": false,
-              "leader_score": 17.0,
-              "leader_detail": {
-                "circ_mv_yi": 460.0,
-                "ret_3d_pct": -6.65,
-                "ret_z": -2.54,
-                "main_net_3d_yi": -0.35,
-                "mf_z": -0.84,
-                "ret_anomaly_score": 12,
-                "mf_anomaly_score": 22
-              }
-            }
-          ],
-          "any_overheated": false,
-          "staleness_factor": 0.85,
-          "staleness_detail": {
-            "prior_theme_count": 1,
-            "keywords": [
-              "CBOE",
-              "期权",
-              "延长"
-            ]
-          },
-          "max_rank_pre_stale": 41.75,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "29381d36079e90f9f77bf934b39541b9",
-          "news_channel": "加红",
-          "event_headline": "全球原油库存逼近百日警戒线",
-          "topic_class": "涨价/降价",
-          "applied_pattern": "P03",
-          "transmission_chain": "Step -1 (event_type): 新闻为高盛测算+霍尔木兹海峡封锁导致库存跌破警戒线，是具体事件驱动 → event_driven。\nStep 0 (impact_scope): 全球原油库存逼近警戒线+霍尔木兹海峡封锁（每天损失超1000万桶供应），影响全球能源定价和通胀预期，属于全球级宏观事件 → global (×1.00)。\nStep 1 (topic_class): 核心是\"库存逼近警戒线+供应中断\"，属于涨价/降价类。\nStep 2 (范式选择): 根据矩阵，涨价类最优范式为 [P03] 供需共振 (win=68%, comp=+0.12)。供给端：霍尔木兹海峡封锁导致每天损失超1000万桶供应，可视库存仅73天；需求端：全球需求仍在高位。供需严重失衡驱动油价上行。\nStep 3 (因果链): 新闻X：高盛测算全球原油库存5月底跌破100天警戒线（仅98天），可视库存仅73天 + 霍尔木兹海峡封锁导致每天供应损失超1000万桶 → [P03] 供给端大幅收缩（地缘封锁不可抗力）+ 需求端刚性 → 原油价格进入上涨通道 → 利好：1）上游油气开采/油服企业（直接受益油价上涨，利润弹性大）；2）能源替代/新能源（油价高企加速替代逻辑）。\nStep 4 (特征条件): 受益标的特征：① 上游油气开采龙头，资源储量丰富，油价弹性大；② 油服企业，受益于上游资本开支扩张",
-          "impact_scope": "global",
-          "scope_emoji": "🌍",
-          "scope_cn": "全球级",
-          "scope_multiplier": 1.0,
-          "event_type": "event_driven",
-          "raw_title": "美国高盛集团测算显示全球原油库存逼近“百日警戒线”",
-          "raw_content": "【美国高盛集团测算显示全球原油库存逼近“百日警戒线”】财联社5月29日电，近日有消息披露，美国高盛集团测算显示，全球原油库存最早可能于5月底跌破相当于全球100天需求量的水平。高盛集团测算显示，截至4月底，全球原油库存约相当于全球101天需求量，预计5月底将降至98天。其中，通过卫星等手段可观测的“可视库存”预计仅剩73天需求量。消息称，目前每天只有少数船只能够通过霍尔木兹海峡，导致全球每天原油供应损失超1000万桶。 (央视新闻)",
-          "news_pub_time": "2026-05-29 04:22",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 82,
-          "novelty_score": 72,
-          "max_heat": 47,
-          "max_accept": 44,
-          "max_rank": 35.15,
-          "stocks": [
-            {
-              "ts_code": "600871.SH",
-              "stock_name": "石化油服",
-              "segment": "油服-钻井工程",
-              "rec_reason": "国内最大油服企业之一，油价上行驱动上游资本开支扩张，油服订单量和价格双升，业绩弹性大；历史油价上行周期中油服板块涨幅领先",
-              "applied_pattern": "P03",
-              "expected_return_pct": 15.0,
-              "expected_duration_days": 12,
-              "expected_window": "T+1-3",
-              "heat_score": 47,
-              "acceptance_score": 44,
-              "rank_score": 70.3,
-              "pre_run_up_3d": -2.88,
-              "overheated": false,
-              "leader_score": 28.5,
-              "leader_detail": {
-                "circ_mv_yi": 314.0,
-                "ret_3d_pct": -3.73,
-                "ret_z": -0.94,
-                "main_net_3d_yi": -0.13,
-                "mf_z": -0.33,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
-              }
-            },
-            {
-              "ts_code": "600028.SH",
-              "stock_name": "中国石化",
-              "segment": "上游油气开采",
-              "rec_reason": "国内最大原油生产商之一，油价每涨10美元/桶，年化利润增厚超百亿级别；资源储量丰富，直接受益于全球原油供应缺口驱动的油价上行周期",
-              "applied_pattern": "P03",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+1-3",
-              "heat_score": 47,
-              "acceptance_score": 38,
-              "rank_score": 68.93,
-              "pre_run_up_3d": -2.24,
-              "overheated": false,
-              "leader_score": 28.5,
-              "leader_detail": {
-                "circ_mv_yi": 4595.0,
-                "ret_3d_pct": -0.41,
-                "ret_z": -0.35,
-                "main_net_3d_yi": -1.4,
-                "mf_z": -0.81,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 22
-              }
-            },
-            {
-              "ts_code": "600938.SH",
-              "stock_name": "中国海油",
-              "segment": "上游油气开采-海上原油",
-              "rec_reason": "国内最大海上原油生产商，桶油成本控制优异（约30美元/桶），油价弹性极大；全球供应缺口下海上原油增产空间大，直接受益油价上涨",
-              "applied_pattern": "P03",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+1-3",
-              "heat_score": 47,
-              "acceptance_score": 38,
-              "rank_score": 65.98,
-              "pre_run_up_3d": -0.46,
-              "overheated": false,
-              "leader_score": 28.5,
-              "leader_detail": {
-                "circ_mv_yi": 1029.0,
-                "ret_3d_pct": -2.19,
-                "ret_z": -0.62,
-                "main_net_3d_yi": -0.68,
-                "mf_z": -0.28,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
-              }
-            }
-          ],
-          "any_overheated": false,
-          "staleness_factor": 0.5,
-          "staleness_detail": {
-            "prior_theme_count": 7,
-            "keywords": [
-              "全球",
-              "原油",
-              "库存"
-            ]
-          },
-          "max_rank_pre_stale": 70.3,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "d925bed3fb19ee88a15c61b47b8e95b4",
-          "news_channel": "加红",
-          "event_headline": "欧盟1200亿欧元重振芯片生产",
-          "topic_class": "海外巨头动态",
-          "applied_pattern": "P01",
-          "transmission_chain": "Step -1 事件类型判断: 新闻为欧盟正式立法提案(芯片法案2.0), 含明确金额(1200亿欧元)和具体目标(2035年/新建AI代工厂), 属于真实事件驱动(event_driven), 非传闻或评论。\n\nStep 0 影响范围判断: 该法案影响整个欧盟半导体产业链(设计/制造/设备/材料), 但并非改变人类范式的技术首发(非paradigm_shift), 也非全球级宏观政策(非global), 而是影响整个半导体行业的产业政策 → industry (×0.85)。\n\nStep 1-2 范式选择: 新闻属于\"海外巨头动态\"类别, 矩阵最优范式为[P01]海外映射(win=69%, comp=+0.17)。欧盟大手笔投入半导体+AI代工厂, 将拉动上游半导体设备/材料需求, 利好A股半导体设备/材料出口或技术对标企业。同时, 欧盟芯片法案2.0强调\"本地化制造\"和\"AI芯片代工\", 映射到A股逻辑: 1) 半导体设备出口欧盟的供应商受益; 2) 国内半导体设备龙头技术对标, 资金按估值对标逻辑买入。\n\nStep 3 因果链: 欧盟1200亿欧元芯片法案2.0出台 → 欧盟大力建设本土晶圆厂和AI代工厂(300亿欧元AI代工厂) → 对半导体设备/材料需求激增 → 中国半导体设备龙头有望获得欧盟订单或技术对标估值提升 → 利好A股半导体设备龙头。\n\nStep 4 受益特征:",
-          "impact_scope": "industry",
-          "scope_emoji": "🏭",
-          "scope_cn": "全行业",
-          "scope_multiplier": 0.85,
-          "event_type": "event_driven",
-          "raw_title": "欧盟称需要1200亿欧元来重振本土芯片生产",
-          "raw_content": "【欧盟称需要1200亿欧元来重振本土芯片生产】财联社5月29日电，欧盟正通过一项重新修订的《芯片法》再次尝试振兴其半导体产业，该法案要求到2035年投入1200亿欧元（约合1400亿美元）的公私合营资金。即将出台的《芯片法案2.0》将重点关注如何切实提高欧盟制造芯片的本地需求，包括新建一座价值300亿欧元的用于AI半导体的芯片代工厂。",
-          "news_pub_time": "2026-05-29 01:09",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 72,
-          "novelty_score": 60,
-          "max_heat": 78,
-          "max_accept": 20,
-          "max_rank": 35.44,
-          "stocks": [
-            {
-              "ts_code": "002371.SZ",
-              "stock_name": "北方华创",
-              "segment": "半导体设备龙头",
-              "rec_reason": "国内半导体设备绝对龙头, 刻蚀/薄膜沉积/清洗等核心设备全覆盖, 产品已进入国际主流晶圆厂供应链。欧盟1200亿欧元建厂潮将拉动设备需求, 北方华创作为国产替代+出海双逻辑标的, 技术对标海外巨头, 受益于[P01]海外映射估值提升。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 78,
-              "acceptance_score": 20,
-              "rank_score": 54.53,
-              "pre_run_up_3d": -5.61,
-              "overheated": false,
-              "leader_score": 22.0,
-              "leader_detail": {
-                "circ_mv_yi": 4562.0,
-                "ret_3d_pct": -6.02,
-                "ret_z": -1.07,
-                "main_net_3d_yi": -13.02,
-                "mf_z": -1.03,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
-              }
-            },
-            {
-              "ts_code": "688012.SH",
-              "stock_name": "中微公司",
-              "segment": "半导体刻蚀设备",
-              "rec_reason": "CCP刻蚀机全球领先, 已进入台积电/英特尔/三星等国际大厂供应链。欧盟新建AI芯片代工厂(300亿欧元)对先进刻蚀设备需求极大, 中微公司有望获得欧盟客户订单, 是[P01]海外映射最直接受益标的。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 78,
-              "acceptance_score": 20,
-              "rank_score": 52.33,
-              "pre_run_up_3d": -6.63,
-              "overheated": false,
-              "leader_score": 22.0,
-              "leader_detail": {
-                "circ_mv_yi": 2789.0,
-                "ret_3d_pct": -4.23,
-                "ret_z": -0.56,
-                "main_net_3d_yi": -4.97,
-                "mf_z": -1.27,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
-              }
-            }
-          ],
-          "any_overheated": false,
-          "staleness_factor": 0.65,
-          "staleness_detail": {
-            "prior_theme_count": 3,
-            "keywords": [
-              "欧盟",
-              "欧元",
-              "重振"
-            ]
-          },
-          "max_rank_pre_stale": 54.53,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "567a20986282dbba29eb037c607f02df",
-          "news_channel": "公司",
-          "event_headline": "腾讯入股脑机接口公司暖芯迦",
-          "topic_class": "海外巨头动态",
-          "applied_pattern": "P01",
-          "transmission_chain": "Step -1: 新闻类型判断。这是一条具体的产业事件——腾讯入股脑机接口公司暖芯迦，属于真实发生的工商变更事件，非传闻/评论/复盘，选 event_driven。\n\nStep 0: 影响范围判断。腾讯作为互联网巨头入股脑机接口赛道，释放了产业资本加速布局的信号，影响范围覆盖脑机接口产业链多家公司（上游芯片设计、中游信号采集、下游医疗应用），但并非改变全人类范式的技术首发（暖芯迦非首次发布），也不是国家级政策，故选 multi_company。\n\nStep 1: 新闻类型归类。属于\"海外巨头动态\"的变体——国内巨头（腾讯）战略投资新兴赛道，逻辑与海外巨头映射类似，适用 [P01] 海外映射范式（国内巨头入局映射A股同类标的）。\n\nStep 2: 范式选择。查矩阵，海外巨头动态最优范式为 [P01]（win=69%, comp=+0.17）。同时叠加 [P07] 技术突破逻辑——脑机接口本身是前沿技术赛道，腾讯入局验证了技术商业化前景。\n\nStep 3: 因果链。新闻：腾讯入股暖芯迦（脑机接口+神经生物芯片）→ 腾讯作为中国科技巨头，其投资方向具有产业风向标意义 → 市场预期脑机接口赛道将加速商业化，资本和政策关注度提升 → A股中已有脑机接口业务布局、与腾讯有潜在合作或技术同源的公司将受益于估值重估和资金流入。\n\nStep 4: 特征条件。受益标的特征：①已有脑机接口技术布局或产品",
-          "impact_scope": "multi_company",
-          "scope_emoji": "🔗",
-          "scope_cn": "产业链",
-          "scope_multiplier": 0.7,
-          "event_type": "event_driven",
-          "raw_title": "",
-          "raw_content": "【腾讯入股脑机接口与神经生物芯片研发商暖芯迦】企查查APP显示，近日，杭州暖芯迦电子科技有限公司发生工商变更，新增腾讯旗下上海启善投资有限公司等为股东，同时注册资本增至1688.53万元。企查查信息显示，该公司成立于2014年，经营范围包含：集成电路设计开发，电子产品、生物医疗设备的技术开发、技术服务和咨询等。公开信息显示，该公司专注于脑机接口以及神经生物芯片研发、生产与销售。",
-          "news_pub_time": "2026-05-29 09:09",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 65,
-          "novelty_score": 92,
-          "max_heat": 36,
-          "max_accept": 71,
-          "max_rank": 32.98,
-          "stocks": [
-            {
-              "ts_code": "300003.SZ",
-              "stock_name": "乐普医疗",
-              "segment": "脑机接口-医疗应用",
-              "rec_reason": "乐普医疗旗下有脑机接口相关的神经调控产品线（如迷走神经刺激器VNS），在脑机接口医疗应用端布局领先，腾讯入局脑机接口赛道将加速医疗场景商业化落地，乐普作为心血管+神经调控双龙头具备渠道和临床优势。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 5.0,
-              "expected_duration_days": 4,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 29,
-              "rank_score": 34.16,
-              "pre_run_up_3d": -3.57,
-              "overheated": false,
-              "leader_score": 42.5,
-              "leader_detail": {
-                "circ_mv_yi": 199.0,
-                "ret_3d_pct": -0.63,
-                "ret_z": -0.23,
-                "main_net_3d_yi": -0.15,
-                "mf_z": 0.61,
-                "ret_anomaly_score": 35,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
-              "ts_code": "002230.SZ",
-              "stock_name": "科大讯飞",
-              "segment": "脑机接口-AI+脑科学",
-              "rec_reason": "科大讯飞在脑机接口领域有明确布局（与华南理工大学等合作脑机接口语音交互），且与腾讯在AI领域有长期合作关系。腾讯入股脑机接口公司，强化了AI+脑科学的产业趋势，科大讯飞作为AI龙头有望受益于赛道情绪提振和估值联动。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 4.0,
-              "expected_duration_days": 3,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 71,
-              "rank_score": 38.8,
-              "pre_run_up_3d": 0.92,
-              "overheated": false,
-              "leader_score": 36.0,
-              "leader_detail": {
-                "circ_mv_yi": 1049.0,
-                "ret_3d_pct": -2.74,
-                "ret_z": -0.81,
-                "main_net_3d_yi": 0.39,
-                "mf_z": 0.48,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 50
-              }
-            },
-            {
-              "ts_code": "300238.SZ",
-              "stock_name": "冠昊生物",
-              "segment": "脑机接口-神经信号",
-              "rec_reason": "公司旗下拥有脑机接口核心的神经电极技术，在神经信号采集与脑机接口临床转化方面有多年积累，与腾讯投资的暖芯迦在神经生物芯片方向形成技术协同映射，且冠昊生物在再生材料与神经修复领域具备稀缺性，腾讯入局将带动赛道估值重估。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 36,
-              "rank_score": 36.68,
-              "pre_run_up_3d": -3.35,
-              "overheated": false,
-              "leader_score": 28.5,
-              "leader_detail": {
-                "circ_mv_yi": 31.0,
-                "ret_3d_pct": -3.74,
-                "ret_z": -1.27,
-                "main_net_3d_yi": -0.11,
-                "mf_z": -0.05,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
-              }
-            }
-          ],
-          "any_overheated": false,
-          "staleness_factor": 0.85,
-          "staleness_detail": {
-            "prior_theme_count": 1,
-            "keywords": [
-              "腾讯",
-              "入股",
-              "脑机"
-            ]
-          },
-          "max_rank_pre_stale": 38.8,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "049830502fdfaf9a3eb77268ef12bf01",
-          "news_channel": "公司",
-          "event_headline": "尼康将推低价光刻机挑战ASML",
-          "topic_class": "海外巨头动态",
-          "applied_pattern": "P02",
-          "transmission_chain": "【Step -1 事件类型判断】新闻为尼康CEO公开表态推出低价芯片制造设备，属于具体的新事件/战略动态，选 event_driven。\n\n【Step 0 影响范围判断】尼康是光刻机领域全球第二大厂商（仅次于ASML），其低价设备战略将影响全球光刻机竞争格局，进而影响A股半导体设备/光刻胶/掩模版等产业链环节。影响范围涉及多条产业链多家公司，选 multi_company（×0.70）。\n\n【Step 1-2 范式选择】新闻类型=海外巨头动态，查矩阵最优范式为 [P01] 海外映射（n=59 win=69% comp=+0.17）。同时，尼康低价设备若成功，将打破ASML垄断，利好国产光刻机产业链的替代逻辑，可叠加 [P02] 国产替代。\n\n【Step 3 因果链推演】新闻：尼康CEO宣布将推出低价芯片制造设备，与ASML竞争 → 影响X：全球光刻机市场格局可能从ASML单极垄断转向双极竞争，中低端光刻机价格有望下行 → 推动Y：1）A股光刻机/半导体设备国产替代情绪升温（尼康路线与国产设备有技术同源性）；2）光刻胶、掩模版等配套耗材受益于设备放量；3）国内晶圆厂设备采购成本下降利好扩产 → 利好Z类公司：光刻机国产替代核心标的、尼康供应链配套企业、半导体设备零部件龙头。\n\n【Step 4 特征条件】受益标的特征：1）与光刻机直接相关的国产设备龙头（有产品落地）；2）尼康/光刻机产",
-          "impact_scope": "multi_company",
-          "scope_emoji": "🔗",
-          "scope_cn": "产业链",
-          "scope_multiplier": 0.7,
-          "event_type": "event_driven",
-          "raw_title": "",
-          "raw_content": "尼康首席执行官称，尼康将推出低价芯片制造设备，与阿斯麦竞争。",
-          "news_pub_time": "2026-05-29 09:25",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 65,
-          "novelty_score": 86,
-          "max_heat": 36,
-          "max_accept": 29,
-          "max_rank": 32.57,
-          "stocks": [
-            {
-              "ts_code": "688037.SH",
-              "stock_name": "芯源微",
-              "segment": "半导体设备",
-              "rec_reason": "国内涂胶显影设备龙头，产品与光刻机前后道工艺紧密配套，尼康低价设备若放量将带动配套设备需求，同时公司也是国产替代核心标的。",
-              "applied_pattern": "P02",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+5-10",
-              "heat_score": 36,
-              "acceptance_score": 29,
-              "rank_score": 38.32,
-              "pre_run_up_3d": -8.9,
-              "overheated": false,
-              "leader_score": 22.0,
-              "leader_detail": {
-                "circ_mv_yi": 495.0,
-                "ret_3d_pct": -8.6,
-                "ret_z": -0.72,
-                "main_net_3d_yi": -2.02,
-                "mf_z": -0.88,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
-              }
-            },
-            {
-              "ts_code": "002338.SZ",
-              "stock_name": "奥普光电",
-              "segment": "光刻机核心部件",
-              "rec_reason": "控股子公司长光辰芯是国内高端CMOS图像传感器龙头，同时公司是国产光刻机曝光光学系统核心供应商，直接受益于光刻机国产替代/竞争格局变化带来的产业链关注度提升。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 8.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 29,
-              "rank_score": 35.04,
-              "pre_run_up_3d": -7.64,
-              "overheated": false,
-              "leader_score": 23.5,
-              "leader_detail": {
-                "circ_mv_yi": 134.0,
-                "ret_3d_pct": -10.26,
-                "ret_z": -2.34,
-                "main_net_3d_yi": -0.52,
-                "mf_z": -0.19,
-                "ret_anomaly_score": 12,
-                "mf_anomaly_score": 35
-              }
-            }
-          ],
-          "any_overheated": false,
-          "staleness_factor": 0.85,
-          "staleness_detail": {
-            "prior_theme_count": 1,
-            "keywords": [
-              "尼康",
-              "低价",
-              "光刻机"
-            ]
-          },
-          "max_rank_pre_stale": 38.32,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "da041d765fcdc6d9710ab21c2727cbcb",
-          "news_channel": "港美股",
-          "event_headline": "城堡证券料美伊协议概率高",
-          "topic_class": "地缘事件",
-          "applied_pattern": "P05",
-          "transmission_chain": "【Step -1 事件类型判断】本条新闻为城堡证券（知名机构）关于美伊协议及霍尔木兹海峡重新开放的预测性观点，属于有明确信源的事件驱动型分析，非盘面综述或传闻，选 event_driven。\n\n【Step 0 影响范围判断】霍尔木兹海峡是全球最重要的石油运输通道（承载全球约1/3海运石油），其开放/关闭直接影响全球油价、通胀预期、货币政策路径及风险资产定价。该事件影响全球宏观资产（美债、美股、美元、原油），属于 global 级别。\n\n【Step 1 主题分类】地缘事件 + 能源供给。\n\n【Step 2-3 范式选择与因果链】选用 [P05] 事件催化 + [P03] 供需共振 双范式推演：\n① 新闻核心：城堡证券认为美伊达成协议概率较高，霍尔木兹海峡可能在7月底前恢复开放 → 全球原油供给端将释放大量增量（伊朗原油日出口量可增加100-150万桶），油价面临下行压力。\n② 油价下跌 → 通胀预期降温 → 美联储降息空间打开（10Y美债收益率降12bp+）→ 全球风险资产估值提升（标普500涨1.7%）。\n③ 对A股传导链：油价下跌利好航空（燃油成本占比30%+）、航运（燃油成本占比25%+）、化工（原料成本下降）等用油/用化工原料的下游行业；同时美债收益率下行利好成长股估值修复。\n④ 受益标的特征：航空板块——燃油成本占比高、票价弹性大、国内航线占比高；航运板块——燃油成本敏感、",
-          "impact_scope": "global",
-          "scope_emoji": "🌍",
-          "scope_cn": "全球级",
-          "scope_multiplier": 1.0,
-          "event_type": "event_driven",
-          "raw_title": "城堡证券料美伊达成协议概率较高 称投资者低估市场全面反弹可能性",
-          "raw_content": "【城堡证券料美伊达成协议概率较高 称投资者低估市场全面反弹可能性】财联社5月29日电，城堡证券表示，投资者可能低估了霍尔木兹海峡“及时\"重新开放所引发市场全面反弹的可能性。该行策略师Frank Flight称，两个迹象显示美伊达成恢复海峡航运的协议可能性相当大。Flight预计，如果海峡在7月底前全面恢复开放，10年期美国国债收益率可能下降超过12个基点，标普500指数上涨1.7%，美元下跌0.5%。",
-          "news_pub_time": "2026-05-29 01:28",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 68,
-          "novelty_score": 86,
-          "max_heat": 27,
-          "max_accept": 44,
-          "max_rank": 31.0,
-          "stocks": [
-            {
-              "ts_code": "600029.SH",
-              "stock_name": "南方航空",
-              "segment": "航空运输",
-              "rec_reason": "国内航线占比最高（约70%），燃油成本占营业成本约32%，油价每下跌10%可增厚年利润约30-40亿元。霍尔木兹海峡若恢复开放，国际油价有望回落10-15美元/桶，南航弹性最大。叠加暑期旺季催化，业绩与估值双修复。",
-              "applied_pattern": "P05",
-              "expected_return_pct": 12.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 27,
-              "acceptance_score": 44,
-              "rank_score": 61.99,
-              "pre_run_up_3d": -2.17,
-              "overheated": false,
-              "leader_score": 28.5,
-              "leader_detail": {
-                "circ_mv_yi": 740.0,
-                "ret_3d_pct": -1.96,
-                "ret_z": -0.6,
-                "main_net_3d_yi": -0.05,
-                "mf_z": -0.19,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
-              }
-            },
-            {
-              "ts_code": "600346.SH",
-              "stock_name": "恒力石化",
-              "segment": "炼化",
-              "rec_reason": "2000万吨/年炼化一体化龙头，原油加工能力居民营首位。油价下行时，原油采购成本下降速度快于产品售价下跌，炼化价差扩大。伊朗原油若恢复出口，轻质低硫原油供应增加，恒力作为大炼化直接受益。",
-              "applied_pattern": "P03",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 27,
-              "acceptance_score": 29,
-              "rank_score": 56.84,
-              "pre_run_up_3d": -6.66,
-              "overheated": false,
-              "leader_score": 23.5,
-              "leader_detail": {
-                "circ_mv_yi": 1210.0,
-                "ret_3d_pct": -8.03,
-                "ret_z": -1.56,
-                "main_net_3d_yi": -0.81,
-                "mf_z": -0.48,
-                "ret_anomaly_score": 12,
-                "mf_anomaly_score": 35
-              }
-            },
-            {
-              "ts_code": "601872.SH",
-              "stock_name": "招商轮船",
-              "segment": "航运-油运",
-              "rec_reason": "油运龙头，燃油成本占运营成本约30%，油价下行直接改善利润率。同时海峡开放后油运航线恢复正常化（不再绕行好望角），吨海里需求虽短期承压，但燃油成本节省+运价企稳更利好龙头。",
-              "applied_pattern": "P03",
-              "expected_return_pct": 10.0,
-              "expected_duration_days": 8,
-              "expected_window": "T+5-10",
-              "heat_score": 27,
-              "acceptance_score": 20,
-              "rank_score": 52.77,
-              "pre_run_up_3d": -9.45,
-              "overheated": false,
-              "leader_score": 17.0,
-              "leader_detail": {
-                "circ_mv_yi": 1281.0,
-                "ret_3d_pct": -8.11,
-                "ret_z": -1.56,
-                "main_net_3d_yi": -1.91,
-                "mf_z": -0.74,
-                "ret_anomaly_score": 12,
-                "mf_anomaly_score": 22
-              }
-            }
-          ],
-          "any_overheated": false,
-          "staleness_factor": 0.5,
-          "staleness_detail": {
-            "prior_theme_count": 6,
-            "keywords": [
-              "城堡",
-              "料美伊",
-              "协议"
-            ]
-          },
-          "max_rank_pre_stale": 61.99,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "055f80328d858d1fc4f011d95c5907a0",
-          "news_channel": "公司",
-          "event_headline": "摩根大通下调茅台五粮液评级",
-          "topic_class": "海外巨头动态",
-          "applied_pattern": "P01",
-          "transmission_chain": "Step -1 事件类型判断: 这是一条投行评级下调新闻, 属于具体的新信息(评级变动+目标价大幅下调), 不是盘面综述或评论, 因此选 event_driven.\n\nStep 0 影响范围判断: 摩根大通同时下调茅台/五粮液/泸州老窖三大白酒龙头评级, 目标价下调幅度巨大(茅台1930→1420, 五粮液130→74), 直接影响整个白酒板块的估值锚和资金情绪, 属于 industry 级别影响.\n\nStep 1-2 范式选择: 新闻类型为\"海外巨头动态\"(摩根大通是全球顶级投行), 最优范式为 [P01] 海外映射(反向). 但这里不是海外映射上涨, 而是海外投行下调评级引发A股白酒板块估值重估. 同时可参考 [P04] 政策驱动(反向) — 但这里没有政策. 核心逻辑是: 海外权威投行下调评级+大幅砍目标价 → 外资持仓白酒的资金面临减仓压力 → 板块整体估值中枢下移.\n\nStep 3 因果链: 摩根大通作为全球顶级投行, 其评级调整对北向资金/外资有强指引效应. 茅台/五粮液/泸州老窖是外资重仓股, 评级下调+目标价大幅砍杀(茅台-26%, 五粮液-43%)将触发外资减仓. 同时, 会计重述问题削弱五粮液投资者信任, 渠道库存可持续性存疑. 虽然摩根大通认为行业复苏指日可待, 但\"复苏更缓慢\"的表述意味着短期基本面承压.\n\nStep 4 受益特征: 这是利空事件, 白酒板块",
-          "impact_scope": "industry",
-          "scope_emoji": "🏭",
-          "scope_cn": "全行业",
-          "scope_multiplier": 0.85,
-          "event_type": "event_driven",
-          "raw_title": "",
-          "raw_content": "【摩根大通基于盈利增长前景下调茅台、五粮液评级】摩根大通将中国白酒制造商贵州茅台的评级从“增持”下调至“中性”，理由是其盈利低于预期，且缺乏2026财年的业绩指引。分析师Jessie Xu表示，由于五粮液进行了重大会计重述，削弱了投资者信任，并引发了对盈利质量和渠道库存可持续性的质疑，该券商将五粮液的评级从“中性”下调至“减持”。摩根大通将贵州茅台目标价由1930元下调至1420元；五粮液目标价由130元下调至74元；将泸州老窖评级同样从增持下调至中性，目标价由155元下调至105元。尽管如此，摩根大通认为该行业复苏指日可待，并已出现企稳的早期迹象；但预计复苏过程将更为缓慢。",
-          "news_pub_time": "2026-05-29 09:19",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 75,
-          "novelty_score": 72,
-          "max_heat": 62,
-          "max_accept": 44,
-          "max_rank": 29.3,
-          "stocks": [
-            {
-              "ts_code": "000858.SZ",
-              "stock_name": "五粮液",
-              "segment": "高端白酒",
-              "rec_reason": "摩根大通将评级从中性下调至减持，目标价从130元砍至74元(-43%)，且指出会计重述削弱投资者信任、渠道库存可持续性存疑。利空程度在三家中最大，短期抛压最重。",
-              "applied_pattern": "P01",
-              "expected_return_pct": -8.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 20,
-              "rank_score": 41.41,
-              "pre_run_up_3d": -3.15,
-              "overheated": false,
-              "leader_score": 73.5,
-              "leader_detail": {
-                "circ_mv_yi": 3295.0,
-                "ret_3d_pct": 1.84,
-                "ret_z": 0.88,
-                "main_net_3d_yi": 6.04,
-                "mf_z": 1.81,
-                "ret_anomaly_score": 65,
-                "mf_anomaly_score": 82
-              }
-            },
-            {
-              "ts_code": "600519.SH",
-              "stock_name": "贵州茅台",
-              "segment": "高端白酒",
-              "rec_reason": "摩根大通将评级从增持下调至中性，目标价从1930元砍至1420元(-26%)，且缺乏2026财年业绩指引。作为外资重仓第一股，北向资金减仓压力最大，短期承压明显。但茅台基本面仍为白酒板块最扎实，若因评级下调超跌，中期有修复机会。",
-              "applied_pattern": "P01",
-              "expected_return_pct": -5.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 62,
-              "acceptance_score": 44,
-              "rank_score": 45.08,
-              "pre_run_up_3d": -0.77,
-              "overheated": false,
-              "leader_score": 66.0,
-              "leader_detail": {
-                "circ_mv_yi": 16576.0,
-                "ret_3d_pct": 4.13,
-                "ret_z": 2.12,
-                "main_net_3d_yi": -0.26,
-                "mf_z": 0.45,
-                "ret_anomaly_score": 82,
-                "mf_anomaly_score": 50
-              }
-            }
-          ],
-          "any_overheated": false,
-          "staleness_factor": 0.65,
-          "staleness_detail": {
-            "prior_theme_count": 4,
-            "keywords": [
-              "摩根",
-              "大通",
-              "下调"
-            ]
-          },
-          "max_rank_pre_stale": 45.08,
-          "similar_cases": []
-        },
-        {
-          "source_news_hash": "13622dc696c01a32cff13d4c98e58f13",
-          "news_channel": "公司",
-          "event_headline": "丰田取消雷克萨斯LF-ZC纯电项目",
-          "topic_class": "海外巨头动态",
-          "applied_pattern": "P08",
-          "transmission_chain": "Step -1 (event_type): 该新闻是丰田官方宣布取消雷克萨斯LF-ZC整车开发项目，属于具体事件，选 event_driven。\n\nStep 0 (impact_scope): LF-ZC是雷克萨斯原定2026年量产的下一代纯电概念车，取消该项目意味着丰田在高端纯电平台路线上收缩。这影响的不只是一家公司，而是波及丰田/雷克萨斯高端纯电供应链上的多家A股供应商，因此选 multi_company。\n\nStep 1-2 (topic_class & 范式选择): 新闻类型为\"海外巨头动态\"，矩阵最优范式为 [P01] 海外映射 (win=69%, comp=+0.17)。同时可辅以 [P08] 产业链传导——丰田砍项目意味着原有供应链订单消失，但反向思考：丰田收缩纯电→利好其他纯电品牌（如比亚迪、蔚来等）的供应链份额争夺，或利好丰田自身混动路线的供应商（丰田转向混动/氢能）。\n\nStep 3 (因果链): 新闻：丰田取消雷克萨斯LF-ZC纯电项目 → ① 原定给该车型配套的A股零部件/材料供应商订单预期落空（利空）；② 丰田战略重心可能从高端纯电转向混动/氢能/其他平台，利好丰田混动供应链中份额稳固的A股公司；③ 丰田在纯电领域退缩，意味着全球纯电竞争格局变化，利好比亚迪等中国品牌高端纯电的供应链（份额替代逻辑）。\n\nStep 4 (特征条件): 受益标的特征：① 丰田",
-          "impact_scope": "multi_company",
-          "scope_emoji": "🔗",
-          "scope_cn": "产业链",
-          "scope_multiplier": 0.7,
-          "event_type": "event_driven",
-          "raw_title": "",
-          "raw_content": "丰田：在对全公司整车开发项目进行审核后，决定取消雷克萨斯LF-ZC项目。",
-          "news_pub_time": "2026-05-29 08:49",
-          "news_pub_date": "2026-05-29",
-          "strength_score": 55,
-          "novelty_score": 69,
-          "max_heat": 36,
-          "max_accept": 46,
-          "max_rank": 28.28,
-          "stocks": [
-            {
-              "ts_code": "600741.SH",
-              "stock_name": "华域汽车",
-              "segment": "丰田混动供应链",
-              "rec_reason": "华域汽车是丰田在华核心零部件供应商，覆盖内饰、车灯、电子等多品类。LF-ZC纯电项目取消意味着丰田资源更聚焦混动和现有平台，华域在丰田混动车型中的配套份额稳固，不受纯电项目取消冲击，反而受益于丰田战略重心回归混动。",
-              "applied_pattern": "P01",
-              "expected_return_pct": 3.0,
-              "expected_duration_days": 5,
-              "expected_window": "T+1-3",
-              "heat_score": 36,
-              "acceptance_score": 44,
-              "rank_score": 30.59,
-              "pre_run_up_3d": -1.95,
-              "overheated": false,
-              "leader_score": 28.5,
-              "leader_detail": {
-                "circ_mv_yi": 527.0,
-                "ret_3d_pct": -1.59,
-                "ret_z": -1.2,
-                "main_net_3d_yi": 0.15,
-                "mf_z": -0.25,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 35
-              }
-            },
-            {
-              "ts_code": "002920.SZ",
-              "stock_name": "德赛西威",
-              "segment": "中国高端纯电供应链",
-              "rec_reason": "丰田在高端纯电领域退缩，全球高端纯电竞争格局重塑，利好中国品牌（蔚来/理想/比亚迪高端品牌）份额提升。德赛西威是蔚来、理想的核心智能座舱和智驾域控供应商，有望承接更多高端纯电订单，替代丰田/雷克萨斯在高端市场的份额。",
-              "applied_pattern": "P08",
-              "expected_return_pct": 5.0,
-              "expected_duration_days": 10,
-              "expected_window": "T+5-10",
-              "heat_score": 36,
-              "acceptance_score": 46,
-              "rank_score": 33.27,
-              "pre_run_up_3d": -0.11,
-              "overheated": false,
-              "leader_score": 22.0,
-              "leader_detail": {
-                "circ_mv_yi": 607.0,
-                "ret_3d_pct": -7.23,
-                "ret_z": -1.21,
-                "main_net_3d_yi": -3.9,
-                "mf_z": -0.52,
-                "ret_anomaly_score": 22,
-                "mf_anomaly_score": 22
-              }
-            }
-          ],
-          "any_overheated": false,
-          "staleness_factor": 0.85,
-          "staleness_detail": {
-            "prior_theme_count": 1,
-            "keywords": [
-              "丰田",
-              "取消",
-              "雷克萨斯"
-            ]
-          },
-          "max_rank_pre_stale": 33.27,
-          "similar_cases": []
-        }
-      ],
-      "n_pool": 42,
-      "max_rank": 45.7,
-      "date": "2026-05-29",
-      "label": "前日",
-      "weekday": "五",
-      "n_qualified": 7
     }
   ]
 }
