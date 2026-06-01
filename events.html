@@ -27,9 +27,16 @@
       .htl-row { display:flex; align-items:center; gap:8px; padding:3px 4px; border-radius:8px; text-decoration:none; }
       a.htl-row:hover { background:#faf5ff; }
       .htl-axisrow { padding-bottom:1px; margin-bottom:2px; }
-      .htl-label { width:150px; flex-shrink:0; overflow:hidden; }
-      .htl-th { font-size:12px; font-weight:700; color:#1f2937; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-      .htl-rank { display:inline-block; min-width:14px; color:#cbd5e1; font-weight:800; font-size:11px; }
+      .htl-label { width:162px; flex-shrink:0; overflow:hidden; }
+      .htl-th { display:flex; align-items:center; gap:5px; min-width:0; }
+      .htl-rank { flex:0 0 auto; min-width:13px; color:#cbd5e1; font-weight:800; font-size:11px; text-align:right; }
+      /* 鎏金边框 + 不同底色 + 白字 的高级感标签 */
+      .htl-tag { flex:0 1 auto; min-width:0; border-radius:7px; padding:1.5px;
+                 background:linear-gradient(135deg,#f8ecb0,#d4af37 38%,#a9791b 62%,#f4d97e);
+                 box-shadow:0 1px 2px rgba(0,0,0,.16); }
+      .htl-tag > b { display:block; border-radius:5.5px; padding:1px 9px; color:#fff; font-weight:700; font-size:12px;
+                     white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-shadow:0 1px 1.5px rgba(0,0,0,.28); }
+      .htl-badge { flex:0 0 auto; font-size:11px; white-space:nowrap; }
       .htl-sub { font-size:9.5px; color:#9ca3af; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:1px; }
       .htl-track { position:relative; flex:1 1 auto; min-width:0; height:26px; }
       .htl-axis { height:14px; }
@@ -41,7 +48,7 @@
       .htl-ev.major { background:#dc2626; box-shadow:0 0 0 1px #fecaca; }
       .htl-ev.latest { outline:2px solid #f9a8d4; outline-offset:1px; }
       .htl-legend { font-size:10px; color:#9ca3af; margin-top:9px; padding-top:8px; border-top:1px solid #f1f5f9; display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
-      @media (max-width:480px){ .htl-label{width:104px} .htl-th{font-size:11px} }
+      @media (max-width:480px){ .htl-label{width:120px} .htl-tag>b{font-size:11px} }
       .day-btn { padding: 6px 14px; border-radius: 7px; font-weight: 500; font-size: 13px; color: #4b5563; background: transparent; border: 0; cursor: pointer; transition: all 0.18s; display: flex; align-items: center; gap: 6px; }
       .day-btn.active { background: white; color: #6366f1; box-shadow: 0 1px 4px rgba(0,0,0,0.08); font-weight: 600; }
       .day-btn .day-count { background: #fef3c7; color: #92400e; padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: 700; }
@@ -520,9 +527,12 @@ function evRenderHype(d){
         const xOf = s => PAD + Math.max(0, Math.min(1, (toDay(s)-dMin)/(dMax-dMin))) * RANGE;
         const fmtMD = s => (s||'').slice(5);
         const dayStr = day => new Date(day*86400000).toISOString().slice(0,10);
-        const fracs = [0, 0.34, 0.67, 1];
-        const ticks = fracs.map(f => `<span class="htl-tick" style="left:${(PAD+f*RANGE).toFixed(2)}%">${f===1?'今 ':''}${fmtMD(dayStr(Math.round(dMin+f*(dMax-dMin))))}</span>`).join('');
+        const fracs = [0, 0.5, 1];
+        const ticks = [0,1].map(f => { const lab=(f===1?'今 ':'')+fmtMD(dayStr(Math.round(dMin+f*(dMax-dMin)))); const pos = f===0?'left:0;transform:none' : 'right:0;left:auto;transform:none'; return `<span class="htl-tick" style="${pos}">${lab}</span>`; }).join('');
         const grid = fracs.map(f => `<span class="htl-gl${f===1?' now':''}" style="left:${(PAD+f*RANGE).toFixed(2)}%"></span>`).join('');
+        // 标签底色调色板 (深色珠光, 配白字+鎏金边); 按主题名 hash 取色, 同主题永远同色
+        const TAG_GRAD = ['linear-gradient(135deg,#7c3aed,#9333ea)','linear-gradient(135deg,#dc2626,#b91c1c)','linear-gradient(135deg,#0d9488,#0f766e)','linear-gradient(135deg,#2563eb,#1d4ed8)','linear-gradient(135deg,#db2777,#be185d)','linear-gradient(135deg,#ea580c,#c2410c)','linear-gradient(135deg,#6366f1,#4338ca)','linear-gradient(135deg,#16a34a,#15803d)','linear-gradient(135deg,#e11d48,#9f1239)','linear-gradient(135deg,#0891b2,#0e7490)'];
+        const _hash = s => { let h=0; for(let k=0;k<(s||'').length;k++) h=(h*31+s.charCodeAt(k))>>>0; return h; };
         const rows = threads.map((t,i) => {
             const evs = (t.events||[]).filter(e => e.date);
             const xs = evs.map(e => xOf(e.date));
@@ -537,12 +547,10 @@ function evRenderHype(d){
                 const cls = 'htl-ev' + (r>=50?' major':'') + (e.date===lastDate?' latest':'');
                 return `<span class="${cls}" style="left:${xOf(e.date).toFixed(2)}%;width:${sz}px;height:${sz}px" title="${evEsc(e.date)}  ${evEsc(e.headline)} (热${Math.round(r)})"></span>`;
             }).join('');
-            let badge = ''; if (maxRank>=50) badge += ' 🔴';
-            try { if (t.last_date && Date.now()-new Date(t.last_date+'T00:00').getTime() <= 2.5*86400000) badge += ' 🆕'; } catch(e){}
             const base = `<span class="htl-base" style="left:${baseL.toFixed(2)}%;width:${Math.max(0,baseR-baseL).toFixed(2)}%"></span>`;
             return `<a class="htl-row" href="#hype-card-${i+1}">
                 <div class="htl-label">
-                    <div class="htl-th"><span class="htl-rank">${i+1}</span>🔥 ${evEsc(t.theme)}${badge}</div>
+                    <div class="htl-th"><span class="htl-rank">${i+1}</span><span class="htl-tag"><b style="background:${TAG_GRAD[_hash(t.theme)%TAG_GRAD.length]}">🔥 ${evEsc(t.theme)}</b></span></div>
                     <div class="htl-sub">${recLabel} · ${t.n_events||evs.length}事件</div>
                 </div>
                 <div class="htl-track">${grid}${base}${dots}</div>
