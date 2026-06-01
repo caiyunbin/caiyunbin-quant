@@ -440,87 +440,60 @@ function hlKey(text, kws){
 function evRenderHype(d){
     const root = document.getElementById('events-hype');
     if(!d || !d.threads || !d.threads.length){ root.innerHTML = '<div class="bg-white rounded-xl p-6 text-center text-gray-400 text-sm">暂无炒作主线</div>'; return; }
-    HYPE_THREADS = d.threads;
-    if(HYPE_SEL >= d.threads.length) HYPE_SEL = 0;
-    let dates = [];
-    d.threads.forEach(t => (t.events||[]).forEach(e => { if(e.date) dates.push(e.date); }));
-    if(!dates.length){ root.innerHTML = '<div class="bg-white rounded-xl p-6 text-center text-gray-400 text-sm">暂无炒作主线</div>'; return; }
-    const maxD = dates.reduce((a,b)=>a>b?a:b), minD = dates.reduce((a,b)=>a<b?a:b);
-    const PX = 26, PAD = 26;
-    const totalDays = Math.max(_hDayDiff(maxD, minD), 1);
-    const laneW = totalDays*PX + PAD*2;
-    const xOf = dt => PAD + _hDayDiff(maxD, dt)*PX;     // 左=近(maxD) / 右=久
-    let ticks = '';
-    for(let k=0; k<=totalDays+6; k+=7){
-        const x = PAD + k*PX;
-        const dt = new Date(new Date(maxD+'T00:00').getTime() - k*86400000);
-        ticks += `<div class="absolute text-[10px] text-gray-300 tabular-nums" style="left:${x}px;top:0;transform:translateX(-50%)">${(dt.getMonth()+1)}/${dt.getDate()}</div>
-                  <div class="absolute" style="left:${x}px;top:16px;bottom:0;width:1px;background:#f1f5f9"></div>`;
-    }
-    const lanes = d.threads.map((t,i) => {
-        const xs = (t.events||[]).map(e=>xOf(e.date));
-        const line = xs.length>1 ? `<div class="hype-line ${i===HYPE_SEL?'sel':''}" style="left:${Math.min(...xs)}px;width:${Math.max(...xs)-Math.min(...xs)}px"></div>` : '';
-        const nodes = (t.events||[]).map(e =>
-            `<button class="hype-node" style="left:${xOf(e.date)}px" title="${evEsc(e.date)}  ${evEsc(e.headline)}" onclick="hypeSelect(${i})"><span class="hype-dot ${i===HYPE_SEL?'sel':''}"></span></button>`
-        ).join('');
-        return `<div class="hype-lane ${i===HYPE_SEL?'sel':''}" onclick="hypeSelect(${i})">${line}${nodes}</div>`;
-    }).join('');
-    const names = d.threads.map((t,i) =>
-        `<button class="hype-name ${i===HYPE_SEL?'sel':''}" onclick="hypeSelect(${i})"><span class="truncate">${evEsc(t.theme)}</span><span class="text-[9px] opacity-70">热${Math.round(t.heat)} · ${t.n_events}事</span></button>`
-    ).join('');
-    root.innerHTML = `
-      <div class="text-xs text-gray-400 mb-2 px-1">近 ${d.window_days} 天 · ${d.n_threads} 条主线齐头并进 · <span class="text-gray-500">← 左为近 / 右为久 →</span> · 点主线看详情 · 更新 ${evEsc(d.generated_at)}</div>
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-3 overflow-hidden">
-        <div class="flex">
-          <div class="shrink-0 w-24 sm:w-28"><div class="h-5"></div>${names}</div>
-          <div class="overflow-x-auto flex-1 border-l border-gray-100">
-            <div class="relative" style="width:${laneW}px">
-              <div class="relative h-5">${ticks}</div>
-              ${lanes}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="hype-detail" class="mt-3"></div>`;
-    hypeRenderDetail();
+    let h = `<div class="text-xs text-gray-400 mb-2 px-1">近 ${d.window_days} 天 · ${d.n_threads} 条炒作主线 (竖向, 往下滚看更多) · 每条 = 时间线 / 逻辑 / 相关个股 · 更新 ${evEsc(d.generated_at)}</div>`;
+    d.threads.forEach((t,i)=> h += evRenderThread(t, i+1));
+    root.innerHTML = h;
 }
-function hypeSelect(i){
-    HYPE_SEL = i;
-    const root = document.getElementById('events-hype'); if(!root) return;
-    root.querySelectorAll('.hype-lane').forEach((el,idx)=>{ el.classList.toggle('sel', idx===i); el.querySelectorAll('.hype-dot').forEach(dd=>dd.classList.toggle('sel', idx===i)); const ln=el.querySelector('.hype-line'); if(ln) ln.classList.toggle('sel', idx===i); });
-    root.querySelectorAll('.hype-name').forEach((el,idx)=>el.classList.toggle('sel', idx===i));
-    hypeRenderDetail();
-}
-function hypeRenderDetail(){
-    const el = document.getElementById('hype-detail'); if(!el) return;
-    const t = HYPE_THREADS[HYPE_SEL]; if(!t) return;
+function evRenderThread(t, rank){
     const kws = t.keywords||[];
-    const evHtml = (t.events||[]).slice().reverse().map(e =>
-        `<div class="flex gap-2 py-1.5 border-b border-gray-50 last:border-0">
-            <span class="text-[11px] font-bold text-pink-500 tabular-nums shrink-0" style="width:38px">${evEsc((e.date||'').slice(5))}</span>
-            <span class="text-xs text-gray-700 leading-snug">${hlKey(e.headline, kws)}</span>
+    const kw = kws.slice(0,6).map(evEsc).join(' · ');
+    // ① 时间线 (竖向圆点, 新→旧, 关键内容标红)
+    const tl = (t.events||[]).slice().reverse().map(e =>
+        `<div class="relative pl-5 pb-2 last:pb-0">
+            <div class="absolute left-0 top-1 w-2.5 h-2.5 rounded-full bg-white border-2 border-pink-400"></div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-[11px] font-bold text-pink-500 tabular-nums shrink-0">${evEsc((e.date||'').slice(5))}</span>
+              <span class="text-xs text-gray-700 leading-snug">${hlKey(e.headline, kws)}</span>
+            </div>
         </div>`
     ).join('');
+    // ② 逻辑 (传导链)
+    const logicHtml = (t.logic && t.logic.length>10)
+        ? `<div class="text-sm text-gray-700 leading-relaxed">${formatChain(t.logic)}</div>${t.logic_event?`<div class="text-[10px] text-gray-400 mt-1.5">📰 代表事件: ${evEsc(t.logic_event)}</div>`:''}`
+        : `<div class="text-xs text-gray-400">(逻辑文字回填补全中…)</div>`;
+    // ③ 相关个股
     const groups = (t.stock_groups||[]).map(evRenderGroup).join('');
-    el.innerHTML = `
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-5">
-        <div class="flex items-center gap-2 flex-wrap mb-1">
-          <span class="text-base font-extrabold text-gray-900">🔥 ${evEsc(t.theme)}</span>
-          <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">${evEsc(t.topic_class)}</span>
-          <span class="text-[11px] text-gray-400">${t.n_events}事件 · ${evEsc((t.first_date||'').slice(5))}~${evEsc((t.last_date||'').slice(5))} · 热${Math.round(t.heat)}</span>
-        </div>
-        <div class="text-[11px] text-gray-400 mb-3">关键词 · ${(kws||[]).slice(0,6).map(evEsc).join(' · ')}</div>
-        <div class="grid md:grid-cols-2 gap-4">
-          <div>
-            <div class="text-[11px] font-semibold text-gray-400 mb-1.5">📅 事件解读 (新 → 旧 · 关键内容标红)</div>
-            <div>${evHtml}</div>
+    return `
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-5">
+      <div class="flex items-start justify-between gap-3">
+        <div class="min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-base font-extrabold text-gray-900">#${rank} 🔥 ${evEsc(t.theme)}</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">${evEsc(t.topic_class)}</span>
           </div>
-          <div>
-            <div class="text-[11px] font-semibold text-gray-400 mb-1.5">🎯 关联个股 · 按关系逻辑分框</div>
-            <div class="space-y-2.5">${groups}</div>
-          </div>
+          <div class="text-[11px] text-gray-400 mt-0.5">关键词 · ${kw}</div>
         </div>
-      </div>`;
+        <div class="text-right shrink-0">
+          <div class="text-xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">${Math.round(t.heat)}</div>
+          <div class="text-[10px] text-gray-400">${t.n_events}事件 · ${evEsc((t.first_date||'').slice(5))}~${evEsc((t.last_date||'').slice(5))}</div>
+        </div>
+      </div>
+      <div class="mt-3 pt-3 border-t border-gray-50">
+        <div class="text-[11px] font-bold text-gray-500 mb-2">📅 时间线 <span class="font-normal text-gray-400">· 新→旧 · 关键内容标红</span></div>
+        <div class="relative">
+          <div class="absolute left-[4px] top-1.5 bottom-2 w-0.5 bg-gradient-to-b from-purple-300 to-pink-200"></div>
+          ${tl}
+        </div>
+      </div>
+      <div class="mt-3 pt-3 border-t border-gray-50">
+        <div class="text-[11px] font-bold text-gray-500 mb-2">🔗 逻辑 <span class="font-normal text-gray-400">· 传导链</span></div>
+        <div class="p-3 bg-purple-50 rounded-lg border-l-4 border-purple-300">${logicHtml}</div>
+      </div>
+      <div class="mt-3 pt-3 border-t border-gray-50">
+        <div class="text-[11px] font-bold text-gray-500 mb-2">🎯 相关个股 <span class="font-normal text-gray-400">· 按关系逻辑分框 · 涨红跌绿</span></div>
+        <div class="space-y-2.5">${groups}</div>
+      </div>
+    </div>`;
 }
 function evRenderGroup(g){
     const st = REL_STYLE[g.relation_type] || REL_STYLE['主题概念'];
