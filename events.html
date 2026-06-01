@@ -493,14 +493,29 @@ function _hypeBadges(t){
 function evRenderHype(d){
     const root = document.getElementById('events-hype');
     if(!d || !d.threads || !d.threads.length){ root.innerHTML = '<div class="bg-white rounded-xl p-6 text-center text-gray-400 text-sm">暂无炒作主线</div>'; return; }
+    // 主线重要度重排: 越新越靠前(主导), 历史上发生过重大事件次之(辅助), 不按事件数量
+    (() => {
+        const _toDay = s => Math.round(new Date(s+'T00:00:00Z').getTime()/86400000);
+        const _today = _toDay((d.generated_at||'').slice(0,10) || new Date().toISOString().slice(0,10));
+        d.threads.forEach(t => {
+            const evs = (t.events||[]).filter(e => e.date);
+            if(!evs.length){ t._imp = -1; return; }
+            const lastDay = Math.max(...evs.map(e => _toDay(e.date)));
+            const recency = Math.exp(-Math.max(0, _today-lastDay)/8);                  // 越新越大 (主导项)
+            const peak = Math.min(100, Math.max(0, ...evs.map(e => e.rank||0)))/100;    // 历史峰值 = 是否发生过重大事件 (辅助项)
+            t._imp = recency + 0.20*peak;
+        });
+        d.threads.sort((a,b) => (b._imp||0) - (a._imp||0));
+    })();
     // 顶部总览: 共享时间轴的主线时间线图 (事件按真实日期落点, 圈大小=重要度, 红=重大, 末点高亮, 淡线=存续区间)
     const summary = (() => {
         const threads = d.threads || [];
         const toDay = s => Math.round(new Date(s+'T00:00:00Z').getTime()/86400000);   // UTC 日号, 防时区漂移
         const allDates = []; threads.forEach(t => (t.events||[]).forEach(e => e.date && allDates.push(e.date)));
         const todayStr = (d.generated_at||'').slice(0,10) || new Date().toISOString().slice(0,10);
-        let dMin = allDates.length ? Math.min(...allDates.map(toDay)) : toDay(todayStr);
-        let dMax = toDay(todayStr); if (dMax <= dMin) dMax = dMin + 1;
+        const todayDay = toDay(todayStr);
+        let dMin = allDates.length ? Math.min(...allDates.map(toDay)) : todayDay;
+        let dMax = todayDay; if (dMax <= dMin) dMax = dMin + 1;
         const PAD = 3, RANGE = 94;                                                     // 横向留白, 落点映射到 3%~97%
         const xOf = s => PAD + Math.max(0, Math.min(1, (toDay(s)-dMin)/(dMax-dMin))) * RANGE;
         const fmtMD = s => (s||'').slice(5);
@@ -513,6 +528,9 @@ function evRenderHype(d){
             const xs = evs.map(e => xOf(e.date));
             const baseL = xs.length ? Math.min(...xs) : PAD, baseR = xs.length ? Math.max(...xs) : PAD;
             const lastDate = evs.length ? evs.reduce((a,b)=> a.date>b.date?a:b).date : null;
+            const lastDay = lastDate ? toDay(lastDate) : null;
+            const daysSince = lastDay==null ? 999 : Math.max(0, todayDay - lastDay);
+            const recLabel = daysSince<=0 ? '今日活跃' : daysSince===1 ? '昨日活跃' : daysSince+'天前';
             const maxRank = Math.max(0, ...evs.map(e => e.rank||0));
             const dots = evs.map(e => {
                 const r = e.rank||0, sz = (7 + Math.min(r,80)/80*8).toFixed(1);
@@ -525,7 +543,7 @@ function evRenderHype(d){
             return `<a class="htl-row" href="#hype-card-${i+1}">
                 <div class="htl-label">
                     <div class="htl-th"><span class="htl-rank">${i+1}</span>🔥 ${evEsc(t.theme)}${badge}</div>
-                    <div class="htl-sub">热 ${Math.round(t.heat)} · ${t.n_events||evs.length} 事件</div>
+                    <div class="htl-sub">${recLabel} · ${t.n_events||evs.length}事件</div>
                 </div>
                 <div class="htl-track">${grid}${base}${dots}</div>
             </a>`;
