@@ -80,12 +80,16 @@
     <!-- 子 Tab: 7日 / 日榜 -->
     <div class="flex items-center justify-center">
         <div class="inline-flex bg-white rounded-xl p-1 shadow-sm border border-gray-200" id="events-subtabs">
-            <button class="event-subtab-btn active px-4 py-2 rounded-lg font-semibold text-sm transition" data-subtab="weekly">📊 7日汇总</button>
+            <button class="event-subtab-btn active px-4 py-2 rounded-lg font-semibold text-sm transition" data-subtab="hype">🔥 炒作脉络</button>
+            <button class="event-subtab-btn px-4 py-2 rounded-lg font-semibold text-sm transition" data-subtab="weekly">📊 7日汇总</button>
             <button class="event-subtab-btn px-4 py-2 rounded-lg font-semibold text-sm transition" data-subtab="daily">📅 3日榜单</button>
         </div>
     </div>
 
-    <div id="events-weekly" class="space-y-4">
+    <div id="events-hype" class="space-y-4">
+        <!-- by JS: 炒作脉络主线 -->
+    </div>
+    <div id="events-weekly" class="space-y-4" hidden>
         <!-- by JS: weekly Top 10 -->
     </div>
     <div id="events-daily" class="space-y-4" hidden>
@@ -107,7 +111,7 @@ const EV_FMT = (x, d) => (typeof x === 'number') ? x.toFixed(d || 1) : '—';
 // 全局状态: 记住用户当前看哪个 tab / 哪一天, in-place 刷新不丢失
 let EV_DATA = null;          // 最近一次 fetch 的 events.json
 let EV_CUR_DAY = 0;          // 当前选中日 (0=今/1=昨/2=前)
-let EV_CUR_SUBTAB = 'weekly';// 当前子tab (weekly/daily)
+let EV_CUR_SUBTAB = 'hype';  // 当前子tab (hype/weekly/daily)
 const EV_SCOPE_LABEL = {
     paradigm_shift: ['🌟', '范式突破'], global: ['🌍', '全球级'],
     industry: ['🏭', '全行业'], multi_company: ['🔗', '产业链'],
@@ -374,11 +378,89 @@ function renderDay(idx) {
         </div>${html}`;
 }
 
+// ============ 炒作脉络 (hype) ============
+let HYPE_DATA = null;
+const REL_STYLE = {
+    '直接主体': {bg:'#1e40af', fg:'#dbeafe', dot:'#3b82f6'},
+    '控股参股': {bg:'#6b21a8', fg:'#f3e8ff', dot:'#a855f7'},
+    '产业链':   {bg:'#0e7490', fg:'#cffafe', dot:'#06b6d4'},
+    '技术突破': {bg:'#b45309', fg:'#fde68a', dot:'#f59e0b'},
+    '海外映射': {bg:'#c2410c', fg:'#ffedd5', dot:'#f97316'},
+    '同业竞品': {bg:'#15803d', fg:'#dcfce7', dot:'#22c55e'},
+    '主题概念': {bg:'#475569', fg:'#f1f5f9', dot:'#94a3b8'},
+};
+function evEsc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function evSpark(arr, up){
+    if(!arr || arr.length<2) return '';
+    const w=58,h=18, mn=Math.min(...arr), mx=Math.max(...arr), rng=(mx-mn)||1;
+    const pts = arr.map((v,i)=>`${(i/(arr.length-1)*w).toFixed(1)},${(h-(v-mn)/rng*(h-2)-1).toFixed(1)}`).join(' ');
+    const col = (up>=0) ? '#16a34a' : '#dc2626';
+    return `<svg width="${w}" height="${h}" class="inline-block align-middle"><polyline fill="none" stroke="${col}" stroke-width="1.4" points="${pts}"/></svg>`;
+}
+async function evLoadHype(){
+    const root = document.getElementById('events-hype');
+    let d;
+    try { d = await (await fetch('data/hype.json?t='+Date.now())).json(); }
+    catch(e){ if(!HYPE_DATA) root.innerHTML = '<div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded"><h3 class="font-bold text-yellow-900">⚠ 炒作脉络数据生成中</h3><p class="text-sm text-yellow-700 mt-1">近 2 个月事件正在回填, 稍后自动刷新.</p></div>'; return; }
+    HYPE_DATA = d; evRenderHype(d);
+}
+function evRenderHype(d){
+    const root = document.getElementById('events-hype');
+    if(!d || !d.threads || !d.threads.length){ root.innerHTML = '<div class="bg-white rounded-xl p-6 text-center text-gray-400 text-sm">暂无炒作主线</div>'; return; }
+    let h = `<div class="text-xs text-gray-400 mb-1 px-1">近 ${d.window_days} 天 · ${d.n_threads} 条炒作主线 · 关联个股按"关系逻辑"分框 (含 60 日走势) · 更新 ${evEsc(d.generated_at)}</div>`;
+    d.threads.forEach((t,i)=> h += evRenderThread(t, i+1));
+    root.innerHTML = h;
+}
+function evRenderThread(t, rank){
+    const kw = (t.keywords||[]).slice(0,6).map(evEsc).join(' · ');
+    const tl = (t.events||[]).slice(-6).map(e =>
+        `<div class="flex gap-2 text-xs leading-snug"><span class="text-gray-400 shrink-0 tabular-nums">${evEsc((e.date||'').slice(5))}</span><span class="text-gray-600 truncate">${evEsc(e.headline)}</span></div>`
+    ).join('');
+    const groups = (t.stock_groups||[]).map(evRenderGroup).join('');
+    return `
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+      <div class="flex items-start justify-between gap-3">
+        <div class="min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-base font-extrabold text-gray-900">#${rank} 🔥 ${evEsc(t.theme)}</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">${evEsc(t.topic_class)}</span>
+          </div>
+          <div class="text-[11px] text-gray-400 mt-0.5 truncate">关键词 · ${kw}</div>
+        </div>
+        <div class="text-right shrink-0">
+          <div class="text-lg font-extrabold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">${Math.round(t.heat)}</div>
+          <div class="text-[10px] text-gray-400">${t.n_events}事件 · ${evEsc((t.first_date||'').slice(5))}~${evEsc((t.last_date||'').slice(5))}</div>
+        </div>
+      </div>
+      <div class="mt-2.5 border-l-2 border-purple-100 pl-2.5 space-y-0.5">${tl}</div>
+      <div class="mt-3 grid gap-2 sm:grid-cols-2">${groups}</div>
+    </div>`;
+}
+function evRenderGroup(g){
+    const st = REL_STYLE[g.relation_type] || REL_STYLE['主题概念'];
+    const rows = (g.stocks||[]).map(s => {
+        const up = (s.ret_pct!=null && s.ret_pct>=0);
+        const retTxt = (s.ret_pct==null) ? '' : `<div class="text-[11px] font-bold" style="color:${up?'#16a34a':'#dc2626'}">${up?'+':''}${s.ret_pct}%</div>`;
+        return `<div class="flex items-center justify-between gap-2 py-0.5">
+            <div class="min-w-0">
+              <div class="text-xs"><span class="font-semibold text-gray-800">${evEsc(s.name)}</span> <span class="text-[10px] text-gray-400">${evEsc(s.ts_code)}</span></div>
+              <div class="text-[10px] text-gray-500 truncate" title="${evEsc(s.reason)}">${evEsc(s.reason)}</div>
+            </div>
+            <div class="text-right shrink-0 leading-none">${evSpark(s.spark, s.ret_pct)}${retTxt}</div>
+        </div>`;
+    }).join('');
+    return `<div class="rounded-lg p-2" style="background:${st.dot}0d;border:1px solid ${st.dot}33">
+        <div class="mb-1"><span class="text-[11px] font-bold px-1.5 py-0.5 rounded" style="background:${st.bg};color:${st.fg}">${evEsc(g.relation_type)}</span></div>
+        <div class="divide-y divide-gray-50">${rows}</div>
+    </div>`;
+}
+
 // 事件子 Tab 切换 (记忆当前 subtab)
 document.querySelectorAll('#events-subtabs .event-subtab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         EV_CUR_SUBTAB = btn.dataset.subtab;
         document.querySelectorAll('#events-subtabs .event-subtab-btn').forEach(b => b.classList.toggle('active', b.dataset.subtab === EV_CUR_SUBTAB));
+        document.getElementById('events-hype').hidden = (EV_CUR_SUBTAB !== 'hype');
         document.getElementById('events-weekly').hidden = (EV_CUR_SUBTAB !== 'weekly');
         document.getElementById('events-daily').hidden = (EV_CUR_SUBTAB !== 'daily');
     });
@@ -386,9 +468,10 @@ document.querySelectorAll('#events-subtabs .event-subtab-btn').forEach(btn => {
 
 // 自动加载
 evLoadAndRender();
+evLoadHype();
 
 // 60s 原地刷新数据 (不整页 reload, 保持当前 tab / 当前那一天 / 滚动位置)
-setInterval(evLoadAndRender, 60000);
+setInterval(() => { evLoadAndRender(); evLoadHype(); }, 60000);
 </script>
 </body>
 </html>
