@@ -9,9 +9,6 @@ __pycache__/
 *.pyd
 
 # 数据 — 绝对不能上 GitHub
-# events.json / hype.json 改为单机大脑直接写网站目录, 不再入库 (防 git reset --hard 覆盖本地实时数据)
-data/events.json
-data/hype.json
 *.parquet
 *.db
 *.sqlite
