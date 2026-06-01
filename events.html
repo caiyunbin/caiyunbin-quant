@@ -23,11 +23,25 @@
       .hb { font-size:10px; padding:1px 6px; border-radius:9999px; font-weight:700; white-space:nowrap; }
       .hb-major { background:#fee2e2; color:#b91c1c; }
       .hb-new { background:#dcfce7; color:#15803d; }
-      .hsum-row { display:flex; align-items:center; gap:6px; padding:5px 6px; border-radius:8px; text-decoration:none; border-bottom:1px solid #f8fafc; }
-      .hsum-row:last-child { border-bottom:0; }
-      .hsum-row:hover { background:#faf5ff; }
-      .hsum-tl { display:flex; align-items:center; gap:3px; overflow:hidden; flex:1 1 auto; min-width:0; flex-wrap:nowrap; }
-      .hsum-dot { width:7px; height:7px; border-radius:9999px; background:#c084fc; display:inline-block; flex-shrink:0; }
+      /* 主线时间线总览图 (共享时间轴: 事件按真实日期落点, 圈大小=重要度) */
+      .htl-row { display:flex; align-items:center; gap:8px; padding:3px 4px; border-radius:8px; text-decoration:none; }
+      a.htl-row:hover { background:#faf5ff; }
+      .htl-axisrow { padding-bottom:1px; margin-bottom:2px; }
+      .htl-label { width:150px; flex-shrink:0; overflow:hidden; }
+      .htl-th { font-size:12px; font-weight:700; color:#1f2937; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .htl-rank { display:inline-block; min-width:14px; color:#cbd5e1; font-weight:800; font-size:11px; }
+      .htl-sub { font-size:9.5px; color:#9ca3af; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:1px; }
+      .htl-track { position:relative; flex:1 1 auto; min-width:0; height:26px; }
+      .htl-axis { height:14px; }
+      .htl-tick { position:absolute; top:0; transform:translateX(-50%); font-size:10px; color:#9ca3af; white-space:nowrap; }
+      .htl-gl { position:absolute; top:3px; bottom:3px; width:1px; background:#f1f5f9; transform:translateX(-50%); }
+      .htl-gl.now { background:#fecaca; }
+      .htl-base { position:absolute; top:50%; height:3px; transform:translateY(-50%); background:linear-gradient(90deg,#ede9fe,#c4b5fd); border-radius:3px; }
+      .htl-ev { position:absolute; top:50%; transform:translate(-50%,-50%); border-radius:9999px; background:#c084fc; border:1px solid #fff; box-shadow:0 0 0 1px #e9d5ff; cursor:pointer; }
+      .htl-ev.major { background:#dc2626; box-shadow:0 0 0 1px #fecaca; }
+      .htl-ev.latest { outline:2px solid #f9a8d4; outline-offset:1px; }
+      .htl-legend { font-size:10px; color:#9ca3af; margin-top:9px; padding-top:8px; border-top:1px solid #f1f5f9; display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+      @media (max-width:480px){ .htl-label{width:104px} .htl-th{font-size:11px} }
       .day-btn { padding: 6px 14px; border-radius: 7px; font-weight: 500; font-size: 13px; color: #4b5563; background: transparent; border: 0; cursor: pointer; transition: all 0.18s; display: flex; align-items: center; gap: 6px; }
       .day-btn.active { background: white; color: #6366f1; box-shadow: 0 1px 4px rgba(0,0,0,0.08); font-weight: 600; }
       .day-btn .day-count { background: #fef3c7; color: #92400e; padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: 700; }
@@ -479,18 +493,49 @@ function _hypeBadges(t){
 function evRenderHype(d){
     const root = document.getElementById('events-hype');
     if(!d || !d.threads || !d.threads.length){ root.innerHTML = '<div class="bg-white rounded-xl p-6 text-center text-gray-400 text-sm">暂无炒作主线</div>'; return; }
-    // 顶部: 所有主线时间线竖向汇总 (mini 时间线 + 重大事件/最新 标识, 点击跳详情)
-    const summary = d.threads.map((t,i) => {
-        const dots = (t.events||[]).slice().reverse().slice(0,12).map(e =>
-            `<span class="hsum-dot" title="${evEsc(e.date)}  ${evEsc(e.headline)}"></span>`).join('');
-        return `<a href="#hype-card-${i+1}" class="hsum-row">
-            <span class="text-[11px] font-bold text-gray-300 w-5 shrink-0 text-right">${i+1}</span>
-            <span class="font-semibold text-gray-800 text-sm shrink-0 truncate" style="max-width:8.5rem">🔥 ${evEsc(t.theme)}</span>
-            ${_hypeBadges(t)}
-            <span class="hsum-tl">${dots}</span>
-            <span class="text-[10px] text-gray-400 ml-auto shrink-0 tabular-nums">${evEsc((t.first_date||'').slice(5))}~${evEsc((t.last_date||'').slice(5))}·热${Math.round(t.heat)}</span>
-        </a>`;
-    }).join('');
+    // 顶部总览: 共享时间轴的主线时间线图 (事件按真实日期落点, 圈大小=重要度, 红=重大, 末点高亮, 淡线=存续区间)
+    const summary = (() => {
+        const threads = d.threads || [];
+        const toDay = s => Math.round(new Date(s+'T00:00:00Z').getTime()/86400000);   // UTC 日号, 防时区漂移
+        const allDates = []; threads.forEach(t => (t.events||[]).forEach(e => e.date && allDates.push(e.date)));
+        const todayStr = (d.generated_at||'').slice(0,10) || new Date().toISOString().slice(0,10);
+        let dMin = allDates.length ? Math.min(...allDates.map(toDay)) : toDay(todayStr);
+        let dMax = toDay(todayStr); if (dMax <= dMin) dMax = dMin + 1;
+        const PAD = 3, RANGE = 94;                                                     // 横向留白, 落点映射到 3%~97%
+        const xOf = s => PAD + Math.max(0, Math.min(1, (toDay(s)-dMin)/(dMax-dMin))) * RANGE;
+        const fmtMD = s => (s||'').slice(5);
+        const dayStr = day => new Date(day*86400000).toISOString().slice(0,10);
+        const fracs = [0, 0.34, 0.67, 1];
+        const ticks = fracs.map(f => `<span class="htl-tick" style="left:${(PAD+f*RANGE).toFixed(2)}%">${f===1?'今 ':''}${fmtMD(dayStr(Math.round(dMin+f*(dMax-dMin))))}</span>`).join('');
+        const grid = fracs.map(f => `<span class="htl-gl${f===1?' now':''}" style="left:${(PAD+f*RANGE).toFixed(2)}%"></span>`).join('');
+        const rows = threads.map((t,i) => {
+            const evs = (t.events||[]).filter(e => e.date);
+            const xs = evs.map(e => xOf(e.date));
+            const baseL = xs.length ? Math.min(...xs) : PAD, baseR = xs.length ? Math.max(...xs) : PAD;
+            const lastDate = evs.length ? evs.reduce((a,b)=> a.date>b.date?a:b).date : null;
+            const maxRank = Math.max(0, ...evs.map(e => e.rank||0));
+            const dots = evs.map(e => {
+                const r = e.rank||0, sz = (7 + Math.min(r,80)/80*8).toFixed(1);
+                const cls = 'htl-ev' + (r>=50?' major':'') + (e.date===lastDate?' latest':'');
+                return `<span class="${cls}" style="left:${xOf(e.date).toFixed(2)}%;width:${sz}px;height:${sz}px" title="${evEsc(e.date)}  ${evEsc(e.headline)} (热${Math.round(r)})"></span>`;
+            }).join('');
+            let badge = ''; if (maxRank>=50) badge += ' 🔴';
+            try { if (t.last_date && Date.now()-new Date(t.last_date+'T00:00').getTime() <= 2.5*86400000) badge += ' 🆕'; } catch(e){}
+            const base = `<span class="htl-base" style="left:${baseL.toFixed(2)}%;width:${Math.max(0,baseR-baseL).toFixed(2)}%"></span>`;
+            return `<a class="htl-row" href="#hype-card-${i+1}">
+                <div class="htl-label">
+                    <div class="htl-th"><span class="htl-rank">${i+1}</span>🔥 ${evEsc(t.theme)}${badge}</div>
+                    <div class="htl-sub">热 ${Math.round(t.heat)} · ${t.n_events||evs.length} 事件</div>
+                </div>
+                <div class="htl-track">${grid}${base}${dots}</div>
+            </a>`;
+        }).join('');
+        return `<div class="htl">
+            <div class="htl-row htl-axisrow"><div class="htl-label"></div><div class="htl-track htl-axis">${ticks}</div></div>
+            ${rows}
+          </div>
+          <div class="htl-legend"><span class="htl-ev major" style="position:static;display:inline-block;width:12px;height:12px"></span>重大(≥50)<span class="htl-ev" style="position:static;display:inline-block;width:8px;height:8px;margin-left:6px"></span>普通<span style="margin-left:6px">·　圈越大越重要　·　越靠右越新　·　点行跳详情</span></div>`;
+    })();
     const feed = d.threads.map((t,i)=> evRenderThread(t, i+1)).join('');
     root.innerHTML = `
       <div class="text-xs text-gray-400 mb-2 px-1">近 ${d.window_days} 天 · ${d.n_threads} 条炒作主线 · 更新 ${evEsc(d.generated_at)}</div>
