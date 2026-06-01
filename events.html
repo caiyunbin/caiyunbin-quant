@@ -137,31 +137,55 @@ const EV_SCOPE_LABEL = {
 };
 const HOT_THRESHOLD = 60;  // 爆款档 (高于合格档 34)
 
-// 📖 把 LLM 输出的 "Step X" 格式转成人话 + 分行
-const STEP_LABELS = {
-    '-1': '📰 事件性质判断',
-    '0':  '🌐 影响范围判断',
-    '1':  '🏷️ 新闻类型分类',
-    '2':  '🎯 推理范式选择',
-    '3':  '⚡ 因果传导链路',
-    '4':  '🎁 受益主体特征',
-};
+// 📖 把 LLM 的内部推演文字洗成"人话"+ 分段分行
+// 剥掉 Step/范式/矩阵/[Pxx]/win%/枚举裁决 等内部行话, 只留可读的因果分析
 function formatChain(chain) {
     if (!chain) return '';
-    // 处理 【Step X xxx】 → 占位符
-    let out = chain.replace(/【\s*Step\s*(-?\d+)[^】]*】[:：、,，\s]*/g, '@@STEP_$1@@');
-    // 处理 Step X xxx: 或 Step X (xxx):
-    out = out.replace(/Step\s*(-?\d+)\s*[（(]?\s*[a-zA-Z_一-龥]*\s*[)）]?\s*[:：]\s*/g, '@@STEP_$1@@');
-    // 替换占位符为人话标题
-    out = out.replace(/@@STEP_(-?\d+)@@/g, (_, n) => {
-        const label = STEP_LABELS[n] || `✨ 步骤 ${n}`;
-        return `\n\n<div class="font-bold text-purple-700 mt-3 mb-1 text-sm">${label}</div>`;
+    let s = ' ' + String(chain) + ' ';
+
+    // ① 去掉"阶段/步骤"脚手架标签 (多种写法), 仅删标签、保留其后正文
+    s = s.replace(/【\s*Stage\s*[A-Za-z][^】]*】/g, '\n');
+    s = s.replace(/【\s*Step\s*-?\d+(?:-\d+)?\s*[:：][^】]*】/g, '\n');
+    s = s.replace(/\[\s*Step\s*-?\d+(?:-\d+)?\s*\]\s*(?:event_type|impact_scope|topic_class|event_subtype)\s*=\s*[\w一-龥]+\s*[:：。]?/g, '\n');
+    s = s.replace(/\[\s*Step\s*-?\d+(?:-\d+)?\s*\]\s*[:：]?/g, '\n');
+    s = s.replace(/Step\s*-?\d+(?:-\d+)?\s*[（(][^)）]*[)）]\s*[:：]?/g, '\n');
+    s = s.replace(/Step\s*-?\d+(?:-\d+)?\s*[一-龥]{0,8}?\s*[:：]/g, '\n');
+
+    // ② 去掉行内行话 token + markdown 强调符
+    s = s.replace(/\*+/g, '');
+    s = s.replace(/\[P\d+(?:\s[^\]]*)?\]/g, '');
+    s = s.replace(/\bP\d{2}\b/g, '');
+    s = s.replace(/[（(]\s*[×xX]\s*[\d.]+\s*[)）]/g, '');
+    s = s.replace(/[（(]\s*n\s*=[^)）]*[)）]/g, '');
+    s = s.replace(/[（(][^)）]{0,40}win%[^)）]*[)）]/g, '');
+    s = s.replace(/\[教训\d+\]/g, '');
+    s = s.replace(/(?:event_type|impact_scope|topic_class|event_subtype)\s*=\s*[\w一-龥]+/g, '');
+    s = s.replace(/\b(?:event_driven|non_event|market_review|global|industry|multi_company|single_company|regional|paradigm_shift)\b/gi, '');
+    s = s.replace(/[→\s]*影响范围[达为到]?\s*级别/g, '');
+    s = s.replace(/[达到为]\s*级别/g, '');
+
+    // ③ 去掉"应用/适用/查矩阵"前缀
+    s = s.replace(/(应用|适用|采用|套用)[一-龥]{0,8}[:：]/g, '');
+    s = s.replace(/查矩阵[:：]/g, '');
+
+    // ④ 按句切分; 丢掉机器味整句 + 清掉裁决引导词残尾
+    const out = [];
+    s.split(/[\n。]/).forEach(raw => {
+        let c = raw.replace(/^[\s,，、;；:：.。\-—~～→]+/, '').replace(/[\s→]+$/, '').replace(/\s{2,}/g, ' ').trim();
+        c = c.replace(/[，,、]\s*(选为?|判定为|判为|故判|定为|故定为|归为|定级为|属于)$/, '').trim();
+        if (c.length < 4) return;
+        if (/矩阵|最优范式|范式选择|适用范式|备选范式|win%|\bn\s*=\s*\d|comp\s*=/.test(c)) return;
+        out.push(c);
     });
-    // 多个空行合并
-    out = out.replace(/\n{2,}/g, '\n\n');
-    // 普通换行变 br
-    out = out.replace(/\n/g, '<br>');
-    return out.trim();
+    if (!out.length) return '';
+
+    // ⑤ 分段分行: 因果链(≥2个→)整段加左竖线强调, 其余普通段; 关键内容标红标粗
+    return out.map(c => {
+        const isChain = (c.match(/→/g) || []).length >= 2;
+        return isChain
+            ? `<div class="mb-2 pl-2.5 border-l-2 border-purple-200 leading-relaxed">${hlKey(c)}</div>`
+            : `<div class="mb-1.5 leading-relaxed">${hlKey(c)}</div>`;
+    }).join('');
 }
 
 function evRenderCard(grp, rank_num, threshold) {
