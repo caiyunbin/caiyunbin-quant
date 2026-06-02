@@ -1,128 +1,167 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登录 · 多子策略决策引擎</title>
-    <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css">
-    <script src="assets/auth.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录 · caiman's quant system</title>
+<link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+<style>
+  :root{ --gold:#d4af37; --gold2:#f5d987; --ink:#0a0e1a; }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--ink); color:#e7eaf3; overflow-x:hidden;
+    display:flex; align-items:center; justify-content:center; padding:24px;
+  }
+  .bg-orbs{position:fixed;inset:0;overflow:hidden;z-index:0}
+  .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.45;animation:float 18s ease-in-out infinite}
+  .orb1{width:480px;height:480px;background:radial-gradient(circle,#3b5bdb,#1e3a8a 60%,transparent);top:-120px;left:-80px}
+  .orb2{width:420px;height:420px;background:radial-gradient(circle,#7c3aed,#4c1d95 60%,transparent);bottom:-140px;right:-60px;animation-delay:-6s}
+  .orb3{width:300px;height:300px;background:radial-gradient(circle,var(--gold),#92400e 55%,transparent);top:40%;right:18%;opacity:.22;animation-delay:-11s}
+  @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.08)}66%{transform:translate(-30px,25px) scale(.95)}}
+  .glass{
+    position:relative;z-index:1;width:100%;max-width:440px;
+    background:rgba(20,26,44,.72); backdrop-filter:blur(22px) saturate(140%);
+    border:1px solid rgba(255,255,255,.10); border-radius:22px;
+    box-shadow:0 24px 70px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
+    padding:38px 34px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:22px;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1407;box-shadow:0 6px 18px rgba(212,175,55,.35)}
+  .brand h1{font-size:20px;font-weight:800;margin:0;letter-spacing:.3px;
+    background:linear-gradient(90deg,#fff,#cbd5e1);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .sub{color:#8b95ad;font-size:12.5px;margin:2px 0 26px;letter-spacing:.2px}
+  .tabs{display:flex;background:rgba(255,255,255,.05);border-radius:12px;padding:4px;margin-bottom:22px}
+  .tab{flex:1;text-align:center;padding:9px;border-radius:9px;font-size:14px;font-weight:600;color:#94a3b8;cursor:pointer;transition:.25s}
+  .tab.on{background:linear-gradient(135deg,#4f46e5,#6d28d9);color:#fff;box-shadow:0 6px 16px rgba(79,70,229,.4)}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:12px;color:#9aa4bd;margin-bottom:7px;letter-spacing:.3px}
+  .field input{width:100%;padding:12px 14px;border-radius:11px;font-size:14.5px;color:#eef1f8;
+    background:rgba(10,14,26,.7);border:1px solid rgba(255,255,255,.10);transition:.2s;outline:none}
+  .field input:focus{border-color:#6d8bff;box-shadow:0 0 0 3px rgba(79,110,255,.18)}
+  .field input::placeholder{color:#5b657d}
+  .terms{margin:14px 0 18px;background:rgba(10,14,26,.55);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px}
+  .terms summary{cursor:pointer;font-size:12.5px;color:#cbb978;font-weight:600;list-style:none;display:flex;align-items:center;gap:6px}
+  .terms summary::-webkit-details-marker{display:none}
+  .terms .body{max-height:168px;overflow-y:auto;margin-top:10px;font-size:11.5px;line-height:1.75;color:#9aa4bd}
+  .terms .body b{color:#d4af37}
+  .terms .body p{margin:0 0 9px}
+  .terms .body::-webkit-scrollbar{width:5px}.terms .body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:3px}
+  .agree{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:#aeb6cc;margin-bottom:18px;cursor:pointer}
+  .agree input{margin-top:2px;width:15px;height:15px;accent-color:var(--gold)}
+  .agree a{color:#9bb0ff;text-decoration:none}
+  .btn{width:100%;padding:13px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;
+    background:linear-gradient(135deg,var(--gold),#b8860b);color:#1a1407;letter-spacing:2px;transition:.2s;
+    box-shadow:0 10px 26px rgba(212,175,55,.32)}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 14px 32px rgba(212,175,55,.45)}
+  .btn:active{transform:translateY(0)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  .msg{margin-top:14px;font-size:13px;text-align:center;min-height:18px}
+  .foot{margin-top:22px;text-align:center;font-size:11px;color:#5b657d;line-height:1.7}
+  .foot a{color:#7c89a8;text-decoration:none}
+  .risk{margin-top:16px;font-size:10.5px;color:#64708a;text-align:center;line-height:1.6;
+    border-top:1px solid rgba(255,255,255,.07);padding-top:14px}
+</style>
 </head>
-<body class="bg-gradient-to-br from-indigo-50 via-white to-blue-50 min-h-screen flex items-center justify-center p-4">
-<div class="max-w-lg w-full space-y-4">
+<body>
+<div class="bg-orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
 
-    <!-- 登录卡片 -->
-    <div class="bg-white shadow-xl rounded-lg p-6 sm:p-10">
-        <div class="text-center mb-6">
-            <div class="text-4xl mb-3">🚀</div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700">多子策略决策引擎</h1>
-            <p class="text-sm text-gray-500 mt-2">A 股每日量化信号 · 仅限授权账号访问</p>
+<div class="glass">
+  <div class="brand">
+    <div class="logo">📈</div>
+    <h1>caiman's quant system</h1>
+  </div>
+  <p class="sub">A 股多策略量化信号 · 事件驱动选股 · 每日更新</p>
+
+  <div class="tabs">
+    <div class="tab on" id="tab-login" onclick="switchTab('login')">登录</div>
+    <div class="tab" id="tab-reg" onclick="switchTab('reg')">注册</div>
+  </div>
+
+  <div class="field">
+    <label>邮箱</label>
+    <input id="email" type="email" placeholder="your@email.com" autocomplete="email">
+  </div>
+  <div class="field">
+    <label>密码</label>
+    <input id="password" type="password" placeholder="至少 6 位" autocomplete="current-password">
+  </div>
+
+  <div id="termsBox" style="display:none">
+    <div class="terms">
+      <details>
+        <summary>📜 风险提示 · 免责声明 · 服务条款（点击展开）</summary>
+        <div class="body">
+          <p><b>【投资风险提示】</b>股市有风险，入市需谨慎。本平台提供的所有策略信号、事件分析、回测数据，<b>均为量化模型的研究性输出，仅供学习与参考，不构成任何投资建议、买卖要约或收益承诺</b>。</p>
+          <p><b>【业绩免责】</b>历史回测业绩不代表未来表现；任何策略均可能产生亏损。用户依据本平台信息做出的任何投资决策及由此产生的盈亏，<b>由用户自行承担全部责任</b>，本平台不承担任何直接或间接损失。</p>
+          <p><b>【数据说明】</b>行情数据来自第三方数据源，可能存在延迟、错漏或中断；信号按 T+1 开盘价撮合假设计算，与真实成交存在偏差。</p>
+          <p><b>【账号条款】</b>① 账号仅限本人使用，<b>禁止共享、转售、出借</b>；系统对并发设备做限制，异常将冻结账号。② <b>禁止爬取、批量抓取、二次分发</b>本平台任何付费数据；违者立即封禁且<b>不退款</b>，并保留追责权利。③ 付费为虚拟数字内容服务，<b>一经开通不支持退款</b>。</p>
+          <p><b>【合规声明】</b>本平台非持牌投资顾问机构，不代客理财、不收取业绩分成、不提供荐股服务。如您所在地区法律禁止此类信息服务，请勿使用。</p>
+          <p>注册即视为您已阅读、理解并同意以上全部条款。</p>
         </div>
-
-        <form id="login-form" class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">账号</label>
-                <input
-                    type="text"
-                    id="user"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-base font-mono"
-                    placeholder="请输入管理员分配的账号 (u 开头 8 位)"
-                    autocomplete="username"
-                    spellcheck="false"
-                    required
-                >
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">密码</label>
-                <input
-                    type="password"
-                    id="password"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-base font-mono"
-                    placeholder="请输入管理员分配的密码 (8 位字母数字)"
-                    autocomplete="current-password"
-                    required
-                >
-            </div>
-            <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-md font-medium hover:bg-indigo-700 active:bg-indigo-800 text-base">
-                登录
-            </button>
-            <div id="msg-box" class="hidden rounded-md p-3 text-sm"></div>
-        </form>
-
-        <div class="mt-6 text-xs text-gray-500 border-t pt-4 space-y-1">
-            <p>📌 账号由管理员统一生成, 默认 <strong>7 天有效</strong></p>
-            <p>📌 账号过期后请联系管理员续期, 否则无法登录</p>
-            <p>📌 登录凭证保存于浏览器, 关闭后仍有效 (至账号到期)</p>
-            <p>📌 管理员可随时撤销账号, 撤销后立即生效</p>
-        </div>
+      </details>
     </div>
+    <label class="agree">
+      <input type="checkbox" id="agree">
+      <span>我已阅读并同意 <a href="javascript:void(0)" onclick="document.querySelector('#termsBox details').open=true">《风险提示·免责声明·服务条款》</a></span>
+    </label>
+  </div>
 
-    <!-- 金融风险提示 (重要, 大字号显眼) -->
-    <div class="bg-red-50 border-l-4 border-red-500 rounded-lg p-5 shadow">
-        <h3 class="font-bold text-red-800 mb-2 text-base">⚠️ 重要风险提示</h3>
-        <div class="text-xs text-red-900 space-y-2 leading-relaxed">
-            <p><strong>1. 仅供研究参考</strong>: 本网站所展示的策略数据、信号、净值曲线、推荐买卖股票等内容,
-                <strong>均为本人量化研究的统计结果</strong>, 仅供研究参考与个人学习交流使用,
-                <strong>不构成任何形式的投资建议、保荐意见或收益承诺</strong>.</p>
-            <p><strong>2. 不构成委托关系</strong>: 本网站不向任何用户提供投资咨询、资产管理、代客理财服务,
-                不接受任何形式的投资委托. 用户与本网站之间<strong>不存在投资顾问关系</strong>.</p>
-            <p><strong>3. 历史业绩不代表未来</strong>: 网站展示的回测净值与年化收益均为
-                <strong>历史模拟数据</strong>, 受幸存者偏差、滑点假设、容量约束等因素影响,
-                实盘表现可能<strong>显著低于</strong>历史回测.</p>
-            <p><strong>4. 投资风险自负</strong>: 用户基于本网站任何内容做出的投资决策,
-                由用户<strong>独立判断并自行承担风险</strong>, 包括但不限于本金亏损、流动性风险、市场风险、政策风险.
-                本网站<strong>不对任何投资亏损负责</strong>.</p>
-            <p><strong>5. 适当性原则</strong>: 证券投资有风险, 用户应根据自身的财务状况、投资经验、风险承受能力,
-                结合专业顾问意见独立做出投资决策. <strong>不具备风险承受能力的用户,
-                请勿基于本网站内容进行任何投资操作</strong>.</p>
-            <p><strong>6. 数据准确性</strong>: 本网站数据来源于第三方接口, 不保证数据的实时性、准确性、完整性.
-                因数据错误或延迟导致的任何损失, 本网站<strong>不承担任何责任</strong>.</p>
-            <p class="text-red-700 font-bold mt-3 text-center">
-                登录即视为您已完整阅读、充分理解并同意上述风险提示.
-            </p>
-        </div>
-    </div>
+  <button class="btn" id="submitBtn" onclick="submit()">登 录</button>
+  <div class="msg" id="msg"></div>
 
-    <div class="text-center text-xs text-gray-400 pt-2">
-        &copy; 2026 多子策略决策引擎 · 仅限本人量化研究用
-    </div>
+  <div class="risk">
+    ⚠️ 风险提示：市场有风险，信号仅供参考，不构成投资建议，据此操作风险自负。
+  </div>
+  <div class="foot">
+    <a href="index.html">← 返回首页</a> &nbsp;·&nbsp; 忘记密码请联系客服
+  </div>
 </div>
 
 <script>
-    const $u = document.getElementById('user');
-    const $p = document.getElementById('password');
-    const $msg = document.getElementById('msg-box');
+const API="/api";
+let mode="login";
 
-    function showMsg(text, type) {
-        $msg.className = 'rounded-md p-3 text-sm ' +
-            (type === 'err' ? 'bg-red-50 text-red-700' :
-             type === 'ok'  ? 'bg-green-50 text-green-700' :
-                               'bg-blue-50 text-blue-700');
-        $msg.textContent = text;
-        $msg.classList.remove('hidden');
+function switchTab(m){
+  mode=m;
+  document.getElementById("tab-login").classList.toggle("on", m==="login");
+  document.getElementById("tab-reg").classList.toggle("on", m==="reg");
+  document.getElementById("termsBox").style.display = m==="reg" ? "block" : "none";
+  document.getElementById("submitBtn").textContent = m==="reg" ? "注 册" : "登 录";
+  document.getElementById("msg").textContent="";
+}
+
+async function api(path, body){
+  const r = await fetch(API+path, {method:"POST", credentials:"include",
+    headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)});
+  const d = await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(d.detail || ("错误 "+r.status));
+  return d;
+}
+
+function setMsg(t, ok){ const m=document.getElementById("msg"); m.textContent=t; m.style.color= ok?"#6ee7b7":"#fca5a5"; }
+
+async function submit(){
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+  const btn=document.getElementById("submitBtn");
+  if(!email||!password){ setMsg("请填写邮箱和密码"); return; }
+  if(mode==="reg" && !document.getElementById("agree").checked){ setMsg("请先勾选同意服务条款"); return; }
+  btn.disabled=true;
+  try{
+    if(mode==="reg"){
+      await api("/register",{email,password});
+      setMsg("✅ 注册成功，正在登录...", true);
     }
+    await api("/login",{email,password});
+    setMsg("✅ 登录成功，正在跳转...", true);
+    setTimeout(()=>{ location.href = new URLSearchParams(location.search).get("next") || "index.html"; }, 600);
+  }catch(e){ setMsg("❌ "+e.message); btn.disabled=false; }
+}
 
-    // URL 带 ?reason=xxx 时显示原因 (撤销/过期)
-    const reason = new URLSearchParams(window.location.search).get('reason');
-    if (reason) showMsg(decodeURIComponent(reason), 'err');
-
-    document.getElementById('login-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const user = $u.value.trim();
-        const password = $p.value;
-        showMsg('校验中...', 'info');
-        const res = await tryLogin(user, password);
-        if (res.ok) {
-            showMsg(`登录成功, 跳转中... (账号有效期至 ${res.expire})`, 'ok');
-            const back = new URLSearchParams(window.location.search).get('back');
-            setTimeout(() => {
-                window.location.href = back ? decodeURIComponent(back) : 'index.html';
-            }, 600);
-        } else {
-            showMsg(res.msg, 'err');
-            $p.value = '';
-        }
-    });
+document.getElementById("password").addEventListener("keydown", e=>{ if(e.key==="Enter") submit(); });
+(async()=>{ try{ const me=await (await fetch(API+"/me",{credentials:"include"})).json(); if(me.logged_in){ location.href="index.html"; } }catch(e){} })();
 </script>
 </body>
 </html>
