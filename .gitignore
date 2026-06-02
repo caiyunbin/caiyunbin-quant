@@ -70,3 +70,11 @@ node_modules/
 !.gitignore
 !.nojekyll
 !README.md
+
+# ⭐ 付费墙 (2026-06-02): 全量信号数据不再进公开仓库.
+# 后端 paywall 从 private_data (scp) + Engine_M 本地生成读取.
+data/latest.json
+data/equity_curves.json
+data/events.json
+data/hype.json
+data/history/
