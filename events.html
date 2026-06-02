@@ -489,9 +489,9 @@ async function evLoadHype(){
         root.innerHTML = pwLockCard({title:"🔒 炒作脉络已锁定", sub:"主线逻辑 · 老主线延续标识 · 脉络演化时间线 — 付费会员可见"});
         return;
     }
-    let d;
-    try { d = await (await fetch('data/hype.json?t='+Date.now())).json(); }
-    catch(e){ if(!HYPE_DATA) root.innerHTML = '<div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded"><h3 class="font-bold text-yellow-900">⚠ 炒作脉络数据生成中</h3><p class="text-sm text-yellow-700 mt-1">近 2 个月事件正在回填, 稍后自动刷新.</p></div>'; return; }
+    // 付费用户: 脉络数据已随 /api/events 一起返回 (EV_DATA.hype), 不再单独 fetch 公开文件
+    let d = (EV_DATA && EV_DATA.hype) ? EV_DATA.hype : null;
+    if (!d) { if(!HYPE_DATA) root.innerHTML = '<div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded"><h3 class="font-bold text-yellow-900">⚠ 炒作脉络数据生成中</h3><p class="text-sm text-yellow-700 mt-1">近 2 个月事件正在回填, 稍后自动刷新.</p></div>'; return; }
     HYPE_DATA = d; evRenderHype(d);
 }
 let HYPE_THREADS = [];

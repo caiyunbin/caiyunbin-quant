@@ -11,7 +11,7 @@
     <script src="assets/activity.js"></script>
     <script src="assets/compliance.js"></script>
     <script src="assets/nav.js"></script>
-    <script>requireAuth();</script>
+    <script src="assets/paywall.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 <script>renderNav(false);</script>
@@ -163,9 +163,12 @@ async function loadJSON(path) {
 
 (async function main() {
     let latest = null, eq_curves = null;
-    try { latest = await loadJSON("data/latest.json"); }
-    catch (e) { document.getElementById('meta-version').innerHTML = '⚠ 数据尚未生成. 等待本地 export 脚本首次运行.'; return; }
-    try { eq_curves = await loadJSON("data/equity_curves.json"); } catch (e) {}
+    const me = await pwMe();
+    pwUserBar(me);
+    const sig = await pwSignals(me).catch(_=>null);
+    latest = sig ? sig.data : null;
+    if (!latest) { document.getElementById('meta-version').innerHTML = '⚠ 数据尚未生成. 等待本地 export 脚本首次运行.'; return; }
+    try { eq_curves = await pwGet("/equity"); } catch (e) {}
 
     // Header
     document.getElementById('meta-version').textContent = latest.meta.version + ' · 每日 19:00 自动更新';
