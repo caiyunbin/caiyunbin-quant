@@ -201,11 +201,13 @@ async function loadJSON(p) {
     if (m.sigKey && data.daily_signals && data.daily_signals[m.sigKey]) {
         const s = data.daily_signals[m.sigKey];
         const isEmpty = (!s.holding||s.holding.length===0)&&(!s.buy_today||s.buy_today.length===0)&&(!s.sell_today||s.sell_today.length===0);
+        // ⭐ 防御观望: 无持仓 = 策略按纪律不建仓, buy_today 仅为候选观察池 (与防御空仓状态诚实一致)
+        const flat = (!s.holding||s.holding.length===0);
 
-        if (isEmpty) {
-            sigHtml += `<div class="bg-gray-50 rounded-lg p-6 text-center mb-4">
-                <p class="text-base text-gray-600">💤 当前观望</p>
-                <p class="text-xs text-gray-500 mt-2">当前无活跃信号，等待新机会出现</p>
+        if (flat) {
+            sigHtml += `<div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
+                <p class="text-sm text-amber-800 font-bold">💤 策略当前防御性空仓</p>
+                <p class="text-xs text-amber-700 mt-1">${(s.buy_today&&s.buy_today.length>0) ? '下方为候选观察池，策略按纪律暂不建仓；待大盘择时转好，策略会自动恢复建仓，届时此处显示持仓与离场信号。' : '当前无持仓、无候选，空仓等待机会出现。'}</p>
             </div>`;
         }
 
@@ -239,13 +241,14 @@ async function loadJSON(p) {
         sigHtml += '</div>';
 
         // 买入
-        sigHtml += '<div class="bg-green-50 rounded-lg p-4"><h3 class="text-sm font-bold text-green-900 mb-3">🎯 明日重磅信号 (' + Math.min(3,(s.buy_today||[]).length) + ') · 候选 (' + Math.max(0,(s.buy_today||[]).length-3) + ')</h3>';
+        sigHtml += '<div class="' + (flat?'bg-gray-50':'bg-green-50') + ' rounded-lg p-4"><h3 class="text-sm font-bold ' + (flat?'text-gray-700':'text-green-900') + ' mb-3">' + (flat ? '📋 候选观察池 (' + (s.buy_today||[]).length + ') · 暂不建仓' : '🎯 明日重磅信号 (' + Math.min(3,(s.buy_today||[]).length) + ') · 候选 (' + Math.max(0,(s.buy_today||[]).length-3) + ')') + '</h3>';
         if (s.buy_today && s.buy_today.length > 0) {
             sigHtml += '<ul class="space-y-2">' + s.buy_today.slice(0,8).map((item,i) => {
                 const ts = (typeof item === 'string') ? item : (item.ts_code || '?');
                 const p_up = (typeof item === 'object' && item.p_up != null) ? item.p_up : null;
                 let star = '';
-                if (i===0) star = '<span class="text-yellow-500 text-lg">★★★</span><span class="text-xs text-gray-400 ml-1">重磅</span>';
+                if (flat) star = '<span class="text-xs text-gray-400">观察 ' + (i+1) + '</span>';
+                else if (i===0) star = '<span class="text-yellow-500 text-lg">★★★</span><span class="text-xs text-gray-400 ml-1">重磅</span>';
                 else if (i===1) star = '<span class="text-yellow-500">★★</span>';
                 else if (i===2) star = '<span class="text-yellow-500">★</span>';
                 else star = '<span class="text-xs text-gray-400">候选</span>';

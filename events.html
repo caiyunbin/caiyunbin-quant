@@ -674,8 +674,8 @@ document.querySelectorAll('#events-subtabs .event-subtab-btn').forEach(btn => {
 evLoadAndRender();
 evLoadHype();
 
-// 60s 原地刷新数据 (不整页 reload, 保持当前 tab / 当前那一天 / 滚动位置)
-setInterval(() => { evLoadAndRender(); evLoadHype(); }, 60000);
+// ⭐ 10min 原地刷新 (事件后端每小时才更新一次, 60s 过频且会造成轻微闪烁; 原地 innerHTML 替换, 不整页 reload, 保持当前 tab / 当前那一天 / 滚动位置)
+setInterval(() => { evLoadAndRender(); evLoadHype(); }, 600000);
 </script>
 </body>
 </html>
