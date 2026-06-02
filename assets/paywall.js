@@ -43,12 +43,16 @@ async function pwSignals(me) {
   return { data: await pwGet("/preview"), locked: true };
 }
 
-// 取事件数据
+// 取事件数据 (统一 preview/full 结构 → {weekly, days, meta, hype, locked})
 async function pwEvents(me) {
   if (me && me.is_paid) {
-    try { return { data: await pwGet("/events"), locked: false }; } catch (e) {}
+    try {
+      const r = await pwGet("/events");
+      return { weekly: r.events.weekly, days: r.events.days || [], meta: r.events.meta, hype: r.hype, locked: false };
+    } catch (e) {}
   }
-  return { data: await pwGet("/events/preview"), locked: true };
+  const p = await pwGet("/events/preview");
+  return { weekly: p.weekly, days: p.days || [], meta: p.meta, hype: null, days_count: p.days_count, locked: true };
 }
 
 // 锁定卡片 (替代被遮的信号明细)

@@ -10,7 +10,7 @@
     <script src="assets/activity.js"></script>
     <script src="assets/compliance.js"></script>
     <script src="assets/nav.js"></script>
-    <script>requireAuth();</script>
+    <script src="assets/paywall.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 <script>renderNav(false);</script>
@@ -67,9 +67,12 @@ async function loadJSON(p) {
 }
 
 (async function () {
-    let latest = null;
-    try { latest = await loadJSON("data/latest.json"); }
-    catch (e) {
+    const me = await pwMe();
+    pwUserBar(me);
+    const sig = await pwSignals(me).catch(_=>null);
+    const latest = sig ? sig.data : null;
+    const LOCKED = sig ? sig.locked : true;
+    if (!latest) {
         document.getElementById('strategy-cards').innerHTML =
             '<div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded"><h3 class="font-bold text-yellow-900">⚠ 数据尚未生成</h3></div>';
         return;
@@ -84,6 +87,18 @@ async function loadJSON(p) {
     for (const strat of Object.keys(STRATEGY_INFO)) {
         const info = STRATEGY_INFO[strat];
         const s = signals[strat] || {};
+        // 付费墙: 未付费 → 每个策略显示锁定卡片
+        if (LOCKED) {
+            outerHtml += `<div class="bg-white shadow rounded-lg p-4 sm:p-6 mb-5">
+                <h2 class="text-lg font-bold text-gray-800 mb-3">${info.icon||''} ${strat}</h2>
+                ${pwLockCard({title:"🔒 完整信号已锁定", sub:"明日买入 · 持仓 · 卖出 — 付费会员可见", counts:[
+                    {label:"明日买入", n:(s.buy_today_count ?? (s.buy_today||[]).length)},
+                    {label:"持仓", n:(s.holding_count ?? 0)},
+                    {label:"卖出", n:(s.sell_today_count ?? 0)},
+                ]})}
+            </div>`;
+            continue;
+        }
         const isEmpty = (!s.holding || s.holding.length===0) && (!s.buy_today || s.buy_today.length===0) && (!s.sell_today || s.sell_today.length===0);
 
         let buyHtml = '';
