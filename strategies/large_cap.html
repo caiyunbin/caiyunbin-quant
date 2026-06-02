@@ -11,7 +11,7 @@
     <script src="../assets/activity.js"></script>
     <script src="../assets/compliance.js"></script>
     <script src="../assets/nav.js"></script>
-    <script>requireAuth();</script>
+    <script src="../assets/paywall.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 <script>renderNav(true);</script>
@@ -121,8 +121,12 @@ async function loadJSON(p) {
 }
 
 (async function () {
-    const data = await loadJSON("../data/latest.json").catch(_=>null);
-    const eq = await loadJSON("../data/equity_curves.json").catch(_=>null);
+    const me = await pwMe();
+    pwUserBar(me);
+    const sig = await pwSignals(me).catch(_=>null);
+    const data = sig ? sig.data : null;
+    const LOCKED = sig ? sig.locked : true;
+    const eq = await pwGet("/equity").catch(_=>null);
     if (!data) { document.getElementById('strat-subtitle').textContent = "⚠ 数据尚未生成"; return; }
 
     const m = META_MAP[STRAT_KEY];
@@ -184,6 +188,21 @@ async function loadJSON(p) {
 
     // 今日信号
     let sigHtml = '';
+    // 付费墙: 未付费 → 锁定卡片 (业绩/曲线已露出, 信号明细遮盖)
+    const _sd = (m.sigKey && data.daily_signals) ? data.daily_signals[m.sigKey] : null;
+    if (LOCKED && (_sd || (STRAT_KEY === 'ETF.honest' && data.etf_state))) {
+        const counts = _sd ? [
+            {label:"明日买入", n: (_sd.buy_today_count ?? (_sd.buy_today||[]).length)},
+            {label:"当前持仓", n: (_sd.holding_count ?? 0)},
+            {label:"明日卖出", n: (_sd.sell_today_count ?? 0)},
+        ] : [];
+        document.getElementById('strat-signals').innerHTML = pwLockCard({
+            title: "🔒 完整信号已锁定",
+            sub: "明日买入名单 · 持仓 · 卖出 · 历史明细 — 付费会员可见",
+            counts,
+        });
+        return;
+    }
     if (m.sigKey && data.daily_signals && data.daily_signals[m.sigKey]) {
         const s = data.daily_signals[m.sigKey];
         const isEmpty = (!s.holding||s.holding.length===0)&&(!s.buy_today||s.buy_today.length===0)&&(!s.sell_today||s.sell_today.length===0);
