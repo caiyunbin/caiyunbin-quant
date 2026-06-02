@@ -1,870 +1,211 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理后台 · 多子策略决策引擎</title>
-    <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css">
-    <script src="assets/auth.js"></script>
-    <script src="assets/activity.js"></script>
-    <script src="assets/compliance.js"></script>
-    <script src="assets/admin_api.js"></script>
-    <script src="assets/distribution.js"></script>
-    <script src="assets/pat_wizard.js"></script>
-    <script src="assets/nav.js"></script>
-    <script>requireAdmin();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>caiman's quant · 管理后台</title>
+<link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+<style>
+  body{background:#0f172a;color:#e2e8f0}
+  .card{background:#1e293b;border:1px solid #334155}
+  input,select{background:#0f172a;border:1px solid #334155;color:#e2e8f0;border-radius:6px;padding:6px 10px}
+  button{cursor:pointer}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #334155;font-size:13px}
+  th{color:#94a3b8;font-weight:600}
+  .badge{padding:2px 8px;border-radius:999px;font-size:11px}
+  .b-paid{background:#064e3b;color:#6ee7b7}
+  .b-unpaid{background:#374151;color:#9ca3af}
+  .b-banned{background:#7f1d1d;color:#fca5a5}
+  .btn-p{background:#4f46e5;color:#fff;padding:6px 14px;border-radius:6px}
+  .btn-s{background:#334155;color:#e2e8f0;padding:4px 10px;border-radius:6px;font-size:12px}
+  .btn-d{background:#991b1b;color:#fff;padding:4px 10px;border-radius:6px;font-size:12px}
+</style>
 </head>
-<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
-<script>renderNav(false);</script>
+<body class="min-h-screen">
 
-<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 w-full">
-<div class="space-y-6">
-
-    <div class="bg-orange-50 border-l-4 border-orange-500 rounded-lg p-4 sm:p-6">
-        <h1 class="text-2xl sm:text-3xl font-bold text-orange-800 mb-2">⚙️ 管理后台</h1>
-        <p class="text-sm text-orange-700">含: GitHub PAT 配置、即时改账号/密码、ETF 逐用户开关、账号统计、Tushare 状态.</p>
-        <p class="text-xs text-orange-600 mt-1" id="admin-info"></p>
-        <p class="text-xs text-green-700 mt-1">🔓 <strong>管理员账号无设备数量限制</strong>: 任意多设备同时登录, 不算 2 设备绑定 (该限制仅对用户账号生效).</p>
-    </div>
-
-    <!-- ① GitHub PAT 配置 -->
-    <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-blue-800 mb-2">🔑 GitHub PAT 状态</h2>
-        <p class="text-xs text-blue-700 mb-3">首次进入时已自动弹出向导. 后续如需换 PAT, 点下方按钮重新打开向导.</p>
-        <div class="flex gap-2 flex-wrap items-center">
-            <button id="open-wizard" class="bg-orange-600 text-white px-5 py-2 rounded text-sm font-bold hover:bg-orange-700">🧙 重新打开配置向导</button>
-            <button id="test-pat" class="bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm font-medium hover:bg-gray-300">🔄 测试当前 PAT</button>
-            <button id="clear-pat" class="bg-red-500 text-white px-4 py-2 rounded text-sm font-medium hover:bg-red-600">🗑️ 清除 PAT</button>
-        </div>
-        <p id="pat-status" class="text-sm mt-3"></p>
-        <!-- 隐藏的输入框 (向导用) -->
-        <input type="hidden" id="pat-input">
-        <button id="save-pat" class="hidden"></button>
-    </div>
-
-    <!-- ② Tushare 状态告警 -->
-    <div id="tushare-alert" class="hidden bg-red-50 border-l-4 border-red-600 rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-red-800 mb-2">🚨 Tushare 接口异常</h2>
-        <div id="tushare-detail" class="text-sm text-red-700"></div>
-    </div>
-
-    <!-- ③ 改管理员账号 / 密码 -->
-    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-2">🔐 修改管理员账号 / 密码</h2>
-        <div id="pat-warning-admin" class="hidden bg-yellow-50 border border-yellow-300 rounded p-3 mb-4 text-sm text-yellow-800">
-            ⚠ <strong>请先在上方"GitHub PAT 配置"模块保存 PAT</strong>, 否则保存按钮无效. PAT 是让网页能改 GitHub 文件的钥匙, 仅本浏览器存一次.
-        </div>
-        <div id="pat-ok-admin" class="hidden bg-green-50 border border-green-300 rounded p-3 mb-4 text-sm text-green-800">
-            ✅ PAT 已配置, 可以直接保存. 流程: ① 填新密码 → ② 点"💾 保存" → ③ 立即生效 + 弹窗显示新账号密码 → ④ 截图保存.
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">新账号</label>
-                <input type="text" id="new-admin-user" class="w-full px-4 py-3 border border-gray-300 rounded-md font-mono text-base" placeholder="留空 = 账号不变, 仅改密码">
-                <p class="text-xs text-gray-400 mt-1">当前账号: <code class="bg-gray-100 px-1" id="cur-admin-user">-</code></p>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">新密码 <span class="text-red-500 text-xs">必填, 至少 8 位</span></label>
-                <div class="flex gap-1">
-                    <input type="text" id="new-admin-pwd" class="flex-1 px-4 py-3 border border-gray-300 rounded-md font-mono text-base" placeholder="例: AbCd1234EfGh">
-                    <button id="rand-admin-pwd" class="bg-gray-200 text-gray-700 px-3 rounded text-sm" title="随机生成 14 位强密码">🎲</button>
-                </div>
-                <p class="text-xs text-gray-400 mt-1">⚠ 点保存后立即生效, 旧密码失效. 务必先记下新密码.</p>
-            </div>
-        </div>
-        <button id="save-admin-cred" class="bg-orange-600 text-white px-8 py-3 rounded-md font-bold hover:bg-orange-700 disabled:opacity-40 disabled:cursor-not-allowed" disabled>💾 保存 (尚未配置 PAT)</button>
-        <span id="admin-cred-result" class="ml-3 text-sm"></span>
-    </div>
-
-    <!-- ④ 账号统计 -->
-    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">📊 账号池统计</h2>
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="acc-stats"></div>
-        <div class="mt-4">
-            <h3 class="text-sm font-bold text-gray-600 mb-2">用户账号有效期分布</h3>
-            <div class="grid grid-cols-3 md:grid-cols-6 gap-2 text-xs" id="acc-groups"></div>
-        </div>
-    </div>
-
-
-    <!-- 解密提示卡 (没解密成功时显示) -->
-    <div id="decrypt-card" class="hidden bg-yellow-50 border-l-4 border-yellow-500 rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-yellow-800 mb-2">🔓 解锁账号明文 (一次即可)</h2>
-        <p class="text-sm text-yellow-700 mb-3">
-            账号列表显示"解密失败"是因为本浏览器还没解密过. 输入你的 <strong>管理员密码</strong>, 用它解锁本机加密的账号清单.<br>
-            解密后**永久保存**在本浏览器, 后续无感. 退出登录时清空.
-        </p>
-        <div class="flex gap-2 flex-wrap items-center">
-            <input type="password" id="decrypt-pwd" class="flex-1 min-w-[200px] px-4 py-3 border border-gray-300 rounded-md font-mono" placeholder="输入管理员密码">
-            <button id="decrypt-btn" class="bg-yellow-600 text-white px-5 py-3 rounded font-bold hover:bg-yellow-700">🔓 解锁</button>
-        </div>
-        <p id="decrypt-status" class="text-sm mt-3"></p>
-    </div>
-
-    <!-- ⑥ 分发统计 -->
-    <div class="bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-purple-800 mb-3">📊 账号分发情况</h2>
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="dist-stats"></div>
-        <div class="mt-4 flex gap-2 flex-wrap">
-            <button id="export-all-csv" class="bg-purple-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-purple-700">📥 全部账号导出 CSV</button>
-            <button id="clear-all-notes" class="bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm">🗑️ 清空分发备注</button>
-        </div>
-    </div>
-
-    <!-- 用户行为统计 -->
-    <div class="bg-gradient-to-r from-cyan-50 to-blue-50 border border-cyan-200 rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-cyan-800 mb-2">📈 用户行为统计</h2>
-        <p class="text-xs text-cyan-700 mb-3">
-            <strong>本地模式</strong> (默认): 只能看到 <strong>当前浏览器</strong> 登录过的账号. 用户在自己浏览器记录, 你看不到他们的统计.<br>
-            <strong>全局模式</strong> (需配置 Cloudflare Worker): 所有用户上报到一个集中统计后端, admin 拉取全量. 部署指南见后文.
-        </p>
-        <div id="activity-stats-mode" class="mb-3"></div>
-        <div id="activity-table-wrap" class="scroll-x"></div>
-        <div class="mt-3 flex gap-2 flex-wrap">
-            <button id="act-refresh" class="bg-cyan-600 text-white px-4 py-2 rounded text-xs hover:bg-cyan-700">🔄 刷新</button>
-            <button id="act-clear" class="bg-gray-200 text-gray-700 px-4 py-2 rounded text-xs">🗑️ 清空本机记录</button>
-        </div>
-    </div>
-
-    <!-- ⑦ 账号列表 (分时长模块 + 分发工具) -->
-    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">📜 账号列表 (按有效期分组)</h2>
-        <p class="text-xs text-gray-500 mb-3">每组用不同颜色边框区分. 每行右侧 <strong>📋 复制</strong> · <strong>🏷️ 标记</strong> · <strong>🖼️ 卡片</strong> 三个按钮.</p>
-
-        <div class="mb-3 flex gap-2 flex-wrap">
-            <button id="batch-etf-on" class="bg-green-600 text-white px-3 py-1.5 rounded text-xs">批量: 所有用户 ETF 开启</button>
-            <button id="batch-etf-off" class="bg-red-500 text-white px-3 py-1.5 rounded text-xs">批量: 所有用户 ETF 关闭</button>
-            <span id="batch-etf-status" class="text-sm self-center"></span>
-        </div>
-
-        <div id="acc-groups-container" class="space-y-5"></div>
-
-        <p class="text-xs text-orange-600 mt-3">⚠ admin 切换 ETF 通过 GitHub API 即时生效, 但 manage_accounts.py sync 会回滚. 切换后请同步本机:
-            <code class="bg-gray-100 px-1">python v26_production/manage_accounts.py pull-remote-etf</code></p>
-    </div>
-
+<div id="loginView" class="hidden min-h-screen flex items-center justify-center">
+  <div class="card rounded-xl p-8 w-96">
+    <h1 class="text-xl font-bold mb-1">🔐 管理后台</h1>
+    <p class="text-sm text-gray-400 mb-5">caiman's quant system</p>
+    <input id="li_email" type="email" placeholder="管理员邮箱" class="w-full mb-3">
+    <input id="li_pw" type="password" placeholder="密码" class="w-full mb-4">
+    <button onclick="doLogin()" class="btn-p w-full">登录</button>
+    <p id="li_err" class="text-red-400 text-sm mt-3"></p>
+  </div>
 </div>
-</main>
 
-<script>renderFooter();</script>
+<div id="adminView" class="hidden max-w-7xl mx-auto px-4 py-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">📊 管理后台</h1>
+    <div class="text-sm text-gray-400">
+      <span id="who"></span>
+      <button onclick="doLogout()" class="btn-s ml-3">退出</button>
+    </div>
+  </div>
+
+  <div id="stats" class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6"></div>
+
+  <div class="card rounded-xl p-5 mb-6">
+    <h2 class="font-bold mb-3">➕ 开通 / 续费</h2>
+    <div class="flex flex-wrap gap-3 items-end">
+      <div><label class="text-xs text-gray-400 block mb-1">用户邮箱</label><input id="ac_email" type="email" placeholder="user@x.com"></div>
+      <div><label class="text-xs text-gray-400 block mb-1">档位</label>
+        <select id="ac_tier">
+          <option value="month">月 (30天 ¥99)</option>
+          <option value="quarter" selected>季 (90天 ¥266)</option>
+          <option value="year">年 (360天 ¥799)</option>
+        </select>
+      </div>
+      <div><label class="text-xs text-gray-400 block mb-1">实收金额</label><input id="ac_amount" type="number" placeholder="266" style="width:90px"></div>
+      <div><label class="text-xs text-gray-400 block mb-1">收款备注/流水号</label><input id="ac_from" placeholder="微信 #..."></div>
+      <button onclick="doActivate()" class="btn-p">开通</button>
+      <span id="ac_msg" class="text-sm"></span>
+    </div>
+  </div>
+
+  <div class="card rounded-xl p-5 mb-6">
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="font-bold">👥 用户管理</h2>
+      <div class="flex gap-2">
+        <input id="u_q" placeholder="搜邮箱" style="width:160px" onkeydown="if(event.key==='Enter')loadUsers()">
+        <select id="u_status" onchange="loadUsers()">
+          <option value="">全部</option>
+          <option value="paid">已付费</option>
+          <option value="unpaid">未付费</option>
+          <option value="expired">已过期</option>
+          <option value="banned">封禁</option>
+        </select>
+        <select id="u_sort" onchange="loadUsers()">
+          <option value="created">按注册时间</option>
+          <option value="expiring">按即将到期</option>
+          <option value="login">按最后登录</option>
+        </select>
+        <button onclick="loadUsers()" class="btn-s">刷新</button>
+      </div>
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>邮箱</th><th>状态</th><th>到期</th><th>剩余</th><th>设备</th><th>注册</th><th>最后登录</th><th>操作</th></tr></thead>
+        <tbody id="u_tbody"></tbody>
+      </table>
+    </div>
+    <p id="u_count" class="text-xs text-gray-500 mt-2"></p>
+  </div>
+
+  <div class="card rounded-xl p-5">
+    <h2 class="font-bold mb-3">💰 付费流水</h2>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>时间</th><th>邮箱</th><th>操作</th><th>档</th><th>天数</th><th>金额</th><th>收款</th><th>操作人</th></tr></thead>
+        <tbody id="p_tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 <script>
-// 用 location.origin 拼绝对 URL, 兼容 /admin.html 和 /admin 两种路径
-function _absUrl(rel) {
-    // 移除 admin.html / admin 等 last segment, 拼 data/...
-    var path = location.pathname.replace(/[^/]*$/, '');  // 取目录部分
-    return location.origin + path + rel;
+const API = "/api";
+async function api(path, opts={}){
+  const r = await fetch(API+path, {credentials:"include", headers:{"Content-Type":"application/json"}, ...opts});
+  if(!r.ok){ const e = await r.json().catch(()=>({detail:r.status})); throw new Error(e.detail||r.status); }
+  return r.json();
+}
+function fmtDate(s){ return s ? s.slice(0,10) : "—"; }
+function fmtDateTime(s){ return s ? s.slice(0,16).replace("T"," ") : "—"; }
+
+async function boot(){
+  try{
+    const me = await api("/me");
+    if(me.logged_in && me.role==="admin"){ showAdmin(me); }
+    else { showLogin(); }
+  }catch(e){ showLogin(); }
+}
+function showLogin(){ document.getElementById("loginView").classList.remove("hidden"); document.getElementById("adminView").classList.add("hidden"); }
+function showAdmin(me){
+  document.getElementById("loginView").classList.add("hidden");
+  document.getElementById("adminView").classList.remove("hidden");
+  document.getElementById("who").textContent = me.email;
+  loadStats(); loadUsers(); loadPayments();
+}
+async function doLogin(){
+  const email = document.getElementById("li_email").value.trim();
+  const password = document.getElementById("li_pw").value;
+  try{
+    await api("/login", {method:"POST", body:JSON.stringify({email,password})});
+    const me = await api("/me");
+    if(me.role!=="admin"){ document.getElementById("li_err").textContent="该账号不是管理员"; return; }
+    showAdmin(me);
+  }catch(e){ document.getElementById("li_err").textContent = "登录失败: "+e.message; }
+}
+async function doLogout(){ await api("/logout",{method:"POST"}); location.reload(); }
+
+async function loadStats(){
+  const s = await api("/admin/stats");
+  const cards = [
+    ["总用户", s.total_users, "#60a5fa"],
+    ["付费会员", s.paid_users, "#34d399"],
+    ["7天内到期", s.expiring_7d, "#fbbf24"],
+    ["今日新增", s.new_today, "#a78bfa"],
+    ["累计收入", "¥"+(s.revenue_total||0), "#f472b6"],
+    ["本月收入", "¥"+(s.revenue_month||0), "#22d3ee"],
+  ];
+  document.getElementById("stats").innerHTML = cards.map(([t,v,c])=>
+    `<div class="card rounded-lg p-3"><div class="text-xs text-gray-400">${t}</div><div class="text-2xl font-bold" style="color:${c}">${v}</div></div>`
+  ).join("");
 }
 
-async function loadAdminMeta() {
-    var url = _absUrl("data/admin_meta.json") + "?t=" + Date.now();
-    console.log('[admin] fetching:', url);
-    try {
-        var r = await fetch(url, {cache: "no-store"});
-        console.log('[admin] fetch response:', r.status, r.ok);
-        if (!r.ok) {
-            console.warn('[admin] non-200:', r.status, await r.text());
-            return null;
-        }
-        return await r.json();
-    } catch (e) {
-        console.error('[admin] fetch error:', e);
-        return null;
-    }
-}
-async function loadTushareStatus() {
-    try {
-        var r = await fetch(_absUrl("data/tushare_status.json") + "?t=" + Date.now(), {cache: "no-store"});
-        if (!r.ok) return null; return await r.json();
-    } catch (e) { return null; }
-}
-
-function showStatus(elId, msg, type) {
-    const $el = document.getElementById(elId);
-    $el.textContent = msg;
-    $el.className = type === 'ok' ? 'text-green-600 text-sm' :
-                    type === 'err' ? 'text-red-600 text-sm' :
-                    type === 'warn' ? 'text-yellow-600 text-sm' : 'text-gray-600 text-sm';
+async function loadUsers(){
+  const q = document.getElementById("u_q").value.trim();
+  const status = document.getElementById("u_status").value;
+  const sort = document.getElementById("u_sort").value;
+  const d = await api(`/admin/users?q=${encodeURIComponent(q)}&status=${status}&sort=${sort}`);
+  document.getElementById("u_count").textContent = `共 ${d.count} 个用户`;
+  document.getElementById("u_tbody").innerHTML = d.users.map(u=>{
+    let badge = u.status==="banned" ? '<span class="badge b-banned">封禁</span>'
+      : (u.paid_until && new Date(u.paid_until)>new Date()) ? '<span class="badge b-paid">付费</span>'
+      : '<span class="badge b-unpaid">未付费</span>';
+    return `<tr>
+      <td>${u.email}</td><td>${badge}</td><td>${fmtDate(u.paid_until)}</td>
+      <td>${u.days_left||0}天</td><td>${u.devices}</td>
+      <td>${fmtDate(u.created_at)}</td><td>${fmtDateTime(u.last_login)}</td>
+      <td>
+        <button class="btn-s" onclick="quickExtend('${u.email}')">+30</button>
+        <button class="btn-s" onclick="doKick('${u.email}')">踢</button>
+        <button class="btn-d" onclick="doRevoke('${u.email}')">撤</button>
+        <button class="btn-d" onclick="doBan('${u.email}', ${u.status==='banned'?'false':'true'})">${u.status==='banned'?'解封':'封'}</button>
+      </td></tr>`;
+  }).join("");
 }
 
-// === PAT 状态显示 ===
-function refreshPATStatus() {
-    if (adminHasPAT()) {
-        const pat = adminGetPAT();
-        showStatus('pat-status', '✅ 已配置 PAT (' + pat.slice(0, 7) + '...' + pat.slice(-4) + ') · 后台所有操作可即时生效', 'ok');
-    } else {
-        showStatus('pat-status', '⚠ 未配置 PAT, 点 "🧙 重新打开配置向导" 1 分钟搞定', 'warn');
-    }
-}
-(function () {
-    refreshPATStatus();
-    document.getElementById('open-wizard').addEventListener('click', () => showPATWizard());
-    document.getElementById('test-pat').addEventListener('click', async () => {
-        if (!adminHasPAT()) { showStatus('pat-status', '⚠ 还没配置 PAT, 请先用向导配置', 'warn'); return; }
-        showStatus('pat-status', '⏳ 测试中...', 'info');
-        const r = await adminTestPAT();
-        if (r.ok) showStatus('pat-status', '✅ PAT 正常 (可读 auth_pool.json)', 'ok');
-        else showStatus('pat-status', '❌ ' + r.msg, 'err');
-    });
-    document.getElementById('clear-pat').addEventListener('click', () => {
-        if (confirm('确定清除已保存的 PAT? 之后所有 toggle/改密码会失效.')) {
-            adminClearPAT();
-            refreshPATStatus();
-            if (typeof updateChangeCredUI === 'function') updateChangeCredUI();
-        }
-    });
-})();
-
-// === 改管理员账号/密码 ===
-function updateChangeCredUI() {
-    const auth = getAuthInfo();
-    const $curU = document.getElementById('cur-admin-user');
-    if ($curU && auth) $curU.textContent = auth.user;
-
-    const has = adminHasPAT();
-    const $warn = document.getElementById('pat-warning-admin');
-    const $ok   = document.getElementById('pat-ok-admin');
-    const $btn  = document.getElementById('save-admin-cred');
-    if (has) {
-        $warn && $warn.classList.add('hidden');
-        $ok && $ok.classList.remove('hidden');
-        if ($btn) { $btn.disabled = false; $btn.textContent = '💾 保存'; }
-    } else {
-        $warn && $warn.classList.remove('hidden');
-        $ok && $ok.classList.add('hidden');
-        if ($btn) { $btn.disabled = true; $btn.textContent = '💾 保存 (尚未配置 PAT)'; }
-    }
+async function loadPayments(){
+  const d = await api("/admin/payments?limit=50");
+  document.getElementById("p_tbody").innerHTML = d.payments.map(p=>
+    `<tr><td>${fmtDateTime(p.activated_at)}</td><td>${p.email}</td><td>${p.action}</td>
+     <td>${p.tier||"—"}</td><td>${p.days||"—"}</td><td>${p.amount!=null?"¥"+p.amount:"—"}</td>
+     <td>${p.paid_from||"—"}</td><td>${p.activated_by||"—"}</td></tr>`
+  ).join("");
 }
 
-(function () {
-    const $u = document.getElementById('new-admin-user');
-    const $p = document.getElementById('new-admin-pwd');
-    document.getElementById('rand-admin-pwd').addEventListener('click', () => {
-        const cs = 'abcdefghjkmnpqrstvwxyzABCDEFGHJKLMNPQRSTVWXYZ23456789';
-        let pwd = '';
-        for (let i = 0; i < 14; i++) pwd += cs[Math.floor(Math.random() * cs.length)];
-        $p.value = pwd;
-    });
-    document.getElementById('save-admin-cred').addEventListener('click', async () => {
-        if (!adminHasPAT()) { showStatus('admin-cred-result', '⚠ 请先配置 PAT', 'err'); return; }
-        const newUser = $u.value.trim();
-        const newPwd  = $p.value.trim();
-        if (!newPwd || newPwd.length < 8) { showStatus('admin-cred-result', '⚠ 新密码至少 8 位', 'err'); return; }
-        if (!confirm(`即将保存:\n  ${newUser ? '账号: ' + newUser : '账号: 不变'}\n  密码: ${newPwd}\n\n保存后旧密码立即失效. 已记下新密码?`)) return;
-        showStatus('admin-cred-result', '⏳ 保存中...', 'info');
-        try {
-            const r = await adminChangeAccount(newUser, newPwd);
-            showStatus('admin-cred-result', `✅ 已保存`, 'ok');
-            alert(`✅ 已生效, 下次登录用:\n\n账号: ${r.user}\n密码: ${newPwd}\n到期: ${r.expire}\n\n截图保存! 当前浏览器登录态已延续, 不会被踢出.`);
-            $u.value = ''; $p.value = '';
-            // 立即刷新页面顶部的 admin 信息
-            updateChangeCredUI();
-            const $info = document.getElementById('admin-info');
-            if ($info) $info.textContent = `当前登录: ${r.user} (管理员) · 凭证有效期至 ${r.expire}`;
-        } catch (e) {
-            showStatus('admin-cred-result', '❌ ' + e.message, 'err');
-        }
-    });
-})();
-
-// PAT 保存/清除时, 实时刷新改密码 UI 状态
-document.getElementById('save-pat').addEventListener('click', () => setTimeout(updateChangeCredUI, 50));
-document.getElementById('clear-pat').addEventListener('click', () => setTimeout(updateChangeCredUI, 50));
-// 页面打开时也刷一次
-updateChangeCredUI();
-
-// === 账号统计 + ETF 开关 ===
-// ⭐ 自动修复 localStorage 中残缺 role 字段 (从 auth_pool.json 反查)
-// 兼容 Safari 12+ — 避免使用 ?. 链式可选语法
-async function _autoFixAuthRole() {
-    var auth = getAuthInfo();
-    if (!auth) return null;
-    if (auth.role === 'admin') return auth;
-    try {
-        var r = await fetch("data/auth_pool.json?t=" + Date.now(), {cache: "no-store"});
-        if (!r.ok) return auth;
-        var pool = await r.json();
-        var roles = pool.roles || {};
-        var realRole = null;
-        var keys = Object.keys(roles);
-        for (var i = 0; i < keys.length; i++) {
-            if (keys[i].indexOf(auth.token) === 0) {
-                realRole = roles[keys[i]];
-                break;
-            }
-        }
-        if (realRole && realRole !== auth.role) {
-            var fixed = Object.assign({}, auth, { role: realRole });
-            localStorage.setItem("caiman_auth_2026", JSON.stringify(fixed));
-            console.log('[admin] auto-fix role: ' + auth.role + ' -> ' + realRole);
-            return fixed;
-        }
-    } catch (e) { console.warn('[admin] auto-fix role failed:', e); }
-    return auth;
+async function doActivate(){
+  const email = document.getElementById("ac_email").value.trim();
+  const tier = document.getElementById("ac_tier").value;
+  const amount = parseFloat(document.getElementById("ac_amount").value)||null;
+  const paid_from = document.getElementById("ac_from").value.trim();
+  const msg = document.getElementById("ac_msg");
+  if(!email){ msg.textContent="填邮箱"; msg.style.color="#fca5a5"; return; }
+  try{
+    const r = await api("/admin/activate",{method:"POST",body:JSON.stringify({email,tier,amount,paid_from})});
+    msg.textContent = `✅ ${email} +${r.added_days}天 → ${fmtDate(r.paid_until)}`; msg.style.color="#6ee7b7";
+    loadStats(); loadUsers(); loadPayments();
+  }catch(e){ msg.textContent="❌ "+e.message; msg.style.color="#fca5a5"; }
 }
+async function quickExtend(email){ try{ await api("/admin/extend",{method:"POST",body:JSON.stringify({email,days:30})}); loadUsers(); loadStats(); loadPayments(); }catch(e){alert(e.message);} }
+async function doRevoke(email){ if(!confirm("撤销 "+email+" 的会员?"))return; try{ await api("/admin/revoke",{method:"POST",body:JSON.stringify({email})}); loadUsers(); loadStats(); }catch(e){alert(e.message);} }
+async function doBan(email,ban){ if(!confirm((ban?"封禁":"解封")+" "+email+"?"))return; try{ await api("/admin/ban",{method:"POST",body:JSON.stringify({email,ban})}); loadUsers(); }catch(e){alert(e.message);} }
+async function doKick(email){ try{ await api("/admin/kick",{method:"POST",body:JSON.stringify({email})}); loadUsers(); }catch(e){alert(e.message);} }
 
-(async function () {
-    var _renderErr = function(msg) {
-        var el = document.getElementById('acc-stats');
-        if (el) el.innerHTML =
-            '<div class="col-span-5 bg-red-50 border border-red-300 rounded p-4 text-sm text-red-700">' + msg + '</div>';
-    };
-    // ⭐ 即使 auth 检查失败也尝试 render (admin_meta.json 是公开数据)
-    var auth = null;
-    try { auth = await _autoFixAuthRole(); } catch (e) { console.warn('[admin] _autoFixAuthRole error:', e); }
-    console.log('[admin] auth state:', auth);
-
-    // 渲染 admin-info (无 auth 时显示提示)
-    var $info = document.getElementById('admin-info');
-    if ($info) {
-        if (auth && auth.user) {
-            $info.textContent = '当前登录: ' + auth.user + ' (' +
-                (auth.role === 'admin' ? '管理员' : '角色:' + (auth.role || 'unknown')) +
-                ') · 设备 ' + ((auth.device || '').slice(0, 10)) + ' · 有效期至 ' + auth.expire;
-        } else {
-            $info.innerHTML = '⚠ 未检测到登录态, <a href="login.html" class="underline font-bold">重新登录</a>';
-        }
-    }
-
-    // PAT 向导
-    try { setTimeout(function() { showPATWizardIfNeeded(); }, 800); } catch(e) {}
-
-    var meta = await loadAdminMeta();
-    console.log('[admin] loadAdminMeta:', meta ? ('n_total=' + meta.n_total) : 'null');
-    if (!meta) {
-        // 最后兜底: 直接从 GitHub Pages 原站拉 (绝对 URL, 绕过任何 redirect/CDN 问题)
-        console.log('[admin] fallback: try absolute GitHub Pages URL');
-        try {
-            var r2 = await fetch("https://caiyunbin.github.io/caiyunbin-quant/data/admin_meta.json?t=" + Date.now(), {cache: "no-store"});
-            if (r2.ok) {
-                meta = await r2.json();
-                console.log('[admin] fallback OK: n_total=' + meta.n_total);
-            }
-        } catch (e) { console.warn('[admin] fallback failed:', e); }
-    }
-    if (!meta) {
-        // 详细诊断信息直接写到页面 (用户无需打开调试器)
-        var diagMsg = '<strong>⚠ 加载 admin_meta.json 失败</strong><br><br>';
-        diagMsg += '<div class="text-xs font-mono bg-white p-3 rounded mt-2 break-all">';
-        diagMsg += '🔍 当前页面 URL: <code>' + location.href + '</code><br>';
-        diagMsg += '🔍 域名: <code>' + location.host + '</code><br>';
-        diagMsg += '🔍 浏览器: <code>' + navigator.userAgent.slice(0, 80) + '</code><br>';
-        diagMsg += '🔍 登录态: <code>' + (auth ? (auth.user + ' / role=' + auth.role) : 'null') + '</code><br>';
-        diagMsg += '🔍 LocalStorage 大小: <code>' + (JSON.stringify(localStorage).length) + ' B</code><br>';
-        diagMsg += '</div>';
-        diagMsg += '<br><strong>👇 建议操作</strong>:<br>';
-        diagMsg += '1. 完全退出 Safari (Cmd+Q), 重开<br>';
-        diagMsg += '2. 直接访问 <a href="https://caiyunbin.github.io/caiyunbin-quant/login.html" class="underline font-bold">https://caiyunbin.github.io/caiyunbin-quant/login.html</a><br>';
-        diagMsg += '3. 重新登录 caiman / caiyunbin3344<br>';
-        diagMsg += '4. 然后 <a href="https://caiyunbin.github.io/caiyunbin-quant/admin.html" class="underline font-bold">点这里进 admin</a><br>';
-        diagMsg += '5. 如果还不行, 截图这段诊断信息给开发者';
-        _renderErr(diagMsg);
-        return;
-    }
-    // 即使 auth.role !== "admin" 也渲染 (admin_meta 是公开数据)
-    {
-        const stats = [
-            ['账号总数', meta.n_total, 'text-gray-700'],
-            ['有效账号', meta.n_active, 'text-green-600'],
-            ['管理员', meta.n_admin, 'text-orange-600'],
-            ['用户 (有效)', meta.n_user, 'text-indigo-600'],
-            ['已撤销/过期', (meta.n_revoked + meta.n_expired), 'text-red-500'],
-        ];
-        document.getElementById('acc-stats').innerHTML = stats.map(([k,v,c]) =>
-            `<div class="bg-gray-50 rounded p-3"><div class="text-xs text-gray-500">${k}</div><div class="text-xl font-bold ${c}">${v}</div></div>`
-        ).join('');
-        document.getElementById('acc-groups').innerHTML = Object.entries(meta.expire_groups || {}).map(([k,v]) =>
-            `<div class="bg-blue-50 rounded p-2 text-center"><div class="text-gray-600">${k}</div><div class="text-base font-bold text-indigo-600">${v}</div></div>`
-        ).join('');
-
-        renderAccGroups(meta.accounts);
-    }
-
-    // 批量 ETF
-    document.getElementById('batch-etf-on').addEventListener('click', async () => {
-        if (!adminHasPAT()) { alert("请先配置 PAT"); return; }
-        if (!confirm("确定要给所有用户账号开启 ETF 模块?")) return;
-        showStatus('batch-etf-status', '⏳ 处理中...', 'info');
-        try {
-            const cnt = await adminBatchEtf(true);
-            showStatus('batch-etf-status', `✅ 已开启 ${cnt} 个用户的 ETF`, 'ok');
-            setTimeout(() => location.reload(), 1500);
-        } catch (e) { showStatus('batch-etf-status', '❌ ' + e.message, 'err'); }
-    });
-    document.getElementById('batch-etf-off').addEventListener('click', async () => {
-        if (!adminHasPAT()) { alert("请先配置 PAT"); return; }
-        if (!confirm("确定要关闭所有用户的 ETF 模块?")) return;
-        showStatus('batch-etf-status', '⏳ 处理中...', 'info');
-        try {
-            const cnt = await adminBatchEtf(false);
-            showStatus('batch-etf-status', `✅ 已关闭 ${cnt} 个用户的 ETF`, 'ok');
-            setTimeout(() => location.reload(), 1500);
-        } catch (e) { showStatus('batch-etf-status', '❌ ' + e.message, 'err'); }
-    });
-
-    // Tushare 状态
-    const tus = await loadTushareStatus();
-    if (tus && tus.status === 'error') {
-        document.getElementById('tushare-alert').classList.remove('hidden');
-        document.getElementById('tushare-detail').innerHTML = `
-            <p><strong>状态:</strong> ${tus.message || 'API 调用失败'}</p>
-            <p><strong>最后检查:</strong> ${tus.checked_at || '-'}</p>
-            <p class="text-xs mt-2">请检查 Tushare 积分 / token, 必要时在 v26_production/stock_data_daily_update.py 更新.</p>
-        `;
-    }
-})();
-
-// ============================================================
-// 明文账号 (自动解密自 admin_creds.enc.json, 仅 admin 登录后存 sessionStorage)
-// ============================================================
-function _findCredByHash(hashPrefix) {
-    const accs = getDecryptedAccounts();
-    if (!accs) return null;
-    return accs.find(a => a.hash_prefix === hashPrefix);
-}
-
-// ============================================================
-// 账号列表分组渲染
-// ============================================================
-function _classifyAccount(a) {
-    if (a.role === 'admin') return 'admin';
-    if (a.revoked) return 'revoked';
-    if (!a.active) return 'expired';
-    const n = (a.note || '').toLowerCase();
-    if (n.includes('7d'))    return '7d';
-    if (n.includes('30d'))   return '30d';
-    if (n.includes('90d'))   return '90d';
-    if (n.includes('180d'))  return '180d';
-    if (n.includes('365d'))  return '365d';
-    return 'other';
-}
-
-const GROUP_META = {
-    admin:   { label: '👑 管理员', color: 'bg-orange-50 border-orange-300', tag: 'bg-orange-100 text-orange-700' },
-    '7d':    { label: '🔴 7 天用户',   color: 'bg-red-50 border-red-300',         tag: 'bg-red-100 text-red-700' },
-    '30d':   { label: '🟠 30 天用户',  color: 'bg-yellow-50 border-yellow-300',   tag: 'bg-yellow-100 text-yellow-700' },
-    '90d':   { label: '🟡 90 天用户',  color: 'bg-amber-50 border-amber-300',     tag: 'bg-amber-100 text-amber-700' },
-    '180d':  { label: '🔵 180 天用户', color: 'bg-sky-50 border-sky-300',         tag: 'bg-sky-100 text-sky-700' },
-    '365d':  { label: '🟢 365 天用户', color: 'bg-green-50 border-green-300',     tag: 'bg-green-100 text-green-700' },
-    other:   { label: '⚪ 其他用户',   color: 'bg-gray-50 border-gray-300',       tag: 'bg-gray-100 text-gray-700' },
-    expired: { label: '⏰ 已过期',     color: 'bg-gray-100 border-gray-400',      tag: 'bg-gray-200 text-gray-600' },
-    revoked: { label: '🚫 已撤销',     color: 'bg-gray-100 border-red-400',       tag: 'bg-red-100 text-red-700' },
-};
-const GROUP_ORDER = ['admin', '7d', '30d', '90d', '180d', '365d', 'other', 'expired', 'revoked'];
-
-function renderAccGroups(accounts) {
-    window.__cached_meta_accounts = accounts;
-    const groups = {};
-    for (const a of accounts) {
-        const g = _classifyAccount(a);
-        if (!groups[g]) groups[g] = []; groups[g].push(a);
-    }
-    const $c = document.getElementById('acc-groups-container');
-    $c.innerHTML = '';
-    const hasCreds = !!getDecryptedAccounts();
-
-    // 分发统计
-    refreshDistStats(accounts);
-
-    for (const gKey of GROUP_ORDER) {
-        const list = groups[gKey];
-        if (!list || list.length === 0) continue;
-        const meta = GROUP_META[gKey];
-
-        // 计算该组已分发率
-        let groupDist = 0;
-        list.forEach(a => { if (a.role !== 'admin' && (function(){var _n=getNote(a.hash_prefix);return _n&&_n.distributed;})()) groupDist++; });
-
-        const section = document.createElement('div');
-        section.className = `border-l-4 ${meta.color} rounded p-3 sm:p-4`;
-        section.innerHTML = `
-            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
-                <h3 class="font-bold">
-                    <span>${meta.label} <span class="ml-2 text-xs ${meta.tag} px-2 py-0.5 rounded">${list.length} 个</span>
-                    ${gKey !== 'admin' && gKey !== 'revoked' && gKey !== 'expired'
-                      ? `<span class="ml-2 text-xs text-gray-500">已分发 ${groupDist}/${list.length}</span>` : ''}</span>
-                </h3>
-                <div class="flex gap-1">
-                    ${gKey !== 'admin' && hasCreds ? `
-                    <button class="group-copy bg-indigo-500 text-white px-3 py-1 rounded text-xs hover:bg-indigo-600" data-group="${gKey}">📋 复制本组</button>
-                    <button class="group-csv  bg-purple-500 text-white px-3 py-1 rounded text-xs hover:bg-purple-600" data-group="${gKey}">📥 CSV</button>
-                    ` : ''}
-                </div>
-            </div>
-            <div class="scroll-x">
-            <table class="min-w-full text-xs sm:text-sm">
-                <thead class="bg-white">
-                    <tr class="border-b">
-                        <th class="px-2 py-2 text-left">账号 / 密码</th>
-                        <th class="px-2 py-2 text-left">备注 / 接收人</th>
-                        <th class="px-2 py-2 text-left">到期</th>
-                        <th class="px-2 py-2 text-center">ETF</th>
-                        <th class="px-2 py-2 text-center">操作</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y" id="tbody-${gKey}"></tbody>
-            </table>
-            </div>
-        `;
-        $c.appendChild(section);
-
-        const tbody = section.querySelector(`#tbody-${gKey}`);
-        tbody.innerHTML = list.map(a => {
-            const cred = hasCreds ? _findCredByHash(a.hash_prefix) : null;
-            const note = getNote(a.hash_prefix);
-            const isDist = note && note.distributed;
-
-            const credCell = cred
-                ? `<div class="font-mono text-xs leading-tight">
-                    <div>账号: <span class="text-indigo-700 font-bold">${cred.user}</span></div>
-                    <div>密码: <span class="text-indigo-700 font-bold">${cred.password}</span></div>
-                   </div>`
-                : (hasCreds ? '<span class="text-gray-400 text-xs">未找到</span>'
-                            : '<span class="text-yellow-600 text-xs">解密失败, 请重新登录</span>');
-
-            const noteCell = `
-                <div class="text-xs">
-                    ${(note && note.recipient) ? `<div class="text-green-700">👤 <strong>${note.recipient}</strong></div>` : '<div class="text-gray-400">未分发</div>'}
-                    ${(note && note.note) ? `<div class="text-gray-600">📝 ${note.note}</div>` : ''}
-                    ${(note && note.distributed_at) ? `<div class="text-gray-400 text-[10px]">${note.distributed_at.slice(0, 10)}</div>` : ''}
-                </div>`;
-
-            let etfCell;
-            if (a.role === 'admin') {
-                etfCell = '<span class="text-xs text-gray-400">-</span>';
-            } else {
-                const on = a.etf_visible !== false;
-                etfCell = `<button class="etf-toggle px-2 py-1 rounded text-xs ${on ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700'}"
-                                data-hash="${a.hash_prefix}" data-next="${on ? '0' : '1'}">
-                    ${on ? '✅' : '🚫'}
-                </button>`;
-            }
-
-            const opCell = cred ? `
-                <div class="flex gap-1 justify-center flex-wrap">
-                    <button class="op-copy bg-indigo-600 text-white px-2 py-1 rounded text-xs hover:bg-indigo-700"
-                            data-user="${cred.user}" data-pwd="${cred.password}" data-expire="${a.expire}"
-                            title="复制账号密码">📋</button>
-                    <button class="op-note bg-yellow-500 text-white px-2 py-1 rounded text-xs hover:bg-yellow-600"
-                            data-hash="${a.hash_prefix}"
-                            title="标记分发">🏷️</button>
-                    <button class="op-card bg-purple-500 text-white px-2 py-1 rounded text-xs hover:bg-purple-600"
-                            data-user="${cred.user}" data-pwd="${cred.password}" data-expire="${a.expire}"
-                            title="下载卡片">🖼️</button>
-                    ${a.role !== 'admin' ? `
-                    <button class="op-extend bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700"
-                            data-hash="${a.hash_prefix}" data-group="${gKey}" data-expire="${a.expire}"
-                            title="续期账号">🔄</button>` : ''}
-                </div>` : (a.role !== 'admin' ? `
-                <button class="op-extend bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700"
-                        data-hash="${a.hash_prefix}" data-group="${gKey}" data-expire="${a.expire}"
-                        title="续期账号">🔄 续期</button>` : '<span class="text-gray-300 text-xs">-</span>');
-
-            return `<tr class="${isDist ? 'bg-green-50' : ''}">
-                <td class="px-2 py-2">${credCell}</td>
-                <td class="px-2 py-2">${noteCell}</td>
-                <td class="px-2 py-2 text-xs">${a.expire}</td>
-                <td class="px-2 py-2 text-center">${etfCell}</td>
-                <td class="px-2 py-2 text-center">${opCell}</td>
-            </tr>`;
-        }).join('');
-    }
-
-    bindOps();
-}
-
-function bindOps() {
-    // 单行复制
-    document.querySelectorAll('.op-copy').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const text = formatCredential(btn.dataset.user, btn.dataset.pwd, btn.dataset.expire);
-            navigator.clipboard.writeText(text).then(() => flashBtn(btn, '✅'));
-        });
-    });
-
-    // 单行 标记分发 (prompt 输入接收人)
-    document.querySelectorAll('.op-note').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const hash = btn.dataset.hash;
-            const cur = getNote(hash) || {};
-            const recipient = prompt(
-                '👤 接收人姓名 (留空 = 取消已分发标记):',
-                cur.recipient || ''
-            );
-            if (recipient === null) return;
-            if (recipient.trim() === '') {
-                clearNote(hash);
-            } else {
-                const extra = prompt('📝 额外备注 (可选, 直接回车跳过):', cur.note || '') || '';
-                markDistributed(hash, recipient.trim());
-                if (extra.trim()) setNote(hash, {note: extra.trim()});
-            }
-            // 刷新列表
-            renderAccGroups(window.__cached_meta_accounts);
-        });
-    });
-
-    // 单行 卡片下载
-    document.querySelectorAll('.op-card').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            const orig = btn.textContent;
-            btn.textContent = '⏳';
-            try {
-                await downloadCredCard(btn.dataset.user, btn.dataset.pwd, btn.dataset.expire);
-                btn.textContent = '✅';
-                setTimeout(() => btn.textContent = orig, 1200);
-            } catch (e) {
-                btn.textContent = orig;
-                alert('生成卡片失败: ' + e.message);
-            }
-        });
-    });
-
-    // 组级复制
-    document.querySelectorAll('.group-copy').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const gKey = btn.dataset.group;
-            const accs = (window.__cached_meta_accounts || []).filter(a => _classifyAccount(a) === gKey);
-            const rows = [];
-            for (const a of accs) {
-                const cred = _findCredByHash(a.hash_prefix);
-                if (cred) rows.push({user: cred.user, password: cred.password, expire: a.expire});
-            }
-            if (rows.length === 0) { alert('该组无可复制账号 (明文未解密?)'); return; }
-            navigator.clipboard.writeText(formatCredentialList(rows)).then(() => {
-                flashBtn(btn, `✅ 已复制 ${rows.length} 个`);
-            });
-        });
-    });
-
-    // 组级 CSV
-    document.querySelectorAll('.group-csv').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const gKey = btn.dataset.group;
-            const accs = (window.__cached_meta_accounts || []).filter(a => _classifyAccount(a) === gKey);
-            const rows = [];
-            for (const a of accs) {
-                const cred = _findCredByHash(a.hash_prefix);
-                if (cred) rows.push({...cred, hash_prefix: a.hash_prefix, expire: a.expire, created: a.created});
-            }
-            if (rows.length === 0) { alert('该组无可导出账号'); return; }
-            downloadCSV(`accounts_${gKey}_${new Date().toISOString().slice(0,10)}.csv`, generateCSV(rows));
-        });
-    });
-
-    // 续期按钮
-    document.querySelectorAll('.op-extend').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            if (!adminHasPAT()) { alert('请先配置 GitHub PAT (左侧"密钥配置")'); return; }
-            const hash    = btn.dataset.hash;
-            const gKey    = btn.dataset.group;     // 用作默认续期周期
-            const expire  = btn.dataset.expire;
-            // 推断默认续期天数 (按所在组的周期), 用户可改
-            const defaultDays = {
-                '7d': 7, '30d': 30, '90d': 90, '180d': 180, '365d': 365,
-                'expired': 7, 'revoked': 7, 'other': 30,
-            }[gKey] || 30;
-            const choice = prompt(
-                `🔄 账号续期\n\n当前 hash: ${hash}\n当前到期: ${expire}\n\n续期多少天? (在原到期日基础上延长; 若已过期, 从今天算起)\n常用: 7 / 30 / 90 / 180 / 365`,
-                String(defaultDays)
-            );
-            if (choice === null) return;
-            const days = parseInt(choice.trim(), 10);
-            if (!days || days <= 0 || days > 3650) { alert('请输入 1-3650 之间的整数'); return; }
-            const orig = btn.textContent;
-            btn.disabled = true;
-            btn.textContent = '⏳';
-            try {
-                const r = await adminExtendAccount(hash, days);
-                btn.textContent = '✅';
-                alert(`✅ 续期成功!\n\nhash: ${r.hash_prefix}\n原到期: ${r.old_expire}\n新到期: ${r.new_expire}\n(+${r.days} 天)\n\n⚠ 注意: 远程已更新, 但本机 ~/.quant-site-accounts.json 还需同步.\n在本机跑:\n  python v26_production/manage_accounts.py pull_remote_expires\n(或下次手动 sync 时统一处理)`);
-                setTimeout(() => location.reload(), 800);
-            } catch (e) {
-                btn.textContent = orig;
-                btn.disabled = false;
-                alert('❌ 续期失败: ' + e.message);
-            }
-        });
-    });
-
-    // ETF toggle (原逻辑保留)
-    document.querySelectorAll('.etf-toggle').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            if (!adminHasPAT()) { alert("请先配置 PAT"); return; }
-            const hash = btn.dataset.hash;
-            const next = btn.dataset.next === '1';
-            btn.disabled = true;
-            const origText = btn.textContent;
-            btn.textContent = '⏳';
-            try {
-                await adminToggleEtf(hash, next);
-                btn.className = `etf-toggle px-2 py-1 rounded text-xs ${next ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700'}`;
-                btn.textContent = next ? '✅' : '🚫';
-                btn.dataset.next = next ? '0' : '1';
-                btn.disabled = false;
-            } catch (e) {
-                btn.textContent = origText;
-                btn.disabled = false;
-                alert('❌ 失败: ' + e.message);
-            }
-        });
-    });
-}
-
-function flashBtn(btn, msg) {
-    const orig = btn.textContent;
-    btn.textContent = msg;
-    btn.classList.add('bg-green-600');
-    setTimeout(() => {
-        btn.textContent = orig;
-        btn.classList.remove('bg-green-600');
-    }, 1500);
-}
-
-// 分发统计渲染
-function refreshDistStats(accounts) {
-    const s = getDistributionStats(accounts);
-    const cards = [
-        ['用户总数',     s.total,           'text-gray-700'],
-        ['✅ 已分发',     s.distributed,     'text-green-600'],
-        ['⏳ 未分发',     s.not_distributed, 'text-orange-600'],
-        ['⏰ 已过期',     s.expired,         'text-gray-400'],
-        ['🚫 已撤销',     s.revoked,         'text-red-500'],
-    ];
-    document.getElementById('dist-stats').innerHTML = cards.map(([k, v, c]) =>
-        `<div class="bg-white rounded p-3">
-            <div class="text-xs text-gray-500">${k}</div>
-            <div class="text-2xl font-bold ${c}">${v}</div>
-        </div>`
-    ).join('');
-}
-
-// 全部 CSV 导出
-document.getElementById('export-all-csv').addEventListener('click', () => {
-    const accs = window.__cached_meta_accounts || [];
-    const rows = [];
-    for (const a of accs) {
-        const cred = _findCredByHash(a.hash_prefix);
-        if (cred) rows.push({...cred, hash_prefix: a.hash_prefix, expire: a.expire, created: a.created});
-    }
-    if (rows.length === 0) { alert('无账号可导出, 请先用 admin 账号登录解密'); return; }
-    downloadCSV(`all_accounts_${new Date().toISOString().slice(0,10)}.csv`, generateCSV(rows));
-});
-
-// 清空所有备注
-document.getElementById('clear-all-notes').addEventListener('click', () => {
-    if (!confirm('确定清空所有分发备注 / 接收人 / 已发标记?')) return;
-    localStorage.removeItem(NOTES_KEY);
-    renderAccGroups(window.__cached_meta_accounts || []);
-});
-
-// === 用户行为统计 ===
-function renderActivityStats() {
-    const $mode = document.getElementById('activity-stats-mode');
-    const $wrap = document.getElementById('activity-table-wrap');
-
-    // 模式标识
-    const hasRemote = (typeof STATS_API_URL !== 'undefined' && STATS_API_URL);
-    $mode.innerHTML = hasRemote
-        ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">🌐 全局模式 (Cloudflare Worker 已配置)</span>'
-        : '<span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">📍 本地模式 (仅本浏览器)</span>';
-
-    const act = loadLocalActivity();
-    const users = act.users || {};
-    const keys = Object.keys(users);
-    if (keys.length === 0) {
-        $wrap.innerHTML = '<p class="text-sm text-gray-500 py-4">暂无活动记录. 用户登录后会自动生成统计.</p>';
-        return;
-    }
-
-    const decAccs = getDecryptedAccounts() || [];
-    const findUser = (token) => {
-        const a = decAccs.find(a => a.hash_prefix === token);
-        return a ? a.user : '-';
-    };
-
-    let html = `<table class="min-w-full text-xs">
-        <thead class="bg-white">
-            <tr class="border-b">
-                <th class="px-2 py-2 text-left">账号</th>
-                <th class="px-2 py-2 text-left">角色</th>
-                <th class="px-2 py-2 text-right">登录次数</th>
-                <th class="px-2 py-2 text-right">总停留</th>
-                <th class="px-2 py-2 text-right">设备数</th>
-                <th class="px-2 py-2 text-left">最近登录</th>
-                <th class="px-2 py-2 text-left">设备指纹</th>
-            </tr>
-        </thead><tbody class="divide-y">`;
-    // 按 最近登录 倒序
-    keys.sort((a, b) => (users[b].last_login || '').localeCompare(users[a].last_login || ''));
-    for (const token of keys) {
-        const u = users[token];
-        const totalMin = Math.round((u.total_seconds || 0) / 60);
-        const totalH = Math.floor(totalMin / 60), totalM = totalMin % 60;
-        const totalStr = totalH > 0 ? `${totalH}h ${totalM}m` : `${totalM} 分`;
-        const devShort = (u.devices || []).map(d => d.id.slice(0, 12)).join(' / ');
-        html += `<tr>
-            <td class="px-2 py-2 font-mono">${u.user || findUser(token) || token + '…'}</td>
-            <td class="px-2 py-2"><span class="${u.role === 'admin' ? 'bg-orange-100 text-orange-700' : 'bg-blue-100 text-blue-700'} px-2 py-0.5 rounded">${u.role === 'admin' ? '👑' : '👤'} ${u.role}</span></td>
-            <td class="px-2 py-2 text-right font-bold">${u.login_count || 0}</td>
-            <td class="px-2 py-2 text-right">${totalStr}</td>
-            <td class="px-2 py-2 text-right">${(u.devices || []).length}</td>
-            <td class="px-2 py-2">${(u.last_login || '').replace('T', ' ').slice(0, 16)}</td>
-            <td class="px-2 py-2 font-mono text-gray-500">${devShort || '-'}</td>
-        </tr>`;
-    }
-    html += `</tbody></table>`;
-    html += `<p class="text-xs text-gray-400 mt-3">⚠ 本地模式数据保存在你这个浏览器, 不同步给其他设备/其他 admin. 总停留时长每 60 秒心跳更新.</p>`;
-    $wrap.innerHTML = html;
-}
-document.getElementById('act-refresh').addEventListener('click', renderActivityStats);
-document.getElementById('act-clear').addEventListener('click', () => {
-    if (!confirm('清空本浏览器所有活动记录?')) return;
-    localStorage.removeItem(ACT_KEY);
-    renderActivityStats();
-});
-renderActivityStats();
-
-// 页面加载: 检测解密状态, 没解密则显示解锁卡片
-(function () {
-    const $card = document.getElementById('decrypt-card');
-    const $btn  = document.getElementById('decrypt-btn');
-    const $pwd  = document.getElementById('decrypt-pwd');
-    const $status = document.getElementById('decrypt-status');
-
-    function refreshDecryptState() {
-        if (getDecryptedAccounts()) {
-            $card.classList.add('hidden');
-        } else {
-            $card.classList.remove('hidden');
-            $status.innerHTML = '<span class="text-yellow-700">⚠ 当前未解锁, 复制按钮不可用</span>';
-        }
-    }
-
-    $btn.addEventListener('click', async () => {
-        const pwd = $pwd.value.trim();
-        if (!pwd) { $status.innerHTML = '<span class="text-red-600">⚠ 请输入密码</span>'; return; }
-        $status.innerHTML = '<span class="text-blue-600">⏳ 解密中...</span>';
-        const r = await decryptAdminCreds(pwd);
-        if (r.ok) {
-            $status.innerHTML = `<span class="text-green-600 font-bold">✅ 解锁成功! 已解密 ${r.n} 个账号. 1 秒后刷新列表...</span>`;
-            $pwd.value = '';
-            setTimeout(() => {
-                refreshDecryptState();
-                renderAccGroups(window.__cached_meta_accounts || []);
-            }, 1000);
-        } else {
-            $status.innerHTML = '<span class="text-red-600">❌ ' + r.msg + '</span>';
-        }
-    });
-
-    // 回车提交
-    $pwd.addEventListener('keydown', (e) => { if (e.key === 'Enter') $btn.click(); });
-
-    refreshDecryptState();
-})();
+boot();
 </script>
 </body>
 </html>
