@@ -30,6 +30,84 @@
         </div>
     </div>
 
+    <!-- 核心设计思想 -->
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-5 sm:px-6 py-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">💡 核心设计思想</h2>
+            <p class="text-indigo-100 text-xs sm:text-sm mt-1">为什么是「多子策略协同 + 会自我进化的事件驱动」</p>
+        </div>
+
+        <div class="p-5 sm:p-6 space-y-8">
+
+            <!-- 段一: 多周期多策略 -->
+            <div>
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm">1</span>
+                    <h3 class="text-base sm:text-lg font-bold text-gray-800">多周期 · 多策略协同</h3>
+                </div>
+                <p class="text-sm text-gray-600 leading-7 mb-4">
+                    我从不认为任何<strong class="text-gray-800">单一策略</strong>能够完美穿越所有市场周期。与其押注「一招鲜」，我选择用一组
+                    <strong class="text-indigo-700">彼此相关度很低</strong>的子策略，各自负责不同的行情阶段，协同组成今天的「多子策略决策引擎」——
+                    <strong class="text-gray-800">不同的行情，交给最擅长它的那一个策略</strong>。
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="bg-gradient-to-br from-emerald-50 to-white border border-emerald-200 rounded-xl p-4">
+                        <span class="inline-block text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">炒作前期</span>
+                        <p class="text-xs text-gray-600 leading-6 mt-2">资金刚开始试探，市场上绝大多数个股<strong>市值偏小、仍处低位</strong>。</p>
+                        <p class="text-sm font-bold text-emerald-800 mt-2">→ 「小盘低位」策略</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-amber-50 to-white border border-amber-200 rounded-xl p-4">
+                        <span class="inline-block text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">炒作中期</span>
+                        <p class="text-xs text-gray-600 leading-6 mt-2">资金逐步扩散，个股<strong>市值抬升、进入横盘蓄势</strong>。</p>
+                        <p class="text-sm font-bold text-amber-800 mt-2">→ 「低位横盘」策略</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-rose-50 to-white border border-rose-200 rounded-xl p-4">
+                        <span class="inline-block text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full">炒作后期</span>
+                        <p class="text-xs text-gray-600 leading-6 mt-2">题材接近见顶，各类公司<strong>市值普遍被炒高、大盘风格主导</strong>。</p>
+                        <p class="text-sm font-bold text-rose-800 mt-2">→ 「大盘高位」策略</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 段二: 事件驱动学习进化 -->
+            <div class="border-t border-gray-100 pt-7">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-purple-100 text-purple-700 font-bold text-sm">2</span>
+                    <h3 class="text-base sm:text-lg font-bold text-gray-800">事件驱动 · 像人一样，从历史中学习</h3>
+                </div>
+                <p class="text-sm text-gray-600 leading-7 mb-4">
+                    事件驱动子系统的灵感来自《噪声》(<em>Noise</em>)：书中指出，人类真正高质量的判断，往往源于对
+                    <strong class="text-purple-700">历史相似情境的「匹配」</strong>，而非纯粹的计算。于是我让机器也这样思考——
+                    先给它一座「案例记忆库」，再让它在真实市场中不断<strong class="text-gray-800">验证、反思、进化</strong>。
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div class="bg-purple-50 rounded-xl p-4 border border-purple-100">
+                        <div class="text-2xl mb-1">📚</div>
+                        <p class="text-xs font-bold text-purple-800">① 建库</p>
+                        <p class="text-xs text-gray-600 leading-6 mt-1">以《开盘啦》历史 <strong>500+ 主题</strong>作为初始训练样本，建立案例记忆库。</p>
+                    </div>
+                    <div class="bg-purple-50 rounded-xl p-4 border border-purple-100">
+                        <div class="text-2xl mb-1">📡</div>
+                        <p class="text-xs font-bold text-purple-800">② 实时解读</p>
+                        <p class="text-xs text-gray-600 leading-6 mt-1">每小时抓取<strong>财联社</strong>新闻，对每条热点即时给出预判与强度评分。</p>
+                    </div>
+                    <div class="bg-purple-50 rounded-xl p-4 border border-purple-100">
+                        <div class="text-2xl mb-1">🎯</div>
+                        <p class="text-xs font-bold text-purple-800">③ 回检反馈</p>
+                        <p class="text-xs text-gray-600 leading-6 mt-1">一周后用<strong>关联个股的真实涨跌</strong>回检：涨了 → 成功经验入库；没涨 → 失败教训反思。</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl p-4">
+                        <div class="text-2xl mb-1">🧠</div>
+                        <p class="text-xs font-bold text-white">④ 迭代进化</p>
+                        <p class="text-xs text-purple-100 leading-6 mt-1">模型据此持续迭代，新案例每天喂入，<strong class="text-white">越用越聪明</strong>。</p>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-400 mt-3 text-center">「预测 → 验证 → 反思 → 进化」闭环每天自动运转</p>
+            </div>
+
+        </div>
+    </div>
+
     <!-- 信号生成时间节点 (口语版) -->
     <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4 sm:p-6">
         <h2 class="text-base sm:text-lg font-bold text-indigo-800 mb-3">⏰ 信号怎么来、什么时候看</h2>
