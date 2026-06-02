@@ -227,8 +227,7 @@ function evRenderCard(grp, rank_num, threshold) {
                     ${st.overheated ? `<span class="text-xs text-red-600">🔥 已过热${st.pre_run_up_3d ? '+' + st.pre_run_up_3d.toFixed(1) + '%' : ''}</span>` : ''}
                 </div>
                 <div class="flex items-center gap-2 text-xs">
-                    <span class="font-semibold" style="color:${(st.expected_return_pct>=0)?'#dc2626':'#16a34a'}" title="预期涨幅 / 预期持续天数">${(st.expected_return_pct >= 0 ? '+' : '')}${EV_FMT(st.expected_return_pct, 1)}% · 持续${st.expected_duration_days || 0}天</span>
-                    <span class="text-gray-500" title="预计见效时间窗口 (T+1~T+3 个交易日内)">${st.expected_window || ''}</span>
+                    <span class="font-semibold" style="color:${((st.pre_run_up_3d||0)>=0)?'#dc2626':'#16a34a'}" title="该股过去 3 个交易日累计涨跌幅 (历史数据, 非预测)">近3日 ${((st.pre_run_up_3d||0) >= 0 ? '+' : '')}${EV_FMT(st.pre_run_up_3d||0, 1)}%</span>
                     <span class="px-2 py-0.5 bg-purple-100 text-purple-700 rounded font-bold text-sm" title="该股综合评分">${EV_FMT(st.rank_score, 0)}</span>
                 </div>
             </div>
