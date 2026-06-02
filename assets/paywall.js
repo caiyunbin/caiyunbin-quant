@@ -10,8 +10,9 @@ const PW_TIERS = [
   { tier: "quarter", name: "季卡", days: 90,  price: 266 },
   { tier: "year",    name: "年卡", days: 360, price: 799 },
 ];
-// ⚠️ 收款码图片: 上传到 assets/pay_qr.png (微信/支付宝个人收款码)
-const PW_QR = PW_BASE + "assets/pay_qr.png";
+// 收款码 (支付宝 + 微信), 已上传到 assets/
+const PW_QR_ALIPAY = PW_BASE + "assets/pay_alipay.png";
+const PW_QR_WECHAT = PW_BASE + "assets/pay_wechat.png";
 const PW_CONTACT = "客服微信: caiman_quant";  // 改成你的联系方式
 
 async function pwGet(path) {
@@ -90,9 +91,21 @@ function pwUnlock() {
       <div style="font-size:18px;font-weight:800;margin-bottom:4px">解锁全部信号</div>
       <div style="font-size:12.5px;color:#94a3b8;margin-bottom:16px">每日策略信号 · 持仓 · 事件明细 · 脉络分析</div>
       <div style="display:flex;gap:8px;margin-bottom:18px">${tiers}</div>
-      <div style="background:#fff;border-radius:12px;padding:12px;display:inline-block;margin-bottom:12px">
-        <img src="${PW_QR}" style="width:200px;height:200px;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-        <div style="display:none;width:200px;height:200px;line-height:200px;color:#888;font-size:13px">收款码待上传<br>assets/pay_qr.png</div>
+      <div style="display:flex;gap:12px;margin-bottom:12px;justify-content:center">
+        <div style="text-align:center">
+          <div style="background:#fff;border-radius:10px;padding:8px;display:inline-block">
+            <img src="${PW_QR_WECHAT}" style="width:140px;height:140px;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div style="display:none;width:140px;height:140px;align-items:center;justify-content:center;color:#888;font-size:11px">微信码待传</div>
+          </div>
+          <div style="font-size:11.5px;color:#22c55e;margin-top:5px;font-weight:600">微信支付</div>
+        </div>
+        <div style="text-align:center">
+          <div style="background:#fff;border-radius:10px;padding:8px;display:inline-block">
+            <img src="${PW_QR_ALIPAY}" style="width:140px;height:140px;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div style="display:none;width:140px;height:140px;align-items:center;justify-content:center;color:#888;font-size:11px">支付宝码待传</div>
+          </div>
+          <div style="font-size:11.5px;color:#3b82f6;margin-top:5px;font-weight:600">支付宝</div>
+        </div>
       </div>
       <div style="font-size:12.5px;color:#cbd5e1;line-height:1.7">
         扫码付款，<b style="color:#fbbf24">备注填你的注册邮箱</b><br>
