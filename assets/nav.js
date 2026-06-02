@@ -6,11 +6,15 @@ async function renderNav(isSubdir) {
     // per-user ETF 开关 (admin 总能看, user 看自己的 etf_visible)
     const showEtf = await isEtfVisibleForCurrentUser();
 
+    // ⭐ 当前页 → tab 高亮 (标红). 点哪页哪个 tab 红, 不再写死.
+    const cur = (location.pathname.split('/').pop() || 'index.html');
+    const A = (f) => (cur === f) ? 'bg-red-600 text-white font-bold shadow' : 'text-gray-700 hover:bg-gray-100';
+
     const etfLink = showEtf
-        ? `<a href="${prefix}strategies/etf.html" class="nav-strat-btn"><span class="label-2x2">板块轮动</span></a>`
+        ? `<a href="${prefix}strategies/etf.html" class="nav-strat-btn ${A('etf.html')}"><span class="label-2x2">板块轮动</span></a>`
         : '';
     const adminLink = showAdmin
-        ? `<a href="${prefix}admin.html" class="nav-strat-btn text-orange-600 font-bold hover:bg-orange-50"><span class="label-2x2">管理后台</span></a>`
+        ? `<a href="${prefix}admin.html" class="nav-strat-btn ${cur==='admin.html'?'bg-red-600 text-white font-bold shadow':'text-orange-600 font-bold hover:bg-orange-50'}"><span class="label-2x2">管理后台</span></a>`
         : '';
     const userBadge = auth
         ? `<span class="hidden md:inline text-xs text-gray-400">${auth.role === 'admin' ? '👑' : '👤'} ${auth.user}</span>`
@@ -24,12 +28,12 @@ async function renderNav(isSubdir) {
                 <a href="${prefix}index.html" class="text-base sm:text-xl font-bold text-indigo-600 whitespace-nowrap">🚀 多子策略决策引擎</a>
             </div>
             <div class="nav-desktop items-center space-x-2">
-                <a href="${prefix}index.html" class="nav-strat-btn"><span class="label-2x2">总览首页</span></a>
-                <a href="${prefix}signals.html" class="nav-strat-btn text-indigo-600 font-bold hover:bg-indigo-50"><span class="label-2x2">今日信号</span></a>
-                <a href="${prefix}events.html" class="nav-strat-btn bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:from-purple-700 hover:to-pink-600"><span class="label-2x2">事件驱动</span></a>
-                <a href="${prefix}strategies/small_cap.html"     class="nav-strat-btn"><span class="label-2x2">小盘低位</span></a>
-                <a href="${prefix}strategies/large_cap.html"     class="nav-strat-btn"><span class="label-2x2">大盘高位</span></a>
-                <a href="${prefix}strategies/consolidation.html" class="nav-strat-btn"><span class="label-2x2">低位横盘</span></a>
+                <a href="${prefix}index.html" class="nav-strat-btn ${A('index.html')}"><span class="label-2x2">总览首页</span></a>
+                <a href="${prefix}signals.html" class="nav-strat-btn ${A('signals.html')}"><span class="label-2x2">今日信号</span></a>
+                <a href="${prefix}events.html" class="nav-strat-btn ${A('events.html')}"><span class="label-2x2">事件驱动</span></a>
+                <a href="${prefix}strategies/small_cap.html"     class="nav-strat-btn ${A('small_cap.html')}"><span class="label-2x2">小盘低位</span></a>
+                <a href="${prefix}strategies/large_cap.html"     class="nav-strat-btn ${A('large_cap.html')}"><span class="label-2x2">大盘高位</span></a>
+                <a href="${prefix}strategies/consolidation.html" class="nav-strat-btn ${A('consolidation.html')}"><span class="label-2x2">低位横盘</span></a>
                 ${etfLink}
                 ${adminLink}
                 ${userBadge}

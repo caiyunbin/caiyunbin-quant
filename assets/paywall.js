@@ -46,7 +46,7 @@ async function pwMe() {
 
 // 取信号数据: 付费→全量, 否则→打码预览
 async function pwSignals(me) {
-  if (me && me.is_paid) {
+  if (me && (me.is_paid || me.role === 'admin')) {
     try { return { data: await pwGet("/signals"), locked: false }; } catch (e) {}
   }
   return { data: await pwGet("/preview"), locked: true };
@@ -54,7 +54,7 @@ async function pwSignals(me) {
 
 // 取事件数据 (统一 preview/full 结构 → {weekly, days, meta, hype, locked})
 async function pwEvents(me) {
-  if (me && me.is_paid) {
+  if (me && (me.is_paid || me.role === 'admin')) {
     try {
       const r = await pwGet("/events");
       return { weekly: r.events.weekly, days: r.events.days || [], meta: r.events.meta, hype: r.hype, locked: false };
@@ -132,11 +132,11 @@ async function pwUserBar(me) {
   me = me || await pwMe();
   let inner;
   if (!me.logged_in) {
-    inner = `<a href="login.html?next=${encodeURIComponent(location.pathname.split('/').pop())}"
+    inner = `<a href="${PW_BASE}login.html?next=${encodeURIComponent(location.pathname.split('/').pop())}"
       style="color:#fbbf24;text-decoration:none;font-weight:600">登录 / 注册</a>`;
   } else {
-    const vip = me.is_paid
-      ? `<span style="color:#34d399">★ 会员 · 剩 ${me.days_left} 天</span>`
+    const vip = (me.is_paid || me.role === "admin")
+      ? `<span style="color:#34d399">${me.role==="admin" ? "👑 管理员 · 全权限" : "★ 会员 · 剩 "+me.days_left+" 天"}</span>`
       : `<a href="javascript:pwUnlock()" style="color:#fbbf24;text-decoration:none">未开通 · 解锁</a>`;
     inner = `<span style="color:#94a3b8">${me.email}</span> &nbsp;${vip}
       &nbsp;<a href="javascript:pwLogout()" style="color:#64748b;text-decoration:none">退出</a>`;
