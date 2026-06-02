@@ -269,15 +269,20 @@ async function loadJSON(p) {
         // 历史出清
         sigHtml += '<div class="bg-gray-100 rounded-lg p-4"><h3 class="text-sm font-bold text-gray-700 mb-3">✓ 近期已离场 (' + (s.exited_recent||[]).length + ')</h3>';
         if (s.exited_recent && s.exited_recent.length > 0) {
-            sigHtml += '<ul class="space-y-2">' + s.exited_recent.slice(-5).reverse().map(x =>
+            const _exAll = s.exited_recent.slice().reverse();   // 最近的在前
+            const _exLi = x =>
                 `<li class="bg-white px-3 py-2 rounded text-xs">
                     <div class="flex justify-between flex-wrap gap-1">
                         <span class="font-mono text-gray-700">${x.ts_code}</span>
                         <span class="${x.ret>=0?'text-green-600':'text-red-500'} font-bold">${FMT_PCT(x.ret)}</span>
                     </div>
                     <div class="text-gray-500 mt-1">纳入 ${x.entry_date} → 退 ${x.exit_date} · ${pwReason(x.reason)}</div>
-                </li>`
-            ).join('') + '</ul>';
+                </li>`;
+            sigHtml += '<ul class="space-y-2">' + _exAll.slice(0,3).map(_exLi).join('') + '</ul>';
+            if (_exAll.length > 3) {
+                sigHtml += '<details class="mt-2"><summary class="list-none cursor-pointer text-xs text-indigo-600 font-medium hover:text-indigo-800 select-none">查看全部 ' + _exAll.length + ' 笔 ▾</summary>'
+                    + '<ul class="space-y-2 mt-2">' + _exAll.slice(3).map(_exLi).join('') + '</ul></details>';
+            }
         } else sigHtml += '<p class="text-xs text-gray-500">近期无离场</p>';
         sigHtml += '</div>';
 
