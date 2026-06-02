@@ -88,8 +88,8 @@ const META_MAP = {
     "S2.G13": {
         title: "🏛️ 大盘高位策略",
         sub:   "流通市值 ≥ 200 亿 + 连续 3 日主力净流入 + 突破 20 日新高",
-        alpha: "捕捉大盘股的趋势性建仓 — 主力建仓 + 突破 + 加固风控 (止损 -3% / MA40 macro)",
-        alpha_user: "捕捉大盘股的「主力建仓 + 突破」类趋势信号 (具体阈值不公开)",
+        alpha: "捕捉大盘股的趋势性布局 — 主力布局 + 突破 + 加固风控 (止损 -3% / MA40 macro)",
+        alpha_user: "捕捉大盘股的「主力布局 + 突破」类趋势信号 (具体阈值不公开)",
         sub_user: "适配大盘股趋势行情. 当主力资金持续入场、市场风格切到价值蓝筹、突破前期高点时, 该策略的 Alpha 爆发最强.",
         pool:  "A 股大盘股 (流通市值 ≥ 200 亿元)",
         weight: 0.25, sigKey: "大盘高位",
@@ -106,8 +106,8 @@ const META_MAP = {
     "ETF.honest": {
         title: "🏦 板块轮动策略 (独立运行)",
         sub:   "首买 z 得分 > 0.60 + 板块排名反转 < -0.30 + 拥挤度 < 0.50 + 周线确认 + 60 日强平",
-        alpha: "捕捉板块的机构首买信号 (独立策略, 不并入主组合, 不推送微信)",
-        alpha_user: "捕捉板块的「机构首买 + 拥挤度低」类轮动信号 (具体阈值不公开)",
+        alpha: "捕捉板块的机构首选信号 (独立策略, 不并入主组合, 不推送微信)",
+        alpha_user: "捕捉板块的「机构首选 + 拥挤度低」类轮动信号 (具体阈值不公开)",
         sub_user: "适配板块轮动行情. 当某板块出现机构集中首买、拥挤度尚低、周线确认走强时, 该策略的 Alpha 爆发最强.",
         pool:  "45 板块 + 沪深 300 子指数 ETF 池",
         weight: null, sigKey: null,
@@ -191,11 +191,11 @@ async function loadJSON(p) {
     const _sd = (m.sigKey && data.daily_signals) ? data.daily_signals[m.sigKey] : null;
     if (LOCKED && (_sd || (STRAT_KEY === 'ETF.honest' && data.etf_state))) {
         const counts = _sd ? [
-            {label:"明日买入", n: (_sd.buy_today_count ?? (_sd.buy_today||[]).length)},
-            {label:"当前持仓", n: (_sd.holding_count ?? 0)},
-            {label:"明日卖出", n: (_sd.sell_today_count ?? 0)},
+            {label:"明日信号", n: (_sd.buy_today_count ?? (_sd.buy_today||[]).length)},
+            {label:"跟踪中", n: (_sd.holding_count ?? 0)},
+            {label:"离场", n: (_sd.sell_today_count ?? 0)},
         ] : [];
-        document.getElementById('strat-signals').innerHTML = pwLockCard({title:"🔒 完整信号已锁定", sub:"明日买入名单 · 持仓 · 卖出 · 历史明细 — 付费会员可见", counts});
+        document.getElementById('strat-signals').innerHTML = pwLockCard({title:"🔒 完整信号已锁定", sub:"明日重磅信号 · 持续跟踪 · 离场提示 · 历史明细 — 付费会员可见", counts});
         return;
     }
     if (m.sigKey && data.daily_signals && data.daily_signals[m.sigKey]) {
@@ -204,27 +204,27 @@ async function loadJSON(p) {
 
         if (isEmpty) {
             sigHtml += `<div class="bg-gray-50 rounded-lg p-6 text-center mb-4">
-                <p class="text-base text-gray-600">💤 当前空仓</p>
-                <p class="text-xs text-gray-500 mt-2">无持仓、无新信号 — 可能 macro 触发空仓, 等待行情转好</p>
+                <p class="text-base text-gray-600">💤 当前观望</p>
+                <p class="text-xs text-gray-500 mt-2">当前无活跃信号，等待新机会出现</p>
             </div>`;
         }
 
         sigHtml += '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">';
 
         // 持仓
-        sigHtml += '<div class="bg-blue-50 rounded-lg p-4"><h3 class="text-sm font-bold text-blue-900 mb-3">📦 信号持续中 (' + (s.holding||[]).length + ')</h3>';
+        sigHtml += '<div class="bg-blue-50 rounded-lg p-4"><h3 class="text-sm font-bold text-blue-900 mb-3">📦 持续跟踪中 (' + (s.holding||[]).length + ')</h3>';
         if (s.holding && s.holding.length > 0) {
             sigHtml += '<ul class="space-y-2">' + s.holding.map(h =>
                 `<li class="bg-white px-3 py-2 rounded text-xs flex justify-between flex-wrap gap-1">
                     <span class="font-mono font-bold text-blue-700">${h.ts_code}</span>
-                    <span class="text-gray-500">入场 ${h.entry_date}</span>
+                    <span class="text-gray-500">纳入 ${h.entry_date}</span>
                 </li>`
             ).join('') + '</ul>';
-        } else sigHtml += '<p class="text-xs text-gray-500">无持仓</p>';
+        } else sigHtml += '<p class="text-xs text-gray-500">暂无跟踪标的</p>';
         sigHtml += '</div>';
 
         // 卖出
-        sigHtml += '<div class="bg-red-50 rounded-lg p-4"><h3 class="text-sm font-bold text-red-900 mb-3">📤 明日 T+1 信号出清 (' + (s.sell_today||[]).length + ')</h3>';
+        sigHtml += '<div class="bg-red-50 rounded-lg p-4"><h3 class="text-sm font-bold text-red-900 mb-3">📤 明日离场信号 (' + (s.sell_today||[]).length + ')</h3>';
         if (s.sell_today && s.sell_today.length > 0) {
             sigHtml += '<ul class="space-y-2">' + s.sell_today.map(x =>
                 `<li class="bg-white px-3 py-2 rounded text-xs">
@@ -232,34 +232,34 @@ async function loadJSON(p) {
                         <span class="font-mono font-bold text-red-700">${x.ts_code}</span>
                         <span class="${x.ret>=0?'text-green-600':'text-red-500'} font-bold">${FMT_PCT(x.ret)}</span>
                     </div>
-                    <div class="text-gray-500 mt-1">入 ${x.entry_date} · ${x.reason}</div>
+                    <div class="text-gray-500 mt-1">纳入 ${x.entry_date} · ${pwReason(x.reason)}</div>
                 </li>`
             ).join('') + '</ul>';
-        } else sigHtml += '<p class="text-xs text-gray-500">今日无卖出</p>';
+        } else sigHtml += '<p class="text-xs text-gray-500">今日无离场</p>';
         sigHtml += '</div>';
 
         // 买入
-        sigHtml += '<div class="bg-green-50 rounded-lg p-4"><h3 class="text-sm font-bold text-green-900 mb-3">⭐ 明日开盘信号生成 (' + (s.buy_today||[]).length + ')</h3>';
+        sigHtml += '<div class="bg-green-50 rounded-lg p-4"><h3 class="text-sm font-bold text-green-900 mb-3">🎯 明日重磅信号 (' + Math.min(3,(s.buy_today||[]).length) + ') · 候选 (' + Math.max(0,(s.buy_today||[]).length-3) + ')</h3>';
         if (s.buy_today && s.buy_today.length > 0) {
             sigHtml += '<ul class="space-y-2">' + s.buy_today.slice(0,8).map((item,i) => {
                 const ts = (typeof item === 'string') ? item : (item.ts_code || '?');
                 const p_up = (typeof item === 'object' && item.p_up != null) ? item.p_up : null;
                 let star = '';
-                if (i===0) star = '<span class="text-yellow-500 text-lg">★★★</span><span class="text-xs text-gray-400 ml-1">最优</span>';
+                if (i===0) star = '<span class="text-yellow-500 text-lg">★★★</span><span class="text-xs text-gray-400 ml-1">重磅</span>';
                 else if (i===1) star = '<span class="text-yellow-500">★★</span>';
                 else if (i===2) star = '<span class="text-yellow-500">★</span>';
                 else star = '<span class="text-xs text-gray-400">候选</span>';
-                const pupBadge = (p_up !== null) ? `<span class="text-xs text-blue-600 ml-2" title="次日上涨概率 ensemble (1d/3d/5d)">P_up ${(p_up*100).toFixed(0)}%</span>` : '';
+                const pupBadge = (p_up !== null) ? `<span class="text-xs text-blue-600 ml-2" title="综合信号强度">强度 ${(p_up*100).toFixed(0)}</span>` : '';
                 return `<li class="bg-white px-3 py-2 rounded text-xs flex justify-between items-center">
                     <span class="flex items-center"><span class="font-mono font-bold text-green-700">${ts}</span>${pupBadge}</span>
                     <span>${star}</span>
                 </li>`;
             }).join('') + '</ul>';
-        } else sigHtml += '<p class="text-xs text-gray-500">今日无信号</p>';
+        } else sigHtml += '<p class="text-xs text-gray-500">今日暂无信号</p>';
         sigHtml += '</div>';
 
         // 历史出清
-        sigHtml += '<div class="bg-gray-100 rounded-lg p-4"><h3 class="text-sm font-bold text-gray-700 mb-3">✓ 最近历史出清 (' + (s.exited_recent||[]).length + ')</h3>';
+        sigHtml += '<div class="bg-gray-100 rounded-lg p-4"><h3 class="text-sm font-bold text-gray-700 mb-3">✓ 近期已离场 (' + (s.exited_recent||[]).length + ')</h3>';
         if (s.exited_recent && s.exited_recent.length > 0) {
             sigHtml += '<ul class="space-y-2">' + s.exited_recent.slice(-5).reverse().map(x =>
                 `<li class="bg-white px-3 py-2 rounded text-xs">
@@ -267,10 +267,10 @@ async function loadJSON(p) {
                         <span class="font-mono text-gray-700">${x.ts_code}</span>
                         <span class="${x.ret>=0?'text-green-600':'text-red-500'} font-bold">${FMT_PCT(x.ret)}</span>
                     </div>
-                    <div class="text-gray-500 mt-1">入 ${x.entry_date} → 退 ${x.exit_date} · ${x.reason}</div>
+                    <div class="text-gray-500 mt-1">纳入 ${x.entry_date} → 退 ${x.exit_date} · ${pwReason(x.reason)}</div>
                 </li>`
             ).join('') + '</ul>';
-        } else sigHtml += '<p class="text-xs text-gray-500">无历史出清</p>';
+        } else sigHtml += '<p class="text-xs text-gray-500">近期无离场</p>';
         sigHtml += '</div>';
 
         sigHtml += '</div>';

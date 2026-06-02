@@ -30,32 +30,25 @@
         </div>
     </div>
 
-    <!-- 信号生成 / 出清 时间节点说明 -->
+    <!-- 信号生成时间节点 (口语版) -->
     <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4 sm:p-6">
-        <h2 class="text-base sm:text-lg font-bold text-indigo-800 mb-3">⏰ 信号生成与出清的时间节点</h2>
+        <h2 class="text-base sm:text-lg font-bold text-indigo-800 mb-3">⏰ 信号怎么来、什么时候看</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
             <div class="bg-white rounded p-3">
-                <p class="font-bold text-green-700 mb-1">🟢 信号生成 (Signal Generation)</p>
+                <p class="font-bold text-green-700 mb-1">🟢 每日信号生成</p>
                 <p class="text-xs text-gray-700 leading-relaxed">
-                    每个交易日 <strong>15:00 收盘后</strong>, 引擎读取当日完整 OHLCV + 资金流数据,
-                    在 <strong>18:30 (本地)</strong> 完成信号计算并写入数据库.<br>
-                    <strong>对应入场动作</strong>: 在<strong>次日 (T+1) 9:25-9:30 集合竞价</strong>挂买单,
-                    撮合价以 9:30 开盘价 + 滑点为准.<br>
-                    <strong>不要在盘中追买</strong>, 错过开盘的信号视为放弃.
+                    每个交易日<strong>收盘后</strong>，系统读取当天行情与资金数据，自动算出<strong>次日值得关注的标的</strong>，傍晚更新到网站。
                 </p>
             </div>
             <div class="bg-white rounded p-3">
-                <p class="font-bold text-red-700 mb-1">🔴 信号出清 (Signal Exit)</p>
+                <p class="font-bold text-red-700 mb-1">🔴 离场提示</p>
                 <p class="text-xs text-gray-700 leading-relaxed">
-                    引擎在每日 <strong>15:00 收盘后</strong>基于风控逻辑 (止损 / 快锁 / EarlyStop / MaxHold) 判定出清.<br>
-                    <strong>对应出场动作</strong>: 在<strong>次日 (T+1) 9:25-9:30 集合竞价</strong>挂卖单, 撮合价以 9:30 开盘价 - 滑点为准.<br>
-                    若遇到<strong>跌停封板</strong>或<strong>停牌</strong>, 出清顺延至次日, 引擎自动续判.
+                    系统同时跟踪已入选标的，触发风控条件（回撤、到期、动能减弱等）时，次日给出<strong>离场提示</strong>。
                 </p>
             </div>
         </div>
         <p class="text-xs text-indigo-700 mt-3">
-            <strong>📌 本引擎为日频策略, 非日内策略</strong>: 所有信号在 EOD 计算, T+1 集合竞价撮合.
-            用户无需盯盘, 每个交易日 18:30 后管理员微信将收到次日操作清单, 19:00 自动更新本网站.
+            <strong>📌 这是「每天看一次」的参考信号，不是盯盘工具。</strong>所有信号均为量化模型的研究性参考，<strong>不构成投资建议</strong>，是否操作及盈亏由您自行决定。
         </p>
     </div>
 
@@ -90,32 +83,21 @@
         <p class="text-xs text-gray-500 mt-3">⚠ 板块轮动 (ETF) 为独立策略，每日单独更新数据与信号，<strong>不并入总组合</strong>。</p>
     </div>
 
-    <!-- 回测合规自查清单 + 米筐引擎说明 -->
+    <!-- 回测方法说明 (口语版) -->
     <div class="bg-blue-50 border border-blue-200 shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-blue-900 mb-2">✅ 回测合规自查清单</h2>
-        <p class="text-xs text-blue-700 mb-3">本回测引擎参考 <strong>米筐 RQAlpha</strong> (开源量化回测框架) 的设计准则, 全面对标其滑点/佣金/印花税/T+1 等模型. 以下回测常见陷阱已逐项排查处理:</p>
+        <h2 class="text-xl font-bold text-blue-900 mb-2">✅ 回测做得有多严谨</h2>
+        <p class="text-xs text-blue-700 mb-3">很多策略「回测很美、实盘打脸」，是因为回测里偷偷用了现实拿不到的便宜。本系统对照业界开源框架（米筐 RQAlpha）的标准，把常见「作弊点」逐一堵死，力求回测接近真实可执行：</p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P1 停牌股权益消失</strong>: 用 running cache 持续 mark-to-market</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P2 微盘股流动性</strong>: 信号池要求 amount_20d ≥ 5000 万元</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P3 新股形态噪声</strong>: IPO 后 ≥ 90 个交易日才入场</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P4 涨停日假成交</strong>: 涨停封板时 QuickLock 不能成交</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P5 ST/退市股污染</strong>: close ≥ 5 元 + 过去 20 日 ≥ 18 日正常交易</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P6 复权日跳变</strong>: adj_factor 日变化 > 5% 跳过 entry/exit</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P7 真实滑点</strong>: 固定 15bps (对 amount ≥ 5e7 池合理)</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P8 T+1 持仓限制</strong>: 买入当日不可卖出</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P9 涨停一字板买入</strong>: 开盘 adj_open >= limit_up 时跳过</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P10 跌停无法卖出</strong>: 跌停封单时延后卖出</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P11 单日异常浮盈</strong>: 检测单日 > +15% 触发再核查</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P12 单日集中度</strong>: 单日新建仓 ≤ 2 只</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P13 T+1 资金结算</strong>: 卖出资金 settled / unsettled 分离</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P14 单笔成交量上限</strong>: 单笔 ≤ 5% × amount_20d</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P15 印花税日期</strong>: 2023-08-28 后由 0.1% → 0.05% 切换</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P16 现金生息</strong>: 闲置现金 2.5%/年 (RF) 日化</div>
-            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>P17 EarlyStop 路径假设</strong>: 取保守 fallback 价</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>真实成交假设</strong>：按次日开盘价 + 滑点计算，不用「事后最优价」</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>流动性过滤</strong>：只选成交活跃标的，避开进出困难的小票</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>剔除新股 / ST / 退市</strong>：避免极端形态污染统计</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>涨跌停限制</strong>：封板时不假设能成交，自动顺延</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>T+1 规则</strong>：当日入选次日才动，符合 A 股规则</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>真实费用</strong>：佣金 + 印花税（含 2023 年下调）+ 滑点全计入</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>复权与停牌处理</strong>：价格跳变、停牌期间持续估值</div>
+            <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>分散与上限</strong>：单日新增标的有上限，避免过度集中</div>
         </div>
-        <p class="text-xs text-blue-700 mt-3"><strong>数据来源</strong>: Tushare Pro API (A 股日线/资金流/基本面) + 米筐回测准则.
-            <strong>回测周期</strong>: 2018-01-02 ~ 2026-05-15 (8.4 年).
-            <strong>设计目标</strong>: 在严控回测坑的前提下做出可重现的 Sharpe 1.5+ 三策略组合.</p>
+        <p class="text-xs text-blue-700 mt-3"><strong>数据来源</strong>：Tushare Pro（A 股行情/资金/基本面）。<strong>回测周期</strong>：2018 年初至今（约 8 年）。<strong>说明</strong>：历史回测不代表未来收益，所有数据仅供研究参考。</p>
     </div>
 
     <!-- 年度收益 -->

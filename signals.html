@@ -32,7 +32,7 @@
         <h3 class="font-bold text-sm text-blue-900 mb-2">📖 状态说明</h3>
         <ul class="text-xs text-blue-900 list-disc list-inside space-y-1">
             <li><b>信号持续</b>: 该标的目前处于信号持续期, 继续保留观察</li>
-            <li><b>明日 T+1 信号出清</b>: 系统判定明日 T+1 集合竞价出清, 可作为出清参考</li>
+            <li><b>明日离场信号</b>: 系统判定明日 T+1 集合竞价出清, 可作为出清参考</li>
             <li><b>明日开盘信号生成</b>: 候选标的池, ★★★ 最优, 用户应根据资金量在明日 T+1 开盘参考信号</li>
             <li><b>历史出清</b>: 最近 30 天的历史出清记录, 仅作研究参考</li>
         </ul>
@@ -91,10 +91,10 @@ async function loadJSON(p) {
         if (LOCKED) {
             outerHtml += `<div class="bg-white shadow rounded-lg p-4 sm:p-6 mb-5">
                 <h2 class="text-lg font-bold text-gray-800 mb-3">${info.icon||''} ${strat}</h2>
-                ${pwLockCard({title:"🔒 完整信号已锁定", sub:"明日买入 · 持仓 · 卖出 — 付费会员可见", counts:[
-                    {label:"明日买入", n:(s.buy_today_count ?? (s.buy_today||[]).length)},
-                    {label:"持仓", n:(s.holding_count ?? 0)},
-                    {label:"卖出", n:(s.sell_today_count ?? 0)},
+                ${pwLockCard({title:"🔒 完整信号已锁定", sub:"明日重磅信号 · 持续跟踪 · 离场 — 付费会员可见", counts:[
+                    {label:"明日信号", n:(s.buy_today_count ?? (s.buy_today||[]).length)},
+                    {label:"跟踪中", n:(s.holding_count ?? 0)},
+                    {label:"离场", n:(s.sell_today_count ?? 0)},
                 ]})}
             </div>`;
             continue;
@@ -108,12 +108,12 @@ async function loadJSON(p) {
                 const ts = (typeof item === 'string') ? item : (item.ts_code || '?');
                 const p_up = (typeof item === 'object' && item.p_up != null) ? item.p_up : null;
                 let star = '';
-                if (i === 0) star = '<span class="text-yellow-500 text-lg">★★★</span><span class="text-xs text-gray-400 ml-1">最优</span>';
+                if (i === 0) star = '<span class="text-yellow-500 text-lg">★★★</span><span class="text-xs text-gray-400 ml-1">重磅</span>';
                 else if (i === 1) star = '<span class="text-yellow-500">★★</span>';
                 else if (i === 2) star = '<span class="text-yellow-500">★</span>';
                 else star = '<span class="text-xs text-gray-400">候选</span>';
                 const pupBadge = (p_up !== null)
-                    ? `<span class="text-xs text-blue-600 ml-2" title="次日上涨概率 (ensemble of 1d/3d/5d)">P_up ${(p_up*100).toFixed(0)}%</span>`
+                    ? `<span class="text-xs text-blue-600 ml-2" title="综合信号强度">强度 ${(p_up*100).toFixed(0)}</span>`
                     : '';
                 return `<li class="bg-white px-3 py-2 rounded text-xs flex justify-between items-center">
                     <span class="flex items-center"><span class="font-mono font-bold text-green-700">${ts}</span>${pupBadge}</span>
@@ -121,7 +121,7 @@ async function loadJSON(p) {
                 </li>`;
             }).join('');
         } else {
-            buyHtml = '<p class="text-xs text-gray-500">今日无信号 (可能 macro 触发空仓)</p>';
+            buyHtml = '<p class="text-xs text-gray-500">今日暂无信号</p>';
         }
 
         let holdHtml = '';
@@ -129,10 +129,10 @@ async function loadJSON(p) {
             holdHtml = s.holding.map(h =>
                 `<li class="bg-white px-3 py-2 rounded text-xs flex justify-between flex-wrap gap-1">
                     <span class="font-mono font-bold text-blue-700">${h.ts_code}</span>
-                    <span class="text-gray-500">入场 ${h.entry_date}</span>
+                    <span class="text-gray-500">纳入 ${h.entry_date}</span>
                 </li>`
             ).join('');
-        } else holdHtml = '<p class="text-xs text-gray-500">无持仓</p>';
+        } else holdHtml = '<p class="text-xs text-gray-500">暂无跟踪标的</p>';
 
         let sellHtml = '';
         if (s.sell_today && s.sell_today.length > 0) {
@@ -142,10 +142,10 @@ async function loadJSON(p) {
                         <span class="font-mono font-bold text-red-700">${x.ts_code}</span>
                         <span class="${x.ret >= 0 ? 'text-green-600' : 'text-red-500'} font-bold">${FMT_PCT(x.ret)}</span>
                     </div>
-                    <div class="text-gray-500 mt-1">入 ${x.entry_date} · ${x.reason}</div>
+                    <div class="text-gray-500 mt-1">纳入 ${x.entry_date} · ${pwReason(x.reason)}</div>
                 </li>`
             ).join('');
-        } else sellHtml = '<p class="text-xs text-gray-500">今日无信号出清</p>';
+        } else sellHtml = '<p class="text-xs text-gray-500">今日无离场信号</p>';
 
         let exitedHtml = '';
         if (s.exited_recent && s.exited_recent.length > 0) {
@@ -155,10 +155,10 @@ async function loadJSON(p) {
                         <span class="font-mono text-gray-700">${x.ts_code}</span>
                         <span class="${x.ret >= 0 ? 'text-green-600' : 'text-red-500'} font-bold">${FMT_PCT(x.ret)}</span>
                     </div>
-                    <div class="text-gray-500 mt-1">入 ${x.entry_date} → 退 ${x.exit_date} · ${x.reason}</div>
+                    <div class="text-gray-500 mt-1">纳入 ${x.entry_date} → 退 ${x.exit_date} · ${pwReason(x.reason)}</div>
                 </li>`
             ).join('');
-        } else exitedHtml = '<p class="text-xs text-gray-500">无历史出清</p>';
+        } else exitedHtml = '<p class="text-xs text-gray-500">近期无离场</p>';
 
         outerHtml += `<div class="bg-white shadow rounded-lg p-4 sm:p-6 ${isEmpty?'border-l-4 border-gray-300':''}">
             <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
@@ -168,25 +168,25 @@ async function loadJSON(p) {
             <p class="text-xs text-gray-500 mb-4">${info.pool}</p>
 
             ${isEmpty ? `<div class="bg-gray-50 rounded-lg p-4 sm:p-6 text-center mb-4">
-                <p class="text-base text-gray-600">💤 当前空仓</p>
-                <p class="text-xs text-gray-500 mt-2">无持仓、无新信号 — 可能 macro 触发空仓, 等待行情转好</p>
+                <p class="text-base text-gray-600">💤 当前观望</p>
+                <p class="text-xs text-gray-500 mt-2">当前无活跃信号，等待新机会出现</p>
             </div>` : ''}
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 <div class="bg-blue-50 rounded-lg p-4">
-                    <h3 class="text-sm font-bold text-blue-900 mb-3">📦 信号持续中 (${(s.holding||[]).length})</h3>
+                    <h3 class="text-sm font-bold text-blue-900 mb-3">📦 持续跟踪中 (${(s.holding||[]).length})</h3>
                     <ul class="space-y-2">${holdHtml}</ul>
                 </div>
                 <div class="bg-red-50 rounded-lg p-4">
-                    <h3 class="text-sm font-bold text-red-900 mb-3">📤 明日 T+1 信号出清 (${(s.sell_today||[]).length})</h3>
+                    <h3 class="text-sm font-bold text-red-900 mb-3">📤 明日离场信号 (${(s.sell_today||[]).length})</h3>
                     <ul class="space-y-2">${sellHtml}</ul>
                 </div>
                 <div class="bg-green-50 rounded-lg p-4">
-                    <h3 class="text-sm font-bold text-green-900 mb-3">⭐ 明日开盘信号生成 (${(s.buy_today||[]).length})</h3>
+                    <h3 class="text-sm font-bold text-green-900 mb-3">🎯 明日重磅信号 (${Math.min(3,(s.buy_today||[]).length)}) · 候选 (${Math.max(0,(s.buy_today||[]).length-3)})</h3>
                     <ul class="space-y-2">${buyHtml}</ul>
                 </div>
                 <div class="bg-gray-100 rounded-lg p-4">
-                    <h3 class="text-sm font-bold text-gray-700 mb-3">✓ 最近历史出清 (${(s.exited_recent||[]).length})</h3>
+                    <h3 class="text-sm font-bold text-gray-700 mb-3">✓ 近期已离场 (${(s.exited_recent||[]).length})</h3>
                     <ul class="space-y-2">${exitedHtml}</ul>
                 </div>
             </div>

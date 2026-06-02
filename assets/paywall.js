@@ -15,6 +15,14 @@ const PW_QR_ALIPAY = PW_BASE + "assets/pay_alipay.png";
 const PW_QR_WECHAT = PW_BASE + "assets/pay_wechat.png";
 const PW_CONTACT = "客服微信: caiman_quant";  // 改成你的联系方式
 
+// 风控原因 → 中文口语 (合规: 不用买卖术语)
+const PW_REASON = {
+  HardSL: "风控离场", MacroHard: "大盘风控", QuickLock: "快速锁定",
+  EarlyStop: "提前离场", time_stop: "到期离场", rank_stall: "动能减弱",
+  rank_stall_tol: "动能减弱", trail_dd: "回撤离场", stop_loss: "风控离场",
+};
+function pwReason(r) { return PW_REASON[r] || r || ""; }
+
 async function pwGet(path) {
   const r = await fetch(PW_API + path, { credentials: "include" });
   if (!r.ok) throw new Error(path + " " + r.status);
