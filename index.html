@@ -234,11 +234,11 @@ async function loadJSON(path) {
     try { eq_curves = await pwGet("/equity"); } catch (e) {}
 
     // Header
-    document.getElementById('meta-version').textContent = latest.meta.version + ' · 每日 19:00 自动更新';
+    document.getElementById('meta-version').textContent = '多策略量化决策系统 · 每个交易日收盘后自动更新一次';
     document.getElementById('meta-weights').textContent =
         `总组合配比: 小盘低位 ${(latest.weights['V16.F']*100).toFixed(0)}% · 大盘高位 ${(latest.weights['S2.G13']*100).toFixed(0)}% · 低位横盘 ${(latest.weights['S4.V4']*100).toFixed(0)}% (板块轮动独立运行不并入)`;
     document.getElementById('meta-generated').textContent =
-        `数据日期 ${latest.meta.data_date} · 站点生成 ${latest.meta.generated_at}`;
+        `数据截止 ${latest.meta.data_date} · 网站更新于 ${latest.meta.generated_at}`;
 
     // 关键指标
     const combo = latest.combo;
