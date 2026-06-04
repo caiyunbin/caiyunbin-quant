@@ -10,9 +10,8 @@ async function renderNav(isSubdir) {
     const cur = (location.pathname.split('/').pop() || 'index.html');
     const A = (f) => (cur === f) ? 'bg-red-600 text-white font-bold shadow' : 'text-gray-700 hover:bg-gray-100';
 
-    const etfLink = showEtf
-        ? `<a href="${prefix}strategies/etf.html" class="nav-strat-btn ${A('etf.html')}"><span class="label-2x2">板块轮动</span></a>`
-        : '';
+    // ETF 轮动现为主组合 30% 腿, 对所有用户可见
+    const etfLink = `<a href="${prefix}strategies/etf.html" class="nav-strat-btn ${A('etf.html')}"><span class="label-2x2">ETF 轮动</span></a>`;
     const adminLink = showAdmin
         ? `<a href="${prefix}admin.html" class="nav-strat-btn ${cur==='admin.html'?'bg-red-600 text-white font-bold shadow':'text-orange-600 font-bold hover:bg-orange-50'}"><span class="label-2x2">管理后台</span></a>`
         : '';
@@ -31,7 +30,6 @@ async function renderNav(isSubdir) {
                 <a href="${prefix}index.html" class="nav-strat-btn ${A('index.html')}"><span class="label-2x2">总览首页</span></a>
                 <a href="${prefix}signals.html" class="nav-strat-btn ${A('signals.html')}"><span class="label-2x2">今日信号</span></a>
                 <a href="${prefix}events.html" class="nav-strat-btn ${A('events.html')}"><span class="label-2x2">事件驱动</span></a>
-                <a href="${prefix}strategies/small_cap.html"     class="nav-strat-btn ${A('small_cap.html')}"><span class="label-2x2">小盘低位</span></a>
                 <a href="${prefix}strategies/large_cap.html"     class="nav-strat-btn ${A('large_cap.html')}"><span class="label-2x2">大盘高位</span></a>
                 <a href="${prefix}strategies/consolidation.html" class="nav-strat-btn ${A('consolidation.html')}"><span class="label-2x2">低位横盘</span></a>
                 ${etfLink}
@@ -55,10 +53,9 @@ async function renderNav(isSubdir) {
         <a href="${prefix}index.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">📊 总览</a>
         <a href="${prefix}signals.html" class="block px-4 py-3 rounded text-indigo-700 font-bold bg-indigo-50">⭐ 今日信号</a>
         <a href="${prefix}events.html" class="block px-4 py-3 rounded text-purple-700 font-bold bg-purple-50">📡 事件驱动</a>
-        <a href="${prefix}strategies/small_cap.html"     class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">🎯 小盘低位</a>
         <a href="${prefix}strategies/large_cap.html"     class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">🏛️ 大盘高位</a>
         <a href="${prefix}strategies/consolidation.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">📈 低位横盘</a>
-        ${showEtf ? `<a href="${prefix}strategies/etf.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">🏦 板块轮动</a>` : ''}
+        <a href="${prefix}strategies/etf.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">🔄 ETF 轮动</a>
         ${showAdmin ? `<a href="${prefix}admin.html" class="block px-4 py-3 rounded text-orange-600 font-bold hover:bg-orange-50">⚙️ 管理后台</a>` : ''}
         <div class="border-t mt-3 pt-3">
             <a href="javascript:logout()" class="block px-4 py-3 rounded text-red-500 hover:bg-red-50">↪ 退出登录</a>

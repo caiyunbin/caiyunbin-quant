@@ -51,10 +51,10 @@
                     <strong class="text-gray-800">不同的行情，交给最擅长它的那一个策略</strong>。
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <div class="bg-gradient-to-br from-emerald-50 to-white border border-emerald-200 rounded-xl p-4">
-                        <span class="inline-block text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">炒作前期</span>
-                        <p class="text-xs text-gray-600 leading-6 mt-2">资金刚开始试探，市场上绝大多数个股<strong>市值偏小、仍处低位</strong>。</p>
-                        <p class="text-sm font-bold text-emerald-800 mt-2">→ 「小盘低位」策略</p>
+                    <div class="bg-gradient-to-br from-sky-50 to-white border border-sky-200 rounded-xl p-4">
+                        <span class="inline-block text-xs font-bold text-sky-700 bg-sky-100 px-2 py-0.5 rounded-full">板块 / 全球趋势</span>
+                        <p class="text-xs text-gray-600 leading-6 mt-2">境内某板块走出主升浪，或<strong>美股科技处上升趋势</strong>时，集中跟随当下最强主线。</p>
+                        <p class="text-sm font-bold text-sky-800 mt-2">→ 「ETF 轮动」策略</p>
                     </div>
                     <div class="bg-gradient-to-br from-amber-50 to-white border border-amber-200 rounded-xl p-4">
                         <div class="flex items-center gap-2">
@@ -161,7 +161,7 @@
             <tbody id="singles-tbody" class="bg-white divide-y divide-gray-200"></tbody>
         </table>
         </div>
-        <p class="text-xs text-gray-500 mt-3">⚠ 板块轮动 (ETF) 为独立策略，每日单独更新数据与信号，<strong>不并入总组合</strong>。</p>
+        <p class="text-xs text-gray-500 mt-3">⚠ ETF 轮动策略已并入主组合 (占 <strong>30%</strong>)。因 ETF 2020 年才成立，<strong>组合净值/指标自 2020 年起</strong>统计。</p>
     </div>
 
     <!-- 回测方法说明 (口语版) -->
@@ -199,10 +199,10 @@
 
     <!-- ETF 独立 -->
     <div class="bg-yellow-50 border border-yellow-200 shadow rounded-lg p-4 sm:p-6" id="etf-card" style="display:none">
-        <h2 class="text-xl font-bold text-yellow-800 mb-2">🏦 板块轮动 (ETF) · 独立运行</h2>
-        <p class="text-xs text-yellow-700 mb-3">独立策略, 每日单独更新 — 不并入主组合, 不推送微信. 仅在本面板展示.</p>
+        <h2 class="text-xl font-bold text-yellow-800 mb-2">🔄 ETF 轮动策略 · 主组合 30% 腿</h2>
+        <p class="text-xs text-yellow-700 mb-3">境内板块轮动单押最强簇 + 大盘 regime 择时 + 纳指趋势叠加. 现为主组合 30% 腿, 每日更新.</p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm" id="etf-grid"></div>
-        <p class="text-xs text-gray-500 mt-2">详细信号 → <a href="strategies/etf.html" class="text-yellow-700 underline">板块轮动详情</a></p>
+        <p class="text-xs text-gray-500 mt-2">详细信号 → <a href="strategies/etf.html" class="text-yellow-700 underline">ETF 轮动策略详情</a></p>
     </div>
 
 </div>
@@ -213,7 +213,7 @@
 <script>
 const NAME_CN = {
     "V16.F": "🎯 小盘低位", "S2.G13": "🏛️ 大盘高位",
-    "S4.V4": "📈 低位横盘", "ETF.honest": "🏦 板块轮动",
+    "S4.V4": "📈 低位横盘", "ETF.honest": "🔄 ETF 轮动策略",
 };
 const FMT_PCT = (x) => (x>=0?"+":"") + (x*100).toFixed(1) + "%";
 const FMT_DEC = (x,n=3) => (x>=0?"+":"") + (x).toFixed(n);
@@ -236,7 +236,7 @@ async function loadJSON(path) {
     // Header
     document.getElementById('meta-version').textContent = '多策略量化决策系统 · 每个交易日收盘后自动更新一次';
     document.getElementById('meta-weights').textContent =
-        `总组合配比: 小盘低位 ${(latest.weights['V16.F']*100).toFixed(0)}% · 大盘高位 ${(latest.weights['S2.G13']*100).toFixed(0)}% · 低位横盘 ${(latest.weights['S4.V4']*100).toFixed(0)}% (板块轮动独立运行不并入)`;
+        `总组合配比: 大盘高位 ${(latest.weights['S2.G13']*100).toFixed(0)}% · 低位横盘 ${(latest.weights['S4.V4']*100).toFixed(0)}% · ETF轮动 ${(latest.weights['ETF.honest']*100).toFixed(0)}% (含ETF, 组合回测自2020年ETF成立日起)`;
     document.getElementById('meta-generated').textContent =
         `数据截止 ${latest.meta.data_date} · 网站更新于 ${latest.meta.generated_at}`;
 
@@ -274,7 +274,7 @@ async function loadJSON(path) {
         </tr>`;
     }
     html += `<tr class="bg-indigo-50 font-bold">
-        <td class="px-3 sm:px-4 py-2 whitespace-nowrap">三策略组合 (${(latest.weights['V16.F']*100).toFixed(0)}/${(latest.weights['S2.G13']*100).toFixed(0)}/${(latest.weights['S4.V4']*100).toFixed(0)})</td>
+        <td class="px-3 sm:px-4 py-2 whitespace-nowrap">三策略组合 (${(latest.weights['S2.G13']*100).toFixed(0)}/${(latest.weights['S4.V4']*100).toFixed(0)}/${(latest.weights['ETF.honest']*100).toFixed(0)})</td>
         <td class="px-3 sm:px-4 py-2 text-right">100%</td>
         <td class="px-3 sm:px-4 py-2 text-right text-green-700">${FMT_PCT(combo.ret)}</td>
         <td class="px-3 sm:px-4 py-2 text-right">${FMT_PCT(combo.ann_ret)}</td>
@@ -317,7 +317,7 @@ async function loadJSON(path) {
         const colors = ['#10b981', '#f59e0b', '#ef4444', '#a855f7', '#3b82f6'];
         const series = [];
         let i = 0;
-        for (const k of ["V16.F","S2.G13","S4.V4","ETF.honest","三策略组合"]) {
+        for (const k of ["S2.G13","S4.V4","ETF.honest","三策略组合"]) {
             if (!eq_curves[k]) continue;
             series.push({
                 name: NAME_CN[k] || k,
