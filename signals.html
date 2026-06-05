@@ -80,7 +80,25 @@ async function loadJSON(p) {
 
     const signals = latest.daily_signals || {};
     const container = document.getElementById('strategy-cards');
-    let outerHtml = '';
+    // ⚖️ 当前动态配比 + 权重更新时间 + 变化历史
+    const _wm = latest.weights_meta || {};
+    const _hist = _wm.history || [];
+    const _lastChg = _wm.last_change || '-';
+    const _rgNow = latest.regime || (latest.weights && latest.weights['S2.G13'] >= latest.weights['S4.V4'] ? '趋势市' : '震荡市');
+    const _wpct = (k) => (((latest.weights && latest.weights[k]) || 0) * 100).toFixed(0);
+    let outerHtml = `<div class="bg-gradient-to-br from-indigo-50 to-white border border-indigo-200 shadow rounded-lg p-4 sm:p-6">
+        <div class="flex justify-between items-center flex-wrap gap-2 mb-3">
+            <h2 class="text-lg font-bold text-indigo-800">⚖️ 当前动态配比 · <span class="text-indigo-600">${_rgNow}</span></h2>
+            <span class="text-xs text-gray-500">权重更新于 <b class="text-indigo-700">${_lastChg}</b> (上次相位切换/调仓)</span>
+        </div>
+        <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-sm bg-white border border-indigo-200 rounded px-3 py-1">🏛️ 大盘高位 <b class="text-indigo-700">${_wpct('S2.G13')}%</b></span>
+            <span class="text-sm bg-white border border-indigo-200 rounded px-3 py-1">📈 低位横盘 <b class="text-indigo-700">${_wpct('S4.V4')}%</b></span>
+            <span class="text-sm bg-white border border-sky-200 rounded px-3 py-1">🔄 ETF 轮动 <b class="text-sky-700">${_wpct('ETF.honest')}%</b></span>
+        </div>
+        <p class="text-xs text-gray-500">中证全指 &gt; 100日线 = 趋势市(大盘高位多配 45/25)，否则 = 震荡市(低位横盘多配 15/55)；ETF 固定 30%；每月首交易日按相位调仓。</p>
+        ${_hist.length > 1 ? `<details class="mt-2"><summary class="cursor-pointer text-xs text-indigo-600 font-medium hover:text-indigo-800 select-none">权重变化历史 (近 ${Math.min(6,_hist.length)} 次) ▾</summary><ul class="mt-2 space-y-1 text-xs text-gray-600">${_hist.slice().reverse().map(h => `<li><span class="font-mono text-gray-700">${h.date}</span> 起 → <b>${h.regime}</b> <span class="text-gray-400">(大盘${(h.weights['S2.G13']*100).toFixed(0)}/横盘${(h.weights['S4.V4']*100).toFixed(0)}/ETF${(h.weights['ETF.honest']*100).toFixed(0)})</span></li>`).join('')}</ul></details>` : ''}
+    </div>`;
 
     for (const strat of Object.keys(STRATEGY_INFO)) {
         const info = STRATEGY_INFO[strat];
@@ -205,16 +223,23 @@ async function loadJSON(p) {
     const _es = latest.etf_state || {};
     const _eh = _es.holdings || [];
     const _regime = latest.regime || (latest.weights && latest.weights['S2.G13'] >= latest.weights['S4.V4'] ? '趋势市' : '震荡市');
+    const _eth = (_es.trade_history || []).slice(-15).reverse();   // 最新15笔 (最近的在前)
     outerHtml += `<div class="bg-white shadow rounded-lg p-4 sm:p-6 border-l-4 border-sky-300">
         <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800">🔄 ETF 轮动</h2>
             <span class="text-xs bg-sky-100 text-sky-700 px-3 py-1 rounded-full font-medium">权重 ${(_ew*100).toFixed(0)}%</span>
         </div>
         <p class="text-xs text-gray-500 mb-4">境内板块轮动单押最强簇 + 大盘 regime 择时 + 纳指(^NDX)&gt;200日线时叠加 513100 纳指ETF。该腿无个股信号，按持有 ETF 操作。</p>
-        <div class="bg-sky-50 rounded-lg p-4">
-            <h3 class="text-sm font-bold text-sky-900 mb-2">📦 当前持有 (${_eh.length})</h3>
-            ${_eh.length>0 ? '<ul class="space-y-2">'+_eh.map(h=>`<li class="bg-white px-3 py-2 rounded text-xs font-mono font-bold text-sky-700">${typeof h==='string'?h:(h.ts_code||h)}</li>`).join('')+'</ul>' : '<p class="text-xs text-gray-500">空仓 (持现金 / 等纳指趋势)</p>'}
-            <p class="text-xs text-gray-400 mt-2">最近运行 ${_es.last_run_date||'-'} · 当前相位 ${_regime}</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+            <div class="bg-sky-50 rounded-lg p-4">
+                <h3 class="text-sm font-bold text-sky-900 mb-2">📦 当前持有 (${_eh.length})</h3>
+                ${_eh.length>0 ? '<ul class="space-y-2">'+_eh.map(h=>`<li class="bg-white px-3 py-2 rounded text-xs font-mono font-bold text-sky-700">${typeof h==='string'?h:(h.ts_code||h)}</li>`).join('')+'</ul>' : '<p class="text-xs text-gray-500">空仓 (持现金 / 等纳指趋势)</p>'}
+                <p class="text-xs text-gray-400 mt-2">最近运行 ${_es.last_run_date||'-'} · 当前相位 ${_regime}</p>
+            </div>
+            <div class="bg-gray-100 rounded-lg p-4">
+                <h3 class="text-sm font-bold text-gray-700 mb-2">📑 最近成交 (${_eth.length})</h3>
+                ${_eth.length>0 ? '<ul class="space-y-2">'+_eth.map(t=>`<li class="bg-white px-3 py-2 rounded text-xs"><div class="flex justify-between flex-wrap gap-1"><span class="font-mono text-gray-700">${t.ts_code}</span><span class="${(t.ret||0)>=0?'text-green-600':'text-red-500'} font-bold">${FMT_PCT(t.ret||0)}</span></div><div class="text-gray-500 mt-1">${t.entry_date} → ${t.exit_date||'持有中'} · ${t.hold_days||0}天 · ${t.reason||''}</div></li>`).join('')+'</ul>' : '<p class="text-xs text-gray-500">暂无成交记录</p>'}
+            </div>
         </div>
     </div>`;
 
