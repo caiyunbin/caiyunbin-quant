@@ -7,6 +7,7 @@
     <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/style.css">
     <script src="https://cdn.staticfile.net/echarts/5.4.3/echarts.min.js"></script>
+    <script src="../assets/trade_chart.js"></script>
     <script src="../assets/auth.js"></script>
     <script src="../assets/activity.js"></script>
     <script src="../assets/compliance.js"></script>
@@ -293,6 +294,13 @@ async function loadJSON(p) {
             sigHtml += '<p class="text-xs text-gray-500 mt-2">空仓 (macro 信号为熊市或无合格板块)</p>';
         }
         sigHtml += `</div>`;
+        const _eth = (e.trade_history || []).slice().reverse();
+        if (_eth.length > 0) {
+            sigHtml += '<div class="bg-gray-100 rounded-lg p-4 mt-3"><h3 class="text-sm font-bold text-gray-700 mb-3">📦 历史持仓 (' + _eth.length + ') <span class="text-xs text-indigo-400 font-normal">· 点行看K线</span></h3>';
+            sigHtml += '<ul class="space-y-2">' + _eth.slice(0,15).map((t,i)=>tradeChartLi(t,'eth'+i)).join('') + '</ul>';
+            if (_eth.length > 15) sigHtml += '<details class="mt-2"><summary class="list-none cursor-pointer text-xs text-indigo-600 font-medium hover:text-indigo-800 select-none">查看全部 ' + _eth.length + ' 笔 ▾</summary><ul class="space-y-2 mt-2">' + _eth.slice(15).map((t,i)=>tradeChartLi(t,'eth'+(i+15))).join('') + '</ul></details>';
+            sigHtml += '</div>';
+        }
     } else {
         sigHtml = '<p class="text-gray-500">无今日信号数据</p>';
     }
