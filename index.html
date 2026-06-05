@@ -235,7 +235,8 @@ async function loadJSON(path) {
 
     // Header
     document.getElementById('meta-version').textContent = '多策略量化决策系统 · 每个交易日收盘后自动更新一次';
-    const _rg = latest.regime ? `当前相位【${latest.regime}】→ ` : '';
+    const _rgLabel = latest.regime || (latest.weights && latest.weights['S2.G13'] >= latest.weights['S4.V4'] ? '趋势市' : '震荡市');
+    const _rg = _rgLabel ? `当前相位【${_rgLabel}】→ ` : '';
     document.getElementById('meta-weights').textContent =
         `${_rg}动态配比: 大盘高位 ${(latest.weights['S2.G13']*100).toFixed(0)}% · 低位横盘 ${(latest.weights['S4.V4']*100).toFixed(0)}% · ETF轮动 ${(latest.weights['ETF.honest']*100).toFixed(0)}% (中证全指趋势强度动态切换 S2/S4; 组合回测自2020年起)`;
     document.getElementById('meta-generated').textContent =

@@ -47,14 +47,12 @@
 <script>
 // 详细参数 (admin 才能看) + 模糊行情描述 (user 看)
 const STRATEGY_INFO_ADMIN = {
-    "小盘低位":   {icon: "🎯", weight: 0.05, pool: "A 股小盘股 — 涨幅+主力+量比 三维 rank-delta 跃升"},
-    "大盘高位":   {icon: "🏛️", weight: 0.25, pool: "A 股大盘股 (流通市值 ≥ 200 亿) — 连 3 日主力净流入 + 突破 20 日新高"},
-    "低位横盘":   {icon: "📈", weight: 0.70, pool: "A 股 amount_20d ≥ 5000万 — MA5>MA20>MA60 多头 5-29 天 + 横盘紧贴 MA5"},
+    "大盘高位":   {en:"S2.G13", icon: "🏛️", pool: "A 股大盘股 (流通市值 ≥ 200 亿) — 连 3 日主力净流入 + 突破 20 日新高"},
+    "低位横盘":   {en:"S4.V4", icon: "📈", pool: "A 股 amount_20d ≥ 5000万 — MA5>MA20>MA60 多头 5-29 天 + 横盘紧贴 MA5"},
 };
 const STRATEGY_INFO_USER = {
-    "小盘低位":   {icon: "🎯", weight: 0.05, pool: "适配中小盘活跃 + 资金面宽松的市场环境. 在题材股启动、成长股放量、超跌反弹阶段的 Alpha 爆发最强."},
-    "大盘高位":   {icon: "🏛️", weight: 0.25, pool: "适配大盘股趋势行情. 在主力资金持续入场、市场风格切到价值蓝筹、指数突破前期高点时的 Alpha 爆发最强."},
-    "低位横盘":   {icon: "📈", weight: 0.70, pool: "适配震荡上行行情中的低波动洗盘期. 在大盘已在上升通道, 个股进入紧贴均线的窄幅盘整时的 Alpha 爆发最强."},
+    "大盘高位":   {en:"S2.G13", icon: "🏛️", pool: "适配大盘股趋势行情. 在主力资金持续入场、市场风格切到价值蓝筹、指数突破前期高点时的 Alpha 爆发最强."},
+    "低位横盘":   {en:"S4.V4", icon: "📈", pool: "适配震荡上行行情中的低波动洗盘期. 在大盘已在上升通道, 个股进入紧贴均线的窄幅盘整时的 Alpha 爆发最强."},
 };
 const STRATEGY_INFO = (typeof isAdmin === 'function' && isAdmin())
     ? STRATEGY_INFO_ADMIN : STRATEGY_INFO_USER;
@@ -172,7 +170,7 @@ async function loadJSON(p) {
         outerHtml += `<div class="bg-white shadow rounded-lg p-4 sm:p-6 ${flat?'border-l-4 border-amber-300':''}">
             <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                 <h2 class="text-xl sm:text-2xl font-bold text-gray-800">${info.icon} ${strat}${flat?' <span class="text-sm text-amber-600 font-normal">(空仓观望)</span>':''}</h2>
-                <span class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-medium">权重 ${(info.weight*100).toFixed(0)}%</span>
+                <span class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-medium">权重 ${(((latest.weights&&latest.weights[info.en])||0)*100).toFixed(0)}%</span>
             </div>
             <p class="text-xs text-gray-500 mb-4">${info.pool}</p>
 
@@ -201,6 +199,24 @@ async function loadJSON(p) {
             </div>
         </div>`;
     }
+
+    // ETF 轮动腿 (无个股信号, 显示当前持有的 ETF + 相位)
+    const _ew = (latest.weights && latest.weights['ETF.honest']) || 0.30;
+    const _es = latest.etf_state || {};
+    const _eh = _es.holdings || [];
+    const _regime = latest.regime || (latest.weights && latest.weights['S2.G13'] >= latest.weights['S4.V4'] ? '趋势市' : '震荡市');
+    outerHtml += `<div class="bg-white shadow rounded-lg p-4 sm:p-6 border-l-4 border-sky-300">
+        <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800">🔄 ETF 轮动</h2>
+            <span class="text-xs bg-sky-100 text-sky-700 px-3 py-1 rounded-full font-medium">权重 ${(_ew*100).toFixed(0)}%</span>
+        </div>
+        <p class="text-xs text-gray-500 mb-4">境内板块轮动单押最强簇 + 大盘 regime 择时 + 纳指(^NDX)&gt;200日线时叠加 513100 纳指ETF。该腿无个股信号，按持有 ETF 操作。</p>
+        <div class="bg-sky-50 rounded-lg p-4">
+            <h3 class="text-sm font-bold text-sky-900 mb-2">📦 当前持有 (${_eh.length})</h3>
+            ${_eh.length>0 ? '<ul class="space-y-2">'+_eh.map(h=>`<li class="bg-white px-3 py-2 rounded text-xs font-mono font-bold text-sky-700">${typeof h==='string'?h:(h.ts_code||h)}</li>`).join('')+'</ul>' : '<p class="text-xs text-gray-500">空仓 (持现金 / 等纳指趋势)</p>'}
+            <p class="text-xs text-gray-400 mt-2">最近运行 ${_es.last_run_date||'-'} · 当前相位 ${_regime}</p>
+        </div>
+    </div>`;
 
     container.innerHTML = outerHtml;
 })();
