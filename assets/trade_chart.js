@@ -7,6 +7,14 @@
   window._TRADES = window._TRADES || {};
   var _tmChart = null;
 
+  // 持有天数: 优先用 hold_days(ETF腿带), 否则用 入场→出场 日历天数算 (个股数据无 hold_days)
+  function _heldDays(t) {
+    if (t.hold_days) return t.hold_days;
+    if (t.entry_date && t.exit_date) return Math.max(0, Math.round((new Date(t.exit_date) - new Date(t.entry_date)) / 864e5));
+    return 0;
+  }
+  window._heldDays = _heldDays;
+
   function injectModal() {
     if (document.getElementById('trade-modal')) return;
     var wrap = document.createElement('div');
@@ -40,7 +48,7 @@
     var ret = ((t.ret || 0) >= 0 ? '+' : '') + ((t.ret || 0) * 100).toFixed(1) + '%';
     var col = (t.ret || 0) >= 0 ? '#16a34a' : '#dc2626';
     document.getElementById('tm-title').innerHTML = t.ts_code + ' <span style="color:' + col + '">' + ret + '</span>';
-    document.getElementById('tm-sub').textContent = t.entry_date + ' 买入 → ' + (t.exit_date || '持有中') + ' 卖出 · 持 ' + (t.hold_days || 0) + ' 天 · ' + (t.reason || '');
+    document.getElementById('tm-sub').textContent = t.entry_date + ' 买入 → ' + (t.exit_date || '持有中') + ' 卖出 · 持 ' + _heldDays(t) + ' 天 · ' + (t.reason || '');
     var dates = t.kline.map(function (k) { return k[0]; });
     var ohlc = t.kline.map(function (k) { return [k[1], k[4], k[3], k[2]]; }); // [open,close,low,high]
     function closeAt(d) { var i = dates.indexOf(d); return i >= 0 ? t.kline[i][4] : null; }
@@ -69,7 +77,7 @@
     return '<li class="bg-white px-3 py-2 rounded text-xs ' + (hasK ? 'hover:bg-indigo-50' : '') + '" ' + clk + '>' +
       '<div class="flex justify-between flex-wrap gap-1"><span class="font-mono text-gray-700">' + t.ts_code + icon + '</span>' +
       '<span class="' + ((t.ret || 0) >= 0 ? 'text-green-600' : 'text-red-500') + ' font-bold">' + fmt(t.ret || 0) + '</span></div>' +
-      '<div class="text-gray-500 mt-1">' + t.entry_date + ' → ' + (t.exit_date || '持有中') + (t.hold_days ? ' · ' + t.hold_days + '天' : '') + (t.reason ? ' · ' + t.reason : '') + '</div></li>';
+      '<div class="text-gray-500 mt-1">' + t.entry_date + ' → ' + (t.exit_date || '持有中') + (_heldDays(t) ? ' · ' + _heldDays(t) + '天' : '') + (t.reason ? ' · ' + t.reason : '') + '</div></li>';
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', injectModal);

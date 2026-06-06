@@ -67,7 +67,8 @@ function openTradeChart(tid){
   const ret = ((t.ret||0)>=0?'+':'')+((t.ret||0)*100).toFixed(1)+'%';
   const retColor = (t.ret||0)>=0 ? '#16a34a' : '#dc2626';
   document.getElementById('tm-title').innerHTML = `${t.ts_code} <span style="color:${retColor}">${ret}</span>`;
-  document.getElementById('tm-sub').textContent = `${t.entry_date} 买入 → ${t.exit_date||'持有中'} 卖出 · 持 ${t.hold_days||0} 天 · ${t.reason||''}`;
+  const _hd = t.hold_days || ((t.entry_date&&t.exit_date)?Math.max(0,Math.round((new Date(t.exit_date)-new Date(t.entry_date))/864e5)):0);
+  document.getElementById('tm-sub').textContent = `${t.entry_date} 买入 → ${t.exit_date||'持有中'} 卖出 · 持 ${_hd} 天 · ${t.reason||''}`;
   const dates = t.kline.map(k=>k[0]);
   const ohlc = t.kline.map(k=>[k[1],k[4],k[3],k[2]]); // ECharts: [open,close,low,high]
   const closeAt = (d)=>{ const i=dates.indexOf(d); return i>=0 ? t.kline[i][4] : null; };
