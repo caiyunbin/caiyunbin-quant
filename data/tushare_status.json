@@ -1,7 +1,7 @@
 {
   "status": "ok",
   "message": "Tushare API 正常",
-  "checked_at": "2026-06-09 19:42:55",
+  "checked_at": "2026-06-11 19:50:34",
   "details": {
     "trade_cal_rows": 11,
     "last_trade_date": "20260520",
