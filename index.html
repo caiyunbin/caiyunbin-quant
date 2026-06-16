@@ -292,7 +292,7 @@ async function loadJSON(path) {
     </tr>`;
     tbody.innerHTML = html;
 
-    // 年度表 (从组合的年度推断 — 我们后端没存组合年度, 借用 V16.F 的 yearly 作为占位)
+    // 年度表 (从组合的年度推断 — 我们后端没存组合年度, 借用第一腿 singles[0] 的 yearly 作为占位)
     // 实际上 latest.combo 没有 yearly, 暂用第一个 single 的 yearly 作示意
     const yearlyData = latest.combo.yearly || (latest.singles[0] && latest.singles[0].yearly) || {};
     const yrTbody = document.getElementById('yearly-tbody');
