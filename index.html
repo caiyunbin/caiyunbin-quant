@@ -50,7 +50,12 @@
                     <strong class="text-indigo-700">彼此相关度很低</strong>的子策略，各自负责不同的行情阶段，协同组成今天的「多子策略决策引擎」——
                     <strong class="text-gray-800">不同的行情，交给最擅长它的那一个策略</strong>。
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div class="bg-gradient-to-br from-rose-50 to-white border border-rose-200 rounded-xl p-4">
+                        <span class="inline-block text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full">炒作初期 / 题材启动</span>
+                        <p class="text-xs text-gray-600 leading-6 mt-2">题材轮动活跃、妖股频出，<strong>普涨题材里放量补涨的低位股</strong>集中出击；空仓资金轮进最强宽基兜底。</p>
+                        <p class="text-sm font-bold text-rose-800 mt-2">→ 「妖股题材」策略</p>
+                    </div>
                     <div class="bg-gradient-to-br from-sky-50 to-white border border-sky-200 rounded-xl p-4">
                         <span class="inline-block text-xs font-bold text-sky-700 bg-sky-100 px-2 py-0.5 rounded-full">板块 / 全球趋势</span>
                         <p class="text-xs text-gray-600 leading-6 mt-2">境内某板块走出主升浪，或<strong>美股科技处上升趋势</strong>时，集中跟随当下最强主线。</p>
@@ -161,7 +166,7 @@
             <tbody id="singles-tbody" class="bg-white divide-y divide-gray-200"></tbody>
         </table>
         </div>
-        <p class="text-xs text-gray-500 mt-3">⚠ ETF 轮动策略已并入主组合 (占 <strong>30%</strong>)。因 ETF 2020 年才成立，<strong>本表各腿与组合均按 2020 年起统一口径</strong>计算，便于横向对比（大盘高位 / 低位横盘 在 2018-2019 的更早业绩不计入此表）。</p>
+        <p class="text-xs text-gray-500 mt-3">⚠ 四腿(大盘高位 / 妖股题材 / 低位横盘 / 板块轮动)按<strong>反向40日波动风险平价、逐月动态</strong>配比并入主组合。因 ETF 2020 年才成立，<strong>本表各腿与组合均按 2020 年起统一口径</strong>计算，便于横向对比（更早业绩不计入此表）。</p>
     </div>
 
     <!-- 回测方法说明 (口语版) -->
@@ -212,8 +217,8 @@
 
 <script>
 const NAME_CN = {
-    "V16.F": "🎯 小盘低位", "S2.G13": "🏛️ 大盘高位",
-    "S4.V4": "📈 低位横盘", "ETF.honest": "🔄 ETF 轮动策略",
+    "S2.G13": "🏛️ 大盘高位", "YAOGU.theme": "🔥 妖股题材",
+    "S4.V4": "📈 低位横盘", "ETF.honest": "🔄 板块轮动",
 };
 const FMT_PCT = (x) => (x>=0?"+":"") + (x*100).toFixed(1) + "%";
 const FMT_DEC = (x,n=3) => (x>=0?"+":"") + (x).toFixed(n);
@@ -235,10 +240,11 @@ async function loadJSON(path) {
 
     // Header
     document.getElementById('meta-version').textContent = '多策略量化决策系统 · 每个交易日收盘后自动更新一次';
-    const _rgLabel = latest.regime || (latest.weights && latest.weights['S2.G13'] >= latest.weights['S4.V4'] ? '趋势市' : '震荡市');
-    const _rg = _rgLabel ? `当前相位【${_rgLabel}】→ ` : '';
+    const _rgLabel = latest.regime || '';
+    const _rg = _rgLabel ? `当前相位【${_rgLabel}】· ` : '';
+    const _wp = (k) => latest.weights && latest.weights[k] != null ? (latest.weights[k]*100).toFixed(0) : '—';
     document.getElementById('meta-weights').textContent =
-        `${_rg}动态配比: 大盘高位 ${(latest.weights['S2.G13']*100).toFixed(0)}% · 低位横盘 ${(latest.weights['S4.V4']*100).toFixed(0)}% · ETF轮动 ${(latest.weights['ETF.honest']*100).toFixed(0)}% (中证全指趋势强度动态切换 S2/S4; 组合回测自2020年起)`;
+        `${_rg}四腿风险平价(动态): 大盘高位 ${_wp('S2.G13')}% · 妖股题材 ${_wp('YAOGU.theme')}% · 低位横盘 ${_wp('S4.V4')}% · 板块轮动 ${_wp('ETF.honest')}% (反向40日波动逐月调仓; 组合回测自2020年起)`;
     document.getElementById('meta-generated').textContent =
         `数据截止 ${latest.meta.data_date} · 网站更新于 ${latest.meta.generated_at}`;
 

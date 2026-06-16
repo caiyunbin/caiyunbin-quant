@@ -95,10 +95,12 @@ function openTradeChart(tid){
 // 详细参数 (admin 才能看) + 模糊行情描述 (user 看)
 const STRATEGY_INFO_ADMIN = {
     "大盘高位":   {en:"S2.G13", icon: "🏛️", pool: "A 股大盘股 (流通市值 ≥ 200 亿) — 连 3 日主力净流入 + 突破 20 日新高"},
+    "妖股题材":   {en:"YAOGU.theme", icon: "🔥", pool: "普涨题材(breadth>55)里放量(>2×5日均量)补涨的低位股, 集中≤5只, 移动止盈8% + 题材广度闸; 空仓风格轮动回补"},
     "低位横盘":   {en:"S4.V4", icon: "📈", pool: "A 股 amount_20d ≥ 5000万 — MA5>MA20>MA60 多头 5-29 天 + 横盘紧贴 MA5"},
 };
 const STRATEGY_INFO_USER = {
     "大盘高位":   {en:"S2.G13", icon: "🏛️", pool: "适配大盘股趋势行情. 在主力资金持续入场、市场风格切到价值蓝筹、指数突破前期高点时的 Alpha 爆发最强."},
+    "妖股题材":   {en:"YAOGU.theme", icon: "🔥", pool: "适配题材投机/小盘普涨行情. 题材轮动活跃、妖股频出时 Alpha 爆发最强; 大盘趋势市靠空仓资金轮动最强宽基兜底."},
     "低位横盘":   {en:"S4.V4", icon: "📈", pool: "适配震荡上行行情中的低波动洗盘期. 在大盘已在上升通道, 个股进入紧贴均线的窄幅盘整时的 Alpha 爆发最强."},
 };
 const STRATEGY_INFO = (typeof isAdmin === 'function' && isAdmin())
@@ -131,20 +133,21 @@ async function loadJSON(p) {
     const _wm = latest.weights_meta || {};
     const _hist = _wm.history || [];
     const _lastChg = _wm.last_change || '-';
-    const _rgNow = latest.regime || (latest.weights && latest.weights['S2.G13'] >= latest.weights['S4.V4'] ? '趋势市' : '震荡市');
+    const _rgNow = latest.regime || '';
     const _wpct = (k) => (((latest.weights && latest.weights[k]) || 0) * 100).toFixed(0);
     let outerHtml = `<div class="bg-gradient-to-br from-indigo-50 to-white border border-indigo-200 shadow rounded-lg p-4 sm:p-6">
         <div class="flex justify-between items-center flex-wrap gap-2 mb-3">
-            <h2 class="text-lg font-bold text-indigo-800">⚖️ 当前动态配比 · <span class="text-indigo-600">${_rgNow}</span></h2>
-            ${(_lastChg && _lastChg !== '-') ? `<span class="text-xs text-gray-500">权重更新于 <b class="text-indigo-700">${_lastChg}</b> (上次相位切换/调仓)</span>` : ''}
+            <h2 class="text-lg font-bold text-indigo-800">⚖️ 四腿风险平价配比${_rgNow ? ` · <span class="text-indigo-600">${_rgNow}</span>` : ''}</h2>
+            ${(_lastChg && _lastChg !== '-') ? `<span class="text-xs text-gray-500">权重更新于 <b class="text-indigo-700">${_lastChg}</b> (上次调仓)</span>` : ''}
         </div>
         <div class="flex flex-wrap gap-2 mb-3">
             <span class="text-sm bg-white border border-indigo-200 rounded px-3 py-1">🏛️ 大盘高位 <b class="text-indigo-700">${_wpct('S2.G13')}%</b></span>
+            <span class="text-sm bg-white border border-rose-200 rounded px-3 py-1">🔥 妖股题材 <b class="text-rose-700">${_wpct('YAOGU.theme')}%</b></span>
             <span class="text-sm bg-white border border-indigo-200 rounded px-3 py-1">📈 低位横盘 <b class="text-indigo-700">${_wpct('S4.V4')}%</b></span>
-            <span class="text-sm bg-white border border-sky-200 rounded px-3 py-1">🔄 ETF 轮动 <b class="text-sky-700">${_wpct('ETF.honest')}%</b></span>
+            <span class="text-sm bg-white border border-sky-200 rounded px-3 py-1">🔄 板块轮动 <b class="text-sky-700">${_wpct('ETF.honest')}%</b></span>
         </div>
-        <p class="text-xs text-gray-500">中证全指 &gt; 100日线 = 趋势市(大盘高位多配 45/25)，否则 = 震荡市(低位横盘多配 15/55)；ETF 固定 30%；每月首交易日按相位调仓。</p>
-        ${_hist.length > 1 ? `<details class="mt-2"><summary class="cursor-pointer text-xs text-indigo-600 font-medium hover:text-indigo-800 select-none">权重变化历史 (近 ${Math.min(6,_hist.length)} 次) ▾</summary><ul class="mt-2 space-y-1 text-xs text-gray-600">${_hist.slice().reverse().map(h => `<li><span class="font-mono text-gray-700">${h.date}</span> 起 → <b>${h.regime}</b> <span class="text-gray-400">(大盘${(h.weights['S2.G13']*100).toFixed(0)}/横盘${(h.weights['S4.V4']*100).toFixed(0)}/ETF${(h.weights['ETF.honest']*100).toFixed(0)})</span></li>`).join('')}</ul></details>` : ''}
+        <p class="text-xs text-gray-500">四腿(大盘高位 / 妖股题材 / 低位横盘 / 板块轮动)按<b>反向40日波动风险平价</b>配比：低波动腿多配、让各腿风险贡献均衡；每月首交易日按当时各腿波动调仓。</p>
+        ${_hist.length > 1 ? `<details class="mt-2"><summary class="cursor-pointer text-xs text-indigo-600 font-medium hover:text-indigo-800 select-none">权重变化历史 (近 ${Math.min(6,_hist.length)} 次) ▾</summary><ul class="mt-2 space-y-1 text-xs text-gray-600">${_hist.slice().reverse().map(h => `<li><span class="font-mono text-gray-700">${h.date}</span> 起 <span class="text-gray-400">(大盘${(h.weights['S2.G13']*100).toFixed(0)}/妖股${((h.weights['YAOGU.theme']||0)*100).toFixed(0)}/横盘${(h.weights['S4.V4']*100).toFixed(0)}/板块${(h.weights['ETF.honest']*100).toFixed(0)})</span></li>`).join('')}</ul></details>` : ''}
     </div>`;
 
     for (const strat of Object.keys(STRATEGY_INFO)) {
