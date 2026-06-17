@@ -48,30 +48,35 @@
   <div class="card rounded-xl p-5 mb-6">
     <h2 class="font-bold mb-1">🧭 子策略说明 · V28.1 四腿等权</h2>
     <p class="text-xs text-gray-400 mb-3">四腿等权 25%×4、每日再平衡。回测(2020-2026): 累计 +1132% · Sharpe 2.39 · Calmar 5.16 · MDD -10%(等权优于反向波动风险平价的 +710%/2.20/3.92)。</p>
+    <p class="text-xs text-gray-500 mb-3">注: <code class="text-gray-400">m_idx</code> = 全市场个股当日涨跌幅的等权横截面均值累计指数(≈全A等权), 非中证全指/沪深300。各闸均 T-1 取值(用昨日收盘判定、今日执行)。页面其它处的「趋势市/震荡市」标签是中证全指&gt;MA100, 仅展示用, 不驱动任何子策略权重(四腿恒等权)。</p>
     <div class="overflow-x-auto">
     <table class="w-full text-xs sm:text-sm">
       <thead><tr class="text-gray-400 text-left border-b border-gray-700">
-        <th class="py-2 pr-3 whitespace-nowrap">子策略</th><th class="py-2 pr-3">策略条件</th><th class="py-2">适用行情</th>
+        <th class="py-2 pr-3 whitespace-nowrap">子策略</th><th class="py-2 pr-3">策略条件</th><th class="py-2 pr-3">宏观闸 (大盘择时)</th><th class="py-2">适用行情</th>
       </tr></thead>
       <tbody class="align-top">
         <tr class="border-b border-gray-800">
           <td class="py-2 pr-3 font-semibold whitespace-nowrap">🏛️ 大盘高位<br><span class="text-gray-500 text-xs">S2.G13</span></td>
-          <td class="py-2 pr-3 text-gray-300">大盘股(流通市值≥200亿) + 连 3 日主力净流入 + 突破 20 日新高 + 加固风控(止损 -3% / MA40 硬卖)。</td>
-          <td class="py-2 text-gray-300">趋势/突破市(中证全指&gt;MA100)。大盘右侧、机构建仓行情。</td>
+          <td class="py-2 pr-3 text-gray-300">大盘股(流通市值≥200亿) + 连 3 日主力净流入 + 突破 20 日新高 + 加固风控(止损 -3% / 个股 MA40 硬卖)。</td>
+          <td class="py-2 pr-3 text-gray-300"><span class="text-amber-300 font-semibold">硬闸</span>: <code class="text-gray-400">m_idx ≥ MA40</code>。跌破即<b>全部强制清仓 + 停止买入</b>(熊市保护最严)。</td>
+          <td class="py-2 text-gray-300">大盘右侧突破、机构建仓的趋势市。全市场均值站上 MA40 才进场。</td>
         </tr>
         <tr class="border-b border-gray-800">
           <td class="py-2 pr-3 font-semibold whitespace-nowrap">🔥 妖股题材<br><span class="text-gray-500 text-xs">YAOGU.theme</span></td>
           <td class="py-2 pr-3 text-gray-300">自建题材(涨停原因, 成员窗口90天)→普涨题材(breadth&gt;55)成员里当天放量(&gt;2×5日均量)的 pos_peak 最跌(低位补涨)股, 集中≤5只等权; 移动止盈(回撤8%) + 题材广度闸 + 隐蔽派发黑名单 veto; 空仓资金按20日动量轮进最强风格指数 top2(&gt;MA200)。</td>
+          <td class="py-2 pr-3 text-gray-300"><span class="text-amber-300 font-semibold">双广度闸</span>: ①全市场上涨家数占比5日均 &gt; 其40日中位 ②普涨题材(breadth&gt;55)数5日均 &gt; 其60日中位。任一关→<b>次日清仓</b>, 空仓资金转<b>风格轮动</b>(20日动量 top2 风格指数 &gt;MA200)。</td>
           <td class="py-2 text-gray-300">题材投机/小盘普涨市(2022/2023/2024 独赚, 正是大盘策略最弱时)。大盘趋势市靠风格轮动兜底。</td>
         </tr>
         <tr class="border-b border-gray-800">
           <td class="py-2 pr-3 font-semibold whitespace-nowrap">📈 低位横盘<br><span class="text-gray-500 text-xs">S4.V4</span></td>
           <td class="py-2 pr-3 text-gray-300">amount_20d≥5000万 + MA5&gt;MA20&gt;MA60 多头 5-29 天 + 横盘(MA5斜率&lt;0.5%) + 紧贴 MA5(偏离&lt;2.5%) + 40日位置&lt;70% + EarlyStop 锁利。</td>
+          <td class="py-2 pr-3 text-gray-300"><span class="text-amber-300 font-semibold">硬闸</span>: <code class="text-gray-400">m_idx ≥ MA22</code>(比 S2 的 MA40 更短、更快回场)。跌破即 <b>MacroHard 强制清仓 + 停止买入</b>。</td>
           <td class="py-2 text-gray-300">震荡蓄势市。趋势中段低波动洗盘窗口。最稳健的全天候股票腿。</td>
         </tr>
         <tr>
           <td class="py-2 pr-3 font-semibold whitespace-nowrap">🔄 板块轮动<br><span class="text-gray-500 text-xs">ETF.honest</span></td>
           <td class="py-2 pr-3 text-gray-300">股票型 ETF 动量轮动: 首买资金流 z + 板块排名斜率 + 成交额打分 + 拥挤度过滤 + 趋势确认 + 移动止盈。</td>
+          <td class="py-2 pr-3 text-gray-300"><span class="text-sky-300 font-semibold">软闸</span>: <code class="text-gray-400">沪深300(000300.SH) ≥ MA55</code>(唯一用沪深300、不用 m_idx 的腿)。多头→持仓上限 3 只; 空头→<b>降到 1 只(不清仓)</b>。</td>
           <td class="py-2 text-gray-300">全天候/板块行情。与另三条股票腿(大盘高位/妖股题材/低位横盘)低相关的正交腿, 组合减震器(独立 MDD 最低)。</td>
         </tr>
       </tbody>
