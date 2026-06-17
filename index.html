@@ -325,13 +325,13 @@ async function loadJSON(path) {
         const colors = ['#10b981', '#f59e0b', '#ef4444', '#a855f7', '#3b82f6'];
         const series = [];
         let i = 0;
-        for (const k of ["S2.G13","S4.V4","ETF.honest","三策略组合"]) {
+        for (const k of ["S2.G13","YAOGU.theme","S4.V4","ETF.honest","四腿组合"]) {
             if (!eq_curves[k]) continue;
             series.push({
                 name: NAME_CN[k] || k,
                 type: 'line', smooth: true, showSymbol: false,
                 data: eq_curves[k],
-                lineStyle: { width: k==="三策略组合"?3:1.5, color: colors[i] },
+                lineStyle: { width: k==="四腿组合"?3:1.5, color: colors[i] },
             });
             i++;
         }
