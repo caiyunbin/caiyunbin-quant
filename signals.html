@@ -252,8 +252,9 @@ async function loadJSON(p) {
             <p class="text-xs text-gray-500 mb-4">${info.pool}</p>
 
             ${flat ? `<div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
-                <p class="text-sm text-amber-800 font-bold">💤 策略当前防御性空仓</p>
-                <p class="text-xs text-amber-700 mt-1">${(s.buy_today&&s.buy_today.length>0) ? '下方为候选观察池，策略按纪律暂不建仓；待大盘择时转好，策略会自动恢复建仓，届时此处显示持仓与离场信号。' : '当前无持仓、无候选，空仓等待机会出现。'}</p>
+                <p class="text-sm text-amber-800 font-bold">💤 策略当前空仓${(s.style_etf&&s.style_etf.length)?'（资金已轮动至最强宽基）':'观望'}</p>
+                <p class="text-xs text-amber-700 mt-1">${(s.buy_today&&s.buy_today.length>0) ? '下方为候选观察池，策略按纪律暂不建仓；待大盘择时转好，策略会自动恢复建仓，届时此处显示持仓与离场信号。' : (s.style_etf&&s.style_etf.length ? '当前无妖股可买，空仓资金按 20 日动量轮动至最强宽基指数兜底（见下方风格轮动）。' : '当前无持仓、无候选，空仓等待机会出现。')}</p>
+                ${(s.style_etf&&s.style_etf.length) ? `<div class="mt-2 flex flex-wrap gap-2">${s.style_etf.map(e=>`<span class="text-xs bg-white border border-rose-300 text-rose-700 rounded-full px-3 py-1 font-semibold">🔄 风格轮动持有 · ${(e&&(e.name||e.code))||e}</span>`).join('')}</div>` : ''}
             </div>` : ''}
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
