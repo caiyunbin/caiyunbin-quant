@@ -98,7 +98,7 @@ const META_MAP = {
     "S4.V4": {
         title: "📈 低位横盘策略 (V4.1)",
         sub:   "MA5>MA20>MA60 多头 5-29 天 + 横盘 (MA5 斜率<0.5%) + 紧贴 MA5 (偏离度<2.5%) + Hidden Blacklist 前置过滤 (剔除主力暗中出货嫌疑)",
-        alpha: "捕捉趋势中段的低波动洗盘窗口, EarlyStop 锁利 +8.4% (rqalpha-grade 17 项坑全修). V4.1 (2026-06-03) 新增 P18 hidden_distribution_blacklist 过滤, OOS V27 主组合年化 +2.39pp, MDD 改善 +1.17pp.",
+        alpha: "捕捉趋势中段的低波动洗盘窗口, EarlyStop 锁利 +8.4% (rqalpha-grade 17 项坑全修). V4.1 (2026-06-03) 新增 P18 hidden_distribution_blacklist 过滤, OOS V28 主组合年化 +2.39pp, MDD 改善 +1.17pp.",
         alpha_user: "捕捉「低位横盘形态」中的低波动洗盘窗口, 含锁利机制. V4.1 新增「主力暗中出货避雷」前置过滤层 (具体阈值不公开).",
         sub_user: "适配震荡上行行情中的低波动洗盘期. 当大盘已在上升通道、个股出现紧贴均线的窄幅盘整时, 该策略的 Alpha 爆发最强. V4.1 在选股前先剔除资金面上呈现「主力暗中出货」嫌疑的票, 进一步降低踩雷概率.",
         pool:  "A 股 amount_20d ≥ 5000万, IPO 后 ≥ 90 天, close ≥ 5 — V4.1 过滤掉 Hidden Blacklist (每日约 500 票)",
@@ -135,7 +135,7 @@ async function loadJSON(p) {
     document.getElementById('strat-title').textContent = m.title;
     document.getElementById('strat-subtitle').textContent = isAdmin() ? m.sub : (m.sub_user || m.sub);
     document.getElementById('strat-weight').textContent =
-        m.weight === null ? "独立运行 — 不并入主组合" : `在 V27 主组合中占比 ${(m.weight*100).toFixed(0)}%`;
+        m.weight === null ? "独立运行 — 不并入主组合" : `在 V28 主组合中占比 ${(m.weight*100).toFixed(0)}%`;
     document.getElementById('strat-generated').textContent =
         `数据日期 ${data.meta.data_date} · 站点生成 ${data.meta.generated_at}`;
     document.getElementById('strat-alpha').textContent = isAdmin() ? m.alpha : (m.alpha_user || m.alpha);
