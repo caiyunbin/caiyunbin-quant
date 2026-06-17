@@ -188,7 +188,7 @@
 
     <!-- 年度收益 -->
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">📊 年度表现 (三策略组合)</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">📊 年度表现 (四腿组合)</h2>
         <div class="scroll-x">
         <table class="min-w-full divide-y divide-gray-200 text-xs sm:text-sm">
             <thead class="bg-gray-50">
@@ -244,7 +244,7 @@ async function loadJSON(path) {
     const _rg = _rgLabel ? `当前相位【${_rgLabel}】· ` : '';
     const _wp = (k) => latest.weights && latest.weights[k] != null ? (latest.weights[k]*100).toFixed(0) : '—';
     document.getElementById('meta-weights').textContent =
-        `${_rg}四腿风险平价(动态): 大盘高位 ${_wp('S2.G13')}% · 妖股题材 ${_wp('YAOGU.theme')}% · 低位横盘 ${_wp('S4.V4')}% · 板块轮动 ${_wp('ETF.honest')}% (反向40日波动逐月调仓; 组合回测自2020年起)`;
+        `${_rg}四腿等权(25%×4·每日再平衡): 大盘高位 ${_wp('S2.G13')}% · 妖股题材 ${_wp('YAOGU.theme')}% · 低位横盘 ${_wp('S4.V4')}% · 板块轮动 ${_wp('ETF.honest')}% (组合回测自2020年起)`;
     document.getElementById('meta-generated').textContent =
         `数据截止 ${latest.meta.data_date} · 网站更新于 ${latest.meta.generated_at}`;
 
@@ -282,7 +282,7 @@ async function loadJSON(path) {
         </tr>`;
     }
     html += `<tr class="bg-indigo-50 font-bold">
-        <td class="px-3 sm:px-4 py-2 whitespace-nowrap">三策略组合 (动态权重)</td>
+        <td class="px-3 sm:px-4 py-2 whitespace-nowrap">四腿组合 (等权 25%×4)</td>
         <td class="px-3 sm:px-4 py-2 text-right">100%</td>
         <td class="px-3 sm:px-4 py-2 text-right text-green-700">${FMT_PCT(combo.ret)}</td>
         <td class="px-3 sm:px-4 py-2 text-right">${FMT_PCT(combo.ann_ret)}</td>

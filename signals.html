@@ -21,7 +21,7 @@
 
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
         <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-1">🎯 今日信号</h1>
-        <p class="text-gray-500 text-sm">三个子决策树当日候选股票 + 信号持续状态 + 信号出清建议 (T+1 开盘价撮合)</p>
+        <p class="text-gray-500 text-sm">四个子决策树当日候选股票 + 信号持续状态 + 信号出清建议 (T+1 开盘价撮合)</p>
         <p class="text-xs text-gray-400 mt-2" id="meta-info"></p>
     </div>
 
@@ -137,7 +137,7 @@ async function loadJSON(p) {
     const _wpct = (k) => (((latest.weights && latest.weights[k]) || 0) * 100).toFixed(0);
     let outerHtml = `<div class="bg-gradient-to-br from-indigo-50 to-white border border-indigo-200 shadow rounded-lg p-4 sm:p-6">
         <div class="flex justify-between items-center flex-wrap gap-2 mb-3">
-            <h2 class="text-lg font-bold text-indigo-800">⚖️ 四腿风险平价配比${_rgNow ? ` · <span class="text-indigo-600">${_rgNow}</span>` : ''}</h2>
+            <h2 class="text-lg font-bold text-indigo-800">⚖️ 四腿等权配比${_rgNow ? ` · <span class="text-indigo-600">${_rgNow}</span>` : ''}</h2>
             ${(_lastChg && _lastChg !== '-') ? `<span class="text-xs text-gray-500">权重更新于 <b class="text-indigo-700">${_lastChg}</b> (上次调仓)</span>` : ''}
         </div>
         <div class="flex flex-wrap gap-2 mb-3">
@@ -146,7 +146,7 @@ async function loadJSON(p) {
             <span class="text-sm bg-white border border-indigo-200 rounded px-3 py-1">📈 低位横盘 <b class="text-indigo-700">${_wpct('S4.V4')}%</b></span>
             <span class="text-sm bg-white border border-sky-200 rounded px-3 py-1">🔄 板块轮动 <b class="text-sky-700">${_wpct('ETF.honest')}%</b></span>
         </div>
-        <p class="text-xs text-gray-500">四腿(大盘高位 / 妖股题材 / 低位横盘 / 板块轮动)按<b>反向40日波动风险平价</b>配比：低波动腿多配、让各腿风险贡献均衡；每月首交易日按当时各腿波动调仓。</p>
+        <p class="text-xs text-gray-500">四腿(大盘高位 / 妖股题材 / 低位横盘 / 板块轮动)<b>等权 25%×4、每日再平衡</b>。研究结论(2020-2026): 四腿收益相近,等权不降权高收益腿 → 比反向波动风险平价全面更优(累计 +1132% vs +710%)。</p>
         ${_hist.length > 1 ? `<details class="mt-2"><summary class="cursor-pointer text-xs text-indigo-600 font-medium hover:text-indigo-800 select-none">权重变化历史 (近 ${Math.min(6,_hist.length)} 次) ▾</summary><ul class="mt-2 space-y-1 text-xs text-gray-600">${_hist.slice().reverse().map(h => `<li><span class="font-mono text-gray-700">${h.date}</span> 起 <span class="text-gray-400">(大盘${(h.weights['S2.G13']*100).toFixed(0)}/妖股${((h.weights['YAOGU.theme']||0)*100).toFixed(0)}/横盘${(h.weights['S4.V4']*100).toFixed(0)}/板块${(h.weights['ETF.honest']*100).toFixed(0)})</span></li>`).join('')}</ul></details>` : ''}
     </div>`;
 
