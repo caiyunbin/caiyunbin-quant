@@ -218,8 +218,9 @@ async function loadJSON(p) {
             </div>`;
         }
 
-        // 妖股题材专属: 空仓资金风格轮动 ETF/指数
-        if (s.style_etf && s.style_etf.length > 0) {
+        // 妖股题材专属: 空仓资金风格轮动 ETF/指数 —— 仅妖股空仓(flat)时这笔轮动才真正生效;
+        // style_etf(最强风格指数)引擎每天都算, 满仓时也非空, 故必须用 flat 把关, 否则满仓时误显"空仓风格轮动"
+        if (flat && s.style_etf && s.style_etf.length > 0) {
             sigHtml += `<div class="bg-rose-50 border border-rose-200 rounded-lg p-4 mb-4">
                 <p class="text-sm text-rose-800 font-bold">🔄 空仓资金风格轮动</p>
                 <p class="text-xs text-rose-700 mt-1">妖股个股空仓部分的闲置资金，按 20 日动量轮动进当下最强风格指数：<b class="text-rose-700">${s.style_etf.map(x=>x.name).join('、')}</b>（>MA200 趋势确认才进，否则持现金）。</p>
