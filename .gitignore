@@ -78,3 +78,9 @@ data/equity_curves.json
 data/events.json
 data/hype.json
 data/history/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
