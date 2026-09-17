@@ -30,6 +30,7 @@ async function renderNav(isSubdir) {
                 <a href="${prefix}index.html" class="nav-strat-btn ${A('index.html')}"><span class="label-2x2">总览首页</span></a>
                 <a href="${prefix}signals.html" class="nav-strat-btn ${A('signals.html')}"><span class="label-2x2">今日信号</span></a>
                 <a href="${prefix}events.html" class="nav-strat-btn ${A('events.html')}"><span class="label-2x2">事件驱动</span></a>
+                <a href="${prefix}strategies/market_leaders.html" class="nav-strat-btn ${A('market_leaders.html')}"><span class="label-2x2">市场高度</span></a>
                 <a href="${prefix}strategies/large_cap.html"     class="nav-strat-btn ${A('large_cap.html')}"><span class="label-2x2">大盘高位</span></a>
                 <a href="${prefix}strategies/yaogu.html"         class="nav-strat-btn ${cur==='yaogu.html'?'bg-red-600 text-white font-bold shadow':'text-rose-600 hover:bg-rose-50'}"><span class="label-2x2">妖股题材</span></a>
                 <a href="${prefix}strategies/consolidation.html" class="nav-strat-btn ${A('consolidation.html')}"><span class="label-2x2">低位横盘</span></a>
@@ -54,6 +55,7 @@ async function renderNav(isSubdir) {
         <a href="${prefix}index.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">📊 总览</a>
         <a href="${prefix}signals.html" class="block px-4 py-3 rounded text-indigo-700 font-bold bg-indigo-50">⭐ 今日信号</a>
         <a href="${prefix}events.html" class="block px-4 py-3 rounded text-purple-700 font-bold bg-purple-50">📡 事件驱动</a>
+        <a href="${prefix}strategies/market_leaders.html" class="block px-4 py-3 rounded text-teal-700 font-bold bg-teal-50">市场高度</a>
         <a href="${prefix}strategies/large_cap.html"     class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">🏛️ 大盘高位</a>
         <a href="${prefix}strategies/yaogu.html"         class="block px-4 py-3 rounded text-rose-600 font-semibold hover:bg-rose-50">🔥 妖股题材</a>
         <a href="${prefix}strategies/consolidation.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">📈 低位横盘</a>
