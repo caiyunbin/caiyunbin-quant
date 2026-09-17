@@ -141,12 +141,89 @@
       previous = time; return result;
     });
   }
-  const AI_SOURCE_NOTE = "基于截至所选日的涨停记录；未联网核实新闻";
+  const AI_SOURCE_NOTE = "关联所选日期、右侧筛选与排序；行情和原因以实际返回的数据来源为准。";
   function stockReasonQuestion(row, date) {
     if (!row || !SYMBOL.test(row.ts_code || "") || !ISO_DATE.test(date || "")) throw new Error("请先选择有效的股票与快照日期。");
     return `请分析 ${row.name || row.ts_code}（${row.ts_code}）截至 ${date} 已知的涨停原因。请区分该日与历史涨停记录，梳理主要题材逻辑、连续发酵情况，以及还需要核实的线索；若所选日未涨停或没有原因记录，请明确说明，不要把历史记录当作当日原因。`;
   }
-  function buildChatPayload(date, code, messages) {
+  function normalizeViewContext(raw) {
+    if (!raw || !["ladder", "leaders", "logic"].includes(raw.view)) return null;
+    const text = (value, max = 200) => typeof value === "string" ? value.trim().slice(0, max) : "";
+    const integer = (value, fallback, min, max) => Number.isInteger(value) ? Math.max(min, Math.min(max, value)) : fallback;
+    const unique = (values, limit, valid) => [...new Set((Array.isArray(values) ? values : []).filter(value => typeof value === "string" && valid(value)))].slice(0, limit);
+    const filters = {}, input = raw.filters && typeof raw.filters === "object" ? raw.filters : {};
+    ["query", "board", "bucket"].forEach(key => {if (typeof input[key] === "string") filters[key] = text(input[key]);});
+    ["excludeST", "activeOnly"].forEach(key => {if (typeof input[key] === "boolean") filters[key] = input[key];});
+    ["minDays", "minCount"].forEach(key => {if (input[key] === null || finite(input[key])) filters[key] = input[key];});
+    if (input.columns && typeof input.columns === "object") {
+      filters.columns = {};
+      COLUMNS.forEach(column => {
+        const filter = input.columns[column.key]; if (!filter || typeof filter !== "object") return;
+        if (column.type === "text" && typeof filter.text === "string") filters.columns[column.key] = {text: text(filter.text)};
+        else if (column.type === "number") {
+          const bounds = {};
+          ["min", "max"].forEach(key => {if (filter[key] === null || finite(filter[key])) bounds[key] = filter[key];});
+          if (Object.keys(bounds).length) filters.columns[column.key] = bounds;
+        }
+      });
+    }
+    const keys = raw.view === "logic" ? ["name", "consecutive_days", "today_count", "active_days", "member_count", "last_seen"] : COLUMNS.map(column => column.key);
+    return {view: raw.view, page: integer(raw.page, 1, 1, 10000), page_size: integer(raw.page_size, raw.view === "logic" ? 25 : 50, 1, 100),
+      visible_codes: unique(raw.visible_codes, 100, value => SYMBOL.test(value)), filtered_codes: unique(raw.filtered_codes, 500, value => SYMBOL.test(value)),
+      total_filtered: integer(raw.total_filtered, 0, 0, 10000), logic_ids: unique(raw.logic_ids, 25, value => Boolean(value.trim()) && value.length <= 160),
+      selected_logic: typeof raw.selected_logic === "string" && raw.selected_logic.trim() && raw.selected_logic.length <= 160 ? raw.selected_logic : null,
+      sort: {key: keys.includes(raw.sort?.key) ? raw.sort.key : raw.view === "logic" ? "today_count" : raw.view === "ladder" ? "streak" : "return30_pct", direction: raw.sort?.direction === "asc" ? "asc" : "desc"}, filters};
+  }
+  function buildDashboardViewContext(dashboard) {
+    if (dashboard.view === "logic") {
+      const groups = filterLogicGroups(dashboard.logic, dashboard.logicFilters, dashboard.logicSorting);
+      const visibleGroups = groups.slice((dashboard.logicPage - 1) * 25, dashboard.logicPage * 25);
+      const selected = visibleGroups.find(group => group.id === dashboard.logicSelected);
+      const members = selected ? sortLogicMembers(selected.members, dashboard.logicActiveOnly) : [];
+      const filtered = selected ? members : groups.flatMap(group => sortLogicMembers(group.members));
+      const codes = [...new Set(filtered.map(row => row.ts_code))];
+      return normalizeViewContext({view: "logic", page: dashboard.logicPage, page_size: 25, visible_codes: members.map(row => row.ts_code), filtered_codes: codes, total_filtered: codes.length,
+        logic_ids: visibleGroups.map(group => group.id), selected_logic: selected ? selected.id : null, sort: dashboard.logicSorting, filters: dashboard.logicFilters});
+    }
+    return normalizeViewContext({view: dashboard.view, page: dashboard.page, page_size: dashboard.pageSize,
+      visible_codes: dashboard.filtered.slice((dashboard.page - 1) * dashboard.pageSize, dashboard.page * dashboard.pageSize).map(row => row.ts_code), filtered_codes: dashboard.filtered.map(row => row.ts_code), total_filtered: dashboard.filtered.length,
+      logic_ids: [], selected_logic: null, sort: dashboard.sorting, filters: {...dashboard.filters, bucket: dashboard.view === "ladder" ? dashboard.filters.bucket : ""}});
+  }
+  function researchResolution(response) {
+    const seen = new Set();
+    const stocks = (Array.isArray(response.resolved_stocks) ? response.resolved_stocks : []).filter(stock => stock && SYMBOL.test(stock.ts_code || "") && !seen.has(stock.ts_code) && seen.add(stock.ts_code)).map(stock => ({ts_code: stock.ts_code, name: typeof stock.name === "string" && stock.name.trim() ? stock.name.trim().slice(0, 80) : stock.ts_code}));
+    return {stocks, selected: stocks.length === 1 ? stocks[0] : null, scope: typeof response.research_scope === "string" ? response.research_scope.slice(0, 500) : ""};
+  }
+  function safeResearchUrl(value) {
+    if (typeof value !== "string" || value.length > 5000 || !/^https?:\/\//i.test(value) || /[\u0000-\u0020\u007f]/.test(value)) return "";
+    try {
+      const url = new URL(value);
+      return ["http:", "https:"].includes(url.protocol) && !url.username && !url.password ? url.href : "";
+    } catch (_) {return "";}
+  }
+  function normalizeAiResearch(response = {}) {
+    const seen = new Set();
+    const statuses = ["completed", "failed", "not_used", "disabled", "unavailable"];
+    const sources = (Array.isArray(response.sources) ? response.sources : []).flatMap(source => {
+      if (!source || typeof source !== "object") return [];
+      const url = safeResearchUrl(source.url);
+      if (!url || seen.has(url)) return [];
+      seen.add(url);
+      const title = typeof source.title === "string" && source.title.trim() ? source.title.trim().slice(0, 300) : new URL(url).hostname;
+      const publishedAt = typeof source.published_at === "string" && /^\d{4}-\d{2}-\d{2}(?:$|[T\s])/.test(source.published_at) ? source.published_at.slice(0, 10) : "";
+      return [{url, title, published_at: publishedAt, verification: typeof source.verification === "string" ? source.verification.slice(0, 120) : ""}];
+    }).slice(0, 20);
+    const tools = (Array.isArray(response.tools) ? response.tools : []).filter(tool => tool && ["web_search", "web_fetch"].includes(tool.name)).slice(0, 10).map(tool => ({name: tool.name, status: ["completed", "success", "ok"].includes(tool.status) ? "completed" : ["failed", "error"].includes(tool.status) ? "failed" : "unknown"}));
+    return {engine: typeof response.engine === "string" ? response.engine.slice(0, 80) : "", search_status: statuses.includes(response.search_status) ? response.search_status : "unknown", sources, tools};
+  }
+  function researchStatusLabel(status) {
+    return {completed: "联网检索已完成", failed: "联网检索未完成，请以已取得的数据为准", not_used: "本次未调用联网检索", disabled: "本次已关闭联网检索", unavailable: "联网检索暂不可用"}[status] || "";
+  }
+  function researchDateLabel(source) {
+    const verification = {verified: "日期已核验", before_asof: "截至所选日已发布", verified_before_asof: "截至所选日已发布", within_asof: "截至所选日已发布", after_asof: "晚于所选日", published_after_asof: "晚于所选日", future: "晚于所选日", unknown: "发布日期未核验", unverified: "发布日期未核验", date_unverified: "发布日期未核验"}[source.verification];
+    return [source.published_at || "未提供发布日期", verification || "发布日期未核验"].join(" · ");
+  }
+  function buildChatPayload(date, code, messages, viewContext, webSearch = true) {
     if (!ISO_DATE.test(date || "") || code !== null && !SYMBOL.test(code || "")) throw new Error("请先等待所选日期的市场快照加载完成。");
     const allowed = messages.filter(message => message && ["user", "assistant"].includes(message.role) && typeof message.content === "string" && message.content.trim()).map(message => ({role: message.role, content: message.content.trim()}));
     if (!allowed.length || allowed.at(-1).role !== "user") throw new Error("请输入你想研究的问题。");
@@ -154,9 +231,10 @@
     let recent = allowed.slice(-13);
     while (recent.length && recent[0].role !== "user") recent.shift();
     while (recent.length > 1 && (recent.slice(0, -1).some(message => message.content.length > 8000) || recent.slice(0, -1).reduce((sum, message) => sum + message.content.length, 0) > 18000)) {recent.shift(); while (recent.length > 1 && recent[0].role !== "user") recent.shift();}
-    return {date, ts_code: code, messages: recent};
+    const context = normalizeViewContext(viewContext);
+    return {date, ts_code: code, messages: recent, web_search: webSearch !== false, ...(context ? {view_context: context} : {})};
   }
-  const core = {COLUMNS, normalizeRow, bucketFor, filterAndSort, selectLeaders, normalizeHistory, rowAsOf, normalizeLogicGroup, filterLogicGroups, sortLogicMembers, csvCell, makeCsv, movingAverage, validateBars, stockReasonQuestion, buildChatPayload};
+  const core = {COLUMNS, normalizeRow, bucketFor, filterAndSort, selectLeaders, normalizeHistory, rowAsOf, normalizeLogicGroup, filterLogicGroups, sortLogicMembers, csvCell, makeCsv, movingAverage, validateBars, stockReasonQuestion, normalizeViewContext, buildDashboardViewContext, researchResolution, safeResearchUrl, normalizeAiResearch, researchStatusLabel, researchDateLabel, buildChatPayload};
   if (typeof module !== "undefined" && module.exports) module.exports = core;
   if (typeof document === "undefined") return;
 
@@ -167,7 +245,7 @@
   const tone = value => value > 0 ? "positive" : value < 0 ? "negative" : "neutral";
   const state = {ladder: [], leaders: [], unknown: [], meta: {}, view: "ladder", filtered: [], page: 1, pageSize: 50, filters: {query: "", board: "", bucket: "", excludeST: false, columns: {}}, sorting: {key: "streak", direction: "desc"}, column: null, columnTrigger: null, selected: null, kind: "daily", period: 60, chart: null, chartPayload: null, chartController: null, requestId: 0, cache: new Map(), opener: null, dates: [], requestedDate: "", latestDate: "", loading: true, screenRequestId: 0, screenController: null, screenError: "", logic: [], logicMeta: {}, logicFilters: {query: "", minDays: null, minCount: null, activeOnly: false}, logicSorting: {key: "today_count", direction: "desc"}, logicPage: 1, logicSelected: null, logicActiveOnly: false};
 
-  const ai = {configured: false, configLoaded: false, model: "deepseek-v4-pro", draftModel: "deepseek-v4-pro", models: [{id: "deepseek-v4-pro", label: "DeepSeek V4 Pro"}, {id: "deepseek-flash", label: "DeepSeek Flash"}], keyHint: "", messages: [], selected: null, date: "", busy: false, saving: false, requestId: 0, controller: null, pendingQuestion: "", authRequired: false};
+  const ai = {configured: false, configLoaded: false, model: "deepseek-v4-pro", draftModel: "deepseek-v4-pro", models: [{id: "deepseek-v4-pro", label: "DeepSeek V4 Pro"}, {id: "deepseek-flash", label: "DeepSeek Flash"}], keyHint: "", messages: [], selected: null, resolved: [], researchScope: "", date: "", webSearch: true, busy: false, saving: false, requestId: 0, controller: null, pendingQuestion: "", authRequired: false};
   const aiModelName = model => ai.models.find(option => option.id === model)?.label || model;
   function applyAiConfig(payload) {
     const ids = Array.isArray(payload.models) ? payload.models.filter(id => typeof id === "string" && /^deepseek-[a-z0-9-]+$/.test(id)) : ai.models.map(option => option.id);
@@ -257,28 +335,63 @@
     node.append(make("span", "", message));
     if (retry) {const button = make("button", "text-button", "重试"); button.type = "button"; button.addEventListener("click", retry); node.append(button);}
   }
+  function renderAiContext() {
+    const stockNames = ai.resolved.map(stock => stock.name);
+    $("ai-context-name").textContent = ai.selected ? `${ai.selected.name} · ${ai.selected.ts_code.split(".")[0]}` : stockNames.length ? stockNames.join(" / ") : ai.researchScope || "所选日市场";
+    $("ai-context-name").title = ai.researchScope;
+    $("ai-context-date").textContent = ai.date || "等待快照";
+    $("ai-context-reset").hidden = !ai.selected && !ai.resolved.length && !ai.researchScope;
+    const viewName = {ladder: "连板梯队", leaders: "30 日涨幅榜", logic: "逻辑追踪"}[state.view];
+    const group = state.view === "logic" && state.logic.find(item => item.id === state.logicSelected);
+    const scope = state.view === "logic" ? group ? ` · ${group.name}${state.logicActiveOnly ? "（当日活跃）" : ""}` : ` · 第 ${state.logicPage} 页` : ` · 第 ${state.page} 页 · ${state.filtered.length} 只符合筛选`;
+    $("ai-linked-context").textContent = state.loading ? "正在关联所选日期的看板…" : state.screenError ? "看板数据读取失败，请重试后提问。" : `已关联右侧：${viewName}${scope} · ${state.meta.date || ai.date}`;
+  }
+  function aiAnswerSource(message) {
+    const stocks = Array.isArray(message.resolved_stocks) ? message.resolved_stocks : [];
+    return [stocks.length ? `研究标的：${stocks.map(stock => `${stock.name}（${stock.ts_code}）`).join("、")}` : "", message.research_scope ? `范围：${message.research_scope}` : "", message.source_note || AI_SOURCE_NOTE].filter(Boolean).join(" · ");
+  }
+  function renderAiResearch(item, research) {
+    if (!research) return;
+    const status = researchStatusLabel(research.search_status);
+    if (status) item.append(make("span", `ai-search-status${["failed", "unavailable"].includes(research.search_status) ? " is-warning" : ""}`, status));
+    if (research.tools.length) {
+      const activity = make("div", "ai-tool-activity"); activity.setAttribute("aria-label", "检索记录");
+      research.tools.forEach(tool => activity.append(make("span", "", `${tool.name === "web_search" ? "搜索公告新闻" : "读取网页"} · ${tool.status === "completed" ? "完成" : tool.status === "failed" ? "失败" : "已调用"}`)));
+      item.append(activity);
+    }
+    if (!research.sources.length) return;
+    const details = make("details", "ai-research-sources"); details.append(make("summary", "", `参考来源 · ${research.sources.length}`));
+    const list = make("ol", "ai-source-list");
+    research.sources.forEach(source => {
+      const row = make("li", "ai-source-card"), link = make("a", "", source.title);
+      link.href = source.url; link.target = "_blank"; link.rel = "noopener noreferrer"; link.referrerPolicy = "no-referrer";
+      row.append(link, make("span", "ai-source-domain", new URL(source.url).hostname), make("span", "ai-source-date", researchDateLabel(source)));
+      list.append(row);
+    });
+    details.append(list); item.append(details);
+  }
   function renderAiMessages() {
     const node = $("ai-messages"); node.replaceChildren();
     if (!ai.messages.length && !ai.busy) {
-      const welcome = make("div", "ai-welcome"); welcome.append(make("span", "ai-welcome-mark", "✦"), make("strong", "", "从一只股票的涨停原因开始"), make("p", "", "点击股票旁的“涨停原因”，将自动在这里提问。也可以直接输入想研究的问题。"), make("span", "", "切换股票或历史日期会开启新对话。")); node.append(welcome);
+      const welcome = make("div", "ai-welcome"); welcome.append(make("span", "ai-welcome-mark", "✦"), make("strong", "", "直接问股票，也可以问右侧看板"), make("p", "", "输入股票名称或代码即可研究，例如“宁德时代怎么样”，也可以问“比较右边前3只”。当前日期、筛选和排序会一起关联。"), make("span", "", "点击“涨停原因”可快速提问。切换历史日期会开启新对话。")); node.append(welcome);
     }
     ai.messages.forEach(message => {
       const item = make("article", `ai-message ai-message-${message.role}`); item.append(make("span", "ai-message-author", message.role === "user" ? "你" : message.model ? aiModelName(message.model) : "DeepSeek"), make("p", "ai-message-content", message.content));
-      if (message.role === "assistant") item.append(make("span", "ai-message-source", message.source_note || AI_SOURCE_NOTE));
+      if (message.role === "assistant") {item.append(make("span", "ai-message-source", aiAnswerSource(message))); renderAiResearch(item, message.research);}
       node.append(item);
     });
-    if (ai.busy) {const pending = make("div", "ai-pending"); pending.append(make("span", "loader"), make("span", "", ai.model === "deepseek-reasoner" ? "正在推理与梳理来源…" : "正在分析涨停记录…")); node.append(pending);}
+    if (ai.busy) {const pending = make("div", "ai-pending"); pending.append(make("span", "loader"), make("span", "", ai.webSearch ? "正在关联数据并按需检索公告新闻，可能需要 1–3 分钟…" : "正在关联股票、看板与历史数据…")); node.append(pending);}
     node.scrollTop = node.scrollHeight;
-    $("ai-context-name").textContent = ai.selected ? `${ai.selected.name} · ${ai.selected.ts_code.split(".")[0]}` : "所选日市场";
-    $("ai-context-date").textContent = ai.date || "等待快照"; $("ai-context-reset").hidden = !ai.selected;
+    renderAiContext();
     $("ai-chat-input").disabled = ai.busy;
+    $("ai-web-search").checked = ai.webSearch; $("ai-web-search").disabled = ai.busy;
     $("ai-send").disabled = ai.busy || ai.saving || state.loading || Boolean(state.screenError);
     $("ai-send").firstChild.textContent = ai.busy ? "分析中 " : "发送 ";
     renderAiConfig();
   }
   function clearAiConversation(row = ai.selected, date = ai.date) {
     ai.requestId++; if (ai.controller) ai.controller.abort(); ai.controller = null;
-    ai.busy = false; ai.messages = []; ai.selected = row; ai.date = date; ai.pendingQuestion = "";
+    ai.busy = false; ai.messages = []; ai.selected = row; ai.resolved = row ? [row] : []; ai.researchScope = ""; ai.date = date; ai.pendingQuestion = "";
     $("ai-chat-input").value = ""; $("ai-source-note").textContent = AI_SOURCE_NOTE; showAiStatus(""); renderAiMessages();
   }
   function syncAiDate(date) {
@@ -303,7 +416,7 @@
     if (state.loading || state.screenError) {showAiStatus("请先等待市场快照加载完成。"); return;}
     if (!ai.configured) {ai.pendingQuestion = content; showAiStatus("先配置你的 DeepSeek API Key，保存后点击发送。", null, false); toggleAiConfig(true); return;}
     let payload;
-    try {payload = buildChatPayload(ai.date, ai.selected ? ai.selected.ts_code : null, [...ai.messages, {role: "user", content}]);}
+    try {payload = buildChatPayload(ai.date, ai.selected ? ai.selected.ts_code : null, [...ai.messages, {role: "user", content}], buildDashboardViewContext(state), ai.webSearch);}
     catch (error) {showAiStatus(error.message); return;}
     const requestId = ++ai.requestId;
     ai.busy = true; ai.controller = new AbortController(); ai.messages.push({role: "user", content}); ai.pendingQuestion = "";
@@ -312,8 +425,11 @@
       const response = await aiRequest("chat", "POST", payload, ai.controller.signal);
       if (requestId !== ai.requestId) return;
       if (typeof response.reply !== "string" || !response.reply.trim()) throw new Error("未取得有效回复，请重试。");
-      ai.messages.push({role: "assistant", content: response.reply, model: response.model, source_note: typeof response.source_note === "string" ? response.source_note : AI_SOURCE_NOTE});
-      $("ai-source-note").textContent = typeof response.source_note === "string" ? response.source_note : AI_SOURCE_NOTE;
+      const resolution = researchResolution(response);
+      ai.selected = resolution.selected; ai.resolved = resolution.stocks; ai.researchScope = resolution.scope;
+      const answer = {role: "assistant", content: response.reply, model: response.model, source_note: typeof response.source_note === "string" ? response.source_note : AI_SOURCE_NOTE, resolved_stocks: resolution.stocks, research_scope: resolution.scope, research: normalizeAiResearch(response)};
+      ai.messages.push(answer);
+      $("ai-source-note").textContent = aiAnswerSource(answer);
     } catch (error) {
       if (error.name === "AbortError" || requestId !== ai.requestId) return;
       ai.messages.pop(); $("ai-chat-input").value = content;
@@ -404,7 +520,7 @@
     $("page-number").textContent = `${state.page} / ${totalPages}`; $("page-prev").disabled = state.page === 1; $("page-next").disabled = state.page === totalPages;
     $("unknown-note").hidden = !isLadder || !state.unknown.length;
     $("unknown-note").textContent = state.unknown.length ? `另有 ${state.unknown.length} 只股票因涨停价或连续历史缺失，暂未纳入连板分组。` : "";
-    renderRows();
+    renderRows(); renderAiContext();
   }
   function renderRows() {
     const body = $("table-body"); body.replaceChildren();
@@ -448,7 +564,7 @@
     if (state.loading || state.screenError) {
       $("logic-table-scroll").hidden = true; $("logic-pagination").hidden = true;
       $("logic-result-count").textContent = state.loading ? "正在加载…" : "数据尚未读取";
-      showState($("logic-status"), state.loading ? "正在读取逻辑历史" : "暂时无法读取", state.screenError || `${state.requestedDate || "最新交易日"} · 仅使用该日及此前记录`, state.screenError ? () => loadScreen(state.requestedDate) : null, state.loading); return;
+      showState($("logic-status"), state.loading ? "正在读取逻辑历史" : "暂时无法读取", state.screenError || `${state.requestedDate || "最新交易日"} · 仅使用该日及此前记录`, state.screenError ? () => loadScreen(state.requestedDate) : null, state.loading); renderAiContext(); return;
     }
     const groups = filterLogicGroups(state.logic, state.logicFilters, state.logicSorting), pageSize = 25, pages = Math.max(1, Math.ceil(groups.length / pageSize));
     state.logicPage = Math.max(1, Math.min(state.logicPage, pages));
@@ -485,6 +601,7 @@
     $("logic-page-description").textContent = groups.length ? `第 ${(state.logicPage - 1) * pageSize + 1}–${Math.min(state.logicPage * pageSize, groups.length)} 个逻辑` : "";
     $("logic-page-number").textContent = `${state.logicPage} / ${pages}`; $("logic-page-prev").disabled = state.logicPage === 1; $("logic-page-next").disabled = state.logicPage === pages;
     if (state.logicSelected) renderLogicMembers();
+    else renderAiContext();
   }
   function selectLogic(id) {
     state.logicSelected = state.logicSelected === id ? null : id; state.logicActiveOnly = false; $("logic-active-only").checked = false;
@@ -494,7 +611,7 @@
   }
   function renderLogicMembers() {
     const group = state.logic.find(item => item.id === state.logicSelected);
-    $("logic-members-panel").hidden = !group; if (!group) return;
+    $("logic-members-panel").hidden = !group; renderAiContext(); if (!group) return;
     $("logic-members-title").textContent = group.name;
     $("logic-members-window").textContent = `${state.logicMeta.window_start || state.meta.start_date || ""} → ${state.meta.date}`;
     $("logic-members-description").textContent = `连续发酵 ${group.consecutive_left_censored && group.consecutive_days > 0 ? "≥" : ""}${fmt(group.consecutive_days, 0)} 天 · 当日 ${fmt(group.today_count, 0)} 只涨停 · 历史 ${fmt(group.member_count, 0)} 只参与${group.first_seen ? ` · 窗口内首次 ${group.first_seen}` : ""}${group.source ? ` · ${group.source}` : ""}`;
@@ -725,6 +842,7 @@
   $("ai-config").addEventListener("submit", saveAiConfig); $("ai-delete-config").addEventListener("click", deleteAiConfig);
   $("ai-model").addEventListener("change", event => {ai.draftModel = event.target.value; $("ai-config-status").textContent = ai.draftModel === ai.model ? "" : "模型尚未保存，请点击保存配置。"; renderAiConfig();});
   $("ai-chat-form").addEventListener("submit", sendAiMessage); $("ai-clear-chat").addEventListener("click", () => clearAiConversation());
+  $("ai-web-search").addEventListener("change", event => {ai.webSearch = event.target.checked;});
   $("ai-context-reset").addEventListener("click", () => clearAiConversation(null));
   $("ai-chat-input").addEventListener("keydown", event => {if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {event.preventDefault(); sendAiMessage();}});
   $("ai-mobile-toggle").addEventListener("click", revealAssistant); $("ai-mobile-close").addEventListener("click", hideAssistant); $("ai-backdrop").addEventListener("click", hideAssistant);
