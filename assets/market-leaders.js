@@ -167,14 +167,26 @@
   const tone = value => value > 0 ? "positive" : value < 0 ? "negative" : "neutral";
   const state = {ladder: [], leaders: [], unknown: [], meta: {}, view: "ladder", filtered: [], page: 1, pageSize: 50, filters: {query: "", board: "", bucket: "", excludeST: false, columns: {}}, sorting: {key: "streak", direction: "desc"}, column: null, columnTrigger: null, selected: null, kind: "daily", period: 60, chart: null, chartPayload: null, chartController: null, requestId: 0, cache: new Map(), opener: null, dates: [], requestedDate: "", latestDate: "", loading: true, screenRequestId: 0, screenController: null, screenError: "", logic: [], logicMeta: {}, logicFilters: {query: "", minDays: null, minCount: null, activeOnly: false}, logicSorting: {key: "today_count", direction: "desc"}, logicPage: 1, logicSelected: null, logicActiveOnly: false};
 
-  const ai = {configured: false, configLoaded: false, model: "deepseek-chat", keyHint: "", messages: [], selected: null, date: "", busy: false, saving: false, requestId: 0, controller: null, pendingQuestion: "", authRequired: false};
+  const ai = {configured: false, configLoaded: false, model: "deepseek-v4-pro", draftModel: "deepseek-v4-pro", models: [{id: "deepseek-v4-pro", label: "DeepSeek V4 Pro"}, {id: "deepseek-flash", label: "DeepSeek Flash"}], keyHint: "", messages: [], selected: null, date: "", busy: false, saving: false, requestId: 0, controller: null, pendingQuestion: "", authRequired: false};
+  const aiModelName = model => ai.models.find(option => option.id === model)?.label || model;
+  function applyAiConfig(payload) {
+    const ids = Array.isArray(payload.models) ? payload.models.filter(id => typeof id === "string" && /^deepseek-[a-z0-9-]+$/.test(id)) : ai.models.map(option => option.id);
+    const options = Array.isArray(payload.model_options) ? payload.model_options : [];
+    if (ids.length) ai.models = [...new Set(ids)].map(id => {
+      const option = options.find(item => item && item.id === id);
+      return {id, label: typeof option?.label === "string" ? option.label : id, description: typeof option?.description === "string" ? option.description : ""};
+    });
+    ai.configured = payload.configured === true;
+    ai.model = ids.includes(payload.model) ? payload.model : ai.models[0].id;
+    ai.draftModel = ai.model; ai.configLoaded = true;
+  }
   async function aiRequest(path, method = "GET", body, signal) {
     const response = await fetch(`/api/market-leaders/ai/${path}`, {method, headers: {Accept: "application/json", ...(body ? {"Content-Type": "application/json"} : {})}, credentials: "same-origin", cache: "no-store", ...(body ? {body: JSON.stringify(body)} : {}), signal});
     let payload = null;
     try {if ((response.headers.get("content-type") || "").includes("application/json")) payload = await response.json();} catch (_) { /* Handle invalid service responses below. */ }
     if (response.status === 401) {ai.authRequired = true; $("ai-login").hidden = false; throw new Error("登录状态已失效，请先登录再使用研究助手。");}
     if (!response.ok) {
-      const errorText = payload && typeof payload.error === "string" ? payload.error : payload && typeof payload.message === "string" ? payload.message : "";
+      const errorText = payload && typeof payload.detail === "string" ? payload.detail : payload && typeof payload.error === "string" ? payload.error : payload && typeof payload.message === "string" ? payload.message : "";
       throw new Error(errorText || (response.status === 429 ? "请求较多，请稍后重试。" : `研究助手暂时不可用（${response.status}），请稍后重试。`));
     }
     if (!payload) throw new Error("研究助手未返回有效数据，请稍后重试。");
@@ -191,16 +203,23 @@
   }
   function toggleAiConfig(open) {
     $("ai-config").hidden = !open; $("ai-config-toggle").setAttribute("aria-expanded", String(open));
-    if (open) {revealAssistant(); $("ai-api-key").focus();}
+    if (open) {revealAssistant(); (ai.configured ? $("ai-model") : $("ai-api-key")).focus();}
     else $("ai-api-key").value = "";
   }
   function renderAiConfig() {
     $("ai-connection-status").textContent = ai.configured ? "账户已配置" : "尚未配置 API Key";
     $("ai-connection-dot").classList.toggle("is-connected", ai.configured);
     $("ai-api-key").placeholder = ai.configured ? "留空保留现有密钥" : "输入你的 API Key";
-    $("ai-model").value = ai.model; $("ai-model-label").textContent = ai.model === "deepseek-reasoner" ? "DeepSeek Reasoner" : "DeepSeek Chat";
+    const select = $("ai-model");
+    if ([...select.options].map(option => option.value).join(",") !== ai.models.map(option => option.id).join(",")) {
+      select.replaceChildren(...ai.models.map(option => {const node = make("option", "", option.label); node.value = option.id; return node;}));
+    }
+    select.value = ai.draftModel;
+    $("ai-model-label").textContent = aiModelName(ai.model); $("ai-model-label").title = `当前使用：${aiModelName(ai.model)}`;
+    const selected = ai.models.find(option => option.id === ai.draftModel);
+    $("ai-model-description").textContent = `${selected?.description || ""} 选择后保存，下一次提问生效。${ai.configured ? " API Key 留空即可保留现有密钥。" : ""}`;
     $("ai-delete-config").hidden = !ai.configured;
-    $("ai-api-key").disabled = ai.saving; $("ai-model").disabled = ai.saving;
+    $("ai-api-key").disabled = ai.saving || ai.busy; $("ai-model").disabled = ai.saving || ai.busy;
     $("ai-save-config").disabled = ai.saving || ai.busy; $("ai-delete-config").disabled = ai.saving || ai.busy;
     $("ai-save-config").textContent = ai.saving ? "正在保存…" : "保存配置";
     $("ai-send").disabled = ai.busy || ai.saving || state.loading || Boolean(state.screenError);
@@ -208,7 +227,7 @@
   async function loadAiConfig() {
     try {
       const payload = await aiRequest("config");
-      ai.configured = payload.configured === true; ai.model = payload.model === "deepseek-reasoner" ? "deepseek-reasoner" : "deepseek-chat"; ai.configLoaded = true;
+      applyAiConfig(payload);
       renderAiConfig();
     } catch (error) {$("ai-connection-status").textContent = "配置读取失败"; showAiStatus(error.message, () => loadAiConfig());}
   }
@@ -219,16 +238,16 @@
     ai.saving = true; $("ai-config-status").textContent = "正在保存配置…"; renderAiConfig();
     try {
       const payload = await aiRequest("config", "PUT", {model, ...(key ? {api_key: key} : {})});
-      ai.configured = payload.configured === true; ai.model = payload.model === "deepseek-reasoner" ? "deepseek-reasoner" : "deepseek-chat"; ai.configLoaded = true;
+      applyAiConfig(payload);
       $("ai-config-status").textContent = ai.configured ? "配置已保存。" : "尚未保存密钥，请检查后重试。";
-      if (ai.configured) {toggleAiConfig(false); showAiStatus(ai.pendingQuestion ? "配置已保存，点击发送即可继续刚才的提问。" : "配置已保存，可以开始提问。", null, false); $("ai-chat-input").focus();}
+      if (ai.configured) {toggleAiConfig(false); showAiStatus(`已保存，当前模型：${aiModelName(ai.model)}。${ai.pendingQuestion ? "点击发送即可继续刚才的提问。" : "下一次提问将使用此模型。"}`, null, false); $("ai-chat-input").focus();}
     } catch (error) {$("ai-config-status").textContent = error.message;}
     finally {$("ai-api-key").value = ""; ai.saving = false; renderAiConfig();}
   }
   async function deleteAiConfig() {
     if (ai.saving || ai.busy) return;
     ai.saving = true; renderAiConfig(); $("ai-config-status").textContent = "正在删除密钥…";
-    try {await aiRequest("config", "DELETE"); ai.configured = false; $("ai-api-key").value = ""; $("ai-config-status").textContent = "密钥已删除。重新配置后可继续提问。";}
+    try {applyAiConfig(await aiRequest("config", "DELETE")); $("ai-api-key").value = ""; $("ai-config-status").textContent = "密钥已删除。重新配置后可继续提问。";}
     catch (error) {$("ai-config-status").textContent = error.message;}
     finally {ai.saving = false; renderAiConfig();}
   }
@@ -244,7 +263,7 @@
       const welcome = make("div", "ai-welcome"); welcome.append(make("span", "ai-welcome-mark", "✦"), make("strong", "", "从一只股票的涨停原因开始"), make("p", "", "点击股票旁的“涨停原因”，将自动在这里提问。也可以直接输入想研究的问题。"), make("span", "", "切换股票或历史日期会开启新对话。")); node.append(welcome);
     }
     ai.messages.forEach(message => {
-      const item = make("article", `ai-message ai-message-${message.role}`); item.append(make("span", "ai-message-author", message.role === "user" ? "你" : "DeepSeek"), make("p", "ai-message-content", message.content));
+      const item = make("article", `ai-message ai-message-${message.role}`); item.append(make("span", "ai-message-author", message.role === "user" ? "你" : message.model ? aiModelName(message.model) : "DeepSeek"), make("p", "ai-message-content", message.content));
       if (message.role === "assistant") item.append(make("span", "ai-message-source", message.source_note || AI_SOURCE_NOTE));
       node.append(item);
     });
@@ -293,7 +312,7 @@
       const response = await aiRequest("chat", "POST", payload, ai.controller.signal);
       if (requestId !== ai.requestId) return;
       if (typeof response.reply !== "string" || !response.reply.trim()) throw new Error("未取得有效回复，请重试。");
-      ai.messages.push({role: "assistant", content: response.reply, source_note: typeof response.source_note === "string" ? response.source_note : AI_SOURCE_NOTE});
+      ai.messages.push({role: "assistant", content: response.reply, model: response.model, source_note: typeof response.source_note === "string" ? response.source_note : AI_SOURCE_NOTE});
       $("ai-source-note").textContent = typeof response.source_note === "string" ? response.source_note : AI_SOURCE_NOTE;
     } catch (error) {
       if (error.name === "AbortError" || requestId !== ai.requestId) return;
@@ -704,6 +723,7 @@
   window.addEventListener("resize", () => {if (state.column) closeColumnFilter(false); if (state.chart && $("stock-dialog").open) state.chart.resize();});
   $("ai-config-toggle").addEventListener("click", () => {revealAssistant(); toggleAiConfig($("ai-config").hidden);});
   $("ai-config").addEventListener("submit", saveAiConfig); $("ai-delete-config").addEventListener("click", deleteAiConfig);
+  $("ai-model").addEventListener("change", event => {ai.draftModel = event.target.value; $("ai-config-status").textContent = ai.draftModel === ai.model ? "" : "模型尚未保存，请点击保存配置。"; renderAiConfig();});
   $("ai-chat-form").addEventListener("submit", sendAiMessage); $("ai-clear-chat").addEventListener("click", () => clearAiConversation());
   $("ai-context-reset").addEventListener("click", () => clearAiConversation(null));
   $("ai-chat-input").addEventListener("keydown", event => {if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {event.preventDefault(); sendAiMessage();}});

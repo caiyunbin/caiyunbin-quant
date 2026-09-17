@@ -15,10 +15,11 @@
   <div class="research-layout">
   <aside id="ai-sidebar" class="ai-sidebar" aria-labelledby="ai-title">
     <div class="ai-sidebar-heading"><div><div class="ai-eyebrow">RESEARCH COPILOT</div><h2 id="ai-title"><span aria-hidden="true">✦</span> DeepSeek 研究助手</h2></div><button type="button" id="ai-mobile-close" class="icon-button" aria-label="收起研究助手">×</button></div>
-    <div class="ai-connection"><span id="ai-connection-dot" class="ai-connection-dot"></span><span id="ai-connection-status">读取配置中…</span><button type="button" id="ai-config-toggle" class="text-button" aria-controls="ai-config" aria-expanded="false">配置</button></div>
+    <div class="ai-connection"><span id="ai-connection-dot" class="ai-connection-dot"></span><span id="ai-connection-status">读取配置中…</span><button type="button" id="ai-config-toggle" class="text-button" aria-controls="ai-config" aria-expanded="false">模型 / API 配置</button></div>
     <form id="ai-config" class="ai-config" hidden autocomplete="off">
+      <label class="ai-field" for="ai-model">DeepSeek 模型<select id="ai-model" aria-describedby="ai-model-description"><option value="deepseek-v4-pro">DeepSeek V4 Pro</option><option value="deepseek-flash">DeepSeek Flash</option></select></label>
+      <p id="ai-model-description" class="ai-config-note">选择模型后保存，下一次提问生效。</p>
       <label class="ai-field" for="ai-api-key">DeepSeek API Key<input type="password" id="ai-api-key" placeholder="输入你的 API Key" autocomplete="new-password" spellcheck="false" maxlength="256"></label>
-      <label class="ai-field" for="ai-model">对话模型<select id="ai-model"><option value="deepseek-chat">DeepSeek Chat · 对话</option><option value="deepseek-reasoner">DeepSeek Reasoner · 推理</option></select></label>
       <p class="ai-config-note">使用 DeepSeek 官方接口，密钥加密保存到当前账户；对话按你的 API 账户计费。</p>
       <div class="ai-config-actions"><button type="submit" id="ai-save-config" class="button button-primary">保存配置</button><button type="button" id="ai-delete-config" class="text-button" hidden>删除密钥</button></div>
       <p id="ai-config-status" class="ai-config-status" role="status" aria-live="polite"></p>
@@ -27,7 +28,7 @@
     <div id="ai-messages" class="ai-messages" role="log" aria-label="与 DeepSeek 的对话" aria-live="polite" aria-relevant="additions text"><div class="ai-welcome"><span class="ai-welcome-mark" aria-hidden="true">✦</span><strong>从一只股票的涨停原因开始</strong><p>点击股票旁的“涨停原因”，将自动在这里提问。也可以直接输入想研究的问题。</p><span>切换股票或历史日期会开启新对话。</span></div></div>
     <div id="ai-chat-status" class="ai-chat-status" role="status" aria-live="polite" hidden></div>
     <p id="ai-source-note" class="ai-source-note">基于截至所选日的涨停记录；未联网核实新闻</p>
-    <form id="ai-chat-form" class="ai-chat-form"><label class="sr-only" for="ai-chat-input">向 DeepSeek 提问</label><textarea id="ai-chat-input" rows="3" maxlength="4000" placeholder="询问涨停逻辑、持续性与需要核实的线索…"></textarea><div class="ai-compose-actions"><button type="button" id="ai-clear-chat" class="text-button">清空对话</button><span id="ai-model-label">DeepSeek Chat</span><button type="submit" id="ai-send" class="ai-send" aria-label="发送提问">发送 <span aria-hidden="true">↑</span></button></div></form>
+    <form id="ai-chat-form" class="ai-chat-form"><label class="sr-only" for="ai-chat-input">向 DeepSeek 提问</label><textarea id="ai-chat-input" rows="3" maxlength="4000" placeholder="询问涨停逻辑、持续性与需要核实的线索…"></textarea><div class="ai-compose-actions"><button type="button" id="ai-clear-chat" class="text-button">清空对话</button><span id="ai-model-label">DeepSeek V4 Pro</span><button type="submit" id="ai-send" class="ai-send" aria-label="发送提问">发送 <span aria-hidden="true">↑</span></button></div></form>
     <a id="ai-login" class="ai-login" href="/login" hidden>登录后配置你的 DeepSeek 账户 →</a>
   </aside>
   <main class="page-shell">
