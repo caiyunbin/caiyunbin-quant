@@ -234,7 +234,12 @@
     const context = normalizeViewContext(viewContext);
     return {date, ts_code: code, messages: recent, web_search: webSearch !== false, ...(context ? {view_context: context} : {})};
   }
-  const core = {COLUMNS, normalizeRow, bucketFor, filterAndSort, selectLeaders, normalizeHistory, rowAsOf, normalizeLogicGroup, filterLogicGroups, sortLogicMembers, csvCell, makeCsv, movingAverage, validateBars, stockReasonQuestion, normalizeViewContext, buildDashboardViewContext, researchResolution, safeResearchUrl, normalizeAiResearch, researchStatusLabel, researchDateLabel, buildChatPayload};
+  function accessMessage(status) {
+    if (status === 401) return {title: "登录后查看市场数据", description: "这台设备尚未登录，或登录已过期。请使用已有账号登录，完成后会返回当前看板。", action: "登录并返回看板"};
+    if (status === 403) return {title: "当前账号暂无看板权限", description: "此看板需要有效会员权限。请确认登录的是已开通的账号；如会员已到期，请在首页查看账户状态。", action: "查看账户状态", href: "/index.html"};
+    return null;
+  }
+  const core = {COLUMNS, normalizeRow, bucketFor, filterAndSort, selectLeaders, normalizeHistory, rowAsOf, normalizeLogicGroup, filterLogicGroups, sortLogicMembers, csvCell, makeCsv, movingAverage, validateBars, stockReasonQuestion, normalizeViewContext, buildDashboardViewContext, researchResolution, safeResearchUrl, normalizeAiResearch, researchStatusLabel, researchDateLabel, buildChatPayload, accessMessage};
   if (typeof module !== "undefined" && module.exports) module.exports = core;
   if (typeof document === "undefined") return;
 
@@ -247,6 +252,12 @@
 
   const ai = {configured: false, configLoaded: false, model: "deepseek-v4-pro", draftModel: "deepseek-v4-pro", models: [{id: "deepseek-v4-pro", label: "DeepSeek V4 Pro"}, {id: "deepseek-flash", label: "DeepSeek Flash"}], keyHint: "", messages: [], selected: null, resolved: [], researchScope: "", date: "", webSearch: true, busy: false, saving: false, requestId: 0, controller: null, pendingQuestion: "", authRequired: false};
   const aiModelName = model => ai.models.find(option => option.id === model)?.label || model;
+  const loginUrl = () => `/login.html?next=${encodeURIComponent(location.pathname + location.search)}`;
+  function revealLogin() {
+    $("ai-login").href = loginUrl(); $("ai-login").hidden = false;
+    $("ai-login").textContent = "登录并返回当前看板 →";
+    $("ai-connection-status").textContent = "请先登录网站账号";
+  }
   function applyAiConfig(payload) {
     const ids = Array.isArray(payload.models) ? payload.models.filter(id => typeof id === "string" && /^deepseek-[a-z0-9-]+$/.test(id)) : ai.models.map(option => option.id);
     const options = Array.isArray(payload.model_options) ? payload.model_options : [];
@@ -262,7 +273,7 @@
     const response = await fetch(`/api/market-leaders/ai/${path}`, {method, headers: {Accept: "application/json", ...(body ? {"Content-Type": "application/json"} : {})}, credentials: "same-origin", cache: "no-store", ...(body ? {body: JSON.stringify(body)} : {}), signal});
     let payload = null;
     try {if ((response.headers.get("content-type") || "").includes("application/json")) payload = await response.json();} catch (_) { /* Handle invalid service responses below. */ }
-    if (response.status === 401) {ai.authRequired = true; $("ai-login").hidden = false; throw new Error("登录状态已失效，请先登录再使用研究助手。");}
+    if (response.status === 401) {ai.authRequired = true; revealLogin(); throw new Error("这台设备尚未登录或登录已过期，请先登录网站账号。");}
     if (!response.ok) {
       const errorText = payload && typeof payload.detail === "string" ? payload.detail : payload && typeof payload.error === "string" ? payload.error : payload && typeof payload.message === "string" ? payload.message : "";
       throw new Error(errorText || (response.status === 429 ? "请求较多，请稍后重试。" : `研究助手暂时不可用（${response.status}），请稍后重试。`));
@@ -285,7 +296,7 @@
     else $("ai-api-key").value = "";
   }
   function renderAiConfig() {
-    $("ai-connection-status").textContent = ai.configured ? "账户已配置" : "尚未配置 API Key";
+    $("ai-connection-status").textContent = ai.authRequired ? "请先登录网站账号" : ai.configured ? "账户已配置" : "尚未配置 API Key";
     $("ai-connection-dot").classList.toggle("is-connected", ai.configured);
     $("ai-api-key").placeholder = ai.configured ? "留空保留现有密钥" : "输入你的 API Key";
     const select = $("ai-model");
@@ -307,7 +318,10 @@
       const payload = await aiRequest("config");
       applyAiConfig(payload);
       renderAiConfig();
-    } catch (error) {$("ai-connection-status").textContent = "配置读取失败"; showAiStatus(error.message, () => loadAiConfig());}
+    } catch (error) {
+      $("ai-connection-status").textContent = ai.authRequired ? "请先登录网站账号" : "配置读取失败";
+      showAiStatus(error.message, ai.authRequired ? null : () => loadAiConfig());
+    }
   }
   async function saveAiConfig(event) {
     event.preventDefault(); if (ai.saving || ai.busy) return;
@@ -437,8 +451,11 @@
     } finally {if (requestId === ai.requestId) {ai.busy = false; ai.controller = null; renderAiMessages();}}
   }
   async function getJson(url, signal) {
-    const response = await fetch(url, {headers: {Accept: "application/json"}, cache: "no-store", signal});
-    if (!response.ok) throw new Error(`数据请求未完成（${response.status}），请稍后重试。`);
+    const response = await fetch(url, {headers: {Accept: "application/json"}, credentials: "same-origin", cache: "no-store", signal});
+    if (!response.ok) {
+      const error = new Error(accessMessage(response.status)?.description || `数据请求未完成（${response.status}），请稍后重试。`);
+      error.status = response.status; throw error;
+    }
     if (!(response.headers.get("content-type") || "").includes("application/json")) throw new Error("接口没有返回有效数据。");
     return response.json();
   }
@@ -447,6 +464,23 @@
     target.append(make("span", loading ? "loader" : "state-icon", loading ? "" : "◇"), make("strong", "", title));
     if (description) target.append(make("p", "", description));
     if (retry) {const button = make("button", "button button-outline", "重新加载"); button.type = "button"; button.addEventListener("click", retry); target.append(button);}
+  }
+  function showScreenError(target) {
+    const access = accessMessage(state.screenStatus);
+    if (!access) {showState(target, "暂时无法读取", state.screenError, () => loadScreen(state.requestedDate)); return;}
+    showState(target, access.title, access.description);
+    const link = make("a", "button button-primary", access.action);
+    link.href = access.href || loginUrl(); target.append(link);
+  }
+  function setScreenError(error) {
+    state.loading = false; state.screenStatus = error.status || 0;
+    state.screenError = error.message || "请检查网络连接后重试。";
+    const access = accessMessage(state.screenStatus);
+    if (access) showScreenError($("access-notice"));
+    $("snapshot-note").textContent = access ? access.title : "所选日期读取失败";
+    $("history-status").textContent = access ? access.title : "所选日期读取失败，可重试或切换日期";
+    if (state.screenStatus === 401) revealLogin();
+    render();
   }
   function buildHeaders() {
     $("table-head").replaceChildren();
@@ -525,7 +559,7 @@
   function renderRows() {
     const body = $("table-body"); body.replaceChildren();
     if (state.loading) {$("table-scroll").hidden = true; showState($("table-status"), "正在读取历史快照", `${state.requestedDate || "最新交易日"} · 加载当日已知数据`, null, true); return;}
-    if (state.screenError) {$("table-scroll").hidden = true; showState($("table-status"), "暂时无法读取", state.screenError, () => loadScreen(state.requestedDate)); return;}
+    if (state.screenError) {$("table-scroll").hidden = true; showScreenError($("table-status")); return;}
     if (!state.filtered.length) {$("table-scroll").hidden = true; showState($("table-status"), "没有符合当前条件的股票", "试着放宽筛选条件，或重置筛选查看全部结果。"); return;}
     $("table-scroll").hidden = false; $("table-status").hidden = true;
     const fragment = document.createDocumentFragment(), start = (state.page - 1) * state.pageSize;
@@ -564,7 +598,9 @@
     if (state.loading || state.screenError) {
       $("logic-table-scroll").hidden = true; $("logic-pagination").hidden = true;
       $("logic-result-count").textContent = state.loading ? "正在加载…" : "数据尚未读取";
-      showState($("logic-status"), state.loading ? "正在读取逻辑历史" : "暂时无法读取", state.screenError || `${state.requestedDate || "最新交易日"} · 仅使用该日及此前记录`, state.screenError ? () => loadScreen(state.requestedDate) : null, state.loading); renderAiContext(); return;
+      if (state.screenError) showScreenError($("logic-status"));
+      else showState($("logic-status"), "正在读取逻辑历史", `${state.requestedDate || "最新交易日"} · 仅使用该日及此前记录`, null, true);
+      renderAiContext(); return;
     }
     const groups = filterLogicGroups(state.logic, state.logicFilters, state.logicSorting), pageSize = 25, pages = Math.max(1, Math.ceil(groups.length / pageSize));
     state.logicPage = Math.max(1, Math.min(state.logicPage, pages));
@@ -674,6 +710,7 @@
       const queryDate = new URLSearchParams(location.search).get("date");
       await loadScreen(state.dates.includes(queryDate) ? queryDate : state.latestDate);
     } catch (error) {
+      if (accessMessage(error.status)) {setScreenError(error); return;}
       $("history-status").textContent = "历史日期索引未取得，先展示最新快照。";
       await loadScreen("");
     }
@@ -681,7 +718,8 @@
   async function loadScreen(date = state.requestedDate) {
     const requestId = ++state.screenRequestId;
     if (state.screenController) state.screenController.abort(); state.screenController = new AbortController();
-    state.requestedDate = date || ""; state.loading = true; state.screenError = ""; syncAiDate(date || "");
+    state.requestedDate = date || ""; state.loading = true; state.screenError = ""; state.screenStatus = 0; syncAiDate(date || "");
+    $("access-notice").hidden = true;
     state.ladder = []; state.leaders = []; state.unknown = []; state.logic = []; state.logicSelected = null; state.logicPage = 1; state.page = 1;
     state.opener = null; if ($("stock-dialog").open) $("stock-dialog").close(); afterCloseStock(); closeColumnFilter(false);
     parkLogicMembers();
@@ -720,7 +758,7 @@
       render();
     } catch (error) {
       if (error.name === "AbortError" || requestId !== state.screenRequestId) return;
-      state.loading = false; state.screenError = error.message || "请检查本地服务后重试。"; $("snapshot-note").textContent = "所选日期读取失败"; $("history-status").textContent = "所选日期读取失败，可重试或切换日期"; render();
+      setScreenError(error);
     }
   }
   function openStock(row, opener) {

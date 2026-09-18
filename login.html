@@ -122,6 +122,18 @@
 <script>
 const API="/api";
 let mode="login";
+function returnAfterLogin(){
+  const params = new URLSearchParams(location.search);
+  const requested = params.get("next") || params.get("back") || "/index.html";
+  try {
+    const target = new URL(requested, location.origin);
+    if(target.origin === location.origin && !target.username && !target.password &&
+       !/^\/login(?:\.html)?\/?$/.test(target.pathname)) {
+      return target.pathname + target.search + target.hash;
+    }
+  } catch (_) {}
+  return "/index.html";
+}
 
 function switchTab(m){
   mode=m;
@@ -156,12 +168,12 @@ async function submit(){
     }
     await api("/login",{email,password});
     setMsg("✅ 登录成功，正在跳转...", true);
-    setTimeout(()=>{ location.href = new URLSearchParams(location.search).get("next") || "index.html"; }, 600);
+    setTimeout(()=>{ location.href = returnAfterLogin(); }, 600);
   }catch(e){ setMsg("❌ "+e.message); btn.disabled=false; }
 }
 
 document.getElementById("password").addEventListener("keydown", e=>{ if(e.key==="Enter") submit(); });
-(async()=>{ try{ const me=await (await fetch(API+"/me",{credentials:"include"})).json(); if(me.logged_in){ location.href="index.html"; } }catch(e){} })();
+(async()=>{ try{ const me=await (await fetch(API+"/me",{credentials:"include"})).json(); if(me.logged_in){ location.href=returnAfterLogin(); } }catch(e){} })();
 </script>
 </body>
 </html>

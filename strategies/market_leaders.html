@@ -4,8 +4,8 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light">
   <meta name="description" content="全市场连板梯队与近30交易日涨幅榜，追溯涨停原因并查看个股K线与分时。">
   <title>市场高度观察 — Caiman Quant</title>
-  <link rel="stylesheet" href="/assets/market-leaders.css?v=20260917-harness1">
-  <script src="/assets/market-leaders-echarts.min.js" defer></script><script src="/assets/market-leaders.js?v=20260917-harness1" defer></script>
+  <link rel="stylesheet" href="/assets/market-leaders.css?v=20260918-gilded2">
+  <script src="/assets/market-leaders-echarts.min.js" defer></script><script src="/assets/market-leaders.js?v=20260918-access1" defer></script>
 </head>
 <body>
   <a href="#stock-table" class="skip-link">跳到股票列表</a>
@@ -30,9 +30,10 @@
     <div id="ai-chat-status" class="ai-chat-status" role="status" aria-live="polite" hidden></div>
     <p id="ai-source-note" class="ai-source-note">关联所选日期、右侧筛选与排序；行情和原因以实际返回的数据来源为准。</p>
     <form id="ai-chat-form" class="ai-chat-form"><label class="sr-only" for="ai-chat-input">向 DeepSeek 提问</label><textarea id="ai-chat-input" rows="3" maxlength="4000" placeholder="输入股票名 / 代码，或问“比较右边前3只”…"></textarea><label class="ai-search-toggle" for="ai-web-search" title="结合看板与数据库，按需搜索公开公告和新闻；会使用你的 DeepSeek API 额度。"><input type="checkbox" id="ai-web-search" checked><span>联网搜索公告 / 新闻</span></label><div class="ai-compose-actions"><button type="button" id="ai-clear-chat" class="text-button">清空对话</button><span id="ai-model-label">DeepSeek V4 Pro</span><button type="submit" id="ai-send" class="ai-send" aria-label="发送提问">发送 <span aria-hidden="true">↑</span></button></div></form>
-    <a id="ai-login" class="ai-login" href="/login" hidden>登录后配置你的 DeepSeek 账户 →</a>
+    <a id="ai-login" class="ai-login" href="/login.html?next=%2Fstrategies%2Fmarket_leaders.html" hidden>登录并返回当前看板 →</a>
   </aside>
   <main class="page-shell">
+    <section id="access-notice" class="access-notice" role="status" aria-live="polite" hidden></section>
     <section class="hero" aria-labelledby="page-title"><div><div class="eyebrow">MARKET LEADERS <span class="eyebrow-line"></span> 全市场强势股研究</div><h1 id="page-title">市场高度观察<span class="title-dot">.</span></h1><p class="hero-description">从连板高度到阶段涨幅，找到市场焦点，追溯每一次涨停的原因。</p></div><div class="snapshot"><span class="snapshot-label">收盘数据快照</span><strong id="snapshot-date">—</strong><span id="snapshot-note">正在读取市场数据</span></div></section>
 
     <section class="history-toolbar" aria-label="历史交易日选择"><div class="history-title"><span class="history-icon" aria-hidden="true">◷</span><strong>历史看板</strong><span id="history-count">最近 30 个交易日</span></div><div class="date-controls"><button id="date-prev" type="button" class="date-arrow" aria-label="前一交易日" disabled>←</button><label class="date-select-label"><span class="sr-only">选择历史交易日</span><select id="date-select" disabled><option>正在加载日期…</option></select></label><button id="date-next" type="button" class="date-arrow" aria-label="后一交易日" disabled>→</button><button id="date-latest" type="button" class="text-button" disabled>回到最新</button></div><span id="history-status" class="history-status" aria-live="polite">切换日期查看当日已知信息</span></section>
