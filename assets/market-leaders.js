@@ -358,7 +358,8 @@
     const viewName = {ladder: "连板梯队", leaders: "30 日涨幅榜", logic: "逻辑追踪"}[state.view];
     const group = state.view === "logic" && state.logic.find(item => item.id === state.logicSelected);
     const scope = state.view === "logic" ? group ? ` · ${group.name}${state.logicActiveOnly ? "（当日活跃）" : ""}` : ` · 第 ${state.logicPage} 页` : ` · 第 ${state.page} 页 · ${state.filtered.length} 只符合筛选`;
-    $("ai-linked-context").textContent = state.loading ? "正在关联所选日期的看板…" : state.screenError ? "看板数据读取失败，请重试后提问。" : `已关联右侧：${viewName}${scope} · ${state.meta.date || ai.date}`;
+    $("ai-linked-context").textContent = state.loading ? "正在关联所选日期的看板…" : state.screenError ? accessMessage(state.screenStatus)?.title || "看板数据读取失败，请重试后提问。" : `已关联右侧：${viewName}${scope} · ${state.meta.date || ai.date}`;
+    $("ai-send").disabled = ai.busy || ai.saving || state.loading || Boolean(state.screenError);
   }
   function aiAnswerSource(message) {
     const stocks = Array.isArray(message.resolved_stocks) ? message.resolved_stocks : [];
