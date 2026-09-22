@@ -579,7 +579,7 @@
           td.append(make("span", `streak-badge ${row.streak >= 4 ? "high" : row.streak >= 2 ? "medium" : "low"}`, row.streak > 0 ? row.streak === 1 ? "首板" : `${row.streak} 连板` : row.streak === 0 ? "—" : "待核验"));
         } else if (column.key === "reason") {
           const button = make("button", "reason-button"); button.type = "button";
-          if (row.reason) {button.append(make("span", "reason-text", row.reason), make("span", "reason-meta", `${row.reason_date || "日期未提供"} · ${row.reason_source || "来源未提供"}${row.reason_date && row.reason_date !== state.meta.date ? " · 历史记录" : ""}`));}
+          if (row.reason) {button.append(make("span", "reason-text", row.reason), make("span", "reason-meta", `${row.reason_date || "日期未提供"} · ${row.reason_source || "来源未提供"}${row.reason_date && row.reason_date !== (row.themeDate || state.meta.date) ? " · 历史记录" : ""}`));}
           else button.append(make("span", "reason-missing", state.view === "ladder" ? "暂未取得该日涨停原因" : "近30日未取得涨停原因记录"));
           button.setAttribute("aria-label", `${row.name}，查看完整原因记录`); button.addEventListener("click", () => openStock(row, button)); td.append(button);
         } else if (["return30_pct", "pct_chg"].includes(column.key)) td.append(make("span", `${tone(row[column.key])}${column.key === "return30_pct" ? " return-value" : ""}`, signed(row[column.key])));
@@ -765,11 +765,11 @@
   function openStock(row, opener) {
     closeColumnFilter(false); state.selected = row; state.opener = opener; state.kind = "daily"; state.chartPayload = null;
     $("chart-stock-name").textContent = row.name; $("chart-stock-code").textContent = row.ts_code; $("chart-board").textContent = row.board;
-    $("chart-streak").textContent = row.streak > 0 ? row.streak === 1 ? "首板" : `${row.streak} 连板` : state.view === "logic" ? "逻辑参与股票" : "30 日涨幅榜";
+    $("chart-streak").textContent = row.themeDate ? "题材观察成员" : row.streak > 0 ? row.streak === 1 ? "首板" : `${row.streak} 连板` : state.view === "logic" ? "逻辑参与股票" : "30 日涨幅榜";
     $("chart-close").textContent = fmt(row.close); $("chart-close").className = tone(row.pct_chg); $("chart-change").textContent = signed(row.pct_chg); $("chart-change").className = tone(row.pct_chg);
-    $("chart-return").textContent = signed(row.return30_pct); $("chart-return").className = tone(row.return30_pct); $("chart-amount").textContent = `${fmt(row.amount_yi)} 亿元`; $("chart-snapshot-label").textContent = `${state.meta.date} 收盘快照`;
+    $("chart-return").textContent = signed(row.return30_pct); $("chart-return").className = tone(row.return30_pct); $("chart-amount").textContent = `${fmt(row.amount_yi)} 亿元`; $("chart-snapshot-label").textContent = `${row.themeDate || state.meta.date} 收盘快照`;
     $("reason-summary").textContent = row.reason || (row.streak > 0 ? "暂未取得该日涨停原因记录。" : "近30日未取得涨停原因记录。");
-    $("reason-source").textContent = row.reason ? `${row.reason_date || "日期未提供"} · ${row.reason_source || "来源未提供"}${row.reason_date && row.reason_date !== state.meta.date ? " · 历史涨停记录，非当日归因" : ""}` : "未使用推测或题材标签填补缺失原因。";
+    $("reason-source").textContent = row.reason ? `${row.reason_date || "日期未提供"} · ${row.reason_source || "来源未提供"}${row.reason_date && row.reason_date !== (row.themeDate || state.meta.date) ? " · 历史涨停记录，非当日归因" : ""}` : "未使用推测或题材标签填补缺失原因。";
     const evidenceNote = [row.reason_detail, /差异/.test(row.streak_evidence || "") ? row.streak_evidence : ""].filter(Boolean).join(" ");
     $("reason-detail").textContent = evidenceNote; $("reason-detail").hidden = !evidenceNote;
     $("reason-count").textContent = row.reason_events.length ? `${row.reason_events.length} 条来源记录` : "";
@@ -779,6 +779,11 @@
     const [code, market] = row.ts_code.split("."); $("external-quote").href = `https://quote.eastmoney.com/${market.toLowerCase()}${code}.html`;
     $("stock-dialog").showModal(); document.body.style.overflow = "hidden"; $("close-dialog").focus(); syncChartControls(); loadChart();
   }
+  root.openMarketStock = (code, date, member) => {
+    if (!SYMBOL.test(code || "") || !ISO_DATE.test(date || "")) return;
+    const row = normalizeRow({...member, ts_code: code, themeDate: date});
+    if (row) openStock(row, document.activeElement);
+  };
   function afterCloseStock() {
     state.requestId++; if (state.chartController) state.chartController.abort(); state.chartController = null;
     if (state.chart) {state.chart.dispose(); state.chart = null;}
@@ -792,13 +797,13 @@
   }
   async function loadChart(force = false) {
     if (!state.selected) return;
-    const requestId = ++state.requestId, symbol = state.selected.ts_code, kind = state.kind, date = state.meta.date;
+    const requestId = ++state.requestId, symbol = state.selected.ts_code, kind = state.kind, date = state.selected.themeDate || state.meta.date;
     if (state.chartController) state.chartController.abort(); state.chartController = new AbortController();
     state.chartPayload = null; $("stock-chart").hidden = true; $("chart-source").textContent = ""; $("chart-accessible-summary").textContent = "";
     showState($("chart-status"), kind === "daily" ? "正在读取日 K 线" : "正在读取分时数据", `${date} · ${symbol}`, null, true);
     try {
-      const key = `${symbol}:${kind}:${date}`;
-      const payload = !force && state.cache.has(key) ? state.cache.get(key) : await getJson(`/api/market-leaders/chart/${encodeURIComponent(symbol)}?kind=${kind}&date=${encodeURIComponent(date)}`, state.chartController.signal);
+      const key = `${state.selected.themeDate ? "themes:" : ""}${symbol}:${kind}:${date}`;
+      const payload = !force && state.cache.has(key) ? state.cache.get(key) : await getJson(`/api/market-leaders/${state.selected.themeDate ? "themes/" : ""}chart/${encodeURIComponent(symbol)}?kind=${kind}&date=${encodeURIComponent(date)}`, state.chartController.signal);
       if (requestId !== state.requestId || !$("stock-dialog").open) return;
       if (payload.ts_code && payload.ts_code !== symbol) throw new Error("返回行情与所选股票不一致，未显示。");
       const bars = validateBars(payload, kind, date); state.cache.set(key, payload); state.chartPayload = {...payload, bars};
@@ -837,7 +842,7 @@
       yAxis: [{scale: true, gridIndex: 0, splitNumber: 4, axisLabel: {fontSize: 9, color: axis, formatter: value => Number(value).toFixed(2)}, axisLine: {show: false}, axisTick: {show: false}, splitLine: {lineStyle: {color: grid, type: "dashed"}}}, {scale: true, min: 0, gridIndex: 1, splitNumber: 2, axisLabel: {fontSize: 9, color: axis, formatter: value => value >= 1e8 ? `${(value / 1e8).toFixed(1)}亿` : `${Math.round(value / 1e4)}万`}, axisLine: {show: false}, axisTick: {show: false}, splitLine: {show: false}, name: "股", nameGap: 7, nameTextStyle: {fontSize: 9, color: axis}}],
       dataZoom: kind === "daily" ? [{type: "inside", xAxisIndex: [0, 1], start: 0, end: 100, minValueSpan: 8, zoomOnMouseWheel: false, moveOnMouseWheel: false}] : [], series}, true);
     state.chart.resize(); const last = bars[bars.length - 1];
-    const summary = `${state.selected.name}，截至 ${state.meta.date} 的${kind === "daily" ? "日K线" : "分时"}，显示 ${bars.length} 个数据点。最后 ${last.time}，价格 ${fmt(last.close)} 元。`;
+    const summary = `${state.selected.name}，截至 ${state.selected.themeDate || state.meta.date} 的${kind === "daily" ? "日K线" : "分时"}，显示 ${bars.length} 个数据点。最后 ${last.time}，价格 ${fmt(last.close)} 元。`;
     $("stock-chart").setAttribute("aria-label", summary); $("chart-accessible-summary").textContent = summary;
   }
   document.querySelectorAll(".panel-tab").forEach(button => {
