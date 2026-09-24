@@ -462,3 +462,11 @@ tbody > tr:hover > td{background:#fcfaf5}
   .ai-messages{height:auto;max-height:none;overflow:visible;flex:none;padding:20px 18px 16px}
   .ai-message-content{line-height:2;max-height:none;overflow:visible}
 }
+
+/* Final sizing override for the research conversation: the document owns
+   scrolling so the answer area can expand with the returned content. */
+@media(min-width:1101px){
+  .research-layout{grid-template-columns:minmax(460px,42vw) minmax(0,1fr)}
+  .ai-sidebar{height:auto!important;max-height:none!important;overflow:visible!important}
+  #ai-messages.ai-messages{height:auto!important;max-height:none!important;overflow:visible!important;flex:none!important}
+}
