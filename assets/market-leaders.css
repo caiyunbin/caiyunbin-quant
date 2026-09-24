@@ -447,3 +447,18 @@ tbody > tr:hover > td{background:#fcfaf5}
     overscroll-behavior:auto;
   }
 }
+
+/* Keep the conversation in the document flow so long answers are readable
+   without a second scrollbar inside the assistant panel. */
+@media(min-width:1101px){
+  .research-layout{grid-template-columns:minmax(400px,38vw) minmax(0,1fr);gap:30px}
+  .ai-sidebar{width:100%;overflow:visible}
+  .ai-messages{height:auto;max-height:none;overflow:visible;flex:none;padding:20px 20px 16px}
+  .ai-message-content{font-size:15px;line-height:2.05;padding:14px 16px}
+}
+@media(max-width:1100px){
+  body.ai-sidebar-open{overflow:auto}
+  .ai-sidebar{position:absolute;top:0;bottom:auto;height:auto;min-height:100vh;max-height:none;overflow:visible}
+  .ai-messages{height:auto;max-height:none;overflow:visible;flex:none;padding:20px 18px 16px}
+  .ai-message-content{line-height:2;max-height:none;overflow:visible}
+}
