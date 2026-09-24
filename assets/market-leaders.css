@@ -219,7 +219,7 @@ tbody > tr:hover > td{background:#fcfaf5}
 .logic-active-badge.history{color:#657384;background:#eef1f5}
 .logic-member-date-list{font-size:12px;color:#7a8797;line-height:1.7}
 .logic-empty-note{font-size:13px;color:#7a8795}
-.ai-sidebar{top:22px;height:calc(100dvh - 126px);min-height:640px;max-height:1100px;border-color:#d7dadd;border-radius:11px;box-shadow:0 8px 24px #1d253208;overflow-y:auto;scrollbar-width:thin}
+.ai-sidebar{top:34px;margin-top:12px;height:calc(100dvh - 138px);min-height:640px;max-height:1100px;border-color:#d7dadd;border-radius:11px;box-shadow:0 8px 24px #1d253208;overflow-y:auto;scrollbar-width:thin}
 .ai-sidebar-heading{padding:23px 21px 18px;background:#22252a;border-bottom:1px solid #373a3e;flex-shrink:0;color:#eee9dc}
 .ai-eyebrow{font-size:12px;letter-spacing:1.5px;color:#cab47d;margin-bottom:9px}
 .ai-sidebar-heading h2{font-size:19px;font-weight:600;color:#f4efe2;gap:9px}
@@ -253,20 +253,20 @@ tbody > tr:hover > td{background:#fcfaf5}
 .ai-message-user .ai-message-content{background:#f8f2e4;border-color:#e6d8b8;color:#6d5528;border-radius:9px 0 9px 9px}
 .ai-message-source{font-size:12px;color:#7a8696;line-height:1.8}
 .ai-pending{font-size:13px;color:#8d7245;line-height:1.8}
-.ai-source-note{font-size:12px;color:#788392;line-height:1.75;margin:10px 17px;flex-shrink:0}
+.ai-source-note{font-size:12px;color:#788392;line-height:1.65;margin:8px 17px;flex-shrink:0}
 .ai-chat-status{font-size:13px;color:#537264;line-height:1.8}
 .ai-chat-status.is-error{color:#946140}
 .ai-chat-status .text-button{font-size:13px}
 .ai-chat-form{margin:0 14px 14px;border-color:#ced5de;border-radius:8px}
 .ai-chat-form:focus-within{border-color:#b2975f;box-shadow:0 0 0 3px #c6a46a1a}
-.ai-chat-form textarea{font-size:16px;line-height:1.75;min-height:104px;padding:13px 13px 5px;color:#41536a}
+.ai-chat-form textarea{font-size:16px;line-height:1.6;height:48px;min-height:48px;padding:7px 13px 3px;color:#41536a}
 .ai-chat-form textarea::placeholder{color:#7b8799}
-.ai-compose-actions{padding:6px 10px 10px;gap:7px;flex-wrap:wrap}
+.ai-compose-actions{padding:3px 10px 7px;gap:7px;flex-wrap:wrap}
 .ai-compose-actions .text-button{font-size:12px;color:#667588;min-height:32px}
 .ai-compose-actions>span{font-size:12px;color:#6d7b8d}
 .ai-send{font-size:14px;min-height:38px;padding:7px 11px;background:linear-gradient(115deg,#dfc487,#b99a58);border:1px solid #b29556;color:#302818;font-weight:600;border-radius:5px}
 .ai-send:hover:not(:disabled){background:linear-gradient(115deg,#ebd4a0,#caaa64)}
-.ai-search-toggle{font-size:13px;color:#637387;margin:5px 13px 9px;gap:8px;line-height:1.7}
+.ai-search-toggle{font-size:13px;color:#637387;margin:3px 13px 5px;gap:8px;line-height:1.7}
 .ai-search-status{font-size:12px;color:#4e7662;line-height:1.8}
 .ai-search-status.is-warning{color:#906b34}
 .ai-tool-activity{gap:6px}
@@ -299,7 +299,7 @@ tbody > tr:hover > td{background:#fcfaf5}
   .header-inner{padding-inline:26px}
   .history-status{display:none}
   .history-toolbar .date-controls{margin-left:auto}
-  .ai-sidebar{top:0;height:100dvh;min-height:0;max-height:none;width:min(400px,calc(100vw - 20px));border-radius:0 12px 12px 0}
+  .ai-sidebar{top:0;margin-top:0;height:100dvh;min-height:0;max-height:none;width:min(400px,calc(100vw - 20px));border-radius:0 12px 12px 0}
   .ai-sidebar-heading{padding-top:23px}
   .ai-chat-form{margin-bottom:max(14px,env(safe-area-inset-bottom))}
   .ai-mobile-toggle{padding:12px 17px}
@@ -405,6 +405,11 @@ tbody > tr:hover > td{background:#fcfaf5}
   .ai-message-content,.ai-chat-form textarea,.ai-chat-form textarea:focus,.ai-field input,.ai-field input:focus,.ai-field select{font-size:16px}
   .ai-mobile-toggle{left:14px;bottom:14px;padding:11px 15px;font-size:14px}
 }
+/* Desktop research panel: fill the viewport and let the page grow with the conversation. */
+@media(min-width:1101px){
+  .ai-sidebar{top:28px;margin-top:0;height:auto;min-height:calc(100dvh - 28px);max-height:none;overflow:visible}
+  .ai-messages{flex:0 0 auto;flex-basis:auto;min-height:130px;max-height:none;overflow:visible;overscroll-behavior:auto}
+}
 .access-notice{margin-bottom:24px;padding:22px 24px;border:1px solid #ddc692;border-radius:10px;background:#fff9ec;display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;color:#614e29}
 .access-notice>.state-icon{display:none}
 .access-notice strong{font-size:18px}
@@ -421,4 +426,24 @@ tbody > tr:hover > td{background:#fcfaf5}
   .date-controls .text-button{flex-basis:100%;text-align:right;min-height:30px}
   .history-title>span:last-child{margin-left:0}
   .ai-compose-actions>span{font-size:12px;max-width:100px;overflow-wrap:anywhere}
+}
+
+/* Desktop research assistant: use the full lower viewport and let the page grow naturally. */
+@media(min-width:1101px){
+  .ai-sidebar{
+    top:0;
+    margin-top:0;
+    height:auto;
+    min-height:calc(100dvh - 30px);
+    max-height:none;
+    overflow:visible;
+  }
+  .ai-messages{
+    flex:0 0 auto;
+    flex-basis:auto;
+    min-height:130px;
+    max-height:none;
+    overflow:visible;
+    overscroll-behavior:auto;
+  }
 }

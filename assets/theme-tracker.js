@@ -10,7 +10,28 @@
   };
   const ns = "http://www.w3.org/2000/svg";
   const state = { data: null, date: "", latestDate: "", dates: [], selectedTheme: null, view: "themes", attention: null, requestId: 0, controller: null };
-  const stageNames = new Set(["观察中", "普通观察", "扩散观察", "主线候选", "降温观察", "数据不足"]);
+  const stageLabels = Object.freeze({
+    "观察中": "题材萌芽", "题材萌芽": "题材萌芽", "普通观察": "初级发酵", "初级发酵": "初级发酵",
+    "扩散观察": "中级发酵", "中级发酵": "中级发酵",
+    "主线候选": "主线进行", "主线进行": "主线进行", "降温观察": "主线退潮", "主线退潮": "主线退潮",
+    "数据不足": "数据不足"
+  });
+  const stageNames = new Set(Object.keys(stageLabels));
+  const stageOrder = Object.freeze(["题材萌芽", "初级发酵", "中级发酵", "主线进行", "主线退潮"]);
+  const isVisibleStageChange = (change) => {
+    if (!change || typeof change !== "object") return false;
+    if (change.type === "removed") return true;
+    const before = stageOrder.indexOf(stageLabels[change.previous_stage]);
+    const after = stageOrder.indexOf(stageLabels[change.stage]);
+    if (after < 0) return false;
+    if (change.type === "new") return !change.previous_stage || change.previous_stage === "未出现";
+    return change.type === "changed" && before >= 0 && after > before;
+  };
+  const themeStageChange = (theme) => {
+    const change = theme && theme.stage_change;
+    return change && change.type !== "removed" && isVisibleStageChange(change)
+      && stageLabels[change.stage] === stageLabels[theme.stage] ? change : null;
+  };
   const finite = (value) => {
     if (value === null || value === undefined || typeof value === "boolean" || (typeof value === "string" && value.trim() === "")) return null;
     const number = Number(value);
@@ -31,7 +52,8 @@
   };
   const scoreValue = (theme) => finite(theme && theme.score);
   const stageFor = (theme) => {
-    if (theme && stageNames.has(String(theme.stage))) return String(theme.stage);
+    const stage = theme && stageLabels[String(theme.stage)];
+    if (stage && stageNames.has(stage)) return stage;
     return "数据不足";
   };
   const trustedDomains = ["xueqiu.com", "eastmoney.com", "cninfo.com.cn", "sse.com.cn", "szse.cn", "bse.cn", "cls.cn", "stcn.com", "cnstock.com", "cs.com.cn", "10jqka.com.cn", "sina.com.cn", "sina.cn", "gov.cn", "yicai.com", "thepaper.cn", "stockstar.com", "jrj.com.cn"];
@@ -61,7 +83,7 @@
   const showContent = () => { $("theme-status").hidden = true; $("theme-content").hidden = false; };
   const clear = (target) => { while (target.firstChild) target.removeChild(target.firstChild); };
   const setText = (id, value) => { const target = $(id); if (target) target.textContent = value === undefined || value === null || value === "" ? "—" : String(value); };
-  const stateTone = (stage) => stage === "主线候选" ? "strong" : stage === "降温观察" ? "cooling" : stage === "数据不足" ? "missing" : "watch";
+  const stateTone = (stage) => stage === "主线进行" ? "strong" : stage === "主线退潮" ? "cooling" : stage === "数据不足" ? "missing" : "watch";
   const stageBadge = (stage) => make("span", `theme-stage stage-${stateTone(stage)}`, stage);
 
   function renderMarket(data) {
@@ -116,6 +138,7 @@
 
   function renderThemeCard(theme, index) {
     const article = make("article", "theme-row");
+    if (themeStageChange(theme)) article.classList.add("is-stage-changed");
     const open = make("button", "theme-row-main"); open.type = "button"; open.setAttribute("aria-label", `查看${theme.name || "题材"}详情`);
     const title = make("div", "theme-row-title");
     title.append(make("span", "theme-rank", finite(theme.rank) === null ? "—" : String(theme.rank).padStart(2, "0")), make("span", "theme-name", theme.name || "未命名题材"), stageBadge(stageFor(theme)));
@@ -141,6 +164,91 @@
     const filtered = themes.filter((theme) => matchesTheme(theme, query, stage));
     setText("theme-count", themes.length ? `${filtered.length}/${themes.length}` : "0"); $("theme-ranking-empty").hidden = filtered.length > 0;
     filtered.forEach((theme, index) => target.append(renderThemeCard(theme, index)));
+  }
+
+  function researchMoveStock(theme, member) {
+    const change = themeStageChange(theme);
+    const transition = change && change.type === "changed" ? `题材阶段由“${stageLabels[change.previous_stage]}”变为“${stageLabels[change.stage]}”。` : change && change.type === "new" ? `题材新进入观察池，当前阶段为“${stageFor(theme)}”。` : `当前题材阶段为“${stageFor(theme)}”，不预设它刚发生阶段变化。`;
+    const question = `请分析${member.name || member.ts_code}（${member.ts_code}）在题材“${theme.name}”中的可能上涨原因。${transition}研究截止日为 ${state.date}，请优先查阅截止日之前近期公司公告、新闻及联网搜索结果，并核对关键来源和发布时间。请判断是否存在比“${theme.name}”更直接的概念催化（例如短剧概念），把公司公告明确证实、媒体报道、市场可能炒作但证据不足的逻辑分开；最多列出3个原因，逐项说明证据、日期、来源和关联程度，并列反证与不确定性。不能仅凭题材名称或股价上涨推断因果；截止日之后发布的消息不能解释当日上涨。`;
+    const assistant = window.CaimanMarketLeaders;
+    if (assistant && typeof assistant.askThemeReason === "function") {
+      assistant.askThemeReason({name: member.name || member.ts_code, ts_code: member.ts_code, theme_name: theme.name || theme.id || "题材雷达", date: state.date, question});
+    }
+  }
+
+  function renderThemeChanges(data) {
+    const list = $("theme-changes-list"); clear(list);
+    const comparison = data.meta && data.meta.stage_comparison || {};
+    const changes = comparison.status === "ok" && Array.isArray(data.stage_changes) ? data.stage_changes.filter(isVisibleStageChange) : [];
+    setText("theme-changes-note", comparison.status === "ok" ? `与 ${comparison.previous_date} 比较 · 仅展示阶段顺序推进与进出观察池，点击标签查看下方详情` : comparison.status === "no_previous_date" ? "该日期没有更早的可用题材快照" : "上一交易日快照不可用，无法可靠比较");
+    setText("theme-changes-count", `${changes.length} 个题材`);
+    $("theme-changes-empty").hidden = changes.length > 0;
+    if (comparison.status !== "ok") { $("theme-changes-empty").hidden = true; list.append(make("p", "theme-changes-empty", comparison.status === "no_previous_date" ? "没有前一交易日可供比较。" : "比较数据暂不可用，不展示推测的状态变化。")); return; }
+    if (!changes.length) $("theme-changes-empty").hidden = false;
+    const currentThemes = new Map((Array.isArray(data.themes) ? data.themes : []).map(theme => [theme.id, theme]));
+    groupThemeChanges(changes).forEach((group) => {
+      const article = make("section", "theme-transition-group"); article.setAttribute("aria-label", group.title);
+      const heading = make("div", "theme-transition-heading");
+      const title = make("h4", "", group.title);
+      const transitionIcon = { 
+        "题材萌芽 → 初级发酵": ["👑", "transition-icon-gold", "金皇冠：阶段首次形成有效扩散"],
+        "初级发酵 → 主线进行": ["👑", "transition-icon-silver", "银皇冠：阶段扩散进入主线"],
+        "主线进行 → 主线退潮": ["😈", "transition-icon-devil", "恶魔：主线退潮风险信号"]
+      }[group.title];
+      let icon = null;
+      if (transitionIcon) {
+        icon = make("span", `transition-icon ${transitionIcon[1]}`, transitionIcon[0]);
+        icon.setAttribute("aria-hidden", "true"); icon.title = transitionIcon[2];
+      }
+      if (icon) title.append(icon);
+      heading.append(title, make("span", "theme-transition-count", `${group.changes.length} 个题材`));
+      const tags = make("div", "theme-transition-tags");
+      group.changes.forEach((change) => {
+        const button = make("button", "theme-transition-tag", change.name || change.id || "未命名题材"); button.type = "button";
+        const current = change.type === "removed" ? null : currentThemes.get(change.id);
+        if (current) {
+          button.setAttribute("aria-controls", "theme-detail");
+          button.setAttribute("aria-label", `查看${current.name || change.name || change.id}题材详情`);
+          button.title = "展开并跳转到下方题材详情";
+          button.addEventListener("click", () => {
+            if (!matchesTheme(current, $("theme-search").value.trim(), $("theme-stage-filter").value)) {
+              $("theme-search").value = ""; $("theme-stage-filter").value = ""; renderPopular();
+            }
+            showDetail(current);
+          });
+        } else {
+          button.disabled = true; button.title = "当日观察池中无此题材，暂无可跳转的详情";
+        }
+        tags.append(button);
+      });
+      article.append(heading, tags);
+      if (group.changes.some(change => change.type === "removed" || !currentThemes.has(change.id))) {
+        article.append(make("p", "theme-transition-note", "灰色标签当日不在观察池中，暂无可跳转的详情。"));
+      }
+      list.append(article);
+    });
+  }
+
+  function groupThemeChanges(changes) {
+    const groups = new Map();
+    changes.filter(isVisibleStageChange).forEach((change) => {
+      const before = stageLabels[change.previous_stage];
+      const after = stageLabels[change.stage];
+      const removed = change.type === "removed", added = change.type === "new";
+      const key = removed ? "removed" : JSON.stringify([added ? "new" : before, after]);
+      if (!groups.has(key)) {
+        const title = removed ? "退出观察池" : added ? `新进入 · ${after}` : `${before} → ${after}`;
+        groups.set(key, {title, changes: [], order: removed ? 2 : added ? 1 : 0, before: removed || added ? stageOrder.length : stageOrder.indexOf(before), after: stageOrder.indexOf(after)});
+      }
+      groups.get(key).changes.push(change);
+    });
+    return [...groups.values()].sort((a, b) => a.order - b.order || a.before - b.before || a.after - b.after);
+  }
+
+  function appendResearchControl(parent, theme, member, className = "theme-member-ai-button") {
+    const button = make("button", className, "可能原因"); button.type = "button"; button.disabled = !member.ts_code; button.title = "在右侧 DeepSeek 对话中查看研判与来源";
+    button.addEventListener("click", () => researchMoveStock(theme, member));
+    parent.append(button);
   }
 
   function stockName(member) { return member && (member.name || member.ts_code) || "未命名股票"; }
@@ -236,6 +344,7 @@
       const themes = Array.isArray(member.theme_names) ? member.theme_names.join(" · ") : "";
       if (themes) reason.append(make("b", "theme-member-themes", themes));
       reason.append(make("span", "", member.reason ? `${member.reason}${member.reason_date ? ` · ${member.reason_date}` : ""}` : "暂无归因记录"));
+      appendResearchControl(reason, theme, member, "theme-member-ai-button");
       if (member.quote_date && member.quote_date !== state.date) reason.append(make("small", "", `行情日期 ${member.quote_date}`));
       row.append(reason); body.append(row);
     });
@@ -243,7 +352,15 @@
   }
 
   function showDetail(theme) {
-    state.selectedTheme = theme; setText("theme-detail-title", theme.name || "未命名题材"); setText("theme-detail-summary", `${stageFor(theme)} · 观察强度 ${numberText(theme.score, 1)} · ${finite(theme.coverage) === null ? "覆盖度暂无" : `覆盖 ${pctText(Number(theme.coverage) * 100)}`}`); renderDetailComponents(theme); renderSparkline(theme); renderMembers(theme); $("theme-detail").hidden = false; renderThemes(); $("theme-detail").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    state.selectedTheme = theme;
+    setText("theme-detail-title", theme.name || "未命名题材");
+    setText("theme-detail-summary", `${stageFor(theme)} · 观察强度 ${numberText(theme.score, 1)} · ${finite(theme.coverage) === null ? "覆盖度暂无" : `覆盖 ${pctText(Number(theme.coverage) * 100)}`}`);
+    closeMetricHelp(); renderDetailComponents(theme); renderSparkline(theme); renderMembers(theme);
+    $("theme-detail").hidden = false; renderThemes();
+    $("theme-detail-title").setAttribute("tabindex", "-1");
+    $("theme-detail-title").focus({preventScroll: true});
+    const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $("theme-detail").scrollIntoView({behavior: reducedMotion ? "auto" : "smooth", block: "start"});
   }
 
   function addExternalLink(parent, label, href, className) { const url = safeUrl(href); if (!url) { parent.append(make("span", className || "attention-unavailable", `${label} · 链接不可用`)); return; } const link = make("a", className || "attention-link", label); link.href = url; link.target = "_blank"; link.rel = "noopener noreferrer"; parent.append(link); }
@@ -258,6 +375,31 @@
   }
 
   function updateView() { const themes = state.view === "themes"; $("theme-stage-filter").disabled = !themes; $("theme-tab").tabIndex = themes ? 0 : -1; $("popular-tab").tabIndex = themes ? -1 : 0; $("theme-ranking-panel").hidden = !themes; $("popular-ranking-panel").hidden = themes; $("theme-tab").classList.toggle("is-active", themes); $("popular-tab").classList.toggle("is-active", !themes); $("theme-tab").setAttribute("aria-selected", String(themes)); $("popular-tab").setAttribute("aria-selected", String(!themes)); }
+  function setWorkspaceView(view) {
+    const topics = view === "topics";
+    $("topics-workspace-panel").hidden = !topics;
+    $("stocks-workspace-panel").hidden = topics;
+    $("topics-workspace-tab").classList.toggle("is-active", topics);
+    $("stocks-workspace-tab").classList.toggle("is-active", !topics);
+    $("topics-workspace-tab").setAttribute("aria-selected", String(topics));
+    $("stocks-workspace-tab").setAttribute("aria-selected", String(!topics));
+    $("topics-workspace-tab").tabIndex = topics ? 0 : -1;
+    $("stocks-workspace-tab").tabIndex = topics ? -1 : 0;
+  }
+  function bindWorkspaceTabs() {
+    const tabs = [$("topics-workspace-tab"), $("stocks-workspace-tab")];
+    setWorkspaceView("topics");
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => setWorkspaceView(index === 0 ? "topics" : "stocks"));
+      tab.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const nextIndex = event.key === "Home" ? 0 : event.key === "End" ? 1 : 1 - index;
+        setWorkspaceView(nextIndex === 0 ? "topics" : "stocks");
+        tabs[nextIndex].focus();
+      });
+    });
+  }
   function attentionPlaceholder(title, note) {
     $("attention-panel").hidden = false;
     setText("attention-observed-at", title); setText("attention-status", note);
@@ -292,13 +434,13 @@
       if (!/^\d{4}-\d{2}-\d{2}$/.test(String(meta.date || "")) || (date && date !== meta.date)) throw new Error("所选日期未返回对应快照");
       state.data = data; state.date = String(meta.date);
       if (!state.latestDate) state.latestDate = state.date;
-      renderDateSelect(meta); renderMarket(data); renderThemes(); renderPopular(); updateView(); showContent();
+      renderDateSelect(meta); renderMarket(data); renderThemeChanges(data); renderThemes(); renderPopular(); updateView(); showContent();
       void loadAttention(requestId, controller.signal);
     } catch (error) {
       if (error.name === "AbortError" || requestId !== state.requestId) return;
       const auth = error.status === 401 || error.status === 403;
       const title = error.status === 401 ? "登录后查看题材雷达" : error.status === 403 ? "当前账户暂无题材访问权限" : "题材数据暂不可用";
-      showStatus("error", title, auth ? "请通过当前网站账户登录或核对访问权限。" : date ? `${date} 的题材快照未能读取，请重试或选择其他日期。` : "请稍后重试，或继续查看下方连板看板。");
+      showStatus("error", title, auth ? "请通过当前网站账户登录或核对访问权限。" : date ? `${date} 的题材快照未能读取，请重试或选择其他日期。` : "请稍后重试，或切换至“涨停股看板”查看连板数据。");
       if (auth) {
         const link = make("a", "button button-primary", "前往登录");
         link.href = `/login.html?next=${encodeURIComponent(location.pathname + location.search)}`; $("theme-status").append(link);
@@ -312,11 +454,32 @@
     }
   }
 
+  function closeMetricHelp() {
+    const button = $("theme-metric-help-toggle"); const panel = $("theme-metric-help");
+    if (!button || !panel) return;
+    panel.hidden = true; button.setAttribute("aria-expanded", "false");
+  }
+  function bindMetricHelp() {
+    const button = $("theme-metric-help-toggle"); const panel = $("theme-metric-help");
+    if (!button || !panel) return;
+    button.addEventListener("click", (event) => {
+      event.stopPropagation(); const willOpen = panel.hidden; closeMetricHelp();
+      if (willOpen) { panel.hidden = false; button.setAttribute("aria-expanded", "true"); }
+    });
+    panel.addEventListener("click", (event) => event.stopPropagation());
+    document.addEventListener("click", closeMetricHelp);
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || panel.hidden) return;
+      closeMetricHelp(); button.focus();
+    });
+  }
   function bind() {
+    bindWorkspaceTabs();
+    bindMetricHelp();
     [$("theme-tab"), $("popular-tab")].forEach((tab) => tab.addEventListener("keydown", (event) => { if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return; event.preventDefault(); state.view = event.key === "Home" ? "themes" : event.key === "End" ? "popular" : state.view === "themes" ? "popular" : "themes"; updateView(); $(state.view === "themes" ? "theme-tab" : "popular-tab").focus(); }));
     $("theme-tab").addEventListener("click", () => { state.view = "themes"; updateView(); }); $("popular-tab").addEventListener("click", () => { state.view = "popular"; updateView(); });
     $("theme-search").addEventListener("input", () => { renderThemes(); renderPopular(); }); $("theme-stage-filter").addEventListener("change", renderThemes);
-    $("theme-date-select").addEventListener("change", (event) => { const date = event.target.value; if (date) loadThemes(date); }); $("theme-detail-close").addEventListener("click", () => { $("theme-detail").hidden = true; state.selectedTheme = null; renderThemes(); });
+    $("theme-date-select").addEventListener("change", (event) => { const date = event.target.value; if (date) loadThemes(date); }); $("theme-detail-close").addEventListener("click", () => { closeMetricHelp(); $("theme-detail").hidden = true; state.selectedTheme = null; renderThemes(); });
   }
   document.addEventListener("DOMContentLoaded", () => { bind(); loadThemes(""); });
 }());
