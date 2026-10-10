@@ -1,300 +1,123 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📈 低位横盘 · 多子策略决策引擎</title>
-    <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/style.css">
-    <script src="https://cdn.staticfile.net/echarts/5.4.3/echarts.min.js"></script>
-    <script src="../assets/trade_chart.js"></script>
-    <script src="../assets/auth.js"></script>
-    <script src="../assets/activity.js"></script>
-    <script src="../assets/compliance.js"></script>
-    <script src="../assets/nav.js"></script>
-    <script src="../assets/paywall.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>涨停回调企稳 · 6008 规则与回测</title>
+  <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css?v=20261010-6008">
+  <script src="https://cdn.staticfile.net/echarts/5.4.3/echarts.min.js"></script>
+  <script src="../assets/auth.js"></script>
+  <script src="../assets/activity.js"></script>
+  <script src="../assets/compliance.js"></script>
+  <script src="../assets/nav.js?v=20261010-6008"></script>
+  <script src="../assets/paywall.js?v=20261010-6008"></script>
+  <script src="../assets/pullback6008.js?v=20261010-6008"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 <script>renderNav(true);</script>
+<main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 w-full">
+  <div class="space-y-6">
+    <section class="py-5 sm:py-7 border-b border-gray-200">
+      <div class="flex justify-between items-start flex-wrap gap-4"><div><p class="text-xs font-semibold text-indigo-600">PULLBACK.6008 · 固定规则研究</p><h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mt-2">涨停回调企稳</h1><p class="text-sm text-gray-600 mt-2 max-w-3xl">在强势涨停事件后，寻找充分回调、低点企稳并完成反弹确认的标的。页面展示历史研究结果，不代表实盘组合；详细参数仅管理员可见。</p></div><a href="../signals.html" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">研究信号 →</a></div>
+      <p id="meta" class="text-xs text-gray-400 mt-4">正在载入研究快照...</p>
+    </section>
 
-<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 w-full">
-<div class="space-y-6" data-strategy="S4.V4">
+    <section id="metrics" class="grid grid-cols-2 md:grid-cols-5 gap-3"></section>
 
-    <!-- 标题 -->
-    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-1" id="strat-title">📈 低位横盘</h1>
-        <p class="text-gray-500 text-sm mb-1" id="strat-subtitle"></p>
-        <p class="text-xs text-indigo-600 mt-1" id="strat-weight"></p>
-        <p class="text-xs text-gray-400 mt-1" id="strat-generated"></p>
-    </div>
+    <section id="rules-section" class="py-5 sm:py-6 border-b border-gray-200">
+      <h2 class="text-lg font-bold text-gray-900">固定规则</h2>
+      <p id="rules-note" class="text-xs text-gray-500 mt-1">策略遵循固定研究规则，详细参数仅管理员可见。</p>
+      <div id="rules" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-4"></div>
+    </section>
 
-    <!-- Alpha 来源 -->
-    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-        <h3 class="font-bold text-sm text-yellow-900">📖 Alpha 来源</h3>
-        <p class="text-xs text-yellow-800 mt-1" id="strat-alpha"></p>
-        <p class="text-xs text-yellow-800 mt-1" id="strat-pool"></p>
-    </div>
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="py-5 sm:py-6 border-b border-gray-200"><h2 class="text-lg font-bold text-gray-900">年度样本</h2><p class="text-xs text-gray-500 mt-1 mb-4">按信号日期归属。平均收益为当年完成交易的逐笔平均扣费净收益。</p><div class="scroll-x"><table class="min-w-full text-xs sm:text-sm"><thead class="bg-gray-50 text-gray-500"><tr><th class="text-left px-3 py-2">年份</th><th class="text-right px-3 py-2">信号</th><th class="text-right px-3 py-2">完成</th><th class="text-right px-3 py-2">胜率</th><th class="text-right px-3 py-2">平均</th><th class="text-right px-3 py-2">中位数</th></tr></thead><tbody id="annual" class="divide-y"></tbody></table></div></div>
+      <div class="py-5 sm:py-6 border-b border-gray-200"><h2 class="text-lg font-bold text-gray-900">家族样本</h2><p class="text-xs text-gray-500 mt-1 mb-4">不同板块的涨跌停幅度与触发门槛分别处理。</p><div class="scroll-x"><table class="min-w-full text-xs sm:text-sm"><thead class="bg-gray-50 text-gray-500"><tr><th class="text-left px-3 py-2">家族</th><th class="text-right px-3 py-2">信号</th><th class="text-right px-3 py-2">完成</th><th class="text-right px-3 py-2">胜率</th><th class="text-right px-3 py-2">平均</th></tr></thead><tbody id="families" class="divide-y"></tbody></table></div></div>
+    </section>
 
-    <!-- 关键指标 -->
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4" id="metric-cards"></div>
+    <section id="capital-section" class="py-5 sm:py-6 border-b border-gray-200">
+      <h2 class="text-lg font-bold text-gray-900">独立现金账户 · 退出方式对比</h2>
+      <p id="capital-method" class="text-xs text-gray-500 leading-5 mt-2">账户研究正在校验或未加载。</p>
+      <div id="capital-metrics" class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4"></div>
+      <div id="capital-chart" style="width:100%;height:320px;display:none" class="mt-4" aria-label="各退出方式的独立现金账户净值"></div>
+      <div class="scroll-x mt-4"><table class="min-w-full text-xs sm:text-sm"><thead class="bg-gray-100 text-gray-500"><tr><th class="text-left px-3 py-2 whitespace-nowrap">退出方式</th><th class="text-right px-3 py-2 whitespace-nowrap">账户年化</th><th class="text-right px-3 py-2 whitespace-nowrap">最大回撤</th><th class="text-right px-3 py-2 whitespace-nowrap">单笔平均</th><th class="text-right px-3 py-2 whitespace-nowrap">平均持有</th><th class="text-right px-3 py-2 whitespace-nowrap">接纳率</th><th class="text-right px-3 py-2 whitespace-nowrap">现金占比</th><th class="text-right px-3 py-2 whitespace-nowrap">年化 P5 / P50 / P95</th></tr></thead><tbody id="capital-variants" class="divide-y"><tr><td colspan="8" class="px-3 py-4 text-gray-500">账户研究正在校验或未加载。</td></tr></tbody></table></div>
+      <h3 class="text-sm font-bold text-gray-900 mt-6">账户年度净值收益</h3>
+      <div class="scroll-x mt-3"><table class="min-w-full text-xs sm:text-sm"><thead id="capital-annual-head" class="bg-gray-100 text-gray-500"></thead><tbody id="capital-annual" class="divide-y"></tbody></table></div>
+      <ul id="capital-limits" class="list-disc pl-5 text-xs text-gray-500 leading-5 mt-4 space-y-1"></ul>
+    </section>
 
-    <!-- 净值曲线 -->
-    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">📈 净值曲线 (归一化为 1.0)</h2>
-        <div id="sub_chart" style="width: 100%; height: 360px;"></div>
-    </div>
+    <section class="py-5 sm:py-6 border-b border-gray-200">
+      <h2 class="text-lg font-bold text-gray-900">每日扫描</h2>
+      <p id="latest-meta" class="text-xs text-gray-500 mt-1">正在载入每日扫描状态...</p>
+      <p class="text-xs text-gray-500 mt-2">持仓追踪与离场管理暂未提供。在缺少后续交易日数据时，退出、收益和计划买入日期保持未知。</p>
+      <div id="latest" class="mt-4"></div>
+    </section>
 
-    <!-- 年度表 -->
-    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">📊 年度表现</h2>
-        <div class="scroll-x">
-        <table class="min-w-full divide-y divide-gray-200 text-xs sm:text-sm">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-4 py-2 text-left">年份</th>
-                    <th class="px-4 py-2 text-right">收益</th>
-                </tr>
-            </thead>
-            <tbody id="yearly-tbody" class="bg-white divide-y divide-gray-200"></tbody>
-        </table>
-        </div>
-    </div>
+    <section class="py-5 sm:py-6 border-b border-gray-200">
+      <h2 class="text-lg font-bold text-gray-900">历史信号</h2>
+      <div id="history" class="mt-4"></div>
+    </section>
 
-    <!-- 今日信号 (4 卡片) -->
-    <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">⭐ 今日信号</h2>
-        <div id="strat-signals"></div>
-    </div>
-
-</div>
+    <section class="bg-gray-900 text-gray-100 p-5 sm:p-6"><h2 class="text-lg font-bold">解释边界</h2><div id="limits" class="text-sm text-gray-300 leading-6 mt-2 space-y-2"></div><p class="text-xs text-gray-400 mt-3">逐笔交易统计与现金账户研究采用不同口径。6008 账户独立展示，不计入原 V28 组合历史净值；历史回测结果不代表未来收益。</p></section>
+  </div>
 </main>
-
 <script>renderFooter();</script>
-
 <script>
-const STRAT_KEY = document.querySelector('[data-strategy]').dataset.strategy;
-const FMT_PCT = (x) => (x>=0?"+":"") + (x*100).toFixed(1) + "%";
-const FMT_DEC = (x,n=3) => (x>=0?"+":"") + (x).toFixed(n);
-
-const META_MAP = {
-    "YAOGU.theme": {
-        title: "🔥 妖股题材策略",
-        sub:   "普涨题材(breadth>55)里放量(>2×5日均量)补涨的低位股, 集中≤5只, 移动止盈8% + 题材广度闸; 空仓资金风格轮动回补",
-        alpha: "捕捉小盘题材妖股的补涨启动 — 题材投机/小盘普涨市独赚; 大盘趋势市靠风格轮动兜底",
-        alpha_user: "捕捉「普涨题材里放量补涨的低位股」, 集中持仓 + 移动止盈 + 空仓风格轮动回补 (具体阈值不公开)",
-        sub_user: "适配题材投机/小盘普涨行情. 题材轮动活跃、妖股频出时 Alpha 爆发最强.",
-        pool:  "kpl 涨停原因自建题材的成员股 (普涨+放量+低位), 流通市值 10-1000 亿",
-        weight: null, sigKey: "妖股题材",
-    },
-    "S2.G13": {
-        title: "🏛️ 大盘高位策略",
-        sub:   "流通市值 ≥ 200 亿 + 连续 3 日主力净流入 + 突破 20 日新高",
-        alpha: "捕捉大盘股的趋势性布局 — 主力布局 + 突破 + 加固风控 (止损 -3% / MA40 macro)",
-        alpha_user: "捕捉大盘股的「主力布局 + 突破」类趋势信号 (具体阈值不公开)",
-        sub_user: "适配大盘股趋势行情. 当主力资金持续入场、市场风格切到价值蓝筹、突破前期高点时, 该策略的 Alpha 爆发最强.",
-        pool:  "A 股大盘股 (流通市值 ≥ 200 亿元)",
-        weight: 0.25, sigKey: "大盘高位",
-    },
-    "S4.V4": {
-        title: "📈 低位横盘策略 (V4.1)",
-        sub:   "MA5>MA20>MA60 多头 5-29 天 + 横盘 (MA5 斜率<0.5%) + 紧贴 MA5 (偏离度<2.5%) + Hidden Blacklist 前置过滤 (剔除主力暗中出货嫌疑)",
-        alpha: "捕捉趋势中段的低波动洗盘窗口, EarlyStop 锁利 +8.4% (rqalpha-grade 17 项坑全修). V4.1 (2026-06-03) 新增 P18 hidden_distribution_blacklist 过滤, OOS V28 主组合年化 +2.39pp, MDD 改善 +1.17pp.",
-        alpha_user: "捕捉「低位横盘形态」中的低波动洗盘窗口, 含锁利机制. V4.1 新增「主力暗中出货避雷」前置过滤层 (具体阈值不公开).",
-        sub_user: "适配震荡上行行情中的低波动洗盘期. 当大盘已在上升通道、个股出现紧贴均线的窄幅盘整时, 该策略的 Alpha 爆发最强. V4.1 在选股前先剔除资金面上呈现「主力暗中出货」嫌疑的票, 进一步降低踩雷概率.",
-        pool:  "A 股 amount_20d ≥ 5000万, IPO 后 ≥ 90 天, close ≥ 5 — V4.1 过滤掉 Hidden Blacklist (每日约 500 票)",
-        weight: 0.70, sigKey: "低位横盘",
-    },
-    "ETF.honest": {
-        title: "🔄 ETF 轮动策略",
-        sub:   "在场满仓押注单一最强板块簇 (max1) + 5 分量 regime 择时 (中证全指趋势 / 板块广度 / 低波动 / 北向 / 资金结构) + 空仓日纳指(^NDX)>200日线时叠加 513100 纳指ETF (跨境腿 -8% 止损)",
-        alpha: "境内: 按簇内申赎资金流 (proxy_C z) 选当下最强板块单押, 大盘 regime 转弱即空仓; 跨境: 空仓期若美股纳斯达克100处上升趋势, 切到纳指ETF 补收益. 独立策略, 不并入主组合, 不推送微信.",
-        alpha_user: "境内板块轮动单押当下最强簇 + 大盘择时空仓 + 纳指趋势叠加补收益 (具体阈值不公开)",
-        sub_user: "适配板块轮动 + 全球科技趋势行情. 集中押注当下最强板块, 大盘转弱时空仓避险, 空仓期若美股纳指处上升趋势则切到纳指ETF补收益. 回测自 2020 年策略成立日起.",
-        pool:  "境内 45 板块 ETF 簇 + 跨境 513100 纳指ETF",
-        weight: null, sigKey: null,
-    },
-};
-
-async function loadJSON(p) {
-    const r = await fetch(p + "?t=" + Date.now());
-    if (!r.ok) throw new Error(p);
-    return r.json();
+const pct = value => value == null ? '-' : `${value >= 0 ? '+' : ''}${(value * 100).toFixed(2)}%`;
+const esc = value => String(value ?? '-').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const metric = (label, value, color='text-gray-900') => `<div class="bg-white shadow rounded-lg p-4"><div class="text-xs text-gray-500">${label}</div><div class="metric-num text-xl sm:text-2xl font-bold ${color} mt-1">${value}</div></div>`;
+function renderCapitalResearch(c) {
+  if (!c || !Array.isArray(c.variants) || !c.variants.length) return;
+  const variants = c.variants, baseline = variants.find(x => x.variant === (c.baseline_variant || 'fixed_20'));
+  const n = value => Number.isFinite(value) ? value.toFixed(1) : '-';
+  document.getElementById('capital-method').textContent = `${c.method || '独立现金账户研究'} 固定 20 个开盘间隔为基准。账户年化、最大回撤和年度收益采用 2020 年起固定种子 0 的同一净值路径；P5 / P50 / P95 来自 256 种子整段区间，不拼接各年度最优结果。`;
+  if (baseline) document.getElementById('capital-metrics').innerHTML = [metric('基准账户年化', pct(baseline.cagr), 'text-indigo-700'), metric('基准最大回撤', pct(baseline.mdd), 'text-red-600'), metric('基准信号接纳率', pct(baseline.acceptance_rate)), metric('基准现金占比', pct(baseline.cash_fraction))].join('');
+  document.getElementById('capital-variants').innerHTML = variants.map(x => `<tr class="${x.variant === c.baseline_variant ? 'bg-indigo-50' : ''}"><td class="px-3 py-2 whitespace-nowrap font-medium">${esc(x.label)}${x.variant === c.baseline_variant ? '<span class="text-indigo-700 ml-2">基准</span>' : ''}</td><td class="px-3 py-2 text-right whitespace-nowrap">${pct(x.cagr)}</td><td class="px-3 py-2 text-right whitespace-nowrap">${pct(x.mdd)}</td><td class="px-3 py-2 text-right whitespace-nowrap">${pct(x.trade_mean_return)}</td><td class="px-3 py-2 text-right whitespace-nowrap">${n(x.mean_hold_sessions)} 日</td><td class="px-3 py-2 text-right whitespace-nowrap">${pct(x.acceptance_rate)}</td><td class="px-3 py-2 text-right whitespace-nowrap">${pct(x.cash_fraction)}</td><td class="px-3 py-2 text-right whitespace-nowrap">${pct(x.cagr_p5)} / ${pct(x.cagr_p50)} / ${pct(x.cagr_p95)}</td></tr>`).join('');
+  document.getElementById('capital-annual-head').innerHTML = `<tr><th class="text-left px-3 py-2">年份</th>${variants.map(x => `<th class="text-right px-3 py-2 whitespace-nowrap">${esc(x.label)}</th>`).join('')}</tr>`;
+  document.getElementById('capital-annual').innerHTML = (c.annual || []).map(x => `<tr><td class="px-3 py-2 font-medium">${esc(x.year)}</td>${variants.map(v => `<td class="px-3 py-2 text-right whitespace-nowrap ${x[v.variant] >= 0 ? 'text-green-600' : 'text-red-600'}">${pct(x[v.variant])}</td>`).join('')}</tr>`).join('');
+  document.getElementById('capital-limits').innerHTML = (c.limitations || []).map(x => `<li>${esc(x)}</li>`).join('');
+  const curves = c.curves;
+  if (typeof echarts !== 'undefined' && curves?.dates?.length && curves?.series?.length) {
+    const el = document.getElementById('capital-chart');
+    el.style.display = '';
+    const chart = echarts.init(el);
+    chart.setOption({color:['#2563eb','#059669','#b45309','#dc2626','#7c3aed','#0891b2'], tooltip:{trigger:'axis',valueFormatter:v => Number.isFinite(v) ? v.toFixed(3) : '-'}, legend:{type:'scroll',top:0,data:curves.series.map(x=>x.label),selected:Object.fromEntries(curves.series.map(x=>[x.label,x.variant === (c.default_variant || 'fixed_20')]))}, grid:{left:50,right:20,top:45,bottom:55}, xAxis:{type:'category',data:curves.dates,boundaryGap:false},yAxis:{type:'value',name:'净值',scale:true}, dataZoom:[{type:'inside'},{type:'slider',height:18,bottom:7}], series:curves.series.map(x=>({name:x.label,type:'line',data:x.values,showSymbol:false,connectNulls:false,lineStyle:{width:x.variant === c.baseline_variant ? 2.5 : 1.5}}))});
+    window.addEventListener('resize', () => chart.resize());
+  }
 }
-
-(async function () {
+(async () => {
+  try {
     const me = await pwMe();
     pwUserBar(me);
-    const sig = await pwSignals(me).catch(_=>null);
-    const data = sig ? sig.data : null;
-    const LOCKED = sig ? sig.locked : true;
-    const eq = await pwGet("/equity").catch(_=>null);
-    if (!data) { document.getElementById('strat-subtitle').textContent = "⚠ 数据尚未生成"; return; }
-
-    const m = META_MAP[STRAT_KEY];
-    document.title = m.title + " · 多子策略决策引擎";
-    document.getElementById('strat-title').textContent = m.title;
-    document.getElementById('strat-subtitle').textContent = isAdmin() ? m.sub : (m.sub_user || m.sub);
-    document.getElementById('strat-weight').textContent =
-        m.weight === null ? "独立运行 — 不并入主组合" : `在 V28 主组合中占比 ${(m.weight*100).toFixed(0)}%`;
-    document.getElementById('strat-generated').textContent =
-        `数据日期 ${data.meta.data_date} · 站点生成 ${data.meta.generated_at}`;
-    document.getElementById('strat-alpha').textContent = isAdmin() ? m.alpha : (m.alpha_user || m.alpha);
-    document.getElementById('strat-pool').textContent  = "选股池: " + m.pool;
-
-    // 指标
-    const single = data.singles.find(s => s.name === STRAT_KEY);
-    if (single) {
-        const cards = [
-            ['累计收益', FMT_PCT(single.ret), 'text-green-600'],
-            ['年化',    FMT_PCT(single.ann_ret), 'text-green-600'],
-            ['Sharpe',  FMT_DEC(single.sharpe), 'text-indigo-600'],
-            ['Calmar',  FMT_DEC(single.calmar), 'text-indigo-600'],
-            ['最大回撤', FMT_PCT(single.mdd),   'text-red-500'],
-        ];
-        document.getElementById('metric-cards').innerHTML = cards.map(([k,v,c]) =>
-            `<div class="bg-white shadow rounded-lg p-3 sm:p-4">
-                <div class="text-xs text-gray-500">${k}</div>
-                <div class="metric-num text-2xl font-bold ${c}">${v}</div>
-            </div>`
-        ).join('');
-
-        // 年度
-        const yrs = Object.keys(single.yearly || {}).sort();
-        document.getElementById('yearly-tbody').innerHTML = yrs.map(y => {
-            const v = single.yearly[y];
-            return `<tr class="${v<0?'bg-red-50':''}">
-                <td class="px-4 py-2 font-medium">${y}</td>
-                <td class="px-4 py-2 text-right ${v>=0?'text-green-600':'text-red-500'}">${FMT_PCT(v)}</td>
-            </tr>`;
-        }).join('');
-    }
-
-    // 净值曲线
-    if (eq && eq[STRAT_KEY]) {
-        const chart = echarts.init(document.getElementById('sub_chart'));
-        chart.setOption({
-            tooltip: { trigger: 'axis' },
-            grid: { left: 50, right: 30, top: 30, bottom: 60 },
-            xAxis: { type: 'category', data: eq.dates, axisLabel: { rotate: 30 } },
-            yAxis: { type: 'value', name: '净值' },
-            series: [{
-                name: m.title, type: 'line', smooth: true, showSymbol: false,
-                data: eq[STRAT_KEY],
-                lineStyle: { width: 2, color: '#6366f1' },
-                areaStyle: { color: 'rgba(99,102,241,0.08)' },
-            }],
-        });
-        window.addEventListener('resize', () => chart.resize());
-    }
-
-    // 今日信号
-    let sigHtml = '';
-    const _sd = (m.sigKey && data.daily_signals) ? data.daily_signals[m.sigKey] : null;
-    if (LOCKED && (_sd || (STRAT_KEY === 'ETF.honest' && data.etf_state))) {
-        const counts = _sd ? [
-            {label:"明日信号", n: (_sd.buy_today_count ?? (_sd.buy_today||[]).length)},
-            {label:"跟踪中", n: (_sd.holding_count ?? 0)},
-            {label:"离场", n: (_sd.sell_today_count ?? 0)},
-        ] : [];
-        document.getElementById('strat-signals').innerHTML = pwLockCard({title:"🔒 完整信号已锁定", sub:"明日重磅信号 · 持续跟踪 · 离场提示 · 历史明细 — 付费会员可见", counts});
-        return;
-    }
-    if (m.sigKey && data.daily_signals && data.daily_signals[m.sigKey]) {
-        const s = data.daily_signals[m.sigKey];
-        const isEmpty = (!s.holding||s.holding.length===0)&&(!s.buy_today||s.buy_today.length===0)&&(!s.sell_today||s.sell_today.length===0);
-        // ⭐ 防御观望: 无持仓 = 策略按纪律不建仓, buy_today 仅为候选观察池 (与防御空仓状态诚实一致)
-        const flat = (!s.holding||s.holding.length===0);
-
-        if (flat) {
-            sigHtml += `<div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
-                <p class="text-sm text-amber-800 font-bold">💤 策略当前防御性空仓</p>
-                <p class="text-xs text-amber-700 mt-1">${(s.buy_today&&s.buy_today.length>0) ? '下方为候选观察池，策略按纪律暂不建仓；待大盘择时转好，策略会自动恢复建仓，届时此处显示持仓与离场信号。' : '当前无持仓、无候选，空仓等待机会出现。'}</p>
-            </div>`;
-        }
-
-        sigHtml += '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">';
-
-        // 持仓
-        sigHtml += '<div class="bg-blue-50 rounded-lg p-4"><h3 class="text-sm font-bold text-blue-900 mb-3">📦 持续跟踪中 (' + (s.holding||[]).length + ')</h3>';
-        if (s.holding && s.holding.length > 0) {
-            sigHtml += '<ul class="space-y-2">' + s.holding.map(h =>
-                `<li class="bg-white px-3 py-2 rounded text-xs flex justify-between flex-wrap gap-1">
-                    <span class="font-mono font-bold text-blue-700">${h.ts_code}</span>
-                    <span class="text-gray-500">纳入 ${h.entry_date}</span>
-                </li>`
-            ).join('') + '</ul>';
-        } else sigHtml += '<p class="text-xs text-gray-500">暂无跟踪标的</p>';
-        sigHtml += '</div>';
-
-        // 卖出
-        sigHtml += '<div class="bg-red-50 rounded-lg p-4"><h3 class="text-sm font-bold text-red-900 mb-3">📤 明日离场信号 (' + (s.sell_today||[]).length + ')</h3>';
-        if (s.sell_today && s.sell_today.length > 0) {
-            sigHtml += '<ul class="space-y-2">' + s.sell_today.map(x =>
-                `<li class="bg-white px-3 py-2 rounded text-xs">
-                    <div class="flex justify-between flex-wrap gap-1">
-                        <span class="font-mono font-bold text-red-700">${x.ts_code}</span>
-                        <span class="${x.ret>=0?'text-green-600':'text-red-500'} font-bold">${FMT_PCT(x.ret)}</span>
-                    </div>
-                    <div class="text-gray-500 mt-1">纳入 ${x.entry_date} · ${pwReason(x.reason)}</div>
-                </li>`
-            ).join('') + '</ul>';
-        } else sigHtml += '<p class="text-xs text-gray-500">今日无离场</p>';
-        sigHtml += '</div>';
-
-        // 买入
-        sigHtml += '<div class="' + (flat?'bg-gray-50':'bg-green-50') + ' rounded-lg p-4"><h3 class="text-sm font-bold ' + (flat?'text-gray-700':'text-green-900') + ' mb-3">' + (flat ? '📋 候选观察池 (' + (s.buy_today||[]).length + ') · 暂不建仓' : '🎯 明日重磅信号 (' + Math.min(3,(s.buy_today||[]).length) + ') · 候选 (' + Math.max(0,(s.buy_today||[]).length-3) + ')') + '</h3>';
-        if (s.buy_today && s.buy_today.length > 0) {
-            sigHtml += '<ul class="space-y-2">' + s.buy_today.slice(0,8).map((item,i) => {
-                const ts = (typeof item === 'string') ? item : (item.ts_code || '?');
-                const p_up = (typeof item === 'object' && item.p_up != null) ? item.p_up : null;
-                let star = '';
-                if (flat) star = '<span class="text-xs text-gray-400">观察 ' + (i+1) + '</span>';
-                else if (i===0) star = '<span class="text-yellow-500 text-lg">★★★</span><span class="text-xs text-gray-400 ml-1">重磅</span>';
-                else if (i===1) star = '<span class="text-yellow-500">★★</span>';
-                else if (i===2) star = '<span class="text-yellow-500">★</span>';
-                else star = '<span class="text-xs text-gray-400">候选</span>';
-                const pupBadge = (p_up !== null) ? `<span class="text-xs text-blue-600 ml-2" title="综合信号强度">强度 ${(p_up*100).toFixed(0)}</span>` : '';
-                return `<li class="bg-white px-3 py-2 rounded text-xs flex justify-between items-center">
-                    <span class="flex items-center"><span class="font-mono font-bold text-green-700">${ts}</span>${pupBadge}</span>
-                    <span>${star}</span>
-                </li>`;
-            }).join('') + '</ul>';
-        } else sigHtml += '<p class="text-xs text-gray-500">今日暂无信号</p>';
-        sigHtml += '</div>';
-
-        // 历史出清
-        sigHtml += '<div class="bg-gray-100 rounded-lg p-4"><h3 class="text-sm font-bold text-gray-700 mb-3">✓ 历史已离场 (' + (s.exited_recent||[]).length + ') <span class="text-xs text-indigo-400 font-normal">· 点行看K线</span></h3>';
-        if (s.exited_recent && s.exited_recent.length > 0) {
-            const _exAll = s.exited_recent.slice().reverse();   // 最近的在前
-            const _exLi = (x,i) => tradeChartLi({ts_code:x.ts_code, entry_date:x.entry_date, exit_date:x.exit_date, ret:x.ret, reason:pwReason(x.reason), kline:x.kline}, 'ex'+i);
-            sigHtml += '<ul class="space-y-2">' + _exAll.slice(0,3).map((x,i)=>_exLi(x,i)).join('') + '</ul>';
-            if (_exAll.length > 3) {
-                sigHtml += '<details class="mt-2"><summary class="list-none cursor-pointer text-xs text-indigo-600 font-medium hover:text-indigo-800 select-none">查看全部 ' + _exAll.length + ' 笔 ▾ · 点行看K线</summary>'
-                    + '<ul class="space-y-2 mt-2">' + _exAll.slice(3).map((x,i)=>_exLi(x,i+3)).join('') + '</ul></details>';
-            }
-        } else sigHtml += '<p class="text-xs text-gray-500">近期无离场</p>';
-        sigHtml += '</div>';
-
-        sigHtml += '</div>';
-    } else if (STRAT_KEY === 'ETF.honest' && data.etf_state) {
-        const e = data.etf_state;
-        sigHtml = `<div class="bg-yellow-50 rounded-lg p-4">
-            <p class="text-sm text-gray-700 mb-2">最近运行: <span class="font-mono font-bold">${e.last_run_date}</span></p>
-            <p class="text-sm text-gray-700">当前累计净值: <span class="font-mono font-bold text-green-600">${(e.last_equity||1.0).toFixed(3)}</span></p>
-            <p class="text-sm text-gray-700">持仓数量: <span class="font-mono font-bold">${(e.holdings||[]).length}</span></p>`;
-        if (e.holdings && e.holdings.length > 0) {
-            sigHtml += '<ul class="mt-2 ml-4 list-disc text-sm">';
-            for (const h of e.holdings) sigHtml += `<li>${h.ts_code || h}</li>`;
-            sigHtml += '</ul>';
-        } else {
-            sigHtml += '<p class="text-xs text-gray-500 mt-2">空仓 (macro 信号为熊市或无合格板块)</p>';
-        }
-        sigHtml += `</div>`;
-    } else {
-        sigHtml = '<p class="text-gray-500">无今日信号数据</p>';
-    }
-
-    document.getElementById('strat-signals').innerHTML = sigHtml;
+    const d = await loadPullback6008();
+    const admin = !!(me && me.role === 'admin' && d.rules);
+    const locked = d.locked ?? !(me && (me.is_paid || me.role === 'admin'));
+    const b = d.backtest || {}, m = d.meta || {};
+    document.getElementById('meta').textContent = `研究区间 ${m.source_period || '-'} · 网站展示 ${m.display_period || '-'} · 数据截止 ${m.data_date || '-'}`;
+    document.getElementById('metrics').innerHTML = [metric('研究信号', b.signals ?? '-', 'text-indigo-700'), metric('完成交易', b.completed ?? '-'), metric('胜率', pct(b.win_rate), 'text-green-600'), metric('平均扣费净收益', pct(b.mean_net_return), 'text-green-600'), metric('中位数净收益', pct(b.median_net_return))].join('');
+    const rules = admin ? [
+      ['10cm 主板事件', d.rules?.main_board], ['20cm 创业板 / 科创板事件', d.rules?.growth_board], ['观察窗口', `末板后 ${d.rules?.post_limit_window_sessions} 个交易日内`], ['回调条件', d.rules?.pullback], ['企稳与反弹', `企稳：${d.rules?.stabilization_sessions}；反弹：${d.rules?.rebound}`], ['研究执行', d.rules?.entry_exit], ['市场过滤', d.rules?.market_filter],
+    ] : [
+      ['强势事件', '分别识别主板与创业板、科创板的强势涨停事件。'],
+      ['回调后确认', '等待充分回调、低点企稳与反弹确认，按固定规则生成研究候选。'],
+      ['独立研究', '逐笔交易与固定容量现金账户分别统计，6008 不计入原 V28 组合历史。'],
+    ];
+    if (admin) document.getElementById('rules-note').textContent = '以下阈值来自已完成的 6008 研究设计；页面不进行参数搜索或择优展示。';
+    document.getElementById('rules').innerHTML = rules.map(([k, v]) => `<div class="py-2"><h3 class="text-sm font-bold text-gray-900">${esc(k)}</h3><p class="text-xs text-gray-600 leading-5 mt-2">${esc(v)}</p></div>`).join('');
+    const row = (x, isAnnual) => isAnnual ? `<tr><td class="px-3 py-2 font-medium">${x.year}</td><td class="px-3 py-2 text-right">${x.signals}</td><td class="px-3 py-2 text-right">${x.completed}</td><td class="px-3 py-2 text-right ${x.win_rate >= .5 ? 'text-green-600':'text-red-600'}">${pct(x.win_rate)}</td><td class="px-3 py-2 text-right ${x.mean_net_return >= 0 ? 'text-green-600':'text-red-600'}">${pct(x.mean_net_return)}</td><td class="px-3 py-2 text-right">${pct(x.median_net_return)}</td></tr>` : `<tr><td class="px-3 py-2 font-medium">${esc(x.family)}</td><td class="px-3 py-2 text-right">${x.signals}</td><td class="px-3 py-2 text-right">${x.completed}</td><td class="px-3 py-2 text-right ${x.win_rate >= .5 ? 'text-green-600':'text-red-600'}">${pct(x.win_rate)}</td><td class="px-3 py-2 text-right ${x.mean_net_return >= 0 ? 'text-green-600':'text-red-600'}">${pct(x.mean_net_return)}</td></tr>`;
+    document.getElementById('annual').innerHTML = (d.annual || []).map(x => row(x, true)).join('');
+    document.getElementById('families').innerHTML = (d.families || []).map(x => row(x, false)).join('');
+    renderCapitalResearch(d.capital_research);
+    const scan = pullbackScanInfo(d);
+    document.getElementById('latest-meta').textContent = scan.text;
+    document.getElementById('latest').innerHTML = !scan.ready
+      ? `<p class="text-sm text-gray-500">${esc(scan.emptyMessage)}</p>`
+      : locked ? pwLockCard({title:'🔒 完整研究信号已锁定', sub:'最新候选与历史明细沿用会员权限', counts:scan.count == null ? [] : [{label:'确认候选', n:scan.count}], emptyText:scan.emptyLockText})
+      : (d.latest_signals || []).map(s => `<article class="border border-indigo-200 bg-indigo-50 rounded-lg p-4"><div class="flex justify-between flex-wrap gap-3"><div><h3 class="font-bold text-indigo-900">${esc(s['股票名称'])} <span class="font-mono text-sm">${esc(s['股票代码'])}</span></h3><p class="text-xs text-indigo-700 mt-1">${esc(s['涨停家族'])} · 信号日 ${esc(s['信号日期'])} · ${esc(s['大盘状态'])}</p></div><span class="text-xs h-fit bg-white border border-indigo-200 px-2 py-1 rounded">${esc(s['执行状态'])}</span></div>${admin ? `<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs mt-4"><div class="py-1"><span class="block text-gray-500">回调深度</span><b>${pct(s['回调深度'])}</b></div><div class="py-1"><span class="block text-gray-500">低点后</span><b>${esc(s['低点后交易日'])} 日</b></div><div class="py-1"><span class="block text-gray-500">距末板</span><b>${esc(s['距末板交易日'])} 日</b></div><div class="py-1"><span class="block text-gray-500">反弹确认</span><b>${pct(s['反弹幅度'])}</b></div></div>` : ''}<p class="text-xs text-gray-600 mt-3">研究计划：${s['计划买入日期'] ? `${esc(s['计划买入日期'])} 开盘` : '下一交易日开盘，待确认'}。</p></article>`).join('') || `<p class="text-sm text-gray-500">${esc(scan.emptyMessage)}</p>`;
+    document.getElementById('limits').innerHTML = [d.robustness?.website_period_note, d.robustness?.stability_note, d.robustness?.concentration_note].filter(Boolean).map(x => `<p>${esc(x)}</p>`).join('');
+    document.getElementById('history').innerHTML = renderPullbackHistory(d, locked, admin);
+  } catch (error) { document.getElementById('meta').textContent = `研究数据载入失败：${error.message}`; }
 })();
 </script>
 </body>

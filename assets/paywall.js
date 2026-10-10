@@ -66,7 +66,7 @@ async function pwEvents(me) {
 
 // 锁定卡片 (替代被遮的信号明细)
 function pwLockCard(opts) {
-  const { title = "🔒 完整信号已锁定", counts = [], sub = "" } = opts || {};
+  const { title = "🔒 完整信号已锁定", counts = [], sub = "", emptyText = "今日数据已生成" } = opts || {};
   const chips = counts.filter(c => c.n > 0).map(c =>
     `<span style="display:inline-block;background:#1e293b;color:#cbd5e1;border:1px solid #334155;
       border-radius:999px;padding:3px 12px;font-size:12px;margin:3px">${c.label} <b style="color:#fbbf24">${c.n}</b></span>`
@@ -76,7 +76,7 @@ function pwLockCard(opts) {
     <div style="font-size:30px;margin-bottom:6px">🔒</div>
     <div style="font-size:16px;font-weight:700;margin-bottom:4px">${title}</div>
     ${sub ? `<div style="font-size:12.5px;color:#94a3b8;margin-bottom:12px">${sub}</div>` : ""}
-    <div style="margin:10px 0 16px">${chips || '<span style="color:#94a3b8;font-size:12px">今日数据已生成</span>'}</div>
+    <div style="margin:10px 0 16px">${chips || `<span style="color:#94a3b8;font-size:12px">${emptyText}</span>`}</div>
     <button onclick="pwUnlock()" style="background:linear-gradient(135deg,#d4af37,#b8860b);color:#1a1407;
       font-weight:700;border:none;border-radius:10px;padding:11px 28px;font-size:14px;cursor:pointer;
       box-shadow:0 8px 20px rgba(212,175,55,.3)">付费解锁全部</button>
@@ -148,6 +148,8 @@ async function pwUserBar(me) {
     "padding:7px 14px;font-size:12.5px;color:#e2e8f0";
   bar.innerHTML = inner;
   const old = document.getElementById("pw-userbar"); if (old) old.remove();
-  document.body.appendChild(bar);
+  const main = document.querySelector('main');
+  if (main) document.body.insertBefore(bar, main);
+  else document.body.insertBefore(bar, document.body.firstChild);
 }
 async function pwLogout() { try { await pwPost("/logout"); } catch (e) {} location.reload(); }

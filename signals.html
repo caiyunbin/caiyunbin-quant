@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>今日信号 · 多子策略决策引擎</title>
     <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/style.css?v=20261010-6008">
     <script src="assets/auth.js"></script>
     <script src="assets/activity.js"></script>
     <script src="assets/compliance.js"></script>
-    <script src="assets/nav.js"></script>
-    <script src="assets/paywall.js"></script>
+    <script src="assets/nav.js?v=20261010-6008"></script>
+    <script src="assets/paywall.js?v=20261010-6008"></script>
+    <script src="assets/pullback6008.js?v=20261010-6008"></script>
     <script src="https://cdn.staticfile.net/echarts/5.4.3/echarts.min.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
@@ -21,7 +22,7 @@
 
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
         <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-1">🎯 今日信号</h1>
-        <p class="text-gray-500 text-sm">四个子决策树当日候选股票 + 信号持续状态 + 信号出清建议 (T+1 开盘价撮合)</p>
+        <p class="text-gray-500 text-sm">多策略每日候选、持续跟踪与离场提示。涨停回调企稳独立展示研究快照，原 V28 组合历史另行标注。</p>
         <p class="text-xs text-gray-400 mt-2" id="meta-info"></p>
     </div>
 
@@ -96,16 +97,34 @@ function openTradeChart(tid){
 const STRATEGY_INFO_ADMIN = {
     "大盘高位":   {en:"S2.G13", icon: "🏛️", pool: "A 股大盘股 (流通市值 ≥ 200 亿) — 连 3 日主力净流入 + 突破 20 日新高"},
     "妖股题材":   {en:"YAOGU.theme", icon: "🔥", pool: "普涨题材(breadth>55)里放量(>2×5日均量)补涨的低位股, 集中≤5只, 移动止盈8% + 题材广度闸; 空仓风格轮动回补"},
-    "低位横盘":   {en:"S4.V4", icon: "📈", pool: "A 股 amount_20d ≥ 5000万 — MA5>MA20>MA60 多头 5-29 天 + 横盘紧贴 MA5"},
+    "涨停回调企稳": {en:"PULLBACK.6008", icon: "📈", pool: "强势涨停事件后充分回调、低点企稳与反弹确认；6008 固定规则研究，未纳入原 V28 组合"},
 };
 const STRATEGY_INFO_USER = {
     "大盘高位":   {en:"S2.G13", icon: "🏛️", pool: "适配大盘股趋势行情. 在主力资金持续入场、市场风格切到价值蓝筹、指数突破前期高点时的 Alpha 爆发最强."},
     "妖股题材":   {en:"YAOGU.theme", icon: "🔥", pool: "适配题材投机/小盘普涨行情. 题材轮动活跃、妖股频出时 Alpha 爆发最强; 大盘趋势市靠空仓资金轮动最强宽基兜底."},
-    "低位横盘":   {en:"S4.V4", icon: "📈", pool: "适配震荡上行行情中的低波动洗盘期. 在大盘已在上升通道, 个股进入紧贴均线的窄幅盘整时的 Alpha 爆发最强."},
+    "涨停回调企稳": {en:"PULLBACK.6008", icon: "📈", pool: "寻找强势涨停事件后充分回调、低点企稳并完成反弹确认的标的。每日独立扫描，持仓追踪与离场管理暂未提供。"},
 };
 const STRATEGY_INFO = (typeof isAdmin === 'function' && isAdmin())
     ? STRATEGY_INFO_ADMIN : STRATEGY_INFO_USER;
 const FMT_PCT = (x) => (x>=0?"+":"") + (x*100).toFixed(1) + "%";
+const ESC = (x) => String(x ?? '-').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+
+function renderPullbackCard(research, locked, admin) {
+    const m = research?.meta || {}, scan = pullbackScanInfo(research);
+    let detail;
+    if (!research) {
+        detail = '<p class="text-xs text-gray-500">研究快照暂不可用。</p>';
+    } else if (!scan.ready) {
+        detail = `<p class="text-sm text-gray-500">${ESC(scan.emptyMessage)}</p>`;
+    } else if (locked) {
+        detail = pwLockCard({title:'🔒 完整研究信号已锁定', sub:'最新候选与历史信号明细沿用会员权限', counts:scan.count == null ? [] : [{label:'确认候选', n:scan.count}], emptyText:scan.emptyLockText});
+    } else {
+        const latest = research.latest_signals || [];
+        const candidates = latest.map(s => `<li class="border border-gray-200 rounded-lg p-3"><div class="flex justify-between flex-wrap gap-2"><strong>${ESC(s['股票名称'])} <span class="font-mono">${ESC(s['股票代码'])}</span></strong><span class="text-gray-500">${ESC(s['执行状态'])}</span></div><p class="text-gray-500 mt-1">${ESC(s['涨停家族'])} · 信号日 ${ESC(s['信号日期'])} · 大盘状态 ${ESC(s['大盘状态'])}</p>${admin ? `<p class="text-gray-500 mt-1">回调 ${FMT_PCT(s['回调深度'])} · 低点后 ${ESC(s['低点后交易日'])} 日 · 反弹 ${FMT_PCT(s['反弹幅度'])}</p>` : ''}<p class="text-gray-600 mt-2">研究计划：${s['计划买入日期'] ? `${ESC(s['计划买入日期'])} 开盘` : '下一交易日开盘，待确认'}。${admin ? '持有 20 个开盘间隔。' : ''}</p></li>`).join('') || `<li class="text-gray-500">${ESC(scan.emptyMessage)}</li>`;
+        detail = `<h3 class="font-bold text-sm text-gray-800 mb-3">最新确认候选${scan.count == null ? '' : ` (${scan.count})`}</h3><ul class="space-y-3 text-xs">${candidates}</ul>`;
+    }
+    return `<div class="bg-white shadow rounded-lg p-4 sm:p-6"><div class="flex justify-between flex-wrap gap-2 mb-3"><h2 class="text-xl sm:text-2xl font-bold text-gray-800">📈 涨停回调企稳</h2><a href="strategies/consolidation.html" class="text-xs text-indigo-700">独立研究 · 策略详情 →</a></div><p class="text-xs text-gray-500 mb-3">强势涨停事件后，寻找充分回调、低点企稳与反弹确认。未纳入原 V28 组合。</p><p class="text-xs text-gray-400 mb-2">研究数据截止 ${ESC(m.data_date)} · 非实时交易指令</p><p class="text-xs text-gray-600 mb-4">${ESC(scan.text)}</p>${detail}${research ? renderPullbackHistory(research, locked, admin) : ''}<p class="text-xs text-gray-500 mt-4">持仓追踪与离场管理暂未提供；未成熟样本不填入未来成交或收益。</p></div>`;
+}
 
 async function loadJSON(p) {
     const r = await fetch(p + "?t=" + Date.now());
@@ -119,13 +138,17 @@ async function loadJSON(p) {
     const sig = await pwSignals(me).catch(_=>null);
     const latest = sig ? sig.data : null;
     const LOCKED = sig ? sig.locked : true;
+    const ADMIN = !!(me && me.role === 'admin');
+    const research = await loadPullback6008().catch(() => null);
+    const RESEARCH_LOCKED = research?.locked ?? !(me && (me.is_paid || ADMIN));
     if (!latest) {
+        document.getElementById('meta-info').textContent = `6008 研究数据截止 ${research?.meta?.data_date || '-'} · 其他策略数据暂不可用`;
         document.getElementById('strategy-cards').innerHTML =
-            '<div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded"><h3 class="font-bold text-yellow-900">⚠ 数据尚未生成</h3></div>';
+            '<div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded"><h3 class="font-bold text-yellow-900">其他策略数据暂不可用</h3></div>' + renderPullbackCard(research, RESEARCH_LOCKED, ADMIN);
         return;
     }
     document.getElementById('meta-info').textContent =
-        `信号日期 ${latest.meta.data_date} · 站点生成 ${latest.meta.generated_at}`;
+        `其他策略数据截止 ${latest.meta.data_date} · 站点生成 ${latest.meta.generated_at} · 6008 研究数据截止 ${research?.meta?.data_date || '-'}`;
 
     const signals = latest.daily_signals || {};
     const container = document.getElementById('strategy-cards');
@@ -137,21 +160,25 @@ async function loadJSON(p) {
     const _wpct = (k) => (((latest.weights && latest.weights[k]) || 0) * 100).toFixed(0);
     let outerHtml = `<div class="bg-gradient-to-br from-indigo-50 to-white border border-indigo-200 shadow rounded-lg p-4 sm:p-6">
         <div class="flex justify-between items-center flex-wrap gap-2 mb-3">
-            <h2 class="text-lg font-bold text-indigo-800">⚖️ 四腿等权配比${_rgNow ? ` · <span class="text-indigo-600">${_rgNow}</span>` : ''}</h2>
+            <h2 class="text-lg font-bold text-indigo-800">⚖️ 原 V28 组合历史配比${_rgNow ? ` · <span class="text-indigo-600">${_rgNow}</span>` : ''}</h2>
             ${(_lastChg && _lastChg !== '-') ? `<span class="text-xs text-gray-500">权重更新于 <b class="text-indigo-700">${_lastChg}</b> (上次调仓)</span>` : ''}
         </div>
         <div class="flex flex-wrap gap-2 mb-3">
             <span class="text-sm bg-white border border-indigo-200 rounded px-3 py-1">🏛️ 大盘高位 <b class="text-indigo-700">${_wpct('S2.G13')}%</b></span>
             <span class="text-sm bg-white border border-rose-200 rounded px-3 py-1">🔥 妖股题材 <b class="text-rose-700">${_wpct('YAOGU.theme')}%</b></span>
-            <span class="text-sm bg-white border border-indigo-200 rounded px-3 py-1">📈 低位横盘 <b class="text-indigo-700">${_wpct('S4.V4')}%</b></span>
+            <span class="text-sm bg-white border border-indigo-200 rounded px-3 py-1">📈 旧低位横盘 <b class="text-indigo-700">${_wpct('S4.V4')}%</b></span>
             <span class="text-sm bg-white border border-sky-200 rounded px-3 py-1">🔄 板块轮动 <b class="text-sky-700">${_wpct('ETF.honest')}%</b></span>
         </div>
-        <p class="text-xs text-gray-500">四腿(大盘高位 / 妖股题材 / 低位横盘 / 板块轮动)<b>等权 25%×4、每日再平衡</b>。研究结论(2020-2026): 四腿收益相近,等权不降权高收益腿 → 比反向波动风险平价全面更优(累计 +1132% vs +710%)。</p>
+        <p class="text-xs text-gray-500">原四腿(大盘高位 / 妖股题材 / 旧低位横盘 / 板块轮动)的历史配置为<b>等权 25%×4、每日再平衡</b>。6008 作为独立研究替换策略入口，未计入原组合的权重、净值与收益。</p>
         ${_hist.length > 1 ? `<details class="mt-2"><summary class="cursor-pointer text-xs text-indigo-600 font-medium hover:text-indigo-800 select-none">权重变化历史 (近 ${Math.min(6,_hist.length)} 次) ▾</summary><ul class="mt-2 space-y-1 text-xs text-gray-600">${_hist.slice().reverse().map(h => `<li><span class="font-mono text-gray-700">${h.date}</span> 起 <span class="text-gray-400">(大盘${(h.weights['S2.G13']*100).toFixed(0)}/妖股${((h.weights['YAOGU.theme']||0)*100).toFixed(0)}/横盘${(h.weights['S4.V4']*100).toFixed(0)}/板块${(h.weights['ETF.honest']*100).toFixed(0)})</span></li>`).join('')}</ul></details>` : ''}
     </div>`;
 
     for (const strat of Object.keys(STRATEGY_INFO)) {
         const info = STRATEGY_INFO[strat];
+        if (info.en === 'PULLBACK.6008') {
+            outerHtml += renderPullbackCard(research, RESEARCH_LOCKED, ADMIN);
+            continue;
+        }
         const s = signals[strat] || {};
         // 付费墙: 未付费 → 每个策略显示锁定卡片
         if (LOCKED) {

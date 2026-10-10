@@ -32,6 +32,16 @@
     /* 导航折叠 */
     .nav-desktop { display: none !important; }
     .nav-mobile  { display: flex !important; }
+    #pw-userbar {
+        position: static !important;
+        z-index: auto !important;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 0 !important;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        text-align: right;
+    }
     /* 卡片内字体调整 */
     .metric-num   { font-size: 1.25rem !important; }
     h1.text-3xl   { font-size: 1.5rem !important; }

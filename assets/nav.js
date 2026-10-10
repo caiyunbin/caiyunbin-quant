@@ -33,7 +33,7 @@ async function renderNav(isSubdir) {
                 <a href="${prefix}strategies/market_leaders.html" class="nav-strat-btn ${A('market_leaders.html')}"><span class="label-2x2">题材雷达</span></a>
                 <a href="${prefix}strategies/large_cap.html"     class="nav-strat-btn ${A('large_cap.html')}"><span class="label-2x2">大盘高位</span></a>
                 <a href="${prefix}strategies/yaogu.html"         class="nav-strat-btn ${cur==='yaogu.html'?'bg-red-600 text-white font-bold shadow':'text-rose-600 hover:bg-rose-50'}"><span class="label-2x2">妖股题材</span></a>
-                <a href="${prefix}strategies/consolidation.html" class="nav-strat-btn ${A('consolidation.html')}"><span class="label-2x2">低位横盘</span></a>
+                <a href="${prefix}strategies/consolidation.html" class="nav-strat-btn ${A('consolidation.html')}"><span class="label-2x2">涨停回调</span></a>
                 ${etfLink}
                 ${adminLink}
                 ${userBadge}
@@ -58,7 +58,7 @@ async function renderNav(isSubdir) {
         <a href="${prefix}strategies/market_leaders.html" class="block px-4 py-3 rounded text-teal-700 font-bold bg-teal-50">题材雷达</a>
         <a href="${prefix}strategies/large_cap.html"     class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">🏛️ 大盘高位</a>
         <a href="${prefix}strategies/yaogu.html"         class="block px-4 py-3 rounded text-rose-600 font-semibold hover:bg-rose-50">🔥 妖股题材</a>
-        <a href="${prefix}strategies/consolidation.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">📈 低位横盘</a>
+        <a href="${prefix}strategies/consolidation.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">📈 涨停回调企稳</a>
         <a href="${prefix}strategies/etf.html" class="block px-4 py-3 rounded text-gray-700 hover:bg-indigo-50">🔄 ETF 轮动</a>
         ${showAdmin ? `<a href="${prefix}admin.html" class="block px-4 py-3 rounded text-orange-600 font-bold hover:bg-orange-50">⚙️ 管理后台</a>` : ''}
         <div class="border-t mt-3 pt-3">

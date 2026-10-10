@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>多子策略决策引擎</title>
     <link href="https://cdn.staticfile.net/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/style.css?v=20261010-6008">
     <script src="https://cdn.staticfile.net/echarts/5.4.3/echarts.min.js"></script>
     <script src="assets/auth.js"></script>
     <script src="assets/activity.js"></script>
     <script src="assets/compliance.js"></script>
-    <script src="assets/nav.js"></script>
-    <script src="assets/paywall.js"></script>
+    <script src="assets/nav.js?v=20261010-6008"></script>
+    <script src="assets/paywall.js?v=20261010-6008"></script>
+    <script src="assets/pullback6008.js?v=20261010-6008"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 <script>renderNav(false);</script>
@@ -63,11 +64,11 @@
                     </div>
                     <div class="bg-gradient-to-br from-amber-50 to-white border border-amber-200 rounded-xl p-4">
                         <div class="flex items-center gap-2">
-                            <span class="inline-block text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">炒作中期</span>
-                            <span class="inline-block text-xs font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded-full" title="2026-06-03 新增 Hidden Blacklist 前置过滤, OOS 主组合年化 +2.39pp, MDD 改善 +1.17pp">⭐ V4.1</span>
+                            <span class="inline-block text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">强势事件后回调</span>
+                            <span class="inline-block text-xs font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded-full">6008 研究</span>
                         </div>
-                        <p class="text-xs text-gray-600 leading-6 mt-2">资金逐步扩散，个股<strong>市值抬升、进入横盘蓄势</strong>。<span class="text-indigo-700 font-semibold">V4.1 新增主力暗中出货避雷层</span>。</p>
-                        <p class="text-sm font-bold text-amber-800 mt-2">→ 「低位横盘」策略</p>
+                        <p class="text-xs text-gray-600 leading-6 mt-2">强势涨停事件之后，等待<strong>充分回调、低点企稳和反弹确认</strong>。当前为独立研究快照，尚未纳入组合。</p>
+                        <p class="text-sm font-bold text-amber-800 mt-2">→ <a href="strategies/consolidation.html">「涨停回调企稳」策略</a></p>
                     </div>
                     <div class="bg-gradient-to-br from-rose-50 to-white border border-rose-200 rounded-xl p-4">
                         <span class="inline-block text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full">炒作后期</span>
@@ -138,18 +139,34 @@
         </p>
     </div>
 
-    <!-- 组合关键指标 -->
+    <section class="py-4 sm:py-6 border-b border-gray-200">
+        <div class="flex justify-between items-start flex-wrap gap-3">
+            <div><h2 class="text-xl font-bold text-gray-800">📈 涨停回调企稳 · 6008</h2><p class="text-xs text-gray-500 mt-2">替换原低位横盘的策略入口。以下为逐笔交易研究，未纳入原 V28 组合。</p></div>
+            <a href="strategies/consolidation.html" class="text-sm text-indigo-700 font-medium">策略研究 →</a>
+        </div>
+        <p id="pullback-meta" class="text-xs text-gray-400 mt-3">正在载入研究快照...</p>
+        <p id="pullback-scan-meta" class="text-xs text-gray-600 mt-2">正在载入每日扫描状态...</p>
+        <div id="pullback-metrics" class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-4"></div>
+        <p class="text-xs text-gray-500 mt-3">平均扣费净收益是完成交易的逐笔算术平均，不等同于组合收益率。每日信号页显示最新扫描候选；持仓追踪与离场管理暂未提供。</p>
+    </section>
+
+    <div class="border-l-4 border-gray-400 bg-gray-100 p-4 rounded">
+        <h2 class="font-bold text-gray-800">原 V28 组合历史</h2>
+        <p class="text-xs text-gray-600 mt-2">下列组合指标、净值曲线和年度表现保留原四腿配置，包含旧低位横盘策略。涨停回调企稳 6008 另有独立现金账户研究，未计入这些原 V28 组合结果。</p>
+    </div>
+
+    <!-- 原组合历史指标 -->
     <div class="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4" id="combo-metrics"></div>
 
     <!-- 净值曲线 -->
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">📈 净值曲线 (归一化为 1.0)</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">📈 原 V28 净值曲线 (归一化为 1.0)</h2>
         <div id="equity_chart" style="width: 100%; height: 360px;"></div>
     </div>
 
     <!-- 单策略对比 -->
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">🧱 子决策树独立表现</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">🧱 原 V28 子策略历史表现</h2>
         <div class="scroll-x">
         <table class="min-w-full divide-y divide-gray-200 text-xs sm:text-sm">
             <thead class="bg-gray-50">
@@ -166,13 +183,13 @@
             <tbody id="singles-tbody" class="bg-white divide-y divide-gray-200"></tbody>
         </table>
         </div>
-        <p class="text-xs text-gray-500 mt-3">⚠ 四腿(大盘高位 / 妖股题材 / 低位横盘 / 板块轮动)按<strong>等权 25%×4、每日再平衡</strong>配比并入主组合。因 ETF 2020 年才成立，<strong>本表各腿与组合均按 2020 年起统一口径</strong>计算，便于横向对比（更早业绩不计入此表）。</p>
+        <p class="text-xs text-gray-500 mt-3">原四腿(大盘高位 / 妖股题材 / 旧低位横盘 / 板块轮动)按<strong>等权 25%×4、每日再平衡</strong>计算。因 ETF 2020 年才成立，<strong>各腿与原组合按 2020 年起统一口径</strong>展示。6008 的逐笔研究统计独立展示，不计入本表。</p>
     </div>
 
     <!-- 回测方法说明 (口语版) -->
     <div class="bg-blue-50 border border-blue-200 shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-blue-900 mb-2">✅ 回测做得有多严谨</h2>
-        <p class="text-xs text-blue-700 mb-3">很多策略「回测很美、实盘打脸」，是因为回测里偷偷用了现实拿不到的便宜。本系统对照业界开源框架（米筐 RQAlpha）的标准，把常见「作弊点」逐一堵死，力求回测接近真实可执行：</p>
+        <h2 class="text-xl font-bold text-blue-900 mb-2">原 V28 回测方法与复核状态</h2>
+        <p class="text-xs text-blue-700 mb-3">以下为原回测的方法说明。2026-10-10 的执行审计发现，大盘高位策略的资金释放时序与缺报价估值、旧低位横盘策略的部分提前退出价格仍需修正重算。原 V28 历史指标暂不作为可部署绩效；6008 的现金账户另行展示。</p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
             <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>真实成交假设</strong>：按次日开盘价 + 滑点计算，不用「事后最优价」</div>
             <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>流动性过滤</strong>：只选成交活跃标的，避开进出困难的小票</div>
@@ -183,12 +200,12 @@
             <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>复权与停牌处理</strong>：价格跳变、停牌期间持续估值</div>
             <div class="bg-white rounded p-3"><span class="text-green-600 font-bold">✓</span> <strong>分散与上限</strong>：单日新增标的有上限，避免过度集中</div>
         </div>
-        <p class="text-xs text-blue-700 mt-3"><strong>数据来源</strong>：Tushare Pro（A 股行情/资金/基本面）。<strong>回测周期</strong>：2018 年初至今（约 8 年）。<strong>说明</strong>：历史回测不代表未来收益，所有数据仅供研究参考。</p>
+        <p class="text-xs text-blue-700 mt-3"><strong>数据来源</strong>：Tushare Pro（A 股行情/资金/基本面）。<strong>网站展示</strong>：2020 年起。<strong>说明</strong>：以上方法说明不等同于全部执行检查通过，历史回测不代表未来收益。</p>
     </div>
 
     <!-- 年度收益 -->
     <div class="bg-white shadow rounded-lg p-4 sm:p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">📊 年度表现 (四腿组合)</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-3 sm:mb-4">📊 年度表现 (原 V28 四腿组合)</h2>
         <div class="scroll-x">
         <table class="min-w-full divide-y divide-gray-200 text-xs sm:text-sm">
             <thead class="bg-gray-50">
@@ -204,8 +221,8 @@
 
     <!-- ETF 独立 -->
     <div class="bg-yellow-50 border border-yellow-200 shadow rounded-lg p-4 sm:p-6" id="etf-card" style="display:none">
-        <h2 class="text-xl font-bold text-yellow-800 mb-2">🔄 ETF 轮动策略 · 主组合 30% 腿</h2>
-        <p class="text-xs text-yellow-700 mb-3">境内板块轮动单押最强簇 + 大盘 regime 择时 + 纳指趋势叠加. 现为主组合 30% 腿, 每日更新.</p>
+        <h2 class="text-xl font-bold text-yellow-800 mb-2">🔄 ETF 轮动策略</h2>
+        <p class="text-xs text-yellow-700 mb-3">境内板块轮动单押最强簇 + 大盘 regime 择时 + 纳指趋势叠加，继续按原策略展示每日数据。</p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm" id="etf-grid"></div>
         <p class="text-xs text-gray-500 mt-2">详细信号 → <a href="strategies/etf.html" class="text-yellow-700 underline">ETF 轮动策略详情</a></p>
     </div>
@@ -218,7 +235,7 @@
 <script>
 const NAME_CN = {
     "S2.G13": "🏛️ 大盘高位", "YAOGU.theme": "🔥 妖股题材",
-    "S4.V4": "📈 低位横盘", "ETF.honest": "🔄 板块轮动",
+    "S4.V4": "📈 旧低位横盘 (V28 历史)", "ETF.honest": "🔄 板块轮动", "四腿组合": "原 V28 四腿组合",
 };
 const FMT_PCT = (x) => (x>=0?"+":"") + (x*100).toFixed(1) + "%";
 const FMT_DEC = (x,n=3) => (x>=0?"+":"") + (x).toFixed(n);
@@ -233,6 +250,21 @@ async function loadJSON(path) {
     let latest = null, eq_curves = null;
     const me = await pwMe();
     pwUserBar(me);
+    try {
+        const research = await loadPullback6008();
+        const b = research.backtest || {}, m = research.meta || {};
+        document.getElementById('pullback-meta').textContent = `研究数据截止 ${m.data_date || '-'} · 展示区间 ${m.display_period || '-'} · 独立研究快照`;
+        document.getElementById('pullback-scan-meta').textContent = pullbackScanInfo(research).text;
+        document.getElementById('pullback-metrics').innerHTML = [
+            ['研究信号', b.signals ?? '-'], ['完成交易', b.completed ?? '-'],
+            ['完成交易胜率', b.win_rate == null ? '-' : FMT_PCT(b.win_rate)],
+            ['平均扣费净收益', b.mean_net_return == null ? '-' : FMT_PCT(b.mean_net_return)],
+            ['中位数净收益', b.median_net_return == null ? '-' : FMT_PCT(b.median_net_return)],
+        ].map(([label, value]) => `<div class="border border-gray-200 rounded-lg p-3"><div class="text-xs text-gray-500">${label}</div><div class="metric-num text-xl font-bold text-indigo-700 mt-1">${value}</div></div>`).join('');
+    } catch (e) {
+        document.getElementById('pullback-meta').textContent = '6008 研究数据暂不可用';
+        document.getElementById('pullback-scan-meta').textContent = '日更状态未加载，候选待确认';
+    }
     const sig = await pwSignals(me).catch(_=>null);
     latest = sig ? sig.data : null;
     if (!latest) { document.getElementById('meta-version').innerHTML = '⚠ 数据尚未生成. 等待本地 export 脚本首次运行.'; return; }
@@ -244,7 +276,7 @@ async function loadJSON(path) {
     const _rg = _rgLabel ? `当前相位【${_rgLabel}】· ` : '';
     const _wp = (k) => latest.weights && latest.weights[k] != null ? (latest.weights[k]*100).toFixed(0) : '—';
     document.getElementById('meta-weights').textContent =
-        `${_rg}四腿等权(25%×4·每日再平衡): 大盘高位 ${_wp('S2.G13')}% · 妖股题材 ${_wp('YAOGU.theme')}% · 低位横盘 ${_wp('S4.V4')}% · 板块轮动 ${_wp('ETF.honest')}% (组合回测自2020年起)`;
+        `${_rg}原 V28 组合历史配比: 大盘高位 ${_wp('S2.G13')}% · 妖股题材 ${_wp('YAOGU.theme')}% · 旧低位横盘 ${_wp('S4.V4')}% · 板块轮动 ${_wp('ETF.honest')}% (2020年起；未包含6008)`;
     document.getElementById('meta-generated').textContent =
         `数据截止 ${latest.meta.data_date} · 网站更新于 ${latest.meta.generated_at}`;
 
@@ -282,7 +314,7 @@ async function loadJSON(path) {
         </tr>`;
     }
     html += `<tr class="bg-indigo-50 font-bold">
-        <td class="px-3 sm:px-4 py-2 whitespace-nowrap">四腿组合 (等权 25%×4)</td>
+        <td class="px-3 sm:px-4 py-2 whitespace-nowrap">原 V28 四腿组合 (等权 25%×4)</td>
         <td class="px-3 sm:px-4 py-2 text-right">100%</td>
         <td class="px-3 sm:px-4 py-2 text-right text-green-700">${FMT_PCT(combo.ret)}</td>
         <td class="px-3 sm:px-4 py-2 text-right">${FMT_PCT(combo.ann_ret)}</td>
@@ -292,9 +324,7 @@ async function loadJSON(path) {
     </tr>`;
     tbody.innerHTML = html;
 
-    // 年度表 (从组合的年度推断 — 我们后端没存组合年度, 借用第一腿 singles[0] 的 yearly 作为占位)
-    // 实际上 latest.combo 没有 yearly, 暂用第一个 single 的 yearly 作示意
-    const yearlyData = latest.combo.yearly || (latest.singles[0] && latest.singles[0].yearly) || {};
+    const yearlyData = latest.combo.yearly || {};
     const yrTbody = document.getElementById('yearly-tbody');
     yrTbody.innerHTML = Object.keys(yearlyData).sort().map(y => {
         const v = yearlyData[y];
@@ -302,7 +332,7 @@ async function loadJSON(path) {
             <td class="px-4 py-2 font-medium">${y}</td>
             <td class="px-4 py-2 text-right ${v>=0?'text-green-600':'text-red-500'}">${FMT_PCT(v)}</td>
         </tr>`;
-    }).join('');
+    }).join('') || '<tr><td colspan="2" class="px-4 py-3 text-gray-500">原组合年度数据暂不可用</td></tr>';
 
     // ETF 独立卡片 (根据 admin 控制 + 用户角色)
     const cfg = await loadSiteConfig();

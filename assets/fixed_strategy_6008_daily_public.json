@@ -1,0 +1,23 @@
+{
+  "daily_scan": {
+    "strategy_id": "mixed_limit_pullback_6008_v1",
+    "report_date": "2026-10-10",
+    "generated_at": "2026-10-10T12:14:40.571671+08:00",
+    "report_id": "656032e3a7c648b6e64812ed",
+    "status": "market_closed",
+    "signal_count": null,
+    "latest_data_date": null,
+    "expected_data_date": "2026-10-10",
+    "market_state": "数据不足",
+    "next_session": null,
+    "missing_sessions": [],
+    "missing_sessions_by_family": null,
+    "partial_recent_sessions": [],
+    "data_quality": null,
+    "error": null,
+    "publish_error": null,
+    "data_date": null,
+    "note": "次日开盘仅供参考，实际成交须核验当日行情；日更不重算历史收益。"
+  },
+  "latest_signals_count": null
+}
